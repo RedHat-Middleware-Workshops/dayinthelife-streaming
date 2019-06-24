@@ -1,8 +1,5 @@
 /** 
 kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 FlightStatus.java
-
-kamel run  -d camel-swagger-java -d camel-jackson -d camel-undertow  OrderService.java --dev
-
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
