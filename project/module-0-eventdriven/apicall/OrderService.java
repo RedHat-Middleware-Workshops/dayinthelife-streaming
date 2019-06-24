@@ -1,11 +1,11 @@
 /** 
-kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 FlightStatus.java
+kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow  OrderService.java --dev
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
-//import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.camel.Exchange;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 
 public class OrderService extends RouteBuilder {
@@ -32,8 +32,13 @@ public class OrderService extends RouteBuilder {
         
 
         from("direct:placeorder")
+            .log("placeorder--> ${body}")
             .marshal(jacksonDataFormat)
-            .log(" ${body}");
+            .log("placeorder 2 --> ${body}")
+           // .removeHeader("*")
+           // .setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
+            //.toD("http4://inventory-service/notify/order?bridgeEndpoint=true")
+            ;
 
         
     }
