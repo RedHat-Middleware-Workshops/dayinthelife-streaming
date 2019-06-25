@@ -1,0 +1,37 @@
+---
+- name: Evaluate {{ operators_project }} namespace if not exists 
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ operators_project }}'
+    state: present
+
+- name: Evaluate Operator Group
+  k8s:
+    api_version: operators.coreos.com/v1alpha2
+    kind: OperatorGroup
+    name: workshop-operators
+    namespace: '{{ operators_project }}'
+
+- name: Evaluate Streams CatalogSourceConfig
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'streams-csc.yaml.j2') }}"
+
+- name: Evaluate Streams Subscription
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'streams-subscription.yaml.j2') }}"
+
+- name: Create Earth Kafka Namespace
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ kafka_earth_namespace }}'
+    state: present
+
+- name: Create Earth Kafka Cluster
+  k8s:
+    state: present
+    namespace: '{{ kafka_earth_namespace }}'
+    resource_definition: "{{ lookup('template', 'kafka-earth.yaml.j2') }}"

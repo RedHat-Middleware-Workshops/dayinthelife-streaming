@@ -1,0 +1,17 @@
+---
+- name: Process user namespace
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: 'user{{ item }}'
+    state: present
+
+- name: Give user{{ item }} access to user{{ item }} project
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'user-rolebinding.yaml.j2') }}"
+
+- name: Give user{{ item }} access to {{ kafka_earth_namespace }}
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'user-rolebinding.yaml.j2') }}"
