@@ -1,15 +1,15 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: 'user{{ item  }}-{{ role }}-{{ namespace }}'
-  namespace: '{{ namespace }}'
+  name: '{{ item.user }}-{{ item.role }}-{{ item.namespace }}-namespace'
+  namespace: '{{ item.namespace }}'
   labels:
     app: workshop
 subjects:
 - kind: User
-  name: 'user{{ item  }}'
-  namespace: '{{ namespace }}'
+  name: '{{ item.user  }}'
+  namespace: '{{ item.namespace }}'
 roleRef:
   kind: ClusterRole
-  name: '{{ role }}'
+  name: '{{ item.role }}'
   apiGroup: rbac.authorization.k8s.io

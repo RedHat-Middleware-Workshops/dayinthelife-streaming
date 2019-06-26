@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: CatalogSourceConfig
+metadata:
+  name: messaging-online
+  namespace: openshift-marketplace
+spec:
+  csDisplayName: EnMasse Operators
+  csPublisher: EnMasse
+  packages: enmasse
+  targetNamespace: '{{ operators_project }}'

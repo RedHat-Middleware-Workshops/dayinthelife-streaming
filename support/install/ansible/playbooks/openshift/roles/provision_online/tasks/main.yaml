@@ -1,0 +1,30 @@
+---
+- name: Evaluate {{ operators_project }} namespace if not exists 
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ operators_project }}'
+    state: present
+
+- name: Evaluate Operator Group
+  k8s:
+    api_version: operators.coreos.com/v1alpha2
+    kind: OperatorGroup
+    name: workshop-operators
+    namespace: '{{ operators_project }}'
+
+- name: Evaluate Streams OperatorSource
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'online-opsrc.yaml.j2') }}"
+
+- name: Evaluate Streams CatalogSourceConfig
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'online-csc.yaml.j2') }}"
+
+- name: Evaluate Streams Subscription
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'online-subscription.yaml.j2') }}"
+

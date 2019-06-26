@@ -6,12 +6,10 @@
     name: 'user{{ item }}'
     state: present
 
-- name: Give user{{ item }} access to user{{ item }} project
+- name: Give user{{ item }} access to project
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'user-rolebinding.yaml.j2') }}"
-
-- name: Give user{{ item }} access to {{ kafka_earth_namespace }}
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'user-rolebinding.yaml.j2') }}"
+  loop:
+    - { user: 'user{{ item }}', namespace: 'user{{ item }}', role: 'admin' }
+    - { user: 'user{{ item }}', namespace: '{{ kafka_earth_namespace }}', role: 'view' }
