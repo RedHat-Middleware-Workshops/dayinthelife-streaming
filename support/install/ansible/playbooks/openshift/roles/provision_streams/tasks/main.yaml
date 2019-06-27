@@ -22,16 +22,3 @@
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'streams-subscription.yaml.j2') }}"
-
-- name: Create Earth Kafka Namespace
-  k8s:
-    api_version: v1
-    kind: Namespace
-    name: '{{ kafka_earth_namespace }}'
-    state: present
-
-- name: Create Earth Kafka Cluster
-  k8s:
-    state: present
-    namespace: '{{ kafka_earth_namespace }}'
-    resource_definition: "{{ lookup('template', 'kafka-earth.yaml.j2') }}"

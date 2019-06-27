@@ -9,22 +9,28 @@
 - name: "Install DIL Streaming Workshop"
   hosts: workshop
   tasks:
+    # - include_role:
+    #     name: provision_streams
+    #   vars:
+    #     streams_version: "1.1.0"
+    #     kafka_earth_namespace: "shared-kafka-earth"
+    #     operators_project: "workshop-operators"
+    #   tags: provision_streams
+    # - include_role:
+    #     name: provision_online
+    #   vars:
+    #     online_version: "0.28.0"
+    #     operators_project: "workshop-operators"
+    #   tags: provision_online
     - include_role:
-        name: provision_streams
+        name: provision_shared
       vars:
-        streams_version: "1.1.0"
+        db_earth_namespace: "shared-db-earth"
         kafka_earth_namespace: "shared-kafka-earth"
-        operators_project: "workshop-operators"
       tags: provision_streams
-    - include_role:
-        name: provision_online
-      vars:
-        online_version: "0.28.0"
-        operators_project: "workshop-operators"
-      tags: provision_online
-    - include_role:
-        name: user_projects
-      with_sequence: start=1 end={{ usersno }} format=%d
-      vars:
-        kafka_earth_namespace: "shared-kafka-earth"
-      tags: user_projects
+    # - include_role:
+    #     name: user_projects
+    #   with_sequence: start=1 end={{ usersno }} format=%d
+    #   vars:
+    #     kafka_earth_namespace: "shared-kafka-earth"
+    #   tags: user_projects

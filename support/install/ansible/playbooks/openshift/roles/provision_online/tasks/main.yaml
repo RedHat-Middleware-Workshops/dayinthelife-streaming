@@ -13,17 +13,17 @@
     name: workshop-operators
     namespace: '{{ operators_project }}'
 
-- name: Evaluate Streams OperatorSource
+- name: Evaluate Online OperatorSource
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'online-opsrc.yaml.j2') }}"
 
-- name: Evaluate Streams CatalogSourceConfig
+- name: Evaluate Online CatalogSourceConfig
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'online-csc.yaml.j2') }}"
 
-- name: Evaluate Streams Subscription
+- name: Evaluate Online Subscription
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'online-subscription.yaml.j2') }}"

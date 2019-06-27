@@ -6,7 +6,7 @@
     name: 'user{{ item }}'
     state: present
 
-- name: Give user{{ item }} access to project
+- name: Give user{{ item }} access to projects
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'user-rolebinding.yaml.j2') }}"
