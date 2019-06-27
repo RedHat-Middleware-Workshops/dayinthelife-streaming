@@ -1,3 +1,5 @@
+<?php echo 
+'
 <!DOCTYPE html>
 <html>
 
@@ -12,3 +14,4 @@
 </body>
 
 </html>
+'; ?>
