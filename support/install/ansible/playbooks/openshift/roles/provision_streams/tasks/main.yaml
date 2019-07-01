@@ -22,3 +22,16 @@
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'streams-subscription.yaml.j2') }}"
+
+- name: Wait for Streams operator to install
+  k8s_facts:
+      api_version: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      name: 'amqstreams.v{{ streams_version }}'
+      namespace: '{{ operators_project }}'
+  register: csv_status
+  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
+  retries: 10
+  delay: 30
+
+# - debug: var=csv_status

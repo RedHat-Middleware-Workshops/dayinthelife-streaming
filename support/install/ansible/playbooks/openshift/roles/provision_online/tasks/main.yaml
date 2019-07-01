@@ -28,3 +28,13 @@
     state: present
     resource_definition: "{{ lookup('template', 'online-subscription.yaml.j2') }}"
 
+- name: Wait for Online operator to install
+  k8s_facts:
+      api_version: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      name: 'enmasse.{{ online_version }}'
+      namespace: '{{ operators_project }}'
+  register: csv_status
+  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
+  retries: 10
+  delay: 30
