@@ -1,0 +1,22 @@
+---
+# - name: "Get master config"
+#   hosts: master
+#   gather_facts: no
+#   tasks:
+#   - include_role:
+#       name: master_config
+
+- name: "Uninstall DIL Streaming Workshop"
+  hosts: workshop
+  tasks:
+    - include_role:
+        name: uninstall_streams
+      vars:
+        operators_project: "workshop-operators"
+      tags: provision_streams
+    - include_role:
+        name: uninstall_online
+      vars:
+        operators_project: "workshop-operators"
+      tags: provision_streams
+    
