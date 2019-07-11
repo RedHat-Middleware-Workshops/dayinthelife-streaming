@@ -23,6 +23,12 @@
         operators_project: "workshop-operators"
       tags: provision_online
     - include_role:
+        name: provision_shared
+      vars:
+        db_earth_namespace: "shared-db-earth"
+        kafka_earth_namespace: "shared-kafka-earth"
+      tags: provision_streams
+    - include_role:
         name: user_projects
       with_sequence: start=1 end={{ usersno }} format=%d
       vars:
