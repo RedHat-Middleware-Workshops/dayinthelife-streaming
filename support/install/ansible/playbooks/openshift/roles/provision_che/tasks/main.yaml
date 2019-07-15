@@ -1,0 +1,100 @@
+---
+- name: Evaluate {{ che_project }} namespace if not exists 
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ che_project }}'
+    state: present
+
+- name: Evaluate Eclipse Che CatalogSourceConfig
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'che-csc.yaml.j2') }}"
+
+- name: Evaluate Eclipse Che Operator Group
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'che-operatorgroup.yaml.j2') }}"
+
+
+- name: Evaluate Eclipse Che Subscription
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'che-subscriptionyaml.j2') }}"
+
+- name: Wait for Online operator to install
+  k8s_facts:
+      api_version: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      name: 'enmasse.{{ online_version }}'
+      namespace: '{{ che_project }}'
+  register: csv_status
+  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
+  retries: 10
+  delay: 30
+
+- name: Evaluate Eclipse Che Cluster
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'che-cluster.yaml.j2') }}"
+
+- name: Wait for che to be running
+  uri:
+    url: http://che-{{ che_project }}.{{ route_suffix }}/api/system/state
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 30
+
+- name: get auth token from keycloak master realm
+  uri:
+    url: http://keycloak-{{ che_project }}.{{ route_suffix }}/auth/realms/master/protocol/openid-connect/token
+    method: POST
+    body: "username={{ keycloak_admin_user }}&password={{ keycloak_admin_pwd }}&grant_type=password&client_id=admin-cli"
+    status_code: 200
+    headers:
+      Content-Type: "application/x-www-form-urlencoded"
+  register: master_access_token_result
+
+- name: get auth token from keycloak che realm
+  uri:
+    url: http://keycloak-{{ che_project }}.{{ route_suffix }}/auth/realms/che/protocol/openid-connect/token
+    method: POST
+    body: "username={{ keycloak_che_realm_user }}&password={{ keycloak_che_realm_password }}&grant_type=password&client_id=admin-cli"
+    status_code: 200
+    headers:
+      Content-Type: "application/x-www-form-urlencoded"
+  register: che_access_token_result
+
+- set_fact:
+    master_access_token_bearer: "{{ master_access_token_result.json | json_query('access_token') }}"
+    che_access_token_bearer: "{{ che_access_token_result.json | json_query('access_token') }}"
+
+- name: pre-create {{ che_generate_user_count }} users in che realm with format ({{ che_generate_user_format }})
+  uri:
+    url: http://keycloak-{{ project_name }}.{{ route_suffix }}/auth/admin/realms/che/users
+    method: POST
+    body: "{{ lookup('template','che-user.json.j2') }}"
+    body_format: json
+    status_code: 201,409
+    headers:
+      Authorization: "Bearer {{ master_access_token_bearer }}"
+      Content-Type: "application/json"
+  vars:
+    username: "{{ item }}"
+    first_name: "{{ item }}"
+    last_name: ""
+    email: "{{ item }}@none.com"
+    password: "{{ che_generate_user_password }}"
+  with_sequence: start={{ che_generate_user_count|int if che_generate_user_count|int < 1 else 1}} end={{ che_generate_user_count }} format={{ che_generate_user_format }}
+  when: che_generate_user_count|int > 0
+
+- name: add factory to users
+  include_tasks: add_factory_multi.yml
+  with_sequence: start={{ che_generate_user_count|int if che_generate_user_count|int < 1 else 1}} end={{ che_generate_user_count }} format={{ che_generate_user_format }}
+  when:
+    - che_generate_user_count|int > 0
+    - install_custom_factory_json is defined
+    - install_custom_factory_json is not none
+    - install_custom_factory_json|trim() != ""
