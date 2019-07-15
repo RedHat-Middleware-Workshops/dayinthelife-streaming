@@ -10,6 +10,9 @@ IF NOT EXISTS (
 )
 CREATE DATABASE InternationalDB
 GO
+-- Connect to the 'InternationalDB' database to run this snippet
+USE InternationalDB
+GO
 -- Create a new table called 'Orders' in schema 'dbo'
 -- Drop the table if it already exists
 IF OBJECT_ID('dbo.Orders', 'U') IS NOT NULL
@@ -59,8 +62,8 @@ AS
     GO
 GO
 -- example to execute the stored procedure we just created
-EXECUTE dbo.SpInsertOrder @id = 'af504b24-c8cc-75bc-dc3d-ae2118a2d3ed', @type = 'E', @item = 'Bubble Gum', @quantity = 100, @price = '3.99', @shipaddress = '123  evergreen', @zipcode = '12345'
-GO
+--EXECUTE dbo.SpInsertOrder @id = 'af504b24-c8cc-75bc-dc3d-ae2118a2d3ed', @type = 'E', @item = 'Bubble Gum', @quantity = 100, @price = '3.99', @shipaddress = '123  evergreen', @zipcode = '12345'
+--GO
 -- Query the total count of employees
 SELECT COUNT(*) as OrdersCount FROM dbo.Orders;
 -- Query all employee information

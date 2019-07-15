@@ -1,5 +1,5 @@
-<?php echo 
-'
+<?php 
+echo '
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,7 +81,7 @@
                             <label for="profile_pic">Select File: </label>
                             <input id="fileToUpload" name="fileToUpload" type="file" class="btn">
                             <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                            <p><input type="submit" class="btn btn-primary btn-large" value="Load File &raquo;"/></p>
+                            <p><input type="submit" name="submit" class="btn btn-primary btn-large" value="Load File &raquo;"/></p>
                         </form>
                     </div>
                     <div class="row-fluid">
