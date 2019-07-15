@@ -27,3 +27,20 @@
             -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password!' \
             -e 'MSSQL_PID=Standard' -e 'MSSQL_AGENT_ENABLED=true' \
             -n {{ db_earth_namespace }}"
+
+- name: Create Earth Data SQL ConfigMap
+  k8s:
+    state: present
+    namespace: '{{ db_earth_namespace }}'
+    resource_definition: "{{ lookup('template', 'configmap-data-sql.yaml.j2') }}"
+
+- name: Mount ConfigMap Volume
+  shell: "oc set volume dc/mssql-server-linux --add --name=earth-data \
+            --type=configmap --mount-path=/opt/workshop \
+            --configmap-name=earth-data-sql -n {{ db_earth_namespace }}"
+
+- name: Run DB creation
+  shell: oc rsh `oc get pods -l deploymentconfig=mssql-server-linux \
+            -o jsonpath="{.items[0].metadata.name}"` \
+            /opt/mssql-tools/bin/sqlcmd -U sa -P 'Password!' \
+            -i /opt/workshop/earth-data.sql

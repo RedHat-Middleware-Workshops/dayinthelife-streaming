@@ -1,11 +1,4 @@
 ---
-- name: "Get master config"
-   hosts: master
-   gather_facts: no
-   tasks:
-   - include_role:
-       name: master_config
-
 - name: "Install DIL Streaming Workshop"
   hosts: workshop
   tasks:
@@ -19,7 +12,7 @@
     - include_role:
         name: provision_online
       vars:
-        online_version: "0.28.0"
+        online_version: "0.28.2"
         operators_project: "workshop-operators"
     - include_role:
         name: provision_shared
@@ -31,5 +24,6 @@
         name: user_projects
       with_sequence: start=1 end={{ usersno }} format=%d
       vars:
+        db_earth_namespace: "shared-db-earth"
         kafka_earth_namespace: "shared-kafka-earth"
       tags: user_projects

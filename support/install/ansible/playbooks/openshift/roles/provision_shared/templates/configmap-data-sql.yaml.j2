@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: earth-data-sql
+data:
+  earth-data.sql: "-- Create a new database called 'InternationalDB'\n-- Connect to
+    the 'master' database to run this snippet\nUSE master\nGO\n-- Create the new database
+    if it does not exist already\nIF NOT EXISTS (\n    SELECT name\n        FROM sys.databases\n
+    \       WHERE name = N'InternationalDB'\n)\nCREATE DATABASE InternationalDB\nGO\n--
+    Connect to the 'InternationalDB' database to run this snippet\nUSE InternationalDB\nGO\n--
+    Create a new table called 'Orders' in schema 'dbo'\n-- Drop the table if it already
+    exists\nIF OBJECT_ID('dbo.Orders', 'U') IS NOT NULL\nDROP TABLE dbo.Orders\nGO\n--
+    Create the table in the specified schema\nCREATE TABLE dbo.Orders\n(\n    OrderId
+    UNIQUEIDENTIFIER NOT NULL, -- primary key column\n    OrderType [NVARCHAR](1)
+    NOT NULL,\n    OrderItemName [NVARCHAR](50) NOT NULL,\n    Quantity INT NOT NULL,\n
+    \   Price [NVARCHAR](50) NOT NULL,\n    ShipmentAddress [NVARCHAR](100) NOT NULL,\n
+    \   ZipCode [NVARCHAR](10) NOT NULL\n    -- specify more columns here\n);\nGO\n--
+    Create a new stored procedure called 'SpInsertOrder' in schema 'dbo'\n-- Drop
+    the stored procedure if it already exists\nIF EXISTS (\nSELECT *\n    FROM INFORMATION_SCHEMA.ROUTINES\nWHERE
+    SPECIFIC_SCHEMA = N'dbo'\n    AND SPECIFIC_NAME = N'SpInsertOrder'\n)\nDROP PROCEDURE
+    dbo.SpInsertOrder\nGO\n-- Create the stored procedure in the specified schema\nCREATE
+    PROCEDURE dbo.SpInsertOrder\n    @id UNIQUEIDENTIFIER,\n    @type NVARCHAR(1),\n
+    \   @item NVARCHAR(50),\n    @quantity INT,\n    @price NVARCHAR(50),\n    @shipaddress
+    NVARCHAR(100),\n    @zipcode NVARCHAR(10)\nAS\n    INSERT INTO Orders\n    ( --
+    columns to insert data into\n     [OrderId], [OrderType], [OrderItemName], [Quantity],
+    [Price], [ShipmentAddress], [ZipCode]\n    )\n    VALUES\n    ( -- first row:
+    values for the columns in the list above\n     @id, @type, @item, @quantity, @price,
+    @shipaddress, @zipcode\n    )\n    GO\nGO\n-- example to execute the stored procedure
+    we just created\n--EXECUTE dbo.SpInsertOrder @id = 'af504b24-c8cc-75bc-dc3d-ae2118a2d3ed',
+    @type = 'E', @item = 'Bubble Gum', @quantity = 100, @price = '3.99', @shipaddress
+    = '123  evergreen', @zipcode = '12345'\n--GO\n-- Query the total count of employees\nSELECT
+    COUNT(*) as OrdersCount FROM dbo.Orders;\n-- Query all employee information\nSELECT
+    e.OrderId, e.OrderType, e.OrderItemName, e.Quantity, e.Price, e.ShipmentAddress,
+    e.ZipCode \nFROM dbo.Orders as e\nGO\n"
