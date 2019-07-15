@@ -18,3 +18,12 @@
     kind: Namespace
     name: '{{ db_earth_namespace }}'
     state: present
+
+- name: Enable anyuid on Earth Database Namespace
+  shell: "oc adm policy add-scc-to-user anyuid -z default -n {{ db_earth_namespace }}"
+
+- name: Deploy Earth Database
+  shell: "oc new-app {{ mssqlserver_image }}:{{ mssqlserver_version }} \
+            -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password!' \
+            -e 'MSSQL_PID=Standard' -e 'MSSQL_AGENT_ENABLED=true' \
+            -n {{ db_earth_namespace }}"

@@ -1,10 +1,10 @@
 ---
-# - name: "Get master config"
-#   hosts: master
-#   gather_facts: no
-#   tasks:
-#   - include_role:
-#       name: master_config
+- name: "Get master config"
+   hosts: master
+   gather_facts: no
+   tasks:
+   - include_role:
+       name: master_config
 
 - name: "Install DIL Streaming Workshop"
   hosts: workshop
@@ -21,7 +21,6 @@
       vars:
         online_version: "0.28.0"
         operators_project: "workshop-operators"
-      tags: provision_online
     - include_role:
         name: provision_shared
       vars:
