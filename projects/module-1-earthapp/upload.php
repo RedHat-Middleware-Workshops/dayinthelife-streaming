@@ -103,7 +103,7 @@ array_shift($csv);
 
 /* Connect to the remote server using SQL Server Authentication and   
 specify the InternationalDB database as the database in use. */
-$serverName = "172.17.0.3, 1433";  
+$serverName = $_ENV["SERVER_NAME"] ? $_ENV["SERVER_NAME"] : "localhost, 1433";
 $connectionOptions = array(
     "Database"=>"InternationalDB",  
     "Authentication"=>"SqlPassword",
