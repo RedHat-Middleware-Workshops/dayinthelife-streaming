@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: CatalogSourceConfig
+metadata:
+  name: eclipse-che
+  namespace: openshift-marketplace
+spec:
+  csDisplayName: Red Hat Operators
+  csPublisher: Red Hat
+  packages: eclipse-che
+  targetNamespace: '{{ che_project }}'

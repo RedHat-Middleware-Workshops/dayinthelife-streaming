@@ -34,10 +34,22 @@ public class OrderService extends RouteBuilder {
         from("direct:placeorder")
             .log("placeorder--> ${body}")
             .marshal(jacksonDataFormat)
-            .log("placeorder 2 --> ${body}")
-           // .removeHeader("*")
-           // .setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
-            //.toD("http4://inventory-service/notify/order?bridgeEndpoint=true")
+            //.unmarshal(jacksonDataFormat)
+            .setHeader("myinputBody",simple("${body}"))
+            .log("inputBody 1 --> ${headers.myinputBody}")
+            .removeHeader("CamelHttp*").setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
+            .setBody(simple("${headers.myinputBody}"))
+            
+            .multicast().parallelProcessing()
+            .to("http4://inventory-service.modulezero.apps.cluster-chedemo-7fbb.chedemo-7fbb.openshiftworkshop.com/notify/order?bridgeEndpoint=true",
+                "http4://sales-service.modulezero.apps.cluster-chedemo-7fbb.chedemo-7fbb.openshiftworkshop.com/notify/order?bridgeEndpoint=true",
+                "http4://shipping-service.modulezero.apps.cluster-chedemo-7fbb.chedemo-7fbb.openshiftworkshop.com/notify/order?bridgeEndpoint=true")
+            .end()
+            //.marshal(jacksonDataFormat)
+            .removeHeader("CamelHttp*")
+            
+            .log("return from parallelProcessing ${body}")
+            .log("-----DONE")
             ;
 
         
