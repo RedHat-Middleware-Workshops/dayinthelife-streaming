@@ -1,2 +1,4 @@
 num_zk_nodes: 3
 num_kafka_brokers: 3
+mssqlserver_image: microsoft/mssql-server-linux
+mssqlserver_version: 2017-CU9-GDR2
