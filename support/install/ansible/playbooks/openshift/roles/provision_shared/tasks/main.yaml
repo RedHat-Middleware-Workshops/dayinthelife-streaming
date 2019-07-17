@@ -60,7 +60,7 @@
   delay: 30
 
 - set_fact:
-    mssql_replicas: '{{ dc.resources[0].status.replicas }}'
+    mssql_replicas: '{{ dc.resources[0].spec.replicas }}'
 
 - name: Wait for mssql readiness
   k8s_facts:
@@ -69,7 +69,8 @@
     namespace: '{{ db_earth_namespace }}'
     api_version: v1
   register: dc
-  until: (dc.resources[0].status.readyReplicas | int) == (mssql_replicas | int)
+  until: (dc.resources[0].status.readyReplicas is defined) and 
+        ((dc.resources[0].status.readyReplicas | int) == (mssql_replicas | int))
   retries: 60
   delay: 30
 
