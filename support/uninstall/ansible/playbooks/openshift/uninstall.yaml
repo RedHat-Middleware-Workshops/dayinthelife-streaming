@@ -1,11 +1,4 @@
 ---
-# - name: "Get master config"
-#   hosts: master
-#   gather_facts: no
-#   tasks:
-#   - include_role:
-#       name: master_config
-
 - name: "Uninstall DIL Streaming Workshop"
   hosts: workshop
   tasks:
@@ -19,4 +12,10 @@
       vars:
         operators_project: "workshop-operators"
       tags: provision_streams
-    
+    - include_role:
+        name: uninstall_project
+      loop:
+        - "workshop-operators"
+        - "shared-db-earth" 
+        - "shared-kafka-earth"
+      tags: provision_streams
