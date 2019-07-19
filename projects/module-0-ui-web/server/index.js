@@ -22,11 +22,9 @@ wss(server)
 probe(app)
 
 app.engine('handlebars', exphbs())
-
 app.set('views', join(__dirname, '/views'))
 app.set('view engine', 'handlebars')
 
-log.info(app.get('views'), join(__dirname, '/views'))
 app.get('/', (req, res) => {
   res.render('home.handlebars', {
     WS_CONNECTION_STRING
