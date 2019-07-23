@@ -59,7 +59,8 @@
   retries: 60
   delay: 30
 
-- set_fact:
+- name: Set Expected Replicas
+  set_fact:
     mssql_replicas: '{{ dc.resources[0].spec.replicas }}'
 
 - name: Wait for mssql readiness
@@ -83,10 +84,39 @@
     api_version: v1
   register: mssql_pods
 
-- set_fact:
+- name: Set DB Pod Name
+  set_fact:
     mssql_name: '{{ mssql_pods.resources[0].metadata.name }}'
 
 - name: Load  data into db
   shell: oc exec -n {{ db_earth_namespace }} {{ mssql_name }} \
         -- /opt/mssql-tools/bin/sqlcmd -U sa -P 'Password!' \
         -i /opt/workshop/earth-data.sql
+
+- name: Create Earth Application Namespace
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ app_earth_namespace }}'
+    state: present
+
+- name: Enable anyuid on Earth Database Namespace
+  shell: "oc adm policy add-scc-to-user anyuid -z default -n {{ app_earth_namespace }}"
+
+- name: Check if DB has been deployed
+  k8s_facts:
+    kind: DeploymentConfig
+    name: my-apache-php-app
+    namespace: '{{ app_earth_namespace }}'
+    api_version: v1
+  register: app_exists
+
+- name: Deploy Application
+  block:
+  - name: Deploy Earth Application
+    shell: "oc new-app quay.io/hguerreroo/my-apache-php-app:latest \
+            -e 'SERVER_NAME=mssql-server-linux.{{ db_earth_namespace }}.svc' \
+            -n {{ app_earth_namespace }}"
+  - name: Create Earth Application Route
+    shell: "oc expose service my-apache-php-app --name=www -n {{ app_earth_namespace }}"
+  when: (app_exists.resources is undefined) or (app_exists.resources | length == 0)

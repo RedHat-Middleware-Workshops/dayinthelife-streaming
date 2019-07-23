@@ -18,4 +18,5 @@
         - "workshop-operators"
         - "shared-db-earth" 
         - "shared-kafka-earth"
+        - "shared-app-earth"
       tags: provision_streams
