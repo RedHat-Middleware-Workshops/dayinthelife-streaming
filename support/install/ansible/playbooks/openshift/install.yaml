@@ -12,13 +12,14 @@
     - include_role:
         name: provision_online
       vars:
-        online_version: "0.28.2"
+        online_version: "0.29.0"
         operators_project: "workshop-operators"
     - include_role:
         name: provision_shared
       vars:
         db_earth_namespace: "shared-db-earth"
         kafka_earth_namespace: "shared-kafka-earth"
+        app_earth_namespace: "shared-app-earth"
       tags: provision_streams
     - include_role:
         name: user_projects
@@ -26,4 +27,5 @@
       vars:
         db_earth_namespace: "shared-db-earth"
         kafka_earth_namespace: "shared-kafka-earth"
+        app_earth_namespace: "shared-app-earth"
       tags: user_projects
