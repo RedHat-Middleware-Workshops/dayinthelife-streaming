@@ -1,34 +1,79 @@
-apiVersion: v1
 kind: ConfigMap
+apiVersion: v1
 metadata:
   name: earth-data-sql
 data:
-  earth-data.sql: "-- Create a new database called 'InternationalDB'\n-- Connect to
-    the 'master' database to run this snippet\nUSE master\nGO\n-- Create the new database
-    if it does not exist already\nIF NOT EXISTS (\n    SELECT name\n        FROM sys.databases\n
-    \       WHERE name = N'InternationalDB'\n)\nCREATE DATABASE InternationalDB\nGO\n--
-    Connect to the 'InternationalDB' database to run this snippet\nUSE InternationalDB\nGO\n--
-    Create a new table called 'Orders' in schema 'dbo'\n-- Drop the table if it already
-    exists\nIF OBJECT_ID('dbo.Orders', 'U') IS NOT NULL\nDROP TABLE dbo.Orders\nGO\n--
-    Create the table in the specified schema\nCREATE TABLE dbo.Orders\n(\n    OrderId
-    UNIQUEIDENTIFIER NOT NULL, -- primary key column\n    OrderType [NVARCHAR](1)
-    NOT NULL,\n    OrderItemName [NVARCHAR](50) NOT NULL,\n    Quantity INT NOT NULL,\n
-    \   Price [NVARCHAR](50) NOT NULL,\n    ShipmentAddress [NVARCHAR](100) NOT NULL,\n
-    \   ZipCode [NVARCHAR](10) NOT NULL\n    -- specify more columns here\n);\nGO\n--
-    Create a new stored procedure called 'SpInsertOrder' in schema 'dbo'\n-- Drop
-    the stored procedure if it already exists\nIF EXISTS (\nSELECT *\n    FROM INFORMATION_SCHEMA.ROUTINES\nWHERE
-    SPECIFIC_SCHEMA = N'dbo'\n    AND SPECIFIC_NAME = N'SpInsertOrder'\n)\nDROP PROCEDURE
-    dbo.SpInsertOrder\nGO\n-- Create the stored procedure in the specified schema\nCREATE
-    PROCEDURE dbo.SpInsertOrder\n    @id UNIQUEIDENTIFIER,\n    @type NVARCHAR(1),\n
-    \   @item NVARCHAR(50),\n    @quantity INT,\n    @price NVARCHAR(50),\n    @shipaddress
-    NVARCHAR(100),\n    @zipcode NVARCHAR(10)\nAS\n    INSERT INTO Orders\n    ( --
-    columns to insert data into\n     [OrderId], [OrderType], [OrderItemName], [Quantity],
-    [Price], [ShipmentAddress], [ZipCode]\n    )\n    VALUES\n    ( -- first row:
-    values for the columns in the list above\n     @id, @type, @item, @quantity, @price,
-    @shipaddress, @zipcode\n    )\n    GO\nGO\n-- example to execute the stored procedure
-    we just created\n--EXECUTE dbo.SpInsertOrder @id = 'af504b24-c8cc-75bc-dc3d-ae2118a2d3ed',
-    @type = 'E', @item = 'Bubble Gum', @quantity = 100, @price = '3.99', @shipaddress
-    = '123  evergreen', @zipcode = '12345'\n--GO\n-- Query the total count of employees\nSELECT
-    COUNT(*) as OrdersCount FROM dbo.Orders;\n-- Query all employee information\nSELECT
-    e.OrderId, e.OrderType, e.OrderItemName, e.Quantity, e.Price, e.ShipmentAddress,
-    e.ZipCode \nFROM dbo.Orders as e\nGO\n"
+  earth-data.sql: |-
+    -- Create a new database called 'InternationalDB'
+    -- Connect to the 'master' database to run this snippet
+    USE master
+    GO
+    -- Create the new database if it does not exist already
+    IF NOT EXISTS (
+        SELECT name
+            FROM sys.databases
+            WHERE name = N'InternationalDB'
+    )
+    CREATE DATABASE InternationalDB
+    GO
+    -- Connect to the 'InternationalDB' database to run this snippet
+    USE InternationalDB
+    GO
+    -- Create a new table called 'Orders' in schema 'dbo'
+    -- Drop the table if it already exists
+    IF OBJECT_ID('dbo.Orders', 'U') IS NOT NULL
+    DROP TABLE dbo.Orders
+    GO
+    -- Create the table in the specified schema
+    CREATE TABLE dbo.Orders
+    (
+        OrderId UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, -- primary key column
+        OrderType [NVARCHAR](1) NOT NULL,
+        OrderItemName [NVARCHAR](50) NOT NULL,
+        Quantity INT NOT NULL,
+        Price [NVARCHAR](50) NOT NULL,
+        ShipmentAddress [NVARCHAR](100) NOT NULL,
+        ZipCode [NVARCHAR](10) NOT NULL
+        -- specify more columns here
+    );
+    GO
+    -- Create a new stored procedure called 'SpInsertOrder' in schema 'dbo'
+    -- Drop the stored procedure if it already exists
+    IF EXISTS (
+    SELECT *
+        FROM INFORMATION_SCHEMA.ROUTINES
+    WHERE SPECIFIC_SCHEMA = N'dbo'
+        AND SPECIFIC_NAME = N'SpInsertOrder'
+    )
+    DROP PROCEDURE dbo.SpInsertOrder
+    GO
+    -- Create the stored procedure in the specified schema
+    CREATE PROCEDURE dbo.SpInsertOrder
+        @id UNIQUEIDENTIFIER,
+        @type NVARCHAR(1),
+        @item NVARCHAR(50),
+        @quantity INT,
+        @price NVARCHAR(50),
+        @shipaddress NVARCHAR(100),
+        @zipcode NVARCHAR(10)
+    AS
+        INSERT INTO Orders
+        ( -- columns to insert data into
+         [OrderId], [OrderType], [OrderItemName], [Quantity], [Price], [ShipmentAddress], [ZipCode]
+        )
+        VALUES
+        ( -- first row: values for the columns in the list above
+         @id, @type, @item, @quantity, @price, @shipaddress, @zipcode
+        )
+        GO
+    GO
+    -- Enable Database for CDC template
+    EXEC sys.sp_cdc_enable_db
+    GO
+    -- Enable a Table 
+    EXEC sys.sp_cdc_enable_table
+    @source_schema = N'dbo',
+    @source_name = N'Orders',
+    @role_name = NULL,
+    @supports_net_changes = 1
+    GO
