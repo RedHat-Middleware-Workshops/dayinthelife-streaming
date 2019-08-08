@@ -21,7 +21,7 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.Orders
 (
-    OrderId UNIQUEIDENTIFIER NOT NULL, -- primary key column
+    OrderId UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, -- primary key column
     OrderType [NVARCHAR](1) NOT NULL,
     OrderItemName [NVARCHAR](50) NOT NULL,
     Quantity INT NOT NULL,
@@ -61,12 +61,13 @@ AS
     )
     GO
 GO
--- example to execute the stored procedure we just created
---EXECUTE dbo.SpInsertOrder @id = 'af504b24-c8cc-75bc-dc3d-ae2118a2d3ed', @type = 'E', @item = 'Bubble Gum', @quantity = 100, @price = '3.99', @shipaddress = '123  evergreen', @zipcode = '12345'
---GO
--- Query the total count of employees
-SELECT COUNT(*) as OrdersCount FROM dbo.Orders;
--- Query all employee information
-SELECT e.OrderId, e.OrderType, e.OrderItemName, e.Quantity, e.Price, e.ShipmentAddress, e.ZipCode 
-FROM dbo.Orders as e
+-- Enable Database for CDC template
+EXEC sys.sp_cdc_enable_db
+GO
+-- Enable a Table 
+EXEC sys.sp_cdc_enable_table
+@source_schema = N'dbo',
+@source_name = N'Orders',
+@role_name = NULL,
+@supports_net_changes = 1
 GO
