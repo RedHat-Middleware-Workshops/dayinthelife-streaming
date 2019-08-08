@@ -4,9 +4,9 @@ metadata:
   name: amq-online
   namespace: '{{ operators_project }}'
 spec:
-  channel: alpha
+  channel: stable
   installPlanApproval: Automatic
-  name: enmasse
+  name: amq-online
   source: messaging-online
   sourceNamespace: '{{ operators_project }}'
-  startingCSV: 'enmasse.{{ online_version }}'
+  startingCSV: 'amqonline.{{ online_version }}'

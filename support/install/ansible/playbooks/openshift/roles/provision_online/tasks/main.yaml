@@ -13,11 +13,6 @@
     name: workshop-operators
     namespace: '{{ operators_project }}'
 
-- name: Evaluate Online OperatorSource
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'online-opsrc.yaml.j2') }}"
-
 - name: Evaluate Online CatalogSourceConfig
   k8s:
     state: present
@@ -32,9 +27,9 @@
   k8s_facts:
       api_version: operators.coreos.com/v1alpha1
       kind: ClusterServiceVersion
-      name: 'enmasse.{{ online_version }}'
+      name: 'amqonline.{{ online_version }}'
       namespace: '{{ operators_project }}'
   register: csv_status
-  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
+  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status is defined) and (csv_status.resources[0].status.phase == 'Succeeded')
   retries: 10
   delay: 30

@@ -30,7 +30,7 @@
       name: 'amqstreams.v{{ streams_version }}'
       namespace: '{{ operators_project }}'
   register: csv_status
-  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
+  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status is defined) and (csv_status.resources[0].status.phase == 'Succeeded')
   retries: 10
   delay: 30
 

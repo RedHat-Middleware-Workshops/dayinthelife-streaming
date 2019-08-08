@@ -5,14 +5,14 @@
     - include_role:
         name: provision_streams
       vars:
-        streams_version: "1.1.0"
+        streams_version: "1.2.0"
         kafka_earth_namespace: "shared-kafka-earth"
         operators_project: "workshop-operators"
       tags: provision_streams
     - include_role:
         name: provision_online
       vars:
-        online_version: "0.29.0"
+        online_version: "1.2.0"
         operators_project: "workshop-operators"
     - include_role:
         name: provision_shared
