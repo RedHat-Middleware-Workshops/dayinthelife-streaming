@@ -1,0 +1,23 @@
+<p>The table below lists the latest events recorded in the Shopify system. These will update in realtime when the status indiator in the bottom right reports being "Connected" to the WebSocket server.</p>
+
+<div id="status-panel">
+  <span id="status-text">Status: Connected</span>
+  <span id="status-icon" class="red">✖</span>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Datetime</th>
+      <th width="20%">Department</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody id="notifications-table-body">
+  </tbody>
+</table>
+
+<script src="/static/event-stream.js"></script>
+<script>
+  window.connectToEventStream('{{WS_CONNECTION_STRING}}')
+</script>
