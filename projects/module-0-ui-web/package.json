@@ -8,7 +8,7 @@
     "lint": "standard --fix server/**/*.js frontend/**/*.js",
     "build": "browserify -e frontend/event-stream.js -o static/event-stream.js",
     "start": "node server/index.js",
-    "start-dev": "WS_CONNECTION_STRING=ws://localhost:8080 concurrently 'watchify frontend/event-stream.js -o static/event-stream.js' 'nodemon server/index.js | pino-pretty'"
+    "start-dev": "concurrently 'watchify frontend/event-stream.js -o static/event-stream.js' 'nodemon server/index.js | pino-pretty'"
   },
   "keywords": [],
   "author": "Evan Shortiss",
@@ -19,7 +19,8 @@
     "express-handlebars": "~3.1.0",
     "handlebars": "~4.1.2",
     "kube-probe": "~0.3.2",
-    "pino": "~5.13.0"
+    "pino": "~5.13.0",
+    "ws": "~7.1.2"
   },
   "devDependencies": {
     "@types/express": "~4.17.0",
@@ -30,7 +31,6 @@
     "pino-pretty": "~3.2.0",
     "sockette": "~2.0.6",
     "standard": "~13.0.2",
-    "watchify": "~3.11.1",
-    "ws": "~7.1.1"
+    "watchify": "~3.11.1"
   }
 }

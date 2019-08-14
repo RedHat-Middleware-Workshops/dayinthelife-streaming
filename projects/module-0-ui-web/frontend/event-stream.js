@@ -68,6 +68,12 @@ function processMessage (e) {
  * The script will pass the connectionString that's rendered by the backend.
  */
 window.connectToEventStream = function (connectionString) {
+  if (!connectionString) {
+    const proto = window.location.protocol === 'http:' ? 'ws:' : 'wss:'
+
+    connectionString = `${proto}//${window.location.host}`
+  }
+
   /* eslint-disable no-new */
   new Sockette(connectionString, {
     // Will try reconnect for a minute before giving up (every 6 seconds with 10 attempts)

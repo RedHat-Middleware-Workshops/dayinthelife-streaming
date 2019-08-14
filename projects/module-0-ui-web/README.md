@@ -28,6 +28,14 @@ frontend. The data format is as a JSON Object with the following structure:
 }
 ```
 
+### Variables
+
+* PORT (default: 8080) - HTTP traffic port
+* WSS_INCOMING_PAYLOAD_PORT (default: 8181) - Port that a WebSocket server listens on for payloads to send connected clients.
+* WS_MOCK_DATA_ENABLED (default: false) - Determines if mock data should be sent to clients. 
+* WS_CONNECTION_STRING (default: undefined) - Use this to have the frontend connect to a different socket server
+* LOG_LEVEL (default: info) - Logging level of trace, debug, info, etc.
+
 ### Deployment as Container
 
 Build using the following command from this directory. Replace `$TAG_NAME` with

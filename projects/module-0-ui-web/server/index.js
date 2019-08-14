@@ -6,17 +6,17 @@ const express = require('express')
 const env = require('env-var')
 const probe = require('kube-probe')
 const { join } = require('path')
-const wss = require('./ws')
+const wssOutgoing = require('./ws-outgoing')
+const wssIncoming = require('./ws-incoming')
 const log = require('./log')
 
 const PORT = env.get('PORT', 8080).asPortNumber()
-const WS_CONNECTION_STRING = env.get('WS_CONNECTION_STRING').required().asUrlString()
+const WS_CONNECTION_STRING = env.get('WS_CONNECTION_STRING').asUrlString()
 
 // Create an express app, attach it to a http server,
 // and bind a websocket server to the same socket
 const app = express()
 const server = http.createServer(app)
-wss(server)
 
 // Kubernetes liveness readiness probes
 probe(app)
@@ -39,4 +39,7 @@ server.listen(PORT, (err) => {
   }
 
   log.info(`application started on port ${PORT}`)
+
+  wssIncoming.configureIncomingPayloadWebSocketServer()
+  wssOutgoing.configureClientWebSocketServer(server)
 })
