@@ -1,3 +1,6 @@
+-- 
+-- oc create configmap earth-data-sql --from-file=../../module-1/earth-data.sq
+--
 -- Create a new database called 'InternationalDB'
 -- Connect to the 'master' database to run this snippet
 USE master

@@ -1,0 +1,15 @@
+{
+  "name": "orders-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "mssql-server-linux.shared-db-earth.svc",
+    "database.port": "1433",
+    "database.user": "sa",
+    "database.password": "Password!",
+    "database.dbname": "InternationalDB",
+    "database.server.name": "earth",
+    "table.whitelist": "dbo.Orders",
+    "database.history.kafka.bootstrap.servers": "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092",
+    "database.history.kafka.topic": "dbhistory.earth"
+  }
+}
