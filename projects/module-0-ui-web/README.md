@@ -52,7 +52,7 @@ docker run -d -p 8080:8080 -p 8181:8181 $TAG_NAME:latest
 ```
 
 You can connect to ws://localhost:8181 to send payloads that will be proxied
-to clients viewing the webpage served on http://localhost:8080
+to clients viewing the webpage served on http://localhost:8080.
 
 Or you can push it to a registry and deploy on a container platform, e.g OpenShift.
 
