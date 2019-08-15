@@ -45,13 +45,14 @@ your chosen tag name.
 docker build . -t $TAG_NAME
 ```
 
-You can run the image via Docker like so. The `WS_CONNECTION_STRING` must be
-set (an example is provided):
+You can run the image via Docker with this command:
 
 ```
-SOCKET_SERVER=wss://localhost:9090
-docker run -d -p 8080:8080 -e WS_CONNECTION_STRING=$SOCKET_SERVER $TAG_NAME:latest
+docker run -d -p 8080:8080 -p 8181:8181 $TAG_NAME:latest
 ```
+
+You can connect to ws://localhost:8181 to send payloads that will be proxied
+to clients viewing the webpage served on http://localhost:8080
 
 Or you can push it to a registry and deploy on a container platform, e.g OpenShift.
 
