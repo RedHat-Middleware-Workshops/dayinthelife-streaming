@@ -1,0 +1,55 @@
+oc project user1
+
+// workaround
+oc apply -f ~/Downloads/6872572_rhpds-secret.yaml -n user1
+oc secrets link default 6872572-rhpds-pull-secret --for=pull
+
+oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-connect.yaml -n user1
+
+// wait for build to finish
+
+oc start-build debezium-connect --from-archive http://central.maven.org/maven2/io/debezium/debezium-connector-sqlserver/0.10.0.Beta2/debezium-connector-sqlserver-0.10.0.Beta2-plugin.tar.gz --follow --no-cache -n user1
+
+// only if you want outside access 
+oc expose service debezium-connect-api --name kafka-connect -n user1
+
+// change second url according if using exterrnal access
+
+curl https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/debezium-config.json | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/connectors -d @-
+
+oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n user1
+
+// wait for cluster to start
+
+oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-mirror-maker.yaml -n user1
+
+open http://www-shared-app-earth.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com
+
+load file from: https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv
+
+// check earth topic created
+
+// check moon topic created
+
+oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-bridge.yaml -n user1
+
+oc expose service http-bridge-service --name kafka-bridge -n user1
+
+// check bridge is deployed
+
+curl -X POST http://kafka-bridge-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user1-group -H 'content-type: application/vnd.kafka.v2+json' -d '{
+    "name": "user1",
+    "format": "json",
+    "auto.offset.reset": "earliest",
+    "enable.auto.commit": "false",
+    "fetch.min.bytes": "1024",
+    "consumer.request.timeout.ms": "30000"
+  }'
+
+// copy the instanceID you will need it
+
+curl -X POST http://kafka-bridge-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user1-group/instances/user1/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["user1.earth.dbo.Orders"]}'
+
+// consume records
+
+curl http://kafka-bridge-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user1-group/instances/user1/records -H 'accept: application/vnd.kafka.json.v2+json'
