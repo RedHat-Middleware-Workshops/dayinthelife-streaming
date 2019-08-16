@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaMirrorMaker
 metadata:
-  name: mirror-maker
+  name: earth-moon
 spec:
   replicas: 1
   consumer:

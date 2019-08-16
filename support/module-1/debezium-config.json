@@ -7,9 +7,9 @@
     "database.user": "sa",
     "database.password": "Password!",
     "database.dbname": "InternationalDB",
-    "database.server.name": "earth",
+    "database.server.name": "user1.earth",
     "table.whitelist": "dbo.Orders",
     "database.history.kafka.bootstrap.servers": "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092",
-    "database.history.kafka.topic": "dbhistory.earth"
+    "database.history.kafka.topic": "user1.dbhistory.earth"
   }
 }
