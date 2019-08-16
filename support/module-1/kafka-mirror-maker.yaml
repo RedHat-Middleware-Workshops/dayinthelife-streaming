@@ -1,0 +1,12 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaMirrorMaker
+metadata:
+  name: mirror-maker
+spec:
+  replicas: 1
+  consumer:
+    bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+    groupId: mirror-maker-user1
+  producer:
+    bootstrapServers: 'moon-kafka-bootstrap.user1.svc:9092'
+  whitelist: .*
