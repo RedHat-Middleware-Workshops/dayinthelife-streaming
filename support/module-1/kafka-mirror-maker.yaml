@@ -9,4 +9,4 @@ spec:
     groupId: mirror-maker-user1
   producer:
     bootstrapServers: 'moon-kafka-bootstrap.user1.svc:9092'
-  whitelist: .*
+  whitelist: user1.dbhistory.earth|user1.earth.dbo.Orders
