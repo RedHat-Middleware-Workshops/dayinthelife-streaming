@@ -6,3 +6,8 @@ spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
   replicas: 1
   insecureSourceRepository: true
+  config:
+    group.id: userX-connect-cluster
+    offset.storage.topic: userX-connect-cluster-offsets
+    config.storage.topic: userX-connect-cluster-configs
+    status.storage.topic: userX-connect-cluster-status
