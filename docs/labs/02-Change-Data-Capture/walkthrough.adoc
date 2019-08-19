@@ -1,55 +1,121 @@
-oc project user1
+// change to user namespace
+oc project user2
 
-// workaround
-oc apply -f ~/Downloads/6872572_rhpds-secret.yaml -n user1
-oc secrets link default 6872572-rhpds-pull-secret --for=pull
+// workaround for IST (use your own)
+oc apply -f ~/Downloads/6872572_rhpds-secret.yaml -n user2
+oc secrets link default 6872572-rhpds-pull-secret --for=pull -n user2
 
-oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-connect.yaml -n user1
+// create kafka connect cluster
+cat << EOF | oc apply -n user2 -f -
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaConnectS2I
+metadata:
+  name: debezium
+spec:
+  bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+  replicas: 1
+  insecureSourceRepository: true
+  config:
+    group.id: user2-connect-cluster
+    offset.storage.topic: user2-connect-cluster-offsets
+    config.storage.topic: user2-connect-cluster-configs
+    status.storage.topic: user2-connect-cluster-status
+EOF
 
 // wait for build to finish
 
-oc start-build debezium-connect --from-archive http://central.maven.org/maven2/io/debezium/debezium-connector-sqlserver/0.10.0.Beta2/debezium-connector-sqlserver-0.10.0.Beta2-plugin.tar.gz --follow --no-cache -n user1
+// start a build with the debezium connector plugin
+oc start-build debezium-connect --from-archive http://central.maven.org/maven2/io/debezium/debezium-connector-sqlserver/0.10.0.Beta2/debezium-connector-sqlserver-0.10.0.Beta2-plugin.tar.gz --follow --no-cache -n user2
 
-// only if you want outside access 
-oc expose service debezium-connect-api --name kafka-connect -n user1
+// expose the kafka connect REST API
+oc expose service debezium-connect-api --name kafka-connect -n user2
 
-// change second url according if using exterrnal access
+// config the orders connector
+cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-user2.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/connectors -d @-
+{
+  "name": "orders-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "mssql-server-linux.shared-db-earth.svc",
+    "database.port": "1433",
+    "database.user": "sa",
+    "database.password": "Password!",
+    "database.dbname": "InternationalDB",
+    "database.server.name": "user2.earth",
+    "table.whitelist": "dbo.Orders",
+    "database.history.kafka.bootstrap.servers": "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092",
+    "database.history.kafka.topic": "user2.earth.dbhistory"
+  }
+}
+EOF
 
-curl https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/debezium-config.json | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/connectors -d @-
-
-oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n user1
+// deploy user moon kafka cluster
+oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n user2
 
 // wait for cluster to start
 
-oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-mirror-maker.yaml -n user1
+// deploy mirror maker cluster
+cat << EOF | oc apply -n user2 -f -
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaMirrorMaker
+metadata:
+  name: earth-moon
+spec:
+  replicas: 1
+  consumer:
+    bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+    groupId: mirror-maker-user2
+    config:
+      auto.offset.reset: earliest
+  producer:
+    bootstrapServers: 'moon-kafka-bootstrap.user2.svc:9092'
+  whitelist: user2.earth.*
+EOF
 
+// open legacy app
 open http://www-shared-app-earth.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com
 
+// load the orders 
 load file from: https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv
 
 // check earth topic created
 
 // check moon topic created
 
-oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-bridge.yaml -n user1
+// create the http bridge
+cat << EOF | oc apply -n user2 -f -
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaBridge
+metadata:
+  name: http
+spec:
+  bootstrapServers: 'moon-kafka-bootstrap.user2.svc:9092'
+  http:
+    port: 8080
+  replicas: 1
+EOF
 
-oc expose service http-bridge-service --name kafka-bridge -n user1
+// expose the bridge HTTP REST API
+oc expose service http-bridge-service --name kafka-bridge -n user2
 
 // check bridge is deployed
 
-curl -X POST http://kafka-bridge-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user1-group -H 'content-type: application/vnd.kafka.v2+json' -d '{
-    "name": "user1",
+// create consumer
+cat << EOF | curl -X POST http://kafka-bridge-user2.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user2-http-group -H 'content-type: application/vnd.kafka.v2+json' -d @- 
+{
+    "name": "user2",
     "format": "json",
     "auto.offset.reset": "earliest",
     "enable.auto.commit": "false",
     "fetch.min.bytes": "1024",
     "consumer.request.timeout.ms": "30000"
-  }'
+}
+EOF
 
 // copy the instanceID you will need it
 
-curl -X POST http://kafka-bridge-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user1-group/instances/user1/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["user1.earth.dbo.Orders"]}'
+curl -X POST http://kafka-bridge-user2.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user2-http-group/instances/user2/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["user2.earth.dbo.Orders"]}'
 
 // consume records
 
-curl http://kafka-bridge-user1.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user1-group/instances/user1/records -H 'accept: application/vnd.kafka.json.v2+json'
+curl http://kafka-bridge-user2.apps.cluster-eventing-f4e8.eventing-f4e8.openshiftworkshop.com/consumers/user2-http-group/instances/user2/records -H 'accept: application/vnd.kafka.json.v2+json'
