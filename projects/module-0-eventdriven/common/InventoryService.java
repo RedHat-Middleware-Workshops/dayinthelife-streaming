@@ -1,6 +1,7 @@
-/** 
+/* 
 kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 InventoryService.java
-
+kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 InventoryService.java --dev
+kamel run --name=inventory-service InventoryService.java
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
@@ -8,10 +9,11 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.component.jackson.JacksonDataFormat;
+//import org.apache.camel.component.websocket.WebsocketComponent;
 
 public class InventoryService extends RouteBuilder {
 
-    String BROKER_URL = "tcp://broker-amq-tcp.modulezero.svc:61616";
+   // String BROKER_URL = "tcp://broker-amq-tcp.user1.svc:61616";
     
     
     @Override
@@ -31,6 +33,13 @@ public class InventoryService extends RouteBuilder {
                 .to("direct:notify");
 
         getContext().addComponent("activemq", ActiveMQComponent.activeMQComponent(BROKER_URL));
+        
+        /** WebsocketComponent websocket = new WebsocketComponent();
+        websocket.setHost("dilii-ui.pushed.svc");
+        websocket.setMinThreads(4);
+        websocket.setMaxThreads(5);
+        getContext().addComponent("websocket", websocket);**/
+        
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
         jacksonDataFormat.setUnmarshalType(Order.class);
         
@@ -38,12 +47,13 @@ public class InventoryService extends RouteBuilder {
         from("direct:notify")
             .marshal(jacksonDataFormat)
             .log("Inventory Notified ${body}")
+            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
             ;
-
+/*
         from("activemq:topic:incomingorders?username=amq&password=password")
             .marshal(jacksonDataFormat)
             .log("Inventory Notified ${body}")
-            ;
+            ;*/
     }
 
 
@@ -58,6 +68,8 @@ public class InventoryService extends RouteBuilder {
         private Integer price;
         private String address;
         private Integer zipCode;
+
+        
 
         public void setOrderId(Integer orderId){
             this.orderId=orderId;

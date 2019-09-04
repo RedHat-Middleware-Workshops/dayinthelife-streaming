@@ -11,7 +11,7 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 
 public class ShippingService extends RouteBuilder {
 
-    String BROKER_URL = "tcp://broker-amq-tcp.modulezero.svc:61616";
+    //String BROKER_URL = "tcp://broker-amq-tcp.modulezero.svc:61616";
     
     
     @Override
@@ -30,7 +30,7 @@ public class ShippingService extends RouteBuilder {
             .post("/notify/order")
                 .to("direct:notify");
 
-        getContext().addComponent("activemq", ActiveMQComponent.activeMQComponent(BROKER_URL));
+       // getContext().addComponent("activemq", ActiveMQComponent.activeMQComponent(BROKER_URL));
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
         jacksonDataFormat.setUnmarshalType(Order.class);
         
@@ -38,12 +38,15 @@ public class ShippingService extends RouteBuilder {
         from("direct:notify")
             .marshal(jacksonDataFormat)
             .log("Shipping Notified ${body}")
+            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
             ;
-
+    /** 
         from("activemq:topic:incomingorders?username=amq&password=password")
             .marshal(jacksonDataFormat)
             .log("Shipping Notified ${body}")
+            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
             ;
+            */
     }
 
 
