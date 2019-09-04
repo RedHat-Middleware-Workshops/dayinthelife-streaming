@@ -12,7 +12,7 @@
     - include_role:
         name: provision_online
       vars:
-        online_version: "1.2.0"
+        online_version: "1.2.1"
         operators_project: "workshop-operators"
     - include_role:
         name: provision_shared
