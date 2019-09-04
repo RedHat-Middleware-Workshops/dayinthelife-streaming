@@ -11,7 +11,7 @@ master
 ansible_user=ec2-user
 
 [master]
-master1.GUID.internal
+master1.dil-81f0.internal
 
 [workshop]
 localhost ansible_connection=local
@@ -20,9 +20,9 @@ localhost ansible_connection=local
 eval_openshift_master_config_path=/etc/origin/master/master-config.yaml
 
 [workshop:vars]
-ocp_domain=GUID.openshiftworkshop.com
-ocp_apps_domain=apps.GUID.openshiftworkshop.com
-usersno=1
+ocp_domain=dil-81f0.openshiftworkshop.com
+ocp_apps_domain=apps.dil-81f0.openshiftworkshop.com
+usersno=15
 sso_project=sso
 gogs_project=gogs
 microcks_project=microcks
