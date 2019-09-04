@@ -39,6 +39,11 @@
   retries: 10
   delay: 30
 
+- name: Add the Security Constraint Context
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'scc-185.yaml.j2') }}"
+
 - name: Set temp dir
   set_fact:
     amq_online_tmp: "/tmp/amq-online"
@@ -61,5 +66,5 @@
     namespace: '{{ operators_project }}'
     src: '{{ item }}'
   with_fileglob:
-    - '{{ amq_online_tmp }}/install/components/example-authservices/standard-authservice.yaml'
     - '{{ amq_online_tmp }}/install/components/example-plans/*'
+    - '{{ amq_online_tmp }}/install/components/example-authservices/standard-authservice.yaml'
