@@ -12,7 +12,7 @@ Installing with Ansible requires creating an inventory file with the variables f
 
 The recommended way to install the workshop is running the ansible playbook from the OpenShift4 workshop cluster bastion machine. This is the fastest way to run the installer as it's already running in the cluster closest to the master node.
 
-1. Provision the `OpenShift 4 Workshop` image in RHPDS.  Remember to take note of the *GUID* with your cluster environment variable.
+1. Provision the *OpenShift 4 Workshop* image in RHPDS.  Remember to take note of the *GUID* with your cluster environment variable.
 
 1. Via the CLI, login to your newly provisioned OCP cluster using the `oc` command.
 
@@ -29,9 +29,9 @@ The recommended way to install the workshop is running the ansible playbook from
 
 1. Run the Ansible playbook.
 
-        ```bash
-        ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml
-        ```
+    ```bash
+    ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml
+    ```
 
 <!-- ## Pre-requisites
 
