@@ -38,3 +38,33 @@
     and (csv_status.resources[0].status.phase == 'Succeeded')
   retries: 10
   delay: 30
+
+- name: Add the Security Constraint Context
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'scc-185.yaml.j2') }}"
+
+- name: Set temp dir
+  set_fact:
+    amq_online_tmp: "/tmp/amq-online"
+
+- name: Ensure example directory exists
+  file:
+    path: '{{ amq_online_tmp }}'
+    state: directory
+
+- name: Download example files
+  unarchive:
+      src: https://access.redhat.com/node/4306051/423/0/14663711
+      dest: '{{ amq_online_tmp }}'
+      creates: '{{ amq_online_tmp }}/install'
+      remote_src: yes
+
+- name: Create Online Plan Examples
+  k8s:
+    state: present
+    namespace: '{{ operators_project }}'
+    src: '{{ item }}'
+  with_fileglob:
+    - '{{ amq_online_tmp }}/install/components/example-plans/*'
+    - '{{ amq_online_tmp }}/install/components/example-authservices/standard-authservice.yaml'
