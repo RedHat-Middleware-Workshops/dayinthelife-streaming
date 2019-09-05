@@ -12,7 +12,9 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 
 public class SalesService extends RouteBuilder {
 
-    String BROKER_URL = "amqp://messaging-7rm3r5j1m3.workshop-operators.svc:5672?amqp.saslMechanisms=PLAIN";
+    String BROKER_URL = "amqp://messaging-nt0j2ufbi1.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
+    String USERNAME = "user";
+    String PWD = "enmasse";
     
     
     @Override
@@ -31,7 +33,9 @@ public class SalesService extends RouteBuilder {
             .post("/notify/order")
                 .to("direct:notify");
 
-        getContext().addComponent("activemq", AMQPComponent.amqpComponent(BROKER_URL));
+        AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
+        getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
+                
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
         jacksonDataFormat.setUnmarshalType(Order.class);
         
@@ -39,13 +43,13 @@ public class SalesService extends RouteBuilder {
         from("direct:notify")
             .marshal(jacksonDataFormat)
             .log("Sales Notified ${body}")
-            //.to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
+            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
             ;
 
-        from("amqp:topic://incomingorders?subscriptionDurable=false")
+        from("amqp:topic:incomingorders?subscriptionDurable=false")
             .marshal(jacksonDataFormat)
             .log("Sales Notified ${body}")
-            //.to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
+            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
             ;
         
     }
