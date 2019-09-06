@@ -22,33 +22,36 @@ public class OrderService extends RouteBuilder {
             .port("8080")
             .bindingMode(RestBindingMode.json);
 
-        rest()
+            rest()
             .post("/place")
                 .to("direct:placeorder");
 
-        //getContext().addComponent("activemq", ActiveMQComponent.activeMQComponent(BROKER_URL));
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
         jacksonDataFormat.setUnmarshalType(Order.class);
+        
         
 
         from("direct:placeorder")
             .log("placeorder--> ${body}")
             .marshal(jacksonDataFormat)
+            //.unmarshal(jacksonDataFormat)
             .setHeader("myinputBody",simple("${body}"))
             .log("inputBody 1 --> ${headers.myinputBody}")
             .removeHeader("CamelHttp*").setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
             .setBody(simple("${headers.myinputBody}"))
+            
             .multicast().parallelProcessing()
-                .to("http4://inventory-service/notify/order?bridgeEndpoint=true",
-                    "http4://sales-service/notify/order?bridgeEndpoint=true",
-                    "http4://shipping-service/notify/order?bridgeEndpoint=true")
+            .to("http4://inventory-service/notify/order?bridgeEndpoint=true",
+                "http4://sales-service/notify/order?bridgeEndpoint=true",
+                "http4://shipping-service/notify/order?bridgeEndpoint=true")
             .end()
-            .marshal(jacksonDataFormat)
-            .removeHeader("CamelHttp*")
+            .removeHeaders("*")
+            .setBody().constant("DONE")
             .log("return from parallelProcessing ${body}")
-            .setBody().simple("DONE")
-            .log("-----DONE")
-            ;
+            .log("-----DONE ${headers}")
+                
+        ;
+        
 
         
     }
