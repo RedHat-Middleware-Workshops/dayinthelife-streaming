@@ -36,7 +36,7 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 . Open your terminal window.
 . Change to your user namespace.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 oc project {user-username}
 ----
@@ -47,7 +47,7 @@ oc secrets link default 6872572-rhpds-pull-secret --for=pull -n {user-username}
 
 . Create a `KafkaConnectS2I` Kubernetes Custom Resource to define your connector.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
@@ -70,21 +70,21 @@ EOF
 
 . Start a new build but this time point it to download the debezium connector plugin for SQL Server.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 oc start-build debezium-connect --from-archive http://central.maven.org/maven2/io/debezium/debezium-connector-sqlserver/0.10.0.Beta2/debezium-connector-sqlserver-0.10.0.Beta2-plugin.tar.gz --follow --no-cache -n {user-username}
 ----
 
 . Expose the Kafka Connect REST API.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 oc expose service debezium-connect-api --name kafka-connect -n {user-username}
 ----
 
 . Create a new connector config to react to changes in the `Orders` table called `orders-connector`.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
 {
@@ -115,7 +115,7 @@ In this section you will learn how to start a local Kafka cluster that will repr
 
 . Deploy the startup _Moon_ AMQ streams Kafka cluster.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n {user-username}
 ----
@@ -133,7 +133,7 @@ The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicat
 
 . Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
@@ -178,7 +178,7 @@ However, there are scenarios where it is not possible to use the clients, or ind
 
 . Create the http `KafkaBridge` Custom Resource.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1alpha1
@@ -195,7 +195,7 @@ EOF
 
 . Expose the bridge HTTP REST API service as a route for external access.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 oc expose service http-bridge-service --name kafka-bridge -n {user-username}
 ----
@@ -204,7 +204,7 @@ oc expose service http-bridge-service --name kafka-bridge -n {user-username}
 
 . Create consumer to test the connection to your topic.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group -H 'content-type: application/vnd.kafka.v2+json' -d @- 
 {
@@ -222,14 +222,14 @@ EOF
 
 . Use the previuos instanceID to request subscription to the topics.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["{user-username}.earth.dbo.Orders"]}'
 ----
 
 . Consume some records.
 +
-[source,bash,subs="attributes"]
+[source,bash,subs="attributes+"]
 ----
 curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/records -H 'accept: application/vnd.kafka.json.v2+json'
 ----
