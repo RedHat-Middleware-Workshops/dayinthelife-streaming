@@ -1,10 +1,9 @@
 /* 
 kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 InventoryService.java
 kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 InventoryService.java --dev
-kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  InventoryService.java
+kamel run --name=inventory-service -d camel-jackson -d camel-ahc-ws -d camel-amqp  InventoryService.java
 */
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.component.amqp.AMQPComponent;
 import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -19,23 +18,9 @@ public class InventoryService extends RouteBuilder {
     String USERNAME = "user";
     String PWD = "enmasse";
     
-    
     @Override
     public void configure() throws Exception {
         
-        restConfiguration()
-            .component("undertow")
-            .apiContextPath("/api-doc")
-            .apiProperty("cors", "true")
-            .apiProperty("api.title", "Flight Center")
-            .apiProperty("api.version", "1.0")
-            .port("8080")
-            .bindingMode(RestBindingMode.json);
-
-        rest()
-            .post("/notify/order")
-                .to("direct:notify");
-
         AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
         getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
          
@@ -44,12 +29,7 @@ public class InventoryService extends RouteBuilder {
         JacksonDataFormat invDataFormat = new JacksonDataFormat();
         invDataFormat.setUnmarshalType(InventoryNotification.class);
 
-        from("direct:notify")
-            .marshal(jacksonDataFormat)
-            .log("Inventory Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo")
-            ;
-
+        
         from("amqp:topic:incomingorders?subscriptionDurable=false")
             .unmarshal(jacksonDataFormat)
             .bean(InventoryNotification.class, "getInventoryNotification(${body['orderId']},${body['itemId']},${body['quantity']} )")

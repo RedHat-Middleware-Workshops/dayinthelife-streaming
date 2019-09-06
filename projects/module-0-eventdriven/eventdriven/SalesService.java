@@ -1,7 +1,7 @@
 /** 
 kamel run --name=sales-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 SalesService.java
 kamel run --name=sales-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 SalesService.java --dev
-kamel run --name=sales-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp SalesService.java
+kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
@@ -24,18 +24,6 @@ public class SalesService extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         
-        restConfiguration()
-            .component("undertow")
-            .apiContextPath("/api-doc")
-            .apiProperty("cors", "true")
-            .apiProperty("api.title", "Flight Center")
-            .apiProperty("api.version", "1.0")
-            .port("8080")
-            .bindingMode(RestBindingMode.json);
-
-        rest()
-            .post("/notify/order")
-                .to("direct:notify");
 
         AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
         getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
@@ -45,11 +33,6 @@ public class SalesService extends RouteBuilder {
         JacksonDataFormat salesDataFormat = new JacksonDataFormat();
         salesDataFormat.setUnmarshalType(SalesNotification.class);
 
-        from("direct:notify")
-            .marshal(jacksonDataFormat)
-            .log("Sales Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo")
-            ;
 
         from("amqp:topic:incomingorders?subscriptionDurable=false")
             .unmarshal(jacksonDataFormat)

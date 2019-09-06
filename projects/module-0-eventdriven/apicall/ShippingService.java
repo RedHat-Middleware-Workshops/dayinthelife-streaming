@@ -1,14 +1,12 @@
 /** 
 kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 ShippingService.java
 kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 ShippingService.java --dev
-kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  ShippingService.java
+kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws ShippingService.java
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.apache.camel.component.amqp.AMQPComponent;
-import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,9 +14,6 @@ import java.util.Map;
 
 public class ShippingService extends RouteBuilder {
 
-    String BROKER_URL = "amqp://messaging-7rm3r5j1m3.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
-    String USERNAME = "user";
-    String PWD = "enmasse";
     
     @Override
     public void configure() throws Exception {
@@ -36,9 +31,6 @@ public class ShippingService extends RouteBuilder {
             .post("/notify/order")
                 .to("direct:notify");
 
-        AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
-        getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
-        
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
         jacksonDataFormat.setUnmarshalType(Map.class);
         JacksonDataFormat shippingDataFormat = new JacksonDataFormat();
@@ -46,19 +38,14 @@ public class ShippingService extends RouteBuilder {
         
 
         from("direct:notify")
-            .marshal(jacksonDataFormat)
-            .log("Shipping Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo")
-            ;
-        
-        from("amqp:topic:incomingorders?subscriptionDurable=false")
-            .unmarshal(jacksonDataFormat)
+            .log("Shipping Local Notified ${body}")
             .bean(ShippingNotification.class, "getShippingNotification(${body['orderId']},${body['itemId']},${body['quantity']},${body['address']},${body['zipCode']} )")
             .marshal(shippingDataFormat)
             .convertBodyTo(String.class)
-            .log("Shipping Local Notified ${body}")
             .to("ahc-ws://dilii-ui:8181/echo")
-            ;
+        ;
+        
+       
     }
 
     private static class ShippingNotification {

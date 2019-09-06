@@ -1,17 +1,23 @@
 /** 
 kamel run --name=order-service-event -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 OrderService.java
-
+kamel run --name=order-service-event -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-amqp OrderService.java
+kamel run --name=order-service-event OrderService.java
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.camel.component.amqp.AMQPComponent;
+import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.camel.component.jackson.JacksonDataFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class OrderService extends RouteBuilder {
 
-    String BROKER_URL = "tcp://broker-amq-tcp.modulezero.svc:61616";
+    String BROKER_URL = "amqp://messaging-7rm3r5j1m3.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
+    String USERNAME = "user";
+    String PWD = "enmasse";
 
     @Override
     public void configure() throws Exception {
@@ -29,14 +35,19 @@ public class OrderService extends RouteBuilder {
             .post("/place")
                 .to("direct:placeorder");
 
-        getContext().addComponent("activemq", ActiveMQComponent.activeMQComponent(this.BROKER_URL));
+               
+        AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
+        getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
+        
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
         jacksonDataFormat.setUnmarshalType(Order.class);
         
 
         from("direct:placeorder")
             .marshal(jacksonDataFormat)
-            .log("activemq:topic:incomingorders?username=amq&password=password&exchangePattern=InOnly");
+            .convertBodyTo(String.class)
+            .log("Order to Notify ${body}")
+            .to("amqp:topic:incomingorders?exchangePattern=InOnly&subscriptionDurable=false");
 
         
     }
@@ -53,6 +64,8 @@ public class OrderService extends RouteBuilder {
         private Integer price;
         private String address;
         private Integer zipCode;
+        private String department;
+        private Date datetime;
 
         public void setOrderId(Integer orderId){
             this.orderId=orderId;
@@ -95,6 +108,18 @@ public class OrderService extends RouteBuilder {
         }
         public Integer getZipCode(){
             return this.zipCode;
+        }
+        public String getDepartment() {
+            return department;
+        }
+        public void setDepartment(String department) {
+            this.department = department;
+        }
+        public Date getDatetime() {
+            return datetime;
+        }
+        public void setDatetime(Date datetime) {
+            this.datetime = datetime;
         }
     }
     
