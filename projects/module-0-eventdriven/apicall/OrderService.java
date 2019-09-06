@@ -34,21 +34,19 @@ public class OrderService extends RouteBuilder {
         from("direct:placeorder")
             .log("placeorder--> ${body}")
             .marshal(jacksonDataFormat)
-            //.unmarshal(jacksonDataFormat)
             .setHeader("myinputBody",simple("${body}"))
             .log("inputBody 1 --> ${headers.myinputBody}")
             .removeHeader("CamelHttp*").setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
             .setBody(simple("${headers.myinputBody}"))
-            
             .multicast().parallelProcessing()
-            .to("http4://inventory-service.modulezero.apps.cluster-chedemo-7fbb.chedemo-7fbb.openshiftworkshop.com/notify/order?bridgeEndpoint=true",
-                "http4://sales-service.modulezero.apps.cluster-chedemo-7fbb.chedemo-7fbb.openshiftworkshop.com/notify/order?bridgeEndpoint=true",
-                "http4://shipping-service.modulezero.apps.cluster-chedemo-7fbb.chedemo-7fbb.openshiftworkshop.com/notify/order?bridgeEndpoint=true")
+                .to("http4://inventory-service/notify/order?bridgeEndpoint=true",
+                    "http4://sales-service/notify/order?bridgeEndpoint=true",
+                    "http4://shipping-service/notify/order?bridgeEndpoint=true")
             .end()
-            //.marshal(jacksonDataFormat)
+            .marshal(jacksonDataFormat)
             .removeHeader("CamelHttp*")
-            
             .log("return from parallelProcessing ${body}")
+            .setBody().simple("DONE")
             .log("-----DONE")
             ;
 
@@ -67,7 +65,21 @@ public class OrderService extends RouteBuilder {
         private Integer price;
         private String address;
         private Integer zipCode;
+        private String datetime;
+        private String department;
 
+        public void setDepartment(String department){
+            this.department = department;
+        }
+        public String getDepartment(){
+            return "Inventory";
+        }
+        public void setDatetime(String datetime){
+            this.datetime = datetime;
+        }
+        public String getDatetime(){
+            return "2019-08-08 22:19:99";
+        }
         public void setOrderId(Integer orderId){
             this.orderId=orderId;
         }
