@@ -8,11 +8,15 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.component.amqp.AMQPComponent;
+import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.camel.component.jackson.JacksonDataFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 public class SalesService extends RouteBuilder {
 
-    String BROKER_URL = "amqp://messaging-nt0j2ufbi1.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
+    String BROKER_URL = "amqp://messaging-7rm3r5j1m3.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
     String USERNAME = "user";
     String PWD = "enmasse";
     
@@ -37,77 +41,69 @@ public class SalesService extends RouteBuilder {
         getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
                 
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
-        jacksonDataFormat.setUnmarshalType(Order.class);
-        
+        jacksonDataFormat.setUnmarshalType(Map.class);
+        JacksonDataFormat salesDataFormat = new JacksonDataFormat();
+        salesDataFormat.setUnmarshalType(SalesNotification.class);
 
         from("direct:notify")
             .marshal(jacksonDataFormat)
             .log("Sales Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
+            .to("ahc-ws://dilii-ui:8181/echo")
             ;
 
         from("amqp:topic:incomingorders?subscriptionDurable=false")
-            .marshal(jacksonDataFormat)
+            .unmarshal(jacksonDataFormat)
+            .bean(SalesNotification.class, "getSalesNotification(${body['orderId']},${body['price']} )")
+            .marshal(salesDataFormat)
+            .convertBodyTo(String.class)
             .log("Sales Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
+            .to("ahc-ws://dilii-ui:8181/echo")
             ;
         
     }
 
 
     
-    private static class Order implements java.io.Serializable{
-        private static final long serialVersionUID = 1L;
-        
+    private static class SalesNotification {
         private Integer orderId;
-        private Integer itemId;
-        private String orderItemName;
-        private Integer quantity;
         private Integer price;
-        private String address;
-        private Integer zipCode;
+        private String department;
+        private Date datetime;
+
+        public static SalesNotification getSalesNotification(Integer orderId, Integer price ){
+            SalesNotification salesNotification  = new SalesNotification();
+            salesNotification.setOrderId(orderId);
+            salesNotification.setPrice(price);
+            salesNotification.setDepartment("sales");
+            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            salesNotification.setDatetime(new Date(System.currentTimeMillis()));
+            return salesNotification;
+        }
 
         public void setOrderId(Integer orderId){
             this.orderId=orderId;
         }
-        public void setItemId(Integer itemId){
-            this.itemId=itemId;
-        }
-        public void setOrderItemName(String orderItemName){
-            this.orderItemName=orderItemName;
-        }
-        public void setQuantity(Integer quantity){
-            this.quantity=quantity;
+        public Integer getOrderId(){
+            return this.orderId;
         }
         public void setPrice(Integer price){
             this.price=price;
         }
-        public void setAddress(String address){
-            this.address=address;
-        }
-        public void setZipCode(Integer zipCode){
-            this.zipCode=zipCode;
-        }
-        public Integer getOrderId(){
-            return this.orderId;
-        }
-        public Integer getItemId(){
-            return this.itemId;
-        }
-        public String getOrderItemName(){
-            return this.orderItemName;
-        }
-        public Integer getQuantity(){
-            return this.quantity;
-        }
         public Integer getPrice(){
             return this.price;
         }
-        public String getAddress(){
-            return this.address;
+        public String getDepartment() {
+            return department;
         }
-        public Integer getZipCode(){
-            return this.zipCode;
+        public void setDepartment(String department) {
+            this.department = department;
+        }
+        public Date getDatetime() {
+            return datetime;
+        }
+    
+        public void setDatetime(Date datetime) {
+            this.datetime = datetime;
         }
     }
     

@@ -1,20 +1,21 @@
 /* 
 kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 InventoryService.java
 kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 InventoryService.java --dev
-kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp -d mvn:org.apache.qpid:qpid-jms-client:0.42.0.redhat-00002 InventoryService.java
+kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  InventoryService.java
 */
-import java.util.HashMap;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.component.amqp.AMQPComponent;
 import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.camel.component.jackson.JacksonDataFormat;
-//import org.apache.camel.component.websocket.WebsocketComponent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+
 
 public class InventoryService extends RouteBuilder {
 
-    String BROKER_URL = "amqp://messaging-nt0j2ufbi1.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
+    String BROKER_URL = "amqp://messaging-7rm3r5j1m3.workshop-operators.svc"+":5672"+"?amqp.saslMechanisms=PLAIN";
     String USERNAME = "user";
     String PWD = "enmasse";
     
@@ -35,40 +36,49 @@ public class InventoryService extends RouteBuilder {
             .post("/notify/order")
                 .to("direct:notify");
 
-        AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails("amqp://messaging-7rm3r5j1m3.workshop-operators.svc:5672?amqp.saslMechanisms=PLAIN","user","enmasse",false);
+        AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
         getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
          
         JacksonDataFormat jacksonDataFormat = new JacksonDataFormat();
-        jacksonDataFormat.setUnmarshalType(Order.class);
-        
+        jacksonDataFormat.setUnmarshalType(Map.class);
+        JacksonDataFormat invDataFormat = new JacksonDataFormat();
+        invDataFormat.setUnmarshalType(InventoryNotification.class);
 
         from("direct:notify")
             .marshal(jacksonDataFormat)
             .log("Inventory Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
+            .to("ahc-ws://dilii-ui:8181/echo")
             ;
 
         from("amqp:topic:incomingorders?subscriptionDurable=false")
-            .marshal(jacksonDataFormat)
+            .unmarshal(jacksonDataFormat)
+            .bean(InventoryNotification.class, "getInventoryNotification(${body['orderId']},${body['itemId']},${body['quantity']} )")
+            .marshal(invDataFormat)
+            .convertBodyTo(String.class)
             .log("Inventory Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo?sendToAll=true")
+            .to("ahc-ws://dilii-ui:8181/echo")
             ;
     }
 
 
-    
-    private static class Order implements java.io.Serializable{
-        private static final long serialVersionUID = 1L;
-        
+    private static class InventoryNotification {
         private Integer orderId;
         private Integer itemId;
-        private String orderItemName;
         private Integer quantity;
-        private Integer price;
-        private String address;
-        private Integer zipCode;
+        private String department;
+        private Date datetime;
 
-        
+        public static InventoryNotification getInventoryNotification(Integer orderId, Integer itemId, Integer quantity ){
+            InventoryNotification invenNotification  = new InventoryNotification();
+            invenNotification.setOrderId(orderId);
+            invenNotification.setItemId(itemId);
+            invenNotification.setQuantity(quantity);
+            invenNotification.setDepartment("inventory");
+            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            invenNotification.setDatetime(new Date(System.currentTimeMillis()));
+            return invenNotification;
+        }
+
 
         public void setOrderId(Integer orderId){
             this.orderId=orderId;
@@ -76,20 +86,8 @@ public class InventoryService extends RouteBuilder {
         public void setItemId(Integer itemId){
             this.itemId=itemId;
         }
-        public void setOrderItemName(String orderItemName){
-            this.orderItemName=orderItemName;
-        }
         public void setQuantity(Integer quantity){
             this.quantity=quantity;
-        }
-        public void setPrice(Integer price){
-            this.price=price;
-        }
-        public void setAddress(String address){
-            this.address=address;
-        }
-        public void setZipCode(Integer zipCode){
-            this.zipCode=zipCode;
         }
         public Integer getOrderId(){
             return this.orderId;
@@ -97,21 +95,23 @@ public class InventoryService extends RouteBuilder {
         public Integer getItemId(){
             return this.itemId;
         }
-        public String getOrderItemName(){
-            return this.orderItemName;
-        }
         public Integer getQuantity(){
             return this.quantity;
         }
-        public Integer getPrice(){
-            return this.price;
+        public String getDepartment() {
+            return department;
         }
-        public String getAddress(){
-            return this.address;
+        public void setDepartment(String department) {
+            this.department = department;
         }
-        public Integer getZipCode(){
-            return this.zipCode;
+        public Date getDatetime() {
+            return datetime;
+        }
+    
+        public void setDatetime(Date datetime) {
+            this.datetime = datetime;
         }
     }
+    
     
 }

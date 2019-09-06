@@ -33,6 +33,14 @@ function processMessage (e) {
   const data = JSON.parse(e.data)
   const time = data['datetime']
   const dept = data['department']
+  
+  var deptimglink = '/static/sales.png'
+  if(dept == "inventory")
+    deptimglink = '/static/inventory.png'
+  else if (dept == "shippinglocal")
+    deptimglink = '/static/shippinglocal.png'
+  else if (dept == "shippinginternational.png")
+    deptimglink = '/static/shippinginternational.png.png'
 
   // Create new row and entries
   const trEl = document.createElement('tr')
@@ -41,13 +49,28 @@ function processMessage (e) {
   const tdJsonEl = document.createElement('td')
 
   const jsonPreEl = document.createElement('pre')
-  jsonPreEl.innerHTML = e.data
+  jsonPreEl.style.fontSize = "xx-small"
+  jsonPreEl.innerHTML = JSON.stringify(data)
+  
   tdJsonEl.appendChild(jsonPreEl)
 
   // Will need to do some formatting on these
-  tdTimeEl.innerHTML = new Date(time).toLocaleString()
-  tdDeptEl.innerHTML = dept
+  const timea = document.createElement('a')
+  timea.style.fontSize = "small"
+  timea.innerHTML = new Date(time).toLocaleString()
+  tdTimeEl.appendChild(timea)
 
+  var oImg = document.createElement("img");
+  oImg.setAttribute('src', deptimglink);
+  oImg.setAttribute('height', '30px');
+  oImg.setAttribute('width', '30px');
+
+  const deptpre = document.createElement('a')
+  deptpre.style.fontSize = "medium"
+  deptpre.innerHTML = dept
+  tdDeptEl.appendChild(oImg)
+  tdDeptEl.appendChild(deptpre)
+  
   // Append entries to row
   trEl.appendChild(tdTimeEl)
   trEl.appendChild(tdDeptEl)
