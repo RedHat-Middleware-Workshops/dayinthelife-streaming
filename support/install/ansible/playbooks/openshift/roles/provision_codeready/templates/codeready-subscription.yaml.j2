@@ -1,0 +1,14 @@
+kind: Subscription
+metadata:
+  labels:
+    csc-owner-name: installed-redhat-codeready
+    csc-owner-namespace: openshift-marketplace
+  name: codeready-workspaces
+  namespace: '{{ codeready_project }}'
+spec:
+  channel: final
+  installPlanApproval: Automatic
+  name: codeready-workspaces
+  source: installed-redhat-codeready
+  sourceNamespace: '{{ che_project }}'
+  startingCSV: crwoperator.v1.2.0

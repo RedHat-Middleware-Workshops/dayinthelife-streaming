@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: CatalogSourceConfig
+metadata:
+  name: codeready-workspaces
+  namespace: openshift-marketplace
+spec:
+  csDisplayName: Red Hat Operators
+  csPublisher: Red Hat
+  packages: codeready-workspaces
+  targetNamespace: '{{ codeready_project }}'
