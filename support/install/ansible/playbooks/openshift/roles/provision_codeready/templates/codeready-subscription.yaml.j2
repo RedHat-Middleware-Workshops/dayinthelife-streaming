@@ -1,15 +1,14 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
+  name: codeready-workspaces
+  namespace: '{{ codeready_project }}'
   labels:
     csc-owner-name: installed-redhat-codeready
     csc-owner-namespace: openshift-marketplace
-  name: codeready-workspaces
-  namespace: '{{ codeready_project }}'
 spec:
   channel: final
   installPlanApproval: Automatic
   name: codeready-workspaces
-  source: codeready-workspaces
+  source: installed-redhat-codeready
   sourceNamespace: '{{ codeready_project }}'
-  startingCSV: crwoperator.v1.2.0
