@@ -1,3 +1,4 @@
+apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   labels:
@@ -9,6 +10,6 @@ spec:
   channel: final
   installPlanApproval: Automatic
   name: codeready-workspaces
-  source: installed-redhat-codeready
+  source: codeready-workspaces
   sourceNamespace: '{{ codeready_project }}'
   startingCSV: crwoperator.v1.2.0

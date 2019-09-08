@@ -11,10 +11,24 @@
     state: present
     resource_definition: "{{ lookup('template', 'codeready-csc.yaml.j2') }}"
 
+- name: Evaluate Eclipse CodeReady CatalogSource
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-cs.yaml.j2') }}"
+
+- name: Evaluate Eclipse CodeReady Operator Group
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-operatorgroup.yaml.j2') }}"
+
 - name: Evaluate CodeReady Subscription
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'codeready-subscription.yaml.j2') }}"
+- name: Evaluate CodeReady Cluster
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-cluster.yaml.j2') }}"
 
 - name: Wait for CodeReady operator to install
   k8s_facts:
@@ -26,11 +40,6 @@
   until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
   retries: 10
   delay: 30
-
-- name: Evaluate CodeReady Cluster
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'codeready-cluster.yaml.j2') }}"
 
 - name: Wait for codeready to be running
   uri:
