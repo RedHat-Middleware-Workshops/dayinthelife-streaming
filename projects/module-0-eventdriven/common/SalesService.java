@@ -1,6 +1,4 @@
 /** 
-kamel run --name=sales-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 SalesService.java
-kamel run --name=sales-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 SalesService.java --dev
 kamel run --name=sales-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp SalesService.java
 */
 import java.util.HashMap;
@@ -48,7 +46,7 @@ public class SalesService extends RouteBuilder {
         from("direct:notify")
             .marshal(jacksonDataFormat)
             .log("Sales Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo")
+            .to("ahc-ws://dilii-uiws:8181/echo")
             ;
 
         from("amqp:topic:incomingorders?subscriptionDurable=false")
@@ -57,7 +55,7 @@ public class SalesService extends RouteBuilder {
             .marshal(salesDataFormat)
             .convertBodyTo(String.class)
             .log("Sales Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo")
+            .to("ahc-ws://dilii-uiws:8181/echo")
             ;
         
     }

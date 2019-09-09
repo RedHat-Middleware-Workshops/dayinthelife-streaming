@@ -1,6 +1,4 @@
 /** 
-kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 ShippingService.java
-kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 ShippingService.java --dev
 kamel run --name=shipping-service -d camel-jackson -d camel-ahc-ws -d camel-amqp  ShippingService.java
 */
 import java.util.HashMap;
@@ -39,7 +37,7 @@ public class ShippingService extends RouteBuilder {
             .marshal(shippingDataFormat)
             .convertBodyTo(String.class)
             .log("Shipping Local Notified ${body}")
-            .to("ahc-ws://dilii-ui:8181/echo")
+            .to("ahc-ws://dilii-uiws:8181/echo")
             ;
     }
 

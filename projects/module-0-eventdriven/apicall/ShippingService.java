@@ -1,6 +1,4 @@
 /** 
-kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 ShippingService.java
-kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d mvn:org.apache.activemq:activemq-camel:5.15.9 -d mvn:org.apache.activemq:activemq-client:5.15.9 ShippingService.java --dev
 kamel run --name=shipping-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws ShippingService.java
 */
 import java.util.HashMap;
@@ -42,7 +40,7 @@ public class ShippingService extends RouteBuilder {
             .bean(ShippingNotification.class, "getShippingNotification(${body['orderId']},${body['itemId']},${body['quantity']},${body['address']},${body['zipCode']} )")
             .marshal(shippingDataFormat)
             .convertBodyTo(String.class)
-            .to("ahc-ws://dilii-ui:8181/echo")
+            .to("ahc-ws://dilii-uiws:8181/echo")
         ;
         
        
