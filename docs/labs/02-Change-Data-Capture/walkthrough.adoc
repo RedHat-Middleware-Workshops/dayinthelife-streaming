@@ -40,10 +40,6 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 ----
 oc project {user-username}
 ----
-+
-// workaround for IST (use your own)
-oc apply -f ~/Downloads/6872572_rhpds-secret.yaml -n {user-username}
-oc secrets link default 6872572-rhpds-pull-secret --for=pull -n {user-username}
 
 . Create a `KafkaConnectS2I` Kubernetes Custom Resource to define your connector.
 +
@@ -51,13 +47,13 @@ oc secrets link default 6872572-rhpds-pull-secret --for=pull -n {user-username}
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
-kind: KafkaConnectS2I
+kind: KafkaConnect
 metadata:
   name: debezium
 spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+  image: 'quay.io/hguerreroo/debezium-connect:0.10.0-sqlsrv'
   replicas: 1
-  insecureSourceRepository: true
   config:
     group.id: {user-username}-connect-cluster
     offset.storage.topic: {user-username}-connect-cluster-offsets
