@@ -10,11 +10,9 @@ const probe = require('kube-probe')
 const { join } = require('path')
 const wssOutgoing = require('./ws-outgoing')
 const log = require('./log')
-const kafka = require('./kafka')
 
 const PORT = env.get('PORT', 8080).asPortNumber()
 const WS_CONNECTION_STRING = env.get('WS_CONNECTION_STRING').asUrlString()
-const WS_MOCK_DATA_ENABLED = env.get('WS_MOCK_DATA_ENABLED', 'false').asBool()
 
 // Create an express app, attach it to a http server,
 // and bind a websocket server to the same socket
@@ -42,10 +40,6 @@ server.listen(PORT, async (err) => {
   }
 
   log.info(`application started on port ${PORT}`)
-
-  if (WS_MOCK_DATA_ENABLED === false) {
-    await kafka()
-  }
 
   wssOutgoing.configureClientWebSocketServer(server)
 })
