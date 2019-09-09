@@ -1,1001 +1,1001 @@
-OrderId,OrderType,OrderItemName,Quantity,Price,ShipmentAddress,ZipCode
-af504b24-c8cc-75bc-dc3d-ae2118a2d3ed,E,Lime,100,3.69,541-428 Nulla Avenue,4286
-6817d382-cdba-e369-fe20-ff7c79de5a26,E,Lemon Bar,17,0.09,Ap #249-5876 Magna. Rd.,I9E 0JN
-292bfe79-2b4d-5649-fad8-45676b7c1da7,E,Fruit Punch,16,7.76,525-8975 Urna. Street,13965
-74f42c53-1034-d38e-e49e-473239d1b40b,E,Bubble Gum,185,5.77,473-8850 Tellus Street,657101
-1ad42da6-e1c9-712f-0272-e46f6d9b6380,E,Green Onion,84,5.17,Ap #535-7695 Fringilla Street,70060
-14c72674-a08f-c41d-40cf-b4cc16003940,E,Fenugreek,17,4.39,Ap #133-7694 Eleifend Ave,239129
-58328e37-a7ce-2e33-4133-2a931a71041d,E,Coffee,94,8.41,593-1014 Cras St.,99-977
-635073f0-4abb-4409-f982-0d11e5efb81f,E,Cherry,140,4.42,Ap #781-1741 Sem. St.,130336
-8f7c7d6b-526f-79d5-1edd-c409bb34f478,E,Grape,62,7.26,Ap #766-9767 Etiam Rd.,49-766
-9e6c140c-2388-b153-dd9e-a06068a7362c,E,Egg Nog,117,4.59,6213 Tincidunt Road,489962
-0e9a7f6c-f3e8-2f51-c2e6-f9ef0ddc2ae9,E,Coconut,172,5.20,Ap #795-7837 Imperdiet Rd.,123599
-5757dce1-d183-edce-efca-b6f1b900ea8f,E,Blueberry,114,1.13,"P.O. Box 623, 6126 Enim Av.",9383
-c1347106-32ce-4afd-27f7-70c78e4e4db0,E,Egg Nog,132,1.14,"Ap #304-433 Eget, St.",32094
-e4f0fa22-d73a-5120-0e20-b7a142c3505e,E,Plum,163,2.76,"P.O. Box 132, 2889 Et Rd.",24-490
-ac60a69b-7e40-24af-593a-0591ecd0cc5c,E,Spice,29,9.01,861-4443 Suspendisse Street,00222
-a90467be-5b24-f678-1350-9ef508888d69,E,Elderberry,185,0.04,"P.O. Box 991, 442 Dignissim Avenue",40001
-2ea55b10-483c-c065-b02a-c8a682eee803,E,Cream Soda,12,1.34,Ap #825-8923 Molestie Ave,70403
-5b8fb445-33a9-99e1-ccdc-f26b3bbc3129,E,Vanilla Cream,191,8.42,"P.O. Box 315, 1873 Suscipit Av.",93027
-83aaa804-3f0b-c020-91bf-cebccb2935c1,E,Butter Toffee,197,4.00,"P.O. Box 303, 1597 Nunc Ave",HE1 0VV
-32b91478-5bc2-59d8-6cd3-8eee13464c92,E,Cotton Candy,111,2.08,3007 Donec Av.,119911
-1eb94bb9-aa8e-f6b5-1b22-a62027105cce,E,Pear,100,7.28,564-7769 Et Ave,Y5X 8G9
-b9a4de90-ab42-803b-6a33-db7ee4b4e731,E,Mocha,78,6.47,7575 Natoque Rd.,7690
-da5bccd0-eb4c-4022-e406-8129e93c025f,E,Bubble Gum,11,2.43,8768 Accumsan St.,11700
-2236d770-578d-8787-e850-c5dd2fb89249,E,Cake Batter,170,1.90,"6532 Erat, Road",83567
-14863f38-f2a7-4bc9-a0c1-43f3cefe48bf,E,Orange,82,6.14,196-8281 Sollicitudin Av.,5979
-2cc3ed67-55f5-3998-c3dd-ba0bb9781183,E,Kiwi,18,5.56,1175 Hendrerit Ave,04764
-8e84f785-327b-0370-9004-05c2b6226f71,E,Tangerine,142,9.74,"8418 Vestibulum, St.",79323
-4cbcc7ef-1ec7-a695-6e50-4fee310866e2,E,Lemon Lime,115,9.03,Ap #343-959 Lobortis Street,66824
-94f722d6-c5b1-1b7f-a19d-3899f75c0197,E,Blue Raspberry,122,3.91,989-1309 Neque Rd.,40411
-2d26504f-8347-3f96-4c59-3a9cd4223405,E,Ginger Ale,58,5.24,2057 Posuere St.,983285
-9ee98076-7df9-42f7-d9e7-4af4cce74b64,E,Kiwi,115,2.88,Ap #702-4963 Iaculis Road,8190
-f0a8ec1f-9076-2286-5bb6-efbc031da7a8,E,Pecan,156,0.28,Ap #668-7319 Tincidunt Road,2611
-bc3fecff-3061-020f-148d-e0aedfd45bb3,E,Tutti Frutti,155,8.85,353-4043 Etiam St.,77664
-5a9477ce-cb21-3172-4924-eb420121a3b1,E,Mint,85,4.85,"986-1871 Consectetuer, Street",35501
-37003c8d-1506-17d0-cb8a-bbde353740c9,E,Plum,102,3.93,"Ap #345-5596 Non, St.",0544 KI
-9352744e-48e5-5c8a-d74a-4a7044e38116,E,Black Currant,199,5.66,8984 Aliquet Rd.,1636
-40d3711f-adb6-3240-a1e0-a365fd337db8,E,Tangerine,61,1.30,5233 Ac Street,32000
-81b1f070-b332-b527-31f2-249191a0111d,E,Butter Pecan,190,1.34,778-644 Nullam Ave,20647
-af35a23f-a6d3-05e5-77dd-65d954b7eda2,E,Punch,187,9.80,"P.O. Box 335, 1154 Mollis Av.",3955
-1f036a45-3fb2-4ebf-90eb-087b370e50a6,E,Cheesecake,97,6.73,2322 Ac Av.,75866
-fb830113-bb99-077d-1ec6-f62f4d685c4e,E,Mango Orange Pineapple,147,1.48,"P.O. Box 324, 411 Dis Rd.",9173
-e0f9e2e5-fe98-11de-dc66-d795646c3413,E,Mojito,165,5.93,657-7683 Dis Ave,54-637
-d1685a6b-1427-197a-31e0-6200754b5fe2,E,Grapefruit,159,3.44,"P.O. Box 309, 9166 Integer Av.",19106
-c8211f46-af9a-19dc-ea28-c0f28e5e30b1,E,Cheesecake,84,8.01,4024 Tristique Av.,3693
-0957c159-70b8-a97e-93f9-497c17aab3fa,E,Mango,39,0.59,842-4406 Et Street,57414
-bcc988ee-efdb-af2d-1900-1ee71bf19e9f,E,Grand Mariner,100,3.57,Ap #822-9897 Molestie. Street,7663
-e304ec97-6e7e-407e-c9bf-5df1f01975ee,E,Hazelnut,63,8.03,933-9716 Lorem Ave,8535
-e79d32ac-0e64-5bce-5f09-9b2b0f728c8b,E,Huckleberry,137,0.77,"P.O. Box 559, 3735 Sodales. Street",440316
-02b83b62-2424-73c9-1638-910d11371884,E,Blue Raspberry,97,3.95,727-8286 Mi. Avenue,47616
-e9b610da-79d2-7190-8013-e99deccd33ab,E,Orange,179,1.92,"P.O. Box 795, 2991 A Av.",5953
-28bf1fd1-2159-1f83-f02b-842a9183a713,E,Cinnamon Roll,66,1.75,8204 Tellus Road,8509
-64fd14a8-a542-e654-65cf-92cc19fd8092,E,Tart Lemon,108,7.63,"943-469 Non, Avenue",9994 HV
-abcbab9d-8fa5-6936-ac31-40fa9f416de7,E,Coconut,177,4.75,"P.O. Box 301, 6454 Ante Street",91276
-58f05bdd-e5ff-991c-c98d-2f2dcb26b81d,E,Black Licorice,56,1.26,Ap #934-6877 Nibh. Rd.,50-201
-721e307f-b002-1469-10f4-3799e992d457,E,Dill Pickle,75,6.82,962-1034 Eleifend Av.,76942-399
-f4e1b5bb-1297-3eab-9167-c25a0f7545c0,E,Watermelon,81,9.80,9139 Libero Street,3066
-fcb2f9fe-5903-cbc1-db3d-c5c33a1488f2,E,Pina Colada,166,4.30,5061 Cras Rd.,27631
-789d4bd7-44b1-5830-21c3-b8ad6a9d5bfe,E,Mocha,149,0.19,Ap #138-1066 Amet Road,278772
-0326651c-af80-5973-896c-bc1f0588737a,E,Lemon Custard,88,9.84,Ap #690-4883 Fusce St.,88851
-d6b2aeba-9c8a-2958-2932-6a84907ca7a1,E,Sassafras,10,4.91,"P.O. Box 461, 1528 Magna. Av.",4385 AO
-3577abbd-b8dc-4738-d988-eac1cf50e88d,E,Long Island Tea,111,9.70,Ap #617-1528 Duis Av.,25062
-7040146f-9740-d891-3ba1-2ab72469ba4d,E,Melon Kiwi,13,1.35,8453 Dis St.,158570
-b684b569-0e27-bca0-fb83-c7e9dffe263d,E,Graham Cracker,95,3.56,"4784 Odio, St.",ZF90 2XX
-48f5be1d-8975-5893-ef3f-f52ad1be9a8b,E,Nutmeg,105,4.78,"9932 Dui, Rd.",838754
-b78f950d-23f2-a6b3-8b84-e8a1ea78d984,E,Spearmint,62,2.96,"P.O. Box 269, 9228 Dolor. Rd.",215101
-b9884492-d763-0e2c-f412-fc7a7d84cb17,E,Long Island Tea,68,6.26,Ap #194-2892 Ridiculus St.,8446
-a41f2ff5-5f70-6c43-5d8a-e67ec9cbca93,E,Berry Cola,37,9.97,"P.O. Box 231, 3827 Nibh. St.",68704-812
-b06750a8-fa33-371c-6a3d-fb6f9c15269c,E,Bavarian Cream,179,9.07,3052 Eleifend St.,21115
-0aed38c9-ced1-ebef-9cc6-2211c095d12f,E,Flan,11,4.14,8497 Conubia Street,49445
-d71e2858-be18-b4a7-61ff-af8fede38582,E,Bavarian Cream,31,1.24,"Ap #187-8152 Ornare, St.",RL6 7YQ
-5df8e785-abdc-6d98-bf32-5c657deb159e,E,Hazelnut,164,7.79,"P.O. Box 724, 731 Pharetra Avenue",55146
-a3669c21-600d-3e1d-5cd5-6ab5e820a5c9,E,Mocha Irish Cream,151,1.72,Ap #393-4268 Eu Street,5519
-7ec92812-d67f-e0a7-0fba-e4927fc1ee88,E,Cheesecake,43,1.34,792-6298 At Street,82581
-5f5d7dfe-ae83-51d4-51f9-20cdcfc87dff,E,Orange,16,0.82,9721 Aliquam Road,343634
-6a52ac4d-5ec8-3336-b78c-5d4f9cf3c16a,E,Vanilla,129,8.38,"P.O. Box 840, 948 Sapien St.",3398
-44c40df2-9da5-82f5-7528-b1cacd9ea4c9,E,Whipped Cream,110,5.53,216-1914 Suspendisse Road,51380
-f4a5e5f5-d5d6-6fe3-5e41-e0b03f8903dc,E,Toasted Coconut,100,7.27,6023 Luctus Avenue,770668
-05740544-abdf-4644-fbe3-a39ae23701d2,E,Orange Pineapple,89,5.95,"P.O. Box 545, 6567 Sed Road",07791
-cf3e1a7c-8cac-4a73-4488-9ba2b44543e5,E,Amaretto,145,1.97,Ap #202-2588 In St.,5290
-9dd4477a-3f30-4069-c32c-a8f2e12ac1c0,E,Key Lime,90,0.31,9618 Vulputate Rd.,49034
-41d45f33-2ad6-9eb8-b6e2-47c296f0e5ef,E,Wintergreen,132,0.87,Ap #900-7661 Nisi Road,02692
-da5332ff-aae3-35cc-91df-45ae83a57999,E,Smoke,45,1.26,"P.O. Box 542, 7421 Dignissim Rd.",07286
-7d715631-677d-5c91-0511-7722be8a48f1,E,Mocha,94,2.24,Ap #100-6159 Ipsum Avenue,15807
-ad81a237-08da-23f1-f35b-d146be48c419,E,Plantation Punch,104,9.72,806 Maecenas Rd.,41513
-26262f5d-aeb4-10f3-7eee-e441384a6ab0,E,Key Lime,120,4.54,Ap #677-5383 Quisque Road,50275
-b4ec388f-4a4b-3808-a2bf-67d4375e67fe,E,Creme de Menthe,190,8.56,Ap #888-3625 Libero. Rd.,36259
-ed52ef1b-f62f-cab1-8c4d-3b9a388658cc,E,Tonic,102,4.45,"P.O. Box 692, 5436 Est Road",M9H 4K3
-a1d04d53-301d-b4a5-8845-3188926d7b74,E,Cookie Dough,88,7.38,8129 Dui Street,507588
-ff8a23c2-2a76-bb20-3d7e-7899bf402598,E,Mango Orange Pineapple,60,5.26,Ap #500-4128 Pede St.,71261
-dba7f9fd-dbf1-7097-75c5-687ba2676615,E,Butter Milk,60,6.36,751-3652 Orci Avenue,27381
-feaf0629-594f-823a-db09-f7f4c3a1b09b,E,Butter Milk,40,1.20,"Ap #194-3239 A, St.",2434
-8438fe1b-52e1-3ccc-cba1-d6216f16752c,E,Mango Orange Pineapple,193,1.56,9724 Mollis. St.,901218
-f138b920-a908-0774-9bc1-db4e8fedb26b,E,Rum,163,0.43,4905 Lobortis. Av.,6600
-1e1b9f45-50c4-9084-7e0e-d62a78647793,E,Prickly Pear,15,6.80,753-2216 Magnis Ave,668557
-54becb94-6ae3-8051-a83a-4960c194aef5,E,Creme de Menthe,186,6.32,"P.O. Box 942, 2133 Aliquet. Street",PQ3U 6ED
-3100e44b-71d8-37fd-ed13-6b3d893a93dd,E,Berry Cola,160,3.52,556-4465 Eros Street,BT49 1WF
-93cce642-f3a2-fc29-5c56-53a58b1c90ad,E,Long Island Tea,128,7.82,456-327 Urna. Street,79917
-e04f19ec-1bde-7386-4a74-cedc5707e6b9,E,Cream Soda,55,3.76,350-295 Ornare Avenue,P9J 7A6
-b5826428-80e6-8c11-0224-3e8b4c3df129,E,Pomegranate,173,6.50,Ap #114-7807 Quisque Road,70736
-db3a072b-5869-371f-18bb-81f35e98097b,E,Margarita,105,1.38,"P.O. Box 395, 6357 Donec Street",1072
-454380fb-3277-6f72-114c-fe4b3263b558,E,Apricot,10,6.48,"P.O. Box 436, 4058 Eget Ave",70219
-fb7fd6c5-2697-f513-2c35-8975ea1daea7,E,Toffee,44,4.20,"P.O. Box 631, 6765 Non Street",54607
-8e939b00-c1b6-47ab-5107-202b5e8ba573,E,Lime,63,7.71,Ap #390-9534 Tempus Rd.,31201
-0a8f33bc-b763-c132-bcbc-f692f5822f5b,E,Marshmallow,152,7.18,709-5169 Erat Avenue,U54 2AU
-607a68f3-1503-060e-7874-3b47731b525a,E,Orange Brandy,187,2.38,753 Sodales St.,36565
-e71085fe-8655-0035-839d-bea88a0409b6,E,Tutti Frutti,141,4.09,2915 Et Street,51924
-22c55e66-f8c2-fa24-bb27-5e54c864df26,E,Grape,190,7.06,"P.O. Box 695, 6226 Ligula. Rd.",72336
-5e5b005c-3758-c0d0-fd11-2ce037945086,E,Butter Almond,186,7.76,"P.O. Box 221, 9514 Augue. Rd.",S4T 5M8
-40076fd0-36d4-2e1f-2bef-0d219c31ab66,E,Orange Mango,167,9.06,"P.O. Box 967, 8001 Et Ave",53394
-25de01e5-9cdd-756d-d634-2b061f2a5256,E,Blue Raspberry,169,7.69,"8304 Lorem, Av.",43526
-7f177355-0ac3-5d1d-4ade-a9f79ab24b5d,E,Margarita,34,3.74,623-938 Enim. St.,32742
-f2357cc0-918f-d29d-db33-071f77fbd16d,E,Kettle Corn,48,6.05,6029 Diam Avenue,41807
-7b9b04ae-a324-66ce-3ef7-46a98ecec9af,E,Butter,57,0.03,5630 In Street,128886
-5cba5173-1f72-fc39-a7bf-165ff2989222,E,Vanilla,170,8.13,782-4874 Dolor Av.,28634
-4e582b5e-f541-15d7-b955-f398da9432f4,E,Macadamia Nut,73,4.54,617-4826 Lorem Av.,3605 CZ
-819f4666-23b1-1c40-8f41-513cf40e29f9,E,Cherry Cream Spice,106,9.24,Ap #253-4850 Nullam Rd.,01-675
-9ebeca22-c3ea-9dbc-f07f-869457e2df8c,E,Acai Berry,112,1.09,"P.O. Box 864, 4971 Gravida St.",4818 PY
-24d5e04a-a32d-020b-1525-cccb03cd0d3a,E,Candy Corn,95,7.02,719-1133 Nulla. Street,09862
-b8c1bd32-4b23-14a0-6956-af9f6704b677,E,Strawberry,44,9.91,"P.O. Box 702, 222 Sed Avenue",43-448
-c1188fa4-e1fc-9c24-9f3f-7a2ccd65c45f,E,Pineapple,86,1.56,"P.O. Box 986, 9270 Sed Rd.",31-622
-1338373a-389d-809e-9784-e82353ad3f90,E,Orange Pineapple,157,9.41,950-171 Dui. Avenue,465526
-9e430680-2fd7-3bc7-b700-03d8cbbcabaf,E,Dill Pickle,190,7.50,489-4833 Sodales St.,C4Y 5G2
-398dad88-7841-e872-6165-8e7a331303ea,E,Cherry,56,7.58,3384 Nulla. Street,43662
-8d30ecad-46c3-9736-56b0-0ba847c807d7,E,Passion Fruit,171,9.27,Ap #723-5871 Faucibus St.,80627
-6f541f3b-24ea-02cd-cb76-212f7d3f06c2,E,Pumpkin Pie,150,3.17,"P.O. Box 659, 2402 Etiam Av.",7672
-81168287-5751-5972-33f4-0cca566b9d9b,E,Plantation Punch,102,0.84,242-3228 Iaculis St.,71419-970
-06cccf05-46ac-d924-49a1-45aac99a3720,E,Tequila,183,5.90,"P.O. Box 377, 5872 Nibh St.",61108
-b7f067f5-8d01-c14d-7cc7-b3194ba4c9fc,E,Mojito,114,3.50,Ap #577-1637 Ac St.,191294
-bb2bdc68-3b59-2b2c-a801-12533c9db15b,E,Toasted Coconut,30,3.07,154-2565 Mauris Rd.,80427
-be9205af-386e-119f-e0c0-70fb7c02841c,E,Strawberry,95,1.78,940-3111 Lectus. Rd.,890121
-8897e96e-b56c-6457-2cfe-6cbeaacec2f9,E,Carrot Cake,115,1.14,Ap #926-2058 Mauris Rd.,57341
-de8a46ed-d329-2db8-89d6-8dfabacc731c,E,Almond,50,1.98,Ap #228-7538 Enim St.,08014-734
-e5136849-37c0-5148-777f-5f75f4ca67e9,E,Almond,101,9.93,"P.O. Box 439, 8614 Ad Ave",92801
-557da1b9-15b2-871d-0b72-dc499d3efedc,E,Lemon,49,6.42,987-3478 Risus Street,95-100
-31b6bf6e-c96a-e573-a370-3d71f908609c,E,Anise,191,3.83,Ap #274-7722 Mus. Rd.,193160
-ac64ea08-efbd-869b-f468-28646d86368f,E,Malted Milk,128,3.68,"P.O. Box 923, 1300 Bibendum St.",9383
-4f556335-8ab9-93e9-dc0d-aaf07ace4a75,E,Peanut,172,7.35,3615 Nunc Ave,1823 CX
-1227e899-0849-e15b-3ec3-d7fc47946c37,E,Grape,178,5.27,6373 Non Av.,918568
-f33bc746-c7ab-5160-8841-34d5f9be01f0,E,Sarsaparilla,58,9.27,292-328 Egestas. St.,OU6 3IF
-f744239b-ba46-860f-1165-519dbc7f65e6,E,Mixed Berry,90,6.42,9036 Nibh Street,5018
-8a31c2a3-806c-0132-fff2-7da55171f868,E,Rock and Rye,137,3.35,Ap #784-118 Quisque Avenue,07227
-d9fb2fde-8793-2f35-34b0-1a26c020317b,E,Coconut,74,7.78,9912 Duis St.,60633-965
-e8cc93f2-20ec-c80a-8a89-b932efac9997,E,Egg Nog,103,6.23,Ap #305-4246 Non Av.,452459
-fbd6930b-1fd9-6068-0414-72e62533db6c,E,Cheesecake,125,7.95,903-6364 Gravida Avenue,04641
-a7a16ce9-73b7-721f-ed3a-5a5db7129d23,E,Marshmallow,35,9.94,"P.O. Box 853, 9163 Ornare, Rd.",55989
-23bd98ad-6e71-d22f-e05a-0e9e6784b304,E,Orange Pineapple,89,0.87,6364 Massa Av.,G8Z 7P7
-8d92bbd4-2971-ef4c-c629-5260c4e431eb,E,Lemon Custard,135,7.46,1590 Arcu Road,5833 QM
-31ed2448-74cd-a6c8-2e4f-648cab977ad1,E,Birch Beer,101,1.24,Ap #948-8103 Erat St.,16-022
-858f6d77-ce06-c7fa-4fd7-cab49a744c1b,E,Apricot,163,8.96,"Ap #771-5977 Ut, Street",0476 NL
-f74e0008-200c-3845-65dd-ae1c9b5aeace,E,Orange Pineapple,178,3.08,"P.O. Box 526, 2613 Odio. Avenue",44424
-c6747ff9-c60a-b040-bbab-541ac2685412,E,Almond,84,7.24,"Ap #908-2807 Ut, Ave",55088
-efa9e21a-cdf0-6079-4efc-b7348143f22e,E,Melon Kiwi,82,8.79,283-5312 Mollis. Ave,11732
-dc4035fa-c5d8-8cb4-c283-a6218576e1e8,E,Grapefruit,90,5.36,3354 Ac Ave,50902
-95d12d62-6cb2-461d-0ffe-75c64b55d8fb,E,Elderberry,104,7.51,6592 Ipsum Rd.,7688 NW
-f91c95be-f034-de46-0c37-d1f326a0ab39,E,Rock and Rye,193,4.70,957-3154 Cursus Ave,72918
-64b3b860-7666-05f1-859b-bed1c7fbc562,E,Butter,178,2.41,Ap #680-4940 Ipsum St.,978832
-abfc65e8-a484-666f-fad6-d8d4d0c7ab20,E,Toffee,65,2.58,"P.O. Box 900, 8563 Ut Av.",18951
-5642c0f3-d3d6-5a46-8064-85a83e443ff9,E,Horchata,181,3.59,"P.O. Box 834, 1729 Convallis Av.",C0R 1Z9
-d1ea86d0-2501-e620-a849-134134c79132,E,Kettle Corn,100,8.25,Ap #222-7710 Dignissim. Av.,76498
-d0a85a37-c108-3479-0ca5-78ece78f3dc1,E,Irish Whiskey,178,2.49,"P.O. Box 571, 4733 Non, Street",26546
-f67bd496-085c-9dd9-5fd6-1f6b1b9a09c1,E,Ginger Beer,112,2.18,"P.O. Box 866, 8473 Risus. Ave",14997
-8bb1a462-dd4b-6145-f234-fe52781e12c8,E,Honey,185,8.91,722-328 Phasellus Avenue,892582
-8d88fbc3-1ce7-e439-ed7c-9a3a1b5a499f,E,Cinnamon Roll,181,5.44,767-1537 Vitae Rd.,55031-707
-6cb6e742-8fb7-101a-c0ad-a0e90264f23c,E,Butterscotch,114,5.20,4846 Mauris St.,24080
-1ea30646-d5fb-24ba-4231-556ab37a0d1e,E,Mocha,176,8.77,"P.O. Box 707, 8880 Nam Av.",09091-822
-fec4408c-4157-c11b-a73f-bdb83ed9610b,E,Wintergreen,63,0.51,530-1753 Dignissim. Av.,054670
-17296e5e-c6f0-f8cc-3484-9892fcda620a,E,Cotton Candy,196,3.50,"Ap #981-5551 Orci, Avenue",3585
-f4da4070-8482-fe17-5852-bb321c8e67a4,E,Pineapple,192,1.95,Ap #195-5671 Gravida Av.,M46 4EZ
-4db7ac57-6310-1f63-95de-76c861add45c,E,White Chocolate,194,4.95,Ap #964-4520 Velit St.,209472
-7457cddf-e578-a198-0dc8-1036129ee907,E,Bourbon,132,5.60,Ap #296-8203 Curabitur Av.,09-442
-41e4b838-ab15-d677-28b0-62b25bf7e7b5,E,Nutmeg,161,7.35,805-3831 Phasellus Rd.,75284
-963b25f4-f571-84b2-d65b-311189f951c6,E,Bubble Gum,56,5.51,"P.O. Box 774, 4346 Luctus Rd.",10429
-8ab99267-ee89-151d-8c2c-c5ed90a05da0,E,Orange,67,6.63,747-533 Magna. Rd.,49-538
-83a1b197-da3a-d794-4528-abc459550223,E,Kettle Corn,185,0.63,"Ap #681-3568 Non, Road",5210
-46a1d330-e51f-18a0-50a2-c268ef95e6dc,E,Mint,86,7.50,Ap #128-7934 Egestas Rd.,8766
-5d046e39-5acd-de98-e8a8-164cbec33403,E,Nutmeg,156,1.51,"P.O. Box 101, 4842 Arcu Rd.",51734
-a8020bc2-d3dc-2913-edd7-a6a7f02d0c7d,E,Tart Lemon,154,8.06,255-4918 Dictum Ave,32884
-e59a7849-4be1-c0a1-939d-f1c9adba08d2,E,Pineapple,104,8.77,Ap #829-4631 Praesent Street,33742
-1dd6838b-4f3f-228d-cde6-107c3fec4999,E,Pineapple,161,4.31,1497 Adipiscing St.,86104
-33e40683-cc58-0161-cafc-8648a6cdd698,E,Wild Cherry Cream,128,4.92,152-8353 Proin Rd.,91815
-1387b39f-e648-8847-5c40-c8fd2efb3e97,E,Pineapple,69,5.86,Ap #925-9259 Proin Street,24-869
-406faa14-681e-5506-9c31-1ec587cee611,E,Black Walnut,136,5.79,"P.O. Box 891, 4417 Turpis. Rd.",413710
-6cca6e7c-d8ec-7dc1-ffa2-f506e1d32e38,E,Fenugreek,165,2.40,"P.O. Box 186, 7754 Lorem. Rd.",3950
-8b201378-806b-5272-9cba-a63962f038e9,E,Bacon,64,2.85,Ap #824-2501 Ut Rd.,87-658
-e484ef22-e9fe-dcaa-954a-9661ec00c95c,E,Tangerine,32,5.42,298-2365 Lacinia Street,8306 FD
-52d3b59e-895e-10e7-936d-2da2ad04774a,E,Apple,108,6.96,"P.O. Box 807, 9229 Aliquet St.",89-117
-552213b9-9cf6-0e8e-d566-efcc7ae8be8c,E,Whipped Cream,163,7.92,4417 Aliquet Avenue,26339
-15b3a0cd-7675-48ce-9698-aaaa193da4d1,E,Malted Milk,46,3.80,"P.O. Box 666, 9952 Dapibus Ave",62573
-1352ca15-29d3-2f5e-f8af-0eea17bd9a09,E,Egg Nog,116,2.56,"P.O. Box 467, 4064 Ut Ave",30103
-68df4565-81bf-8e29-470d-f48c897e3b27,E,Macadamia Nut,93,9.72,"P.O. Box 713, 1173 Cum St.",552941
-c0e7eca2-035c-81a5-6887-6bedc203e217,E,Apricot,56,7.27,Ap #267-2331 Enim Av.,3970
-f390dd2f-2bfd-4958-4255-368ca0a9a68e,E,Birch Beer,127,4.05,6189 Lorem Rd.,M4Z 0G6
-ee0643c7-a646-a871-986c-4957c4d482d7,E,Acai Berry,78,3.81,Ap #166-1184 Sociis Avenue,02302
-0c624059-9eef-2cd2-630a-0a1a1ff33c3b,E,Tutti Frutti,13,9.60,Ap #833-4978 Morbi Street,8835
-0d012bf6-adb1-15eb-acce-0d660e6eab72,E,Tequila,99,5.88,2648 Egestas. St.,863745
-5c2eb397-8fe3-7887-d897-8a91a39f2595,E,Candy Corn,105,0.17,"P.O. Box 480, 738 Pellentesque St.",15112
-8f46295a-ed53-ad4f-02c0-ae8ebb846e99,E,Cream Soda,165,3.62,Ap #768-2234 Ornare. Street,61808
-0f88806a-4fc0-d818-9794-47b10e8be483,E,Peppermint,167,1.62,Ap #801-3086 Blandit St.,5744
-ddbb90aa-3d1d-40ea-4fe2-8fb8ab1dc3af,E,Almond,128,2.00,"P.O. Box 950, 1339 Velit Av.",26171
-9a9ff294-d1ee-f763-9c4c-dd9e797646f2,E,Honey,57,7.80,"P.O. Box 392, 7437 Amet, Road",15125
-2a6a8bea-a7b5-cf4c-799c-4083706d9634,E,Fruit Punch,139,3.90,424-9137 Fermentum Rd.,30399
-670f2e9f-f983-3cb1-befa-ba4ec84aff48,E,Smoke,126,5.26,"9985 Vulputate, St.",60666-582
-ec240013-2a6a-5a69-a393-e4e537a4d4da,E,Pink Lemonade,130,5.67,323-2491 Metus Street,2523
-1d45a7a3-abbc-6721-d094-6b6ba58f77b4,E,Fuzzy Navel,193,2.21,Ap #413-5736 Arcu. Ave,K3J 0G3
-e9a314ac-5fc9-a3f0-1786-20d42d193520,E,Macadamia Nut,120,2.70,157-6360 Accumsan St.,9831
-7d865ddf-8d57-c005-968b-39f4fca8d68f,E,Cheesecake,100,4.51,9433 Est St.,510211
-9d4b1dcf-9ec3-9dfa-ef5f-5d255b4276cc,E,Tart Lemon,90,6.38,Ap #548-3334 Congue St.,2895
-73b02f35-5297-ee7c-4f0d-5f34156d2a8b,E,Lime,61,2.81,"P.O. Box 468, 8154 Vestibulum Av.",1911
-730e721d-67e0-9976-922f-52f0c44d84ca,E,Black Cherry,110,8.63,1958 Interdum Street,8234
-c3c57031-ee6d-fa63-4468-78acf2a8dc44,E,Birch Beer,179,7.56,7043 Malesuada St.,716580
-52ec912f-3db3-1b3a-fc85-bbafd6a4eaf6,E,Pink Lemonade,146,4.61,"P.O. Box 913, 5490 Fusce Avenue",11007
-7306d653-362f-aa1a-e7c9-b348d0621762,E,Nutmeg,137,2.81,"P.O. Box 665, 9433 Non Av.",87684
-fbe66add-3d1d-302c-f480-91e9231091b3,E,Spice,62,8.65,7849 Neque St.,03385
-07090bc7-7a5d-57ce-0431-e6f24292bc53,E,Graham Cracker,108,3.50,785-9673 Aliquam St.,80917
-2b8ee0a9-2c2f-8295-b8e6-750db8806f67,E,Pumpkin Pie,156,1.87,"Ap #338-4578 Ut, Avenue",56368
-28d8878f-d77b-63ad-a221-7d7f8f98d9ec,E,Blackberry,62,2.21,5990 Suspendisse Ave,983679
-84e51412-efb9-3963-ffa4-130e1667f405,E,Cinnamon Roll,104,6.20,Ap #808-6673 Non Street,1334
-cbaa5c0f-eaf5-e75c-f45a-9d6fd2ad3aa5,E,Vanilla Cream,84,7.90,Ap #389-750 Id Rd.,8386
-aed98690-5a4e-e002-c234-2dc67952b651,E,Orange Mandarin,132,1.26,1676 Dui. Rd.,75183
-16f0fe9e-2626-bf35-8f4a-3a3d8897c0b6,E,Mixed Berry,186,7.48,758-8170 Pharetra St.,695950
-04f3b9eb-d5a9-f9f9-0067-42d00aaa007a,E,Flan,29,5.00,6358 Neque Rd.,584550
-78e55b16-54ed-bded-42c8-7576b73806e5,E,Almond,165,3.24,100 Faucibus. St.,26072
-1864bda9-4363-2feb-3ccc-24b0368bf7eb,E,Pecan,126,8.83,3523 Bibendum St.,91449
-470d5278-3aee-c8da-173a-bfefe5c0469a,E,Fruit Punch,112,1.73,299-5516 Velit Street,409931
-8b80b88c-f5d0-94ef-6f32-5cc23240dbfb,E,Nutmeg,110,2.42,Ap #271-3217 Eget Av.,62457
-9c4b89be-9bfd-4fab-541b-37c46ae561f2,E,Almond,93,4.37,491-4463 Ipsum. St.,186733
-0016a2d2-b2ee-0428-c75c-4c585c5ef137,E,Vanilla Cream,90,8.45,Ap #813-7190 Quis Av.,M7B 1XD
-b2a346ce-eb81-8b6d-6025-30e4c524b6f6,E,Ginger Beer,91,5.00,"P.O. Box 509, 1444 Dictum Ave",337203
-80ea4583-0554-d205-f975-dad747ab4fbb,E,Margarita,58,3.84,216-2590 Massa. Av.,5339
-2d9b8981-4546-b51e-c5ad-c7b85f35e62b,E,White Chocolate,156,9.84,"P.O. Box 994, 7663 Molestie. Ave",15212-756
-fd000afd-5434-a5c7-13c2-d7303dd5297e,E,Butter Milk,101,9.93,1921 Tristique St.,T8C 2Y5
-bb612aef-c710-3094-7800-a9cd7189fd70,E,Grape,19,6.09,"P.O. Box 923, 5807 Auctor. Rd.",31341
-400da02c-6e9c-85be-9c02-1475a6dddc49,E,Butter Pecan,15,6.28,7743 Amet St.,22732
-9be5f881-7df1-5e40-cfd6-2ae5dde7bbbe,E,Chocolate Mint,46,3.78,869-1489 Pharetra St.,3891
-795d4a9f-1f67-fa07-2047-5df275e254a7,E,Tonic,156,1.41,"P.O. Box 423, 6461 Cras St.",4435
-92c745f9-5d1f-3a94-1767-00a360a1ea57,E,Bourbon,75,4.41,"P.O. Box 288, 2940 Ac Street",30349
-ef786099-7e45-d2b3-35e2-3dde98b3f688,E,Candy Corn,118,2.77,4037 Varius. Av.,24805
-037a499c-d7cd-5354-a4d6-b2402f6ced8d,E,Pear,137,5.94,"P.O. Box 268, 2651 Non Street",U3W 2ZS
-439601b3-179d-db13-3cc4-07b2e8dfa6d2,E,Pecan,192,7.24,Ap #886-5923 Pede Ave,9632
-cad55265-93f7-b549-feed-9e5d94807fc7,E,Smoke,63,9.99,330-4355 Odio Rd.,97136
-5ab5192e-5322-df16-1d14-c957fe675034,E,Apple,40,6.99,Ap #434-2417 Senectus Av.,7826
-eed75a54-b989-37b6-3e1e-e04c1792d739,E,Toasted Coconut,68,2.58,Ap #323-6242 Quis Rd.,16812
-135d635b-b2e6-7d75-15e3-2408b470655b,E,Black Cherry,174,1.90,"P.O. Box 728, 5767 Mi Road",83897
-4445b19f-c0a1-f03e-10ba-d8f52ff368c1,E,Watermelon,23,6.31,"214-6631 Ut, Rd.",907469
-98f4d9ad-d00a-95d2-526a-b9de0126ea57,E,Chocolate,154,1.47,694-6853 Nam Rd.,82033
-8d279f5d-1f79-f296-b7e2-3bbda19c42fa,E,Mocha Irish Cream,126,4.90,Ap #928-1141 Nec Ave,67933
-ab7f2f24-d924-db6b-b8fa-c25426e63b2c,E,Black Currant,134,6.77,503-6234 At Av.,04910
-4feeb026-aee0-6211-59be-d6ed582a31d4,E,Butter Almond,174,0.11,954-2099 Phasellus Street,9547
-0bd739df-89a2-ecdf-f7bb-66dad0344544,E,Punch,15,3.50,1117 Felis. Rd.,T6S 0Z6
-81cfe379-4c94-be5f-ebae-f4fa1aa3aaf6,E,Anise,163,6.09,885-773 Arcu. Rd.,11515
-11f5a927-3332-8a14-daed-6d4b39ab33f0,E,Butter Milk,122,2.81,"P.O. Box 930, 4129 In, Street",C6 1BK
-abbed3c4-2f6a-55e6-8abd-34bc7231b424,E,Wild Cherry Cream,62,2.70,Ap #905-406 Luctus Av.,13-281
-70f2487c-74bd-2283-258e-667f525a92c1,E,Butter Toffee,144,6.19,180-819 Felis St.,34710
-3e51e5c2-fde4-ad45-0b62-0819decf1e61,E,Anise,38,7.66,"7474 Odio, Rd.",525608
-c53e122b-e164-5fe9-f481-68574bd44fdb,E,Spearmint,183,8.09,Ap #500-4298 Lacus. Rd.,99712
-b6c5608f-39b8-42bc-4c47-ccc94bf256bd,E,Lemon Bar,17,8.07,"764-125 Ut, Rd.",39863
-11060248-60e3-7cda-2e8b-aca3b6228a74,E,Bacon,68,9.29,518-9200 Non Rd.,490497
-ce6a26b6-09f1-962f-90ac-612e12681d00,E,Blue Raspberry,154,6.97,3181 Amet Avenue,37509-009
-7481c1c2-526b-aa36-7400-22385faf01c4,E,Sour,89,5.85,573-7280 Pretium Road,92637
-f3eb450c-750d-1ba7-82e8-dc5aee488bda,E,Root Beer,30,0.26,6328 Pharetra Ave,8255 WG
-835d3f11-a2a5-b432-938a-e39abc3128ab,E,Apple,79,5.05,Ap #400-2663 Ullamcorper. Road,57788
-7e60ef70-e380-9f9b-ce5a-8133c902dd3d,E,Irish Whiskey,24,6.99,Ap #478-5610 Odio Ave,4622
-ad3bd383-b37f-1e2f-350f-e4a77ee426e5,E,Blueberry,152,9.99,Ap #142-6074 Integer Street,79-933
-4c6b89bf-8fdf-28f5-ecbc-8a1c13dcfc3f,E,Long Island Tea,184,6.74,"P.O. Box 728, 6079 Et Rd.",10498
-8a4a1233-6147-8554-38b7-ecb3eb315591,E,Plum,150,0.80,"8447 Quis, Ave",32789
-54b9d12d-c2d4-a2d2-6f53-c35d1509385c,E,Lemon Lime,84,1.68,Ap #589-9654 Erat Street,56807
-d9059dd3-9316-ab7e-59bd-fd437438e256,E,Orange Mandarin,88,1.27,"P.O. Box 772, 8358 Nec Street",54906
-3a3ff358-81d7-df74-b46f-d701409d59cf,E,Butter,28,2.38,501-7138 Nec Av.,522101
-0aaa3017-52db-538c-9527-c571e6e903de,E,Tropical Punch,44,7.50,Ap #284-9045 Malesuada St.,H60 5YO
-8ecb5725-05cf-a0d2-b3b7-eb6abb29f6d3,E,Orange Brandy,122,9.66,769-1124 Id Street,X0N 2K8
-3a1cae83-9e59-86a9-cbdc-1ef5443da7c1,E,Wild Cherry Cream,60,7.17,Ap #336-2970 Ipsum. Av.,325584
-16fcc04b-e493-4483-4a5d-ef443f53eca3,E,Tutti Frutti,44,3.17,"P.O. Box 382, 7424 Erat Street",K6K 8E6
-7cef32a3-185b-2645-04cd-6baafe353144,E,Mixed Berry,78,8.96,747-8881 Penatibus St.,7716
-8a0115b3-e8ab-bc0d-495b-50064d7f784d,E,Orange Mandarin,54,5.84,2948 Convallis St.,826959
-87788c86-7462-5464-6a05-495996c9b799,E,Mint,198,3.70,3070 Aliquam Avenue,14259
-21d16fd6-b722-c974-6e6b-052a90c2729f,E,Bacon,83,2.04,"Ap #300-4761 Iaculis, Rd.",M1P 5W8
-652398f6-b148-44d2-6825-5ed731dee3f4,E,Orange Cream,164,6.80,Ap #342-9471 Suspendisse St.,216594
-0e024310-7d42-8e96-0344-220f292ab3f9,E,Butter Pecan,136,1.12,Ap #606-5462 Molestie Rd.,900597
-4baba725-8497-cb11-94de-e768a15e1c61,E,Black Currant,50,6.50,382-1427 Penatibus Avenue,A64 9RU
-38b1f68b-abb0-ec96-06b8-82b67fb0e403,E,Tangerine,70,1.82,"P.O. Box 960, 2234 Faucibus Ave",20682
-2877f5a4-060f-bc2f-abd5-2c60664eb9d4,E,Coconut,17,7.15,391-7634 Mauris. Road,C4J 0B2
-9dead605-c2b1-37b0-ade8-a9323a33aca8,E,Plum,128,5.33,1285 Mi Street,12-507
-5526ab66-0bc6-5359-994f-ebf49a3acaee,E,Quinine,83,3.70,"P.O. Box 956, 5351 Imperdiet St.",041476
-3f9cc72d-bce0-e917-bd47-2726764d22e5,E,Plantation Punch,64,3.19,912-280 Sagittis Rd.,41919
-c248c0fd-5bf9-cb9b-6e72-52b6f40a00f4,E,Lime,165,7.72,274 Luctus. Ave,864267
-96674147-bd85-6994-ce39-38e0fd3f85d2,E,Cream Soda,180,9.90,Ap #642-2214 Nulla Ave,50718
-d5499350-ef09-fcd4-d3ce-575eae7bf550,E,Root Beer,108,0.17,"P.O. Box 627, 9306 Consequat Avenue",TX0Z 6FM
-e5235b64-9f5f-3085-c2e6-d79e0623d295,E,Peach,196,2.93,"P.O. Box 303, 1055 Lacus. Ave",59852
-c790835e-0b6e-e20e-2eeb-d337cb85654d,E,Amaretto,150,9.73,Ap #881-9768 Mi Av.,46821
-095c3603-8d6a-5bd9-d822-328fd899f67c,E,Rum,35,3.43,"P.O. Box 561, 6076 Magna. Av.",508723
-7db21492-a30d-b2c7-793d-009fa5aeaf97,E,Orange Mango,184,1.47,"8470 Lectus, St.",2333 XV
-28b43aa6-f8fe-5372-dca5-71ac3132277d,E,Carrot Cake,86,7.18,"945-3190 Ante, Street",7508
-177be0d7-13e8-c7d3-e4ed-d888f0777cb0,E,Banana,124,7.65,487-4311 Sodales Road,1670
-50ecf5ad-e580-1463-9f12-a4aed564d3fd,E,Butterscotch,61,3.85,"P.O. Box 865, 1787 Tellus St.",5757
-0105a57f-d45c-c204-6c76-818c70503baa,E,Peppermint,118,7.87,"P.O. Box 614, 7893 Orci Rd.",4911
-ccfaf2cd-da51-8842-0a3c-8c663abd8564,E,Cherry,32,8.57,Ap #586-940 Nunc Road,81104
-e826d22d-099f-c645-cf59-2a4dfe791172,E,Carrot Cake,132,5.27,Ap #951-7379 Lobortis. Rd.,02495
-c7a99276-89e3-a26f-1c88-695ddcdb0afc,E,Quinine,171,8.26,"951-4966 Lorem, Road",9393
-8279ba95-dfa7-fc1f-5dcc-b928d613dac2,E,Raspberry Ginger Ale,162,9.35,5333 Sem Avenue,60709
-b73f1822-4ca7-4fe2-f436-116039cc67f3,E,Peppermint,70,6.47,301-5053 Aenean St.,8852
-934c2064-8638-3c0d-c626-cd6284d29ce9,E,Pear,186,8.72,Ap #744-3642 Eu Road,89408
-b9991b9c-81f5-143a-3cad-c54ca78f106a,E,Peach,12,2.66,917-2780 Aliquet Ave,28645
-d8ddfb38-b9de-fed0-814c-196a5f5f04f6,E,Passion Fruit,20,9.77,"P.O. Box 772, 5333 Sagittis Rd.",8849
-4985d2a7-199b-915c-975e-565611cbac45,E,Watermelon,190,0.20,"P.O. Box 381, 7913 Ut Rd.",9977
-9b518937-d9b7-7d9b-828c-2d700cd0dfad,E,Vanilla,194,6.12,Ap #861-9159 Mollis Rd.,20302
-85ba0430-6509-d916-2e76-5fc61c90cf46,E,Prickly Pear,61,7.45,"P.O. Box 789, 5742 Lacus. St.",8944
-49bae191-2bae-ccff-b6c0-0adb9d5dd2ae,E,Mango,90,5.26,4361 Mauris. Rd.,H0E 9E8
-52536221-3d26-0ec2-4bc7-cb77f3862a69,E,Butter Toffee,159,4.17,"9780 Enim, Rd.",6810
-a684cc8b-bba6-99a1-8ca0-f6928bb16688,E,Pumpkin,160,9.83,"P.O. Box 919, 7310 Lorem Rd.",24377-962
-7b79dd10-e607-d845-ec71-8e16e3b936c3,E,Peppermint,145,5.11,5238 Integer St.,99423
-49706e6b-c842-e09f-d540-3193c5c3bda6,E,Key Lime,143,0.15,Ap #124-618 Cum Avenue,4057
-461fc6a7-8c7f-eefa-755c-b12e08828879,E,Hazelnut,51,9.12,8101 Nec Road,58163
-661678a3-bbb3-c648-3fad-ef1dfac0f589,E,Lemon,124,5.91,792 Nunc St.,85-261
-c9a670c0-8189-ae6a-cc58-c50754fd399f,E,Toffee,42,7.76,"619-6887 Sapien, Rd.",484059
-761a4361-938d-e206-7638-a6fa229d0395,E,Mojito,68,2.86,"Ap #519-3666 Eu, Ave",35653
-243e30fd-ba07-83bd-8db1-32a19730aea6,E,Long Island Tea,104,6.86,Ap #506-3571 Nonummy Avenue,48910
-25a8f63f-7ee1-0f5f-ddcf-1c2420181e57,E,Butter Rum,166,6.65,Ap #340-1643 Luctus St.,99642
-ebbc8fac-e4df-75a5-c844-c340fcd2d6fb,E,Blue Raspberry,70,2.70,Ap #841-9677 Magnis Street,37769
-2e20684f-c7e5-715c-9ecf-ded598822182,E,Cotton Candy,142,7.65,4500 Molestie St.,585091
-1399a762-1da1-385f-457f-c55cac724fbe,E,Raspberry,145,9.11,901-4118 Dignissim Rd.,6154 TM
-56208528-9d08-7232-b2bd-2228a7fcba62,E,Spice,108,8.43,"P.O. Box 523, 6309 Auctor, Avenue",56991
-a5595d75-0a58-4a56-a60d-7ad3bd6c3ec4,E,Graham Cracker,134,1.68,437-6000 Primis St.,815662
-296c82cb-28ed-f560-dfe0-fb0dcdea17cf,E,Cinnamon,112,7.72,136-8671 Vivamus St.,9425
-de2a6247-0e72-d313-e6e3-593d02920c04,E,Lime,145,2.75,3131 Lorem. Ave,7931
-1cc434f6-f84d-61dc-c2ca-59b98d321ba1,E,Hazelnut,112,2.74,550-3323 Mollis Ave,55378
-fb7e094f-052e-f9a1-b7f5-a39ccd9843a0,E,Kettle Corn,117,2.40,"7104 Vestibulum, Ave",RA7B 0IE
-87ddca7e-5a79-2902-7590-3faa02b184cf,E,Key Lime,96,7.24,Ap #719-3346 Ac Ave,695034
-867f61dc-baea-1f71-db4b-98e1bfd6c608,E,Orange Brandy,58,5.12,614-1454 Ipsum St.,D18 7XW
-2d6e1905-4b21-c55c-dcba-9a6c5f06194f,E,Cherry Cream Spice,71,5.79,562-9988 Bibendum Rd.,2727
-dd90f4b3-7ab7-a79e-394e-4814b8aa9b7b,E,Fenugreek,165,3.88,Ap #711-3145 Natoque Rd.,4623
-55bb4f1d-28e0-fde7-e272-daa004631ee9,E,Bourbon,22,2.08,"P.O. Box 769, 8544 Semper, Street",60801
-3aa72387-385c-fecb-d07d-f55785a34685,E,Butter,93,9.52,"P.O. Box 287, 132 At St.",39247-066
-7211e741-132e-17ea-514f-e755a1096cf8,E,Blueberry,18,3.85,Ap #772-3407 Lectus St.,630372
-054750a8-cb31-1ed8-01b9-01a1f61bfa57,E,Plum,99,8.97,7095 Dapibus St.,H7W 2KI
-6fa4f576-6071-fd07-9d79-8464bbd21e4b,E,Fuzzy Navel,155,8.80,Ap #843-636 Mattis Ave,85966
-a89c2476-6e3e-26d2-0bd4-3eb90e25f88a,E,Rum,141,7.79,3495 Vehicula Av.,4742
-9dcf94f3-b261-a4df-0677-819282138fa8,E,Kettle Corn,32,3.92,"P.O. Box 214, 6554 Augue St.",V2P 4B1
-d1b8c570-30fc-9289-cc59-d986cb001a9b,E,Passion Fruit,191,6.19,Ap #514-5197 Fusce Avenue,R45 1WL
-75299e58-b691-d7e6-d6cf-a00e024a9a12,E,Melon,10,6.34,"P.O. Box 655, 9519 Eu Road",25136
-b6d5b900-e171-2f24-5aa8-94c7fd1fde7e,E,Pina Colada,115,7.10,"P.O. Box 276, 9508 Nunc Road",144508
-70ad5830-9f11-b4ea-5aee-bc26070e968d,E,Cookie Dough,50,4.93,4891 Quisque Av.,16092
-cdf3d82a-397e-a913-7047-41cc7bf792a5,E,Marshmallow,138,3.45,Ap #949-5188 Sagittis. Avenue,04393
-240ead1f-5e35-b56f-f74d-e68613b38f18,E,Sour,22,2.29,"Ap #462-1056 Urna, Avenue",788888
-a3b078cd-8d2f-7b79-b2cb-345ee685dcf8,E,Vanilla Cream,107,1.59,Ap #814-1929 Proin Avenue,14728-030
-145d3729-3961-da08-6e2f-2c3f2982fad3,E,Cherry,144,3.67,5494 Ut St.,51053
-a9e7b850-25a0-dbb6-a0e3-d272f1aec48a,E,Vanilla Cream,168,7.39,926-1311 Netus Avenue,2347
-2c907a2c-25bf-dca9-6bdb-9624e5cfdecf,E,Ginger Lime,94,5.05,"P.O. Box 712, 6182 Odio. Rd.",9232 DJ
-bc15eab6-6829-8c0a-32d3-905282b028a4,E,Mojito,166,6.60,495-7116 Amet St.,C5G 3H6
-28f5f3e7-decc-7f9e-1d4b-430261ac3f57,E,Almond,124,9.50,Ap #339-7549 Odio Street,31970
-6cc1e5a8-f89a-3779-27ea-c800e31557e6,E,Ginger Beer,131,5.12,6908 Ultricies Street,508403
-ac921c49-8a53-2307-9490-720b253c13c5,E,Prickly Pear,67,7.03,216-1213 Ultrices Ave,56544
-c98161e7-bac9-97e8-b88f-d01f7bd3534d,E,Kettle Corn,151,5.20,8850 Urna Road,60917
-b1757d30-8e53-a498-b405-e8d41e240296,E,Cola,172,4.83,952-103 Odio St.,28853
-5451de6f-59b5-5e93-5c6d-9cd135bd054a,E,Peppermint,68,0.10,1118 Ac Ave,60867
-c858c44d-383e-0758-e81a-57919a4b70ef,E,Lemon Custard,103,2.80,"P.O. Box 627, 1094 Urna Road",8268
-a0a75a24-fade-8cdd-e7c8-42a6b3b89801,E,Tutti Frutti,12,7.95,6174 Enim. Ave,7016
-2a7bd6be-9acb-9e12-d26d-33f80e70d3c5,E,Cream Soda,11,8.58,848-4573 Et Avenue,7407
-063af72f-b213-dbce-a62f-6035773c30d6,E,Caramel,121,2.55,"P.O. Box 464, 4669 Aliquet Street",683654
-3baf2ce5-d4e6-697c-0293-d4789ff5a457,E,Cherry,160,4.30,Ap #855-4737 Ac Ave,13643
-2a6ceecb-ce2d-d9c9-2021-6e70d1ec4ba9,E,Mocha Irish Cream,199,3.62,"P.O. Box 355, 3252 Ut, Avenue",00312
-9c095d25-037b-656a-90b8-8cc0a61cd3e1,E,Lemon,29,7.82,"P.O. Box 444, 2907 Non, Street",E6T 9Y0
-1fd1d9f2-de75-ee2b-5b0d-ec1892386d1e,E,Whipped Cream,31,3.96,9894 Congue Av.,40789
-cc91bfbf-78f7-e095-1b29-20d7ff660e86,E,Cream Soda,168,0.42,"P.O. Box 474, 1204 Lacus. Rd.",02871
-98b0d0a1-ca44-8ba8-5d04-7436ac73ca74,E,Whipped Cream,128,1.78,Ap #422-128 Ullamcorper Rd.,9888
-97b7e5c1-a749-1d21-6759-2d6ba8185086,E,Green Onion,157,2.89,"P.O. Box 551, 7799 Tincidunt St.",B68 5ZN
-8d13a59f-1796-ed94-ddc1-9fd47287fab3,E,Green Onion,137,0.99,Ap #243-9088 Nec Street,FK9 6OI
-a0d21931-6016-5e75-1100-be184496684f,E,Black Cherry,15,2.18,7475 Neque St.,K0M 8K2
-d5d6d2cd-5cd1-dca0-4e1c-fa593f6d8c5a,E,Anise,88,5.70,"P.O. Box 328, 5435 Nec, Rd.",9493
-e06a1623-f32c-61e0-9d0a-a95a4bd8ef89,E,Lemon Custard,38,4.04,"P.O. Box 595, 4359 Volutpat. Road",52609
-ad7760be-d15e-033e-32b9-1e9f1479314e,E,Tequila,71,5.89,365-2385 Aliquet St.,24-051
-58646159-788f-466c-8163-a53834c3eb11,E,Plantation Punch,190,3.57,"P.O. Box 796, 4248 Curabitur St.",05279
-aad450a6-2689-017c-9541-40b5f62e9527,E,Mango Orange Pineapple,68,5.99,521-2338 Tellus Ave,6538
-e93d42a8-acca-2b2e-262b-fe032594750d,E,Banana,29,2.32,"P.O. Box 363, 1603 Nunc St.",300872
-d2f265c1-987b-2192-ad80-9e6b9746c47c,E,Dill Pickle,44,9.60,510-1139 Tincidunt Av.,531035
-f0bf82c8-49fb-8d20-0414-5f7e4e846d78,E,Melon Kiwi,85,2.93,"Ap #826-4093 Elit, Road",V7M 5H8
-a9f6467e-189a-ebc2-87c4-5b8ac7e12b24,E,Orange Mandarin,131,2.57,461-4596 Morbi St.,9438
-7d73e7f0-1f79-b81e-c6f3-ea739a70daf1,E,Mojito,150,9.21,8789 Nisi Rd.,9579
-75b0105b-bc57-22da-5359-3bac9948671d,E,Marshmallow,17,9.31,1913 Amet Ave,VY6 4XV
-673ca0f2-c8ec-fe45-6e6e-2e3313ecd687,E,Honey,200,0.50,"P.O. Box 871, 1962 Molestie St.",1652
-e093bce2-95ec-792f-43c4-ec5031c4ddeb,E,Pecan Roll,49,3.18,247-5809 Tortor Street,67778
-ae5d4005-a403-ae2b-d70b-90787bc5da2e,E,Tart Lemon,13,8.45,9477 Arcu. Rd.,65364
-9f16b76f-86c9-7bc7-a473-0fad4d6d5ce5,E,Wild Cherry Cream,126,1.53,"P.O. Box 935, 4975 Vulputate Road",756434
-5ff95319-42a7-7a58-d217-258e6f58f0b9,E,Mango Orange Pineapple,97,7.57,"P.O. Box 520, 270 Amet St.",874839
-524dcbd9-4f5c-18a7-7377-eb27d714e228,E,Black Walnut,29,1.40,4875 Erat. Av.,91116
-c8a7e46c-bb82-c79f-1c61-8c26143df87f,E,Plantation Punch,74,2.25,254 Sem Av.,88056
-a71d3d6f-d574-7ace-8b06-d5df7f26400b,E,Fuzzy Navel,17,9.01,"P.O. Box 305, 5203 Elit, Rd.",71228
-8a6b34c3-1935-c4bc-35b7-2d59d075ded0,E,Pistachio,98,0.26,791-4036 Nullam Avenue,31902
-4b2d70ef-8ebb-f7cc-f213-245048c27411,E,Black Licorice,93,1.11,"874-8648 Vel, Avenue",93856
-d1586287-d5b1-1a30-ecc9-ca08dbb5a9be,E,Black Currant,66,4.60,"P.O. Box 817, 2998 Erat. Road",58707
-1edde238-9bcd-83e6-df7d-b5a0ae148eab,E,Orange Mango,89,7.77,"P.O. Box 870, 9422 Adipiscing Rd.",97572
-a5c0ea26-81be-7821-924a-fecf4e295f42,E,Orange Brandy,40,4.60,"P.O. Box 487, 2204 Tellus. Avenue",7262
-52e73c12-d345-5506-e99a-8cc67d06e1d4,E,Toffee,88,9.27,"P.O. Box 286, 6564 Purus. Road",10208
-476c3d51-8846-e401-7d0b-25a7396d39d5,E,Wild Cherry Cream,26,3.39,"P.O. Box 647, 8329 Diam Avenue",2282
-79a588aa-a453-0686-58e4-37264273d043,E,Tropical Punch,87,8.16,Ap #288-5623 Sollicitudin Street,23853
-dfa9e726-c88c-27fa-310c-e4b7fff008f4,E,Rock and Rye,47,6.07,Ap #635-7521 Nunc Av.,55691
-d35c90dd-403f-f19e-e23e-23b0bc4f6f67,E,Creme de Menthe,127,7.77,"Ap #810-4518 Orci, Avenue",7409
-228cad2c-aeb6-32d9-8cd0-4b819cbd9c51,E,Elderberry,84,2.04,6551 Pede Street,96872
-e12e5888-c1d7-9859-41fb-042f47ba4734,E,Vanilla,91,4.99,Ap #847-949 Consectetuer Rd.,895511
-2d4bc7a7-9f32-dc7b-65e7-1b818c0ac928,E,Black Licorice,15,5.42,315-6557 A Avenue,99246
-90867276-2bfe-921a-ef99-222d8416b12f,E,Apple,156,7.69,3811 Eros. Rd.,U0 9RQ
-77fe06ac-8f8d-0a0a-7781-7081568b6857,E,Cream Soda,16,3.94,"235-7497 Pellentesque, St.",57516
-c275f6cc-3649-2261-c169-2659cb942c1f,E,Coconut,44,1.86,"P.O. Box 909, 2837 Turpis Av.",41109
-91d6b3d8-e308-46e0-5712-616a7d3606b4,E,Toasted Coconut,14,9.63,289-2176 Interdum St.,8205
-8e8d12d1-244e-b641-ae63-ae0f18155d56,E,Pear,54,4.04,332-944 Semper St.,07888
-49d012ff-abb1-51a9-38ff-b5c6db1e9729,E,Peppermint,200,6.22,Ap #616-4804 Mauris Avenue,74283-886
-f116123c-14a3-325f-ed16-fb99d61c3b92,E,Malted Milk,175,5.90,2616 Purus. Street,371659
-3892e573-99f2-cb37-7e9c-d81f7ba1c5a9,E,Orange Brandy,20,9.49,Ap #950-5648 Mi Av.,27342
-02106e7f-acc8-f71b-63ad-700fe9a3983d,E,Cake Batter,68,2.47,8080 Hendrerit. Street,7603
-3a4bd80c-53d3-c3cd-282d-ed16f276f6b5,E,Raspberry Ginger Ale,79,5.65,3565 Molestie Rd.,95368
-f13ac4ac-f6fb-820f-cb25-1c0d4fe30789,E,Vanilla Cream,188,4.55,Ap #331-2444 Eget Rd.,35331-730
-d9ff26d3-8e72-5ce6-f179-647ff3bb6dff,E,Lemon Custard,42,3.53,808-8375 Massa St.,97-503
-9f2d549a-6cc7-52ae-d817-4800e119d748,E,Carmel Apple,53,8.59,386-4271 Ac Av.,6614
-ced2d738-e5c8-25fc-bd72-427aa63f78fc,E,Lemon Custard,10,7.69,"P.O. Box 585, 8865 Parturient Av.",63447
-e0f951a4-06ab-9b90-d59f-8ef34a2e7f3a,E,Pumpkin,140,7.03,648 Eu Rd.,044480
-a4b92940-fcae-2877-ac50-e5c319ff448f,E,Butter,23,0.24,"8269 Nec, St.",33732
-c4092dca-72d9-53c8-7003-858c8baecc64,E,Rock and Rye,139,6.30,"Ap #898-9810 Leo, St.",X71 8AV
-d3c7243b-f9fc-da93-b850-f9f4a7d72b07,E,Cheesecake,64,8.13,Ap #500-7058 Cras Ave,78516-729
-befd374e-fa9f-e32b-e8f4-5617694d6d2a,E,Cranberry,192,1.89,Ap #651-4778 Tincidunt Ave,51061
-81ef72f8-10d5-74ad-50ef-5f9680d81626,E,Acai Berry,185,6.97,"8780 Pede, Road",2601
-766e4fe7-7cfe-374b-7fd2-d0825d181219,E,Tangerine,22,1.85,4679 Arcu Street,04022
-37874dd9-baa0-6e43-ab7e-5f09bd47f6cf,E,Rum,97,4.34,Ap #531-151 Metus Avenue,64-207
-c8a0b93e-28b6-b8a4-7e95-4f3aa684708f,E,Plum,163,2.34,Ap #526-2527 Ipsum Rd.,407296
-21cf87d4-fa00-59ac-c9bf-35cc420df8fe,E,Horchata,50,9.44,Ap #141-2070 Cursus St.,15705
-0f1cc285-790c-d836-4ee2-14bc71ce9a22,E,Lemon Bar,94,2.31,"P.O. Box 742, 7769 Placerat, Road",86377
-e7571e12-32c2-5af2-fff2-24c266415f3e,E,Doughnut,68,8.40,161-7158 Auctor Ave,31-428
-aff62afd-e639-8668-45d4-42689c6f0e94,E,Huckleberry,128,6.40,332-8209 Mollis. St.,PK7 5JP
-67d8f4c3-43da-399f-c42b-d229cefaf1a2,E,Papaya,49,3.78,"P.O. Box 724, 1076 In Road",40028
-5925c6af-0ae3-96b1-6223-9d916775e51e,E,Rock and Rye,68,6.33,Ap #765-7063 Nunc Street,5234 LO
-c9eb1a4e-45ff-aa21-0783-2495b302ae8f,E,Cinnamon,141,4.95,232-1222 Placerat Road,9764
-2614ba08-7cd2-b221-24c7-1ee4967fbdd1,E,Orange Brandy,127,4.37,"P.O. Box 687, 6935 Mauris Road",MO13 2CE
-2c99f8c3-f65c-e741-7cbc-dbacc673bc35,E,Ginger Beer,17,3.98,"P.O. Box 733, 7959 Nec Avenue",171710
-c276e8d4-dd1e-6489-23cc-2416c2245289,E,Toasted Coconut,181,9.76,4559 Vitae Rd.,25213
-e50e65c4-8a77-f33b-9e2c-b21c93cc2a19,E,Orange Brandy,165,6.92,Ap #654-1752 Ante Avenue,144433
-c1983bc4-8f38-c805-8ea4-020c65903604,E,Pistachio,182,0.02,411-2403 Id Street,2031
-c2d367ed-7e94-fa69-6df2-16f41995823e,E,Cream Soda,164,2.73,Ap #948-678 Mauris St.,994866
-73831784-e873-cf16-4d4a-9d90e8b77cb7,E,Smoke,18,3.74,324-2458 Purus. St.,C8 3RK
-a68eef82-d39c-1e65-33ca-2f2d684132b8,E,Cola,115,0.03,963-7591 Diam. Avenue,G6S 2N0
-4017c752-2290-26b1-7bd1-90601bec4e0c,E,Tonic,92,1.27,"P.O. Box 154, 9137 Rutrum St.",60254
-026ab636-c5ef-a5dc-d11e-8d71776697e4,E,Almond,35,3.40,457-9782 Ac Street,70200
-c09ed5de-b31a-1ff8-712c-f94934f5bd6a,E,Tutti Frutti,89,8.30,789-3293 Pretium Road,92678
-416ca157-cacf-dc72-b2ed-c0b0e363d5ff,E,Candy Corn,103,1.60,"P.O. Box 618, 9042 Blandit St.",23204
-521957e7-2e5c-029e-4dec-b33b2680ebd9,E,Raspberry,59,7.88,5689 Sit Road,8389
-fb75d292-1357-325e-9784-63e141a386d0,E,Tonic,48,2.48,"P.O. Box 252, 9899 Interdum Av.",C1N 5S6
-5a725323-8329-140e-ced3-36d6cb1ba109,E,Marshmallow,124,4.76,Ap #563-2209 Malesuada St.,86003
-3f9bd4f8-75ec-465d-2113-a4b769a58409,E,Pumpkin Pie,88,1.95,Ap #865-7425 Fringilla Road,942579
-42d9df86-62fd-9886-134a-afad40e05cb9,E,Lemon Custard,49,5.49,7540 Mi. St.,6612
-6d32630c-3257-674c-736b-adcde602bbc2,E,Maple,107,6.16,"Ap #400-732 Lacus, Rd.",1576
-76064bf3-9b80-fe1e-6571-cc8c2305b49e,E,Birch Beer,22,5.22,Ap #941-8318 Fusce St.,6756
-b55595b9-28ab-eee5-a381-b22de82dc129,E,Wintergreen,134,1.89,"P.O. Box 547, 9773 Risus. Rd.",62480
-a24c8b9f-f62c-41ac-7f5c-515ba03b7572,E,Pomegranate,90,8.70,"9087 At, Rd.",83260
-56bcbcff-caaf-7b13-5912-d4d01502f12a,E,Tequila,20,0.24,415-2575 Integer Road,42913
-930a9cff-5112-de88-fc98-c06d8f3eaf7c,E,Maple,161,8.51,843-4526 Risus. St.,88834
-d0c74435-2c21-2857-8fc3-ff56bd1f711a,E,Orange Mandarin,44,1.14,"5168 Ullamcorper, Av.",47427
-f9cd4d8a-da48-eb89-2948-c512dd9cb79b,E,Bavarian Cream,184,3.22,1009 Massa. Ave,30011-393
-7bdd30c3-0015-c3b2-62d4-822382c9a27f,E,Cherry Cream Spice,117,0.04,"P.O. Box 903, 3926 Enim St.",16480
-b4b2a3ce-3f9a-1fb1-619a-76a2b2d49073,E,Rum,91,9.16,125 Dolor. Avenue,9093 ZN
-fcab123b-26ca-dacd-06aa-6594cc56bd6c,E,Ginger Lime,171,1.30,Ap #299-9813 Lectus St.,961776
-22768917-fe10-f010-8535-10684475c7a0,E,Eucalyptus,196,2.86,687-3582 Pharetra Rd.,238512
-5d9f79a9-fef5-5973-d2ec-ba985b85af93,E,Eucalyptus,70,6.09,"P.O. Box 566, 7431 Laoreet, St.",75365
-58da559d-822a-06bc-f6a1-5410692d31ad,E,Marshmallow,198,9.94,4853 Amet Avenue,689721
-f74a916f-e279-b372-c811-ce7465e66190,E,Coffee,95,6.09,"P.O. Box 397, 8218 Molestie Street",4459
-f153580e-a21a-b93a-227c-4041d710a784,E,Pecan,137,3.30,"P.O. Box 852, 937 Commodo Rd.",50716
-13beef5b-e9b7-b759-4692-16216344a90f,E,Peanut,46,4.26,7462 Ultrices. St.,61610
-82777f62-23e9-825e-76cf-af09ba0fdab6,E,Pineapple,60,4.10,818-4291 In St.,8618
-2bfc10aa-d517-7153-45e6-1f460f92a1ea,E,Acai Berry,158,3.48,234-8149 Arcu St.,R5A 6B7
-8bdfd17c-4de6-22cf-2231-6e3207127b25,E,Cranberry,89,8.83,"6056 Ornare, Avenue",F05 6OQ
-b7e3a8e9-51a9-5b36-e3cb-af5b8860cfbf,E,Raspberry Ginger Ale,100,0.22,Ap #201-4901 In St.,7357
-94b68a43-1dc9-71f4-5b55-5a7f737c1224,E,Peanut,108,7.55,781-8490 Magna St.,2485 GW
-3df9dc16-6851-4ac8-6bde-d42dffca55f1,E,Pineapple,83,6.70,Ap #666-7479 Mi. Avenue,5362
-88c27b7d-1982-9c1e-d6af-78f8c93b6b70,E,Mango,137,9.90,"P.O. Box 966, 3911 Neque Road",5767
-ede36b07-6ecf-d6e3-c4a5-e25f748f2bc5,E,Melon,142,2.97,"8444 Vel, St.",74272
-0339602a-4ce8-4373-e2c6-d827ed429c56,E,Cranberry,117,3.75,Ap #100-1020 Sollicitudin Ave,390568
-8d42c97f-4f2b-6677-8a7e-d7cbbdf273e7,E,Pineapple,56,3.95,168-2826 Ipsum Road,668607
-28244fdd-2645-c1b3-0e56-2a8cbca572ac,E,Pear,79,9.79,Ap #751-3914 Cum Rd.,69459
-dcd0d631-41ff-6fda-fe3f-5ee08626a878,E,Melon,31,5.84,Ap #968-5000 Pellentesque Road,L4F 8GM
-1f92b835-adea-1052-8ac5-dcde3e7e8c73,E,Peach,39,6.72,6613 Ornare. Avenue,2403
-65439fc7-164a-4c91-4854-88d2d3a1da72,E,Apricot,82,5.17,343-3391 Enim Rd.,62164
-b50f3fdf-a4f4-6a47-6bf3-6ee7675a2b83,E,Mojito,129,6.78,Ap #408-9586 Blandit. Avenue,21946-597
-92f011f5-fcbf-df0c-b7cc-724cbf7dbd19,E,Kettle Corn,18,0.01,7673 Risus. Street,5854 HL
-fe733fff-d336-7578-dac5-085a0b5126f6,E,Blueberry,169,8.50,"P.O. Box 709, 8954 Aliquam Av.",ZK8O 5LH
-ad7a8a06-7dc2-2cad-94fc-197153116da6,E,Ginger Beer,160,1.35,Ap #942-7828 Ullamcorper Rd.,9180 IH
-ce3083c2-67e0-5657-6858-3c3de82bd32b,E,Egg Nog,149,9.54,Ap #200-380 Semper Av.,R9G 7X9
-f4f08f4e-3c0e-eb76-9b28-e74dac0bc1c5,E,Eucalyptus,17,9.89,"P.O. Box 876, 7346 Tincidunt, Road",61908
-edadc1a5-cbc0-b7b1-e03b-6cb5174c0876,E,Mojito,102,1.83,"P.O. Box 136, 496 Fringilla, Av.",4947
-3b5172f6-d6f5-405a-2053-5fcd5f1400b9,E,Elderberry,112,3.66,"P.O. Box 621, 307 Ipsum Road",50005
-3162b43c-d5a5-0f61-2f0c-064af8858d65,E,Bacon,126,5.56,Ap #177-5009 In Rd.,61482
-6f8d5c50-eff5-2e9a-78a1-a2bb25c186e8,E,Bubble Gum,75,7.80,"P.O. Box 541, 4002 Sit St.",85048
-663a2440-5824-d43c-5178-8f45d5e4ba36,E,White Chocolate,49,9.40,"Ap #244-5523 Mauris, Av.",BB5D 9XZ
-563e85b8-5331-1b1a-6aab-33f8bf8a71db,E,Bourbon,134,6.71,Ap #746-5011 Cum St.,10700
-891253a3-d1b2-5c70-804e-edb171370e7f,E,Honey,53,0.37,"P.O. Box 486, 9278 Aliquam Avenue",1396 WM
-2a0b3b72-581e-6ddc-37c9-5f94459943bc,E,Mojito,166,8.69,Ap #902-4366 Accumsan Ave,49243
-18cc378f-10e2-ce81-11c5-2c548934b133,E,Watermelon,126,5.55,"P.O. Box 683, 2204 Sed Avenue",YK5J 3ZB
-81b28255-e6cb-ca0f-0a1a-2dbd95b08231,E,Melon Kiwi,169,3.92,Ap #196-7553 Suspendisse Av.,46400-067
-b04ce7b8-62a3-b8b2-5b4e-c5b86d569534,E,Butter Pecan,12,0.31,577-1087 Ultrices. Avenue,CO9Y 9EC
-a567a382-3daa-0af3-898e-943f53f2e90a,E,Fruit Punch,85,8.75,"P.O. Box 613, 254 Phasellus Avenue",118935
-341dc53a-b7a2-8865-09fc-1711aafa564d,E,Fuzzy Navel,65,4.87,"P.O. Box 865, 3874 Pulvinar Rd.",FE2 6WZ
-d65d9c63-7821-ec66-a164-bd38f168893d,E,Orange Mandarin,32,6.45,315-7035 Pede. Rd.,6065
-5e533c51-0c0d-442c-b45e-966708eed163,E,Cinnamon,19,4.91,9309 Nunc. Rd.,C6G 2K8
-14570435-1f57-962c-8ae2-396dfdb43a53,E,Plum,88,0.92,"P.O. Box 312, 1816 Vestibulum Rd.",65304
-5031aac0-59bd-3838-a5e8-203aa4397256,E,Kettle Corn,184,7.26,"P.O. Box 936, 1881 Dolor St.",46477
-d353c675-07c2-32ee-49ff-1427d903d8f0,E,Ginger Lime,53,7.76,"P.O. Box 925, 802 Dui Av.",11733-630
-85b04060-da2c-e916-620d-d1811d52a69e,E,Peanut,182,5.39,Ap #479-6449 Nisi. Road,61706
-5889d56d-3c4f-9e21-9c91-77cfbf933f0a,E,Kettle Corn,153,2.28,Ap #587-3717 Et St.,48150
-a51048c8-543f-c8c8-1d8a-e1399d508643,E,Vanilla Cream,75,2.70,2659 Et Av.,5256
-401d5ddf-c930-8a5d-562f-fff944fcbcb2,E,White Chocolate,63,4.30,"P.O. Box 923, 8978 Ornare Street",95399
-d22e2aff-ae41-81cd-886b-5c27eca2a15b,E,Vanilla,103,2.92,102-1455 Magna. St.,71714
-abfc367a-cc4b-7a1c-fb29-88d5dcdf9f02,E,Toasted Coconut,61,4.43,"389-5461 Erat, St.",4457
-553c08ed-d23c-1569-49fa-31acd377cd97,E,Butter Milk,59,0.54,1035 Tellus. St.,726689
-04c8a45c-e8d7-a517-4acb-664927ddd581,E,Cinnamon,127,3.29,"P.O. Box 734, 2598 Ac St.",103966
-61c16ab7-bb9b-9ff7-dd57-cd2ba3ef1688,E,Plantation Punch,120,9.75,Ap #575-7292 Proin Rd.,9103
-986d7a07-ec9d-ddf2-2b0c-95d269a692c0,E,Prickly Pear,11,8.81,8719 Nec Rd.,7876
-63e221b4-a3ad-f1c1-06d1-a81a5725b560,E,Macadamia Nut,136,8.59,"P.O. Box 432, 2695 Turpis Street",0306 CI
-d3732a46-04cf-9225-5b8c-6ef0a923df3b,E,Orange Mango,37,7.30,"Ap #422-7075 Orci, Avenue",99896
-101659f9-21e8-dfed-054b-9c49679dad7e,E,Ginger Ale,54,9.61,"P.O. Box 168, 8988 Mauris St.",W7 6YQ
-17b262aa-9824-cda6-90b7-57f7c9103cd5,E,Whipped Cream,156,5.44,8718 Lacus. Rd.,722845
-16b2a8bf-f1d7-d6e0-b454-90ce9414718d,E,Passion Fruit,143,4.35,805-4057 Sed Avenue,17104
-00bd1d4b-44b4-6f34-9a47-8588f923a9e2,E,Chocolate,10,2.68,Ap #846-2237 Elit. Rd.,27049-852
-19320527-b49f-d04c-92a4-554a4509b77a,E,Chocolate Mint,100,3.27,"P.O. Box 309, 3351 Vel, Av.",23088
-1f1b546b-f105-0a85-167b-27dc591d3dfb,E,Blueberry,36,1.62,Ap #776-9951 Tincidunt St.,27509
-86dfb8ff-ccde-9220-5dfb-dc7b500c7913,E,Blue Raspberry,76,7.33,"P.O. Box 546, 6812 Sem Ave",178368
-65e9e053-3464-face-20d9-051ebb8b9397,E,Bubble Gum,11,9.62,Ap #286-7181 Venenatis St.,109588
-95e26365-f053-1c40-e732-f4309a72b4e5,E,Quinine,190,2.24,1952 Neque. Av.,18-660
-3524e43d-8a84-0503-87b0-b4bae380a54b,E,Apricot,19,6.68,Ap #403-9651 Phasellus Rd.,943982
-d0e873e9-535c-3f01-bbb5-536fb2eed758,E,Toasted Coconut,191,3.44,Ap #690-8350 Malesuada Rd.,355044
-04979f57-9925-5140-beb1-9c4751a347bc,E,Orange Mandarin,36,9.98,"9810 Ante, Rd.",01025
-6ade1c74-1263-4dac-2797-1eee3e0ab568,E,Butter Pecan,17,4.08,Ap #147-2407 Sem Rd.,78517-542
-2719753f-de33-24cb-ff24-b8e4521fea2d,E,Bourbon,99,6.48,"P.O. Box 371, 505 Praesent Street",88713
-d12c1be4-41ea-1421-9a27-6d55e4a989eb,E,Strawberry,121,5.66,3802 Lacus Rd.,65814
-18a983e9-0126-325d-53b6-214a58f7ac0c,E,Vanilla Cream,138,9.03,"P.O. Box 305, 6823 Pharetra St.",7179
-b4f17f08-3a01-e5a3-c5c7-d1f7aa4f5b09,E,Tart Lemon,143,3.68,329-2476 Ut Ave,25113
-856d7c24-98db-ba9c-31fb-1b3f7cf0c7ea,E,Whipped Cream,23,1.10,4130 Auctor Rd.,89-977
-bcb79c38-c228-7eaa-ea58-c86c9da3f755,E,Grape,168,8.19,979-3052 Sem. Rd.,61641
-5cc9237b-dbdf-145e-d091-0539b1608097,E,Wintergreen,13,0.00,Ap #804-8487 Consectetuer Ave,40659
-770298b7-fb86-fde3-315b-5b6fe1a4feee,E,Lemon Lime,168,8.40,Ap #613-8133 Natoque Ave,74542
-9eb85f21-82c6-429e-80d4-83becd74e905,E,Wild Cherry Cream,196,8.57,"P.O. Box 716, 3262 Morbi Avenue",8298
-fad4fec7-fd72-5cd0-2d6f-76dc90846de4,E,Fruit Punch,148,4.98,271-5340 Nulla. Street,H3M 3R8
-87d0eef5-fab3-ced9-0529-eb283f92be6b,E,Pear,74,7.34,9040 Eu Avenue,435369
-89336809-b488-c653-3458-bed23448c4cf,E,Lemon Custard,42,5.38,6663 Et Rd.,A1H 8G8
-0880d3d1-a9e3-06b7-8c24-57957e49abcc,E,Margarita,36,8.36,Ap #522-7952 Nunc Avenue,5070
-9f47f902-4720-4ce2-9904-05089fb56e2d,E,Vanilla Cream,49,6.16,1274 Tempus Rd.,B4K 6N7
-a079b5e9-44e7-4a34-d4db-c28ff6ffb0c4,E,Cinnamon Roll,185,4.83,5266 Neque Avenue,51221-687
-65537551-bc43-7c34-fa41-339c9a767b4f,E,Strawberry Kiwi,149,5.49,513 Sed Road,36-170
-ca906fae-6839-16ce-57eb-16d9cfd89e83,E,Hazelnut,153,9.28,Ap #406-4499 Arcu. St.,516462
-8dd6d2b2-6b82-77bb-9e22-7b086ac85478,E,Lemon Lime,41,7.00,"P.O. Box 380, 5959 Ridiculus St.",9165
-4f347a37-b750-ef2b-9e92-607cffeef625,E,Pina Colada,121,4.34,4274 Eu Rd.,J8M 3N7
-30798b8a-7a13-4a08-0156-96e8dbb58731,E,Lemon Custard,80,1.91,Ap #615-4436 Praesent St.,V5G 9L1
-1f1488ce-5ef4-18b6-8cc7-950a70437e05,E,Berry Cola,177,5.35,5617 Adipiscing Rd.,UM8 0BQ
-9fa929ef-c35d-8a66-d7cd-9854f8bdfdc1,E,Orange Brandy,130,2.63,"P.O. Box 663, 5977 Pede Av.",9735
-e6a2bbbc-71c8-9a17-ab92-e6d677ae8efa,E,Lemon Bar,31,0.31,3893 Fringilla Av.,24479
-84591315-3cfd-5084-3b2c-efbd63d076b2,E,Horchata,100,5.53,"622-7390 Est, Ave",8759
-3be07a35-12df-413b-c7b3-2119c63799ee,E,Wild Cherry Cream,153,2.29,5784 Blandit Ave,38294
-15b4a3f1-680e-9283-a6ea-c88dd688fa17,E,Maple,78,4.41,5589 In Avenue,74440
-b18067c2-517a-2942-2e44-0580c4da1cb9,E,Nutmeg,128,3.29,Ap #327-4220 Phasellus Ave,1032 US
-0a0dd8fa-e986-6177-f284-ed22c0bdb544,E,Hazelnut,134,3.36,"8918 Elit, St.",44211
-4f5f64ff-f15d-5105-32d1-86b8a26fbbd7,E,Irish Cream,30,7.42,811-4751 Porttitor St.,90012
-6c995b17-308e-bb5c-6300-531b97e046f8,E,Grapefruit,93,7.92,659-6483 Lobortis St.,K62 3BU
-5dd0095b-4008-e2e9-13ba-2c23a6adb8ee,E,Banana,198,9.88,Ap #528-5598 Id Rd.,K5R 3H8
-c5fde938-9eb2-e2cb-ec96-5cc3b635b319,E,Butterscotch,39,2.29,Ap #654-1903 Purus Street,10602
-0e0bfcff-73c9-bde7-d5a6-203c61521ea2,E,Carrot Cake,58,4.53,1128 Ultricies Rd.,7370
-f38dfce2-28be-93ef-0ca9-a52540d811b7,E,Coconut,184,5.87,5855 Curabitur St.,43258
-b2be6f14-eeb7-440e-c88c-8e45e8fc8a28,E,Chocolate Mint,36,9.53,"784-4494 Convallis, Avenue",0148 IQ
-c5104dcf-dc40-cb2b-8e1b-af7a74f3b1be,E,Marshmallow,65,8.46,"P.O. Box 472, 9543 Eu Rd.",5250
-69d9c35b-c82d-1bec-958f-11aa0f215d0a,E,Mango Orange Pineapple,137,6.58,"P.O. Box 670, 4020 Primis St.",5830
-eccb9316-6c94-076f-ec27-46cadba9d3b9,E,Sarsaparilla,133,5.19,"P.O. Box 808, 1157 Quam. St.",41211
-e00cb263-1c70-8f2b-0baa-b965c94b8f8e,E,Peppermint,81,2.36,4114 Imperdiet Av.,69833
-4d39ac6a-bfef-b66a-418a-6efb93d643f6,E,Acai Berry,108,9.09,469-6210 Eu Rd.,2222
-a43bf370-a202-0891-cf35-1e5c32cdcb46,E,Melon Kiwi,104,2.85,7184 Lobortis Ave,03352
-6b64e26d-5bfd-eec4-9b4e-afa50968c54b,E,Apricot,118,1.99,2455 Eu Street,850944
-ef0907b7-5f1e-d3a0-c056-fa9caa8ea6de,E,Blueberry,162,0.33,681-8601 Nunc Avenue,3406
-99c3f578-4bb4-42bb-0dde-51ec0dd1fc4f,E,Lemonade,122,9.92,Ap #301-1910 Augue Street,33940
-f78db258-7072-a64b-0f40-347c59223961,E,Cherry,172,5.20,"P.O. Box 467, 3654 Molestie Ave",43159
-db2d1842-ccb2-e9c5-279b-14c2de590307,E,Cookie Dough,106,6.64,Ap #204-7907 Non Rd.,651799
-ba278a7d-4531-ee7f-81df-2a22a2d14cec,E,Punch,16,2.15,"P.O. Box 881, 1587 Mollis. Rd.",842347
-eec49535-e458-6c4d-9025-52ef9d9939ab,E,Butter Milk,95,5.20,"557-2393 Nec, Av.",63658
-e8cc10d8-b5c1-9309-2c22-3235cc367af7,E,Carrot Cake,165,6.97,144-5209 Libero. Ave,3152
-c69fea88-b922-1d49-80ac-c168710080c0,E,Egg Nog,101,3.45,"P.O. Box 381, 5146 Id, Rd.",17264
-23b26ff1-7342-d580-f9f6-d43c7580b848,E,Grapefruit,79,4.33,Ap #964-7232 Nisi St.,97515
-edff2edd-9139-89ae-bea5-10aed54a0c5b,E,Lemon,64,5.68,"P.O. Box 169, 2135 Porttitor Rd.",50-259
-b2ff0a94-5913-cde4-b9ab-40cc59d5520e,E,Lemon,30,4.79,2320 Urna Road,1003
-7ec5f2d5-8bdc-79cd-4548-80294050302b,E,Almond,67,5.75,499-7950 Pede. St.,5713
-44e6363a-db78-df04-be6b-4302945080b8,E,Pineapple,124,4.46,Ap #528-3178 Posuere Street,78543
-91ac4d23-494e-061b-a6f3-6a20b7807388,E,Tart Lemon,106,4.60,"606-5793 Tincidunt, Road",12683
-6235afe3-0cc2-2ea7-2b15-a985a76ffaa5,E,Orange Pineapple,200,5.05,"P.O. Box 294, 4993 Odio Rd.",R2M 0L0
-de9462b9-c2ae-1fa2-c455-32665bbfd58a,E,Kiwi,31,6.14,"P.O. Box 128, 887 Vel, Ave",96901
-9cb51f50-9171-6743-eb1d-59276c1ad708,E,Creme de Menthe,23,1.51,676-6530 Fringilla Rd.,S2P 0L5
-f36cfe8e-fd6c-3291-8936-40688f1cd459,E,Pomegranate,124,8.90,"P.O. Box 675, 4520 Tristique Ave",76947
-df919c26-4981-5f36-1905-4efdce940386,E,Key Lime,101,1.19,"P.O. Box 578, 3911 Imperdiet Rd.",20514
-f3406f83-34bf-46f4-a512-dbd5b0160963,E,Bourbon,11,3.46,Ap #572-4695 Lorem St.,7342
-9c457b3b-7740-2885-c267-5315edec62dd,E,Carrot Cake,131,9.16,"P.O. Box 126, 3866 Sed Road",35092
-af982f0d-48d7-a4fa-4081-12618d8ad91f,E,Pecan,50,8.95,Ap #515-3084 Quam St.,50711
-bbcc873e-d7e9-dac0-cdc4-3beedb772f5b,E,Ginger Ale,125,5.99,7455 Morbi Road,578848
-a0089265-a372-9697-844e-08f8208f79d9,E,Fuzzy Navel,196,3.34,"Ap #595-1170 Lorem, Rd.",41909
-f21d2e84-a9fa-6a47-0422-07935ab87956,E,Coffee,16,2.65,"P.O. Box 340, 5145 Nulla. Rd.",42705
-aced7769-04af-6c0b-5713-9cddf9cb5ba8,E,Papaya,139,0.68,484-5584 Habitant Rd.,1405
-f7f1b0a0-badd-c576-0793-e8712ad4b940,E,Almond,184,7.94,514-6546 Donec St.,1608
-61e6ff44-dd43-e747-280f-b9c4b0c6d9cc,E,Grapefruit,69,5.03,636 Arcu. Road,1150
-76d4e1c2-39d0-307b-4b95-56eccac926a8,E,Eucalyptus,39,3.17,"P.O. Box 678, 1692 Fringilla Street",2062
-947825f5-68b6-12f4-1156-899a2148b07b,E,Black Currant,164,8.57,"P.O. Box 706, 5691 Elit. Av.",84844
-a90f93e8-7082-44d0-e3fc-f1b6f15d9c31,E,Maple,19,2.43,5158 Eu Street,5076
-42c4b8b5-5a4d-25eb-8767-2b879fb0b0f8,E,Toffee,140,7.11,"P.O. Box 665, 2244 Suscipit Ave",1469 FT
-d9280e00-07cf-1b00-2eee-f944e298dadf,E,Bourbon,196,4.14,Ap #555-8008 Egestas. Rd.,2867
-1718d0c7-7629-8618-e190-6eff639a76a9,E,Mocha Irish Cream,87,5.95,164-4328 Erat Road,4273 FT
-c2605e70-9e7b-cee3-8f15-a9dc6cc4e461,E,Passion Fruit,45,7.78,"P.O. Box 507, 3757 Nam St.",N7Z 8N8
-27143ea6-c1e2-8ed0-f928-fb7d517c0b87,E,Bourbon,160,4.68,7987 Diam Avenue,47781
-2d2fc8ca-b420-fd97-6640-61e5d41f6cc6,E,Orange Mango,21,2.56,2778 Ante. Ave,8550
-cf3fb994-e4e1-28ea-b392-dc608a7baed1,E,Lemon,32,9.91,"P.O. Box 266, 2749 Lectus. Street",96673
-b206cf86-3aaa-f982-cfb3-d84e41e189e9,E,Candy Corn,170,5.10,653-9898 Neque. Av.,6958
-34a7dfba-ad3f-6547-a9f3-0be62b98ca81,E,Coconut,53,4.64,"P.O. Box 924, 8573 Ac Avenue",0993 GC
-919bfd2b-6ea0-454b-0cea-521844412d6f,E,Spearmint,137,9.83,7293 Cursus Street,10812
-a3c2bf5d-23aa-33e6-196d-ece01fa279e6,E,Mojito,102,7.37,Ap #253-6584 Aliquet Rd.,639050
-ed987a83-65d1-b2c1-90a2-9fd5cf729901,E,Coffee,127,0.99,Ap #849-6582 Ut Rd.,97533
-bd999b31-b51d-e330-8e90-46a4bece4f29,E,Black Cherry,25,3.09,869 Varius Av.,98-726
-9c679e40-c79c-594a-fc42-c72961fc500a,E,Margarita,60,9.80,Ap #192-954 Donec Ave,K3Z 3S8
-349d3da4-65ff-319e-c7c6-9433f9f18814,E,Raspberry,153,4.72,Ap #804-5597 Ipsum. St.,64-596
-57851d8d-c4c3-ba76-f056-5f91f2a3726b,E,Flan,137,5.97,5464 Neque Rd.,97751-455
-e737bef5-ebb2-3094-a2ce-54eff0c7a05d,E,Smoke,49,1.73,4421 Ac Street,091236
-c80be6b8-9bbc-f9cd-2b8b-37f30f818826,E,Sour,72,5.16,369-5988 Integer Avenue,78061
-07548652-39df-3e3c-eb93-0b9552a46412,E,Hazelnut,21,8.31,602-6746 Cursus Rd.,59140
-46876710-3506-86d5-566d-814ca4e10c32,E,Eucalyptus,193,6.26,142-8683 Duis Av.,86668
-b41a4fe2-2094-84c0-c18a-2aec7c357d99,E,Plantation Punch,21,6.86,5914 Tempor Ave,63587
-5599a92f-b48a-7b93-e085-7d189fa79433,E,Cheesecake,86,9.89,210-843 Eu Avenue,226657
-ddd1c76d-0934-179a-c543-9566a7439e66,E,Pina Colada,72,9.11,"P.O. Box 638, 9206 Interdum. Avenue",37815
-88c63d21-1393-0751-6504-4d5964708744,E,Sarsaparilla,90,0.60,"P.O. Box 783, 6939 Malesuada Street",978620
-3f9eb776-d224-0f80-b015-4ca6b252ccc1,E,Hazelnut,73,3.83,Ap #448-1086 Fusce Av.,1719
-ec9a533e-e90f-276e-dea0-deeb6bd5a55e,E,Key Lime,84,2.81,9896 Malesuada Road,05-400
-7a55a0bb-ec84-8a5b-b14d-1793c16aa9d8,E,Cherry,110,1.33,836-9333 Luctus Ave,20211
-df2717ce-ea1d-de17-bd0a-fa94c11278ec,E,Fenugreek,149,8.29,"P.O. Box 388, 1296 Mauris Rd.",829393
-bb046a40-c5ef-efc0-3065-818d2f3430bd,E,Orange Pineapple,165,8.27,3079 Sit St.,9298
-06abe3ab-6731-86e3-ef3e-4ae58d442dd5,E,Pink Lemonade,102,7.99,"148 Eget, Road",926860
-80f42c75-bcdc-1855-0743-0ed8500ceb7b,E,Melon,36,2.11,5388 Lorem Rd.,9210
-2f7884c1-76a1-4128-f696-6af542ef6f74,E,Butterscotch,136,4.53,Ap #261-7442 Nullam Road,10739
-e3704eb6-a457-94be-ed21-e61daa2a59a1,E,Cotton Candy,186,1.59,Ap #272-5089 Hendrerit Av.,0557 HO
-6bc7f777-44fb-4bfd-844b-3a1304c71ad7,E,Bourbon,84,5.73,Ap #181-8745 Luctus St.,29602
-f2e234a1-9731-aa68-2315-3e4e5541858e,E,Candy Corn,180,9.48,Ap #855-9090 Enim. Street,02261
-3708e64f-b378-74ea-366a-00b29159f649,E,Black Cherry,154,2.05,412-6587 Mollis. St.,84-475
-6f1bb519-79ab-6270-24f6-2880735bc6f3,E,Almond,116,9.40,"P.O. Box 375, 3296 At, St.",VD71 5HH
-032c890f-85fc-ce5b-9ebf-0013e2efdb21,E,Cinnamon Roll,18,9.06,Ap #732-7475 Aliquam Street,43447
-14a13a36-492d-72a3-9292-b8ed3a41bcd5,E,Cranberry,95,2.79,Ap #154-5329 Nisi Avenue,5051
-9eedcb17-0665-71ba-74da-0cbf8b0dc0e9,E,Orange,50,2.77,126-8450 Metus Av.,Y5T 6M1
-47d2174d-3d7c-1697-51f0-355b4122c2aa,E,Coffee,121,4.57,"Ap #936-8317 Montes, Av.",42-794
-1ca1081b-386d-46d2-a301-737a27022500,E,Mixed Berry,74,0.33,"Ap #665-8494 Ac, St.",985872
-fd63dfad-825c-21e5-6f63-90185227e070,E,Black Cherry,158,0.25,8425 Nunc Road,SY4 1GT
-b2d66b27-d10e-199c-2f4a-3f70e6b5cdae,E,Mango,190,1.40,"2375 Nec, Avenue",29390
-88bf2532-3aa4-a5d9-a1f8-1b6d148f2011,E,Butter Almond,161,2.78,Ap #188-2434 Sagittis Rd.,2665
-c0f36fd0-d342-0b52-7c35-d6e3574319c0,E,Toasted Coconut,117,5.06,Ap #297-2740 Aliquam Street,LF81 1ZB
-a02c8f01-4b66-4e65-946d-e154e75de64b,E,Chocolate,173,8.07,245-4946 Velit Road,20241
-1a98bddb-c069-07e1-e3e1-80daf94c7f7f,E,Pecan,112,3.02,107-5773 Curae; St.,6158
-85410959-b241-6590-e355-2aefb2c02fd1,E,Lemonade,185,4.61,5695 Purus. St.,75062
-e3ba6cd8-427b-2831-c842-ea6d0e1fea33,E,Cranberry,31,7.87,"P.O. Box 119, 9263 Sed Rd.",662479
-eac5d284-d6d4-d04d-83c7-621d8b16bb7e,E,Butter,43,5.68,Ap #186-3978 Phasellus Rd.,11954
-5ccaf6a4-4f52-a51f-4f1f-3135f55a148e,E,Chocolate,32,7.75,"P.O. Box 573, 2683 Congue. Ave",1690
-faefa7b6-62af-284e-bd74-ad43cefab31d,E,Punch,102,1.35,"449-2421 Nec, Av.",43790
-51dd6cd0-7259-6faf-382b-ec69c14e1af8,E,Huckleberry,161,8.50,480-5013 Quam. Road,2531
-09b33c82-f3aa-e9ea-3638-3ed923c92eef,E,Wintergreen,79,6.35,"P.O. Box 398, 6936 Tempus St.",98-460
-88a6c299-6c63-c6cf-64e0-4e181d630c70,E,Pineapple,165,4.36,102-2535 Morbi Avenue,90578
-f1fc9ee9-285c-9b6e-6a0e-c32e709766c4,E,Almond,97,0.06,9395 Nisi. Street,57401
-3eaf3d2c-5270-2b55-da37-a6729818b41d,E,Mocha,68,0.09,283-3174 Fermentum Av.,66289-471
-7a43cd6b-29ae-f4c4-1f1e-309419454a75,E,Kettle Corn,106,6.05,5220 Augue St.,65260
-662cd34d-d7a5-9688-4cc7-7021c7defb48,E,Cream Soda,28,0.41,"P.O. Box 870, 7081 Elit Ave",65732
-58117720-f392-5dbd-6e51-66a2e9271c23,E,Anise,80,5.23,8921 Scelerisque Street,3600 FX
-91c0aa46-1a08-120d-9b6d-33afef9bca26,E,Butter Rum,162,7.09,7566 Cras Rd.,7696
-7ce580dd-0c82-2372-8644-c9df1169134a,E,Long Island Tea,195,8.76,806-1641 Ligula. Av.,6386
-db9a2ae4-25fb-36b4-3393-8623a86ed63c,E,Apple,163,5.62,8952 Sit Av.,04980
-4cb8f4f9-a127-f075-4f04-ab024b916a86,E,Watermelon,145,6.71,3819 Pellentesque Road,09871
-7277ed6e-36e0-3ad0-4b6d-afc9f9b3ccb5,E,Lemonade,145,8.58,271-9059 At Rd.,40305
-249a9c55-5d02-d865-21ec-7f1f88cd7c4e,E,Passion Fruit,78,3.85,Ap #214-4486 Tristique Rd.,57422-816
-a0ab4028-4179-47d7-5d5e-bd983da10ecb,E,Wintergreen,26,2.11,247-7484 Nullam Avenue,15904
-408af8dc-7738-3b7e-7269-711ffb231900,E,Whipped Cream,126,8.12,Ap #137-1712 Arcu Avenue,736590
-11553359-acbb-ce79-ddbc-ef9c91f146d7,E,Acai Berry,182,0.56,344-8558 Neque St.,61764
-816d47f3-848a-4734-908b-38438cc7816d,E,Orange Mandarin,182,2.02,"P.O. Box 619, 3490 At Rd.",51604-589
-b6a0a47f-6be2-5f2c-8a1e-08ce0e5e9982,E,Bubble Gum,134,2.98,Ap #485-3719 Magna. Rd.,26496-281
-ab1f7b3b-0c5c-9495-caee-7ef60bbc034e,E,Lemon,165,3.19,732-4000 Mauris. Rd.,N3A 7M0
-fd9c8690-3a4a-6acf-9087-942a3e18ddf2,E,Eucalyptus,15,7.08,"P.O. Box 115, 4326 Ut Av.",10605
-0eb6182d-84ec-2a5f-4ea9-6b584784cf2e,E,Pear,159,3.44,Ap #828-1656 Et St.,503405
-09008fbb-70b3-d390-30ba-723c90458782,E,Cinnamon Roll,42,4.91,Ap #683-4456 Hendrerit. Road,M6Z 8K1
-02bb1642-5a72-6d23-dbf8-709aedf97916,E,Black Walnut,173,1.77,9694 Odio St.,65032
-b60e437c-6faa-6c88-f358-1aeeb192b4fc,E,Graham Cracker,172,6.61,"P.O. Box 384, 6499 Eu, Avenue",7520
-5e348287-5365-43a9-ed16-20b3dc6d6ab2,E,Butter Toffee,27,6.65,Ap #409-6817 Ultrices. Rd.,4378
-6028740e-1829-d05f-b8d4-18f5ea12bba7,E,Gingersnap,55,2.12,3164 Proin St.,5436 PD
-41cc0781-d089-64ae-4de2-00257484ea3d,E,Cola,155,8.01,Ap #300-3615 Mauris. St.,5145
-e2697c93-df16-93b2-4333-96178ebe55be,E,Candy Corn,125,4.75,"P.O. Box 781, 3278 Ut, Rd.",9262
-3bdd4662-0fbd-fdb8-fa8c-70766b044cfc,E,Hazelnut,145,1.45,"P.O. Box 263, 4557 Laoreet Rd.",6879
-2176eb4f-86a1-6d7e-5307-2f625e0d7d8e,E,Cranberry,121,8.40,318-6624 Fringilla Road,45762
-2d50dd4a-913c-4b0a-3c99-70169771630b,E,Pineapple,12,6.06,"6495 Lectus, Rd.",620400
-c7977980-47fb-55dd-573a-ef828f46bd09,E,Lime,54,2.40,"P.O. Box 777, 4384 Magna Ave",21077
-fadc3b52-a2d3-3a66-aee6-1a95adb389e1,E,Pina Colada,134,5.78,585-2257 Vestibulum Avenue,47408
-ce0df7f6-8aa4-3d0c-a5b2-6bf356c010dd,E,Melon Kiwi,196,3.66,4066 Integer Ave,3811 YB
-b535918f-21f4-e760-0fbb-58335ccdb2f4,E,Cola,55,9.92,"P.O. Box 209, 3173 Tempor Street",26-459
-d5b7aa7d-74be-20b2-3723-bed6499efb42,E,Butter Pecan,177,5.70,115-2623 Dui St.,697389
-aab275ac-a92b-581d-5064-8bc3819ef319,E,Lemonade,88,3.66,"P.O. Box 316, 4896 Cras Avenue",4632
-0fc5d153-03c5-0813-0230-1b7197af5fae,E,Butter,25,7.86,Ap #955-4370 Elementum Av.,32-990
-00bf54da-3997-334e-ab37-a90706b04102,E,Butter Rum,14,4.30,894-1548 Ipsum Road,7268
-9a5aa145-2d31-fc78-aad1-da30f0ccf56c,E,Butter Pecan,104,0.65,635-7304 Est Rd.,56519
-aeeadaba-6eed-1101-a09e-807db20eaf39,E,Mocha,131,9.14,4147 Et Av.,053489
-e5c63213-27be-2683-ac6d-352648180758,E,Orange Mango,102,3.15,Ap #391-2217 At Rd.,8835
-fe073552-6794-0a87-da02-4c12576a622a,E,Sarsaparilla,60,2.60,"Ap #262-5147 Non, Ave",48-426
-95c9e7d5-3e81-b10b-20b8-0a18e1b3aeb4,E,Wild Cherry Cream,171,4.45,"P.O. Box 400, 4881 Sociis Rd.",753233
-4f2ce772-0aab-aaab-2f4d-a20d3f97018c,E,Macadamia Nut,57,9.90,569 Dolor Ave,98542
-e3e4eed8-7306-b97e-2584-f1286602e92f,E,Melon Kiwi,174,0.50,7084 Diam. Ave,5730
-3c842ea2-d682-827e-e7b4-947fe0417355,E,Ginger Lime,155,1.32,6329 Justo Rd.,8418
-1edd6bee-c3a6-157e-582f-e187220f86e2,E,Whipped Cream,39,2.30,"P.O. Box 523, 4804 Gravida Rd.",17901
-898a217b-6d20-833f-e87f-efb5861b8c0c,E,Coconut,65,1.30,Ap #672-6709 Nunc Road,2501 MH
-e3b22fe7-f4ff-4f5c-af0c-98c59b6a6f8d,E,Orange Brandy,107,1.70,9371 Suscipit Ave,590191
-2a2a5101-56a3-68d5-eab8-a940565636cd,E,Pecan,200,8.87,Ap #948-5608 Magnis St.,56087
-ef512aa0-f2a4-1f0e-e10c-96ee22368117,E,Doughnut,182,3.18,956-7780 Tristique Av.,6201
-b1166c42-54d4-c0b8-49cc-0cc3a9411968,E,Tropical Punch,142,4.82,"P.O. Box 154, 1716 Tellus St.",6692 GG
-56c35715-dfe0-94e1-4f97-ee77754d98b0,E,Key Lime,188,2.30,Ap #386-2178 Augue Avenue,9555
-51463e7e-16e9-23d5-89c7-6731aad729d9,E,Huckleberry,53,8.94,188-3228 Lobortis St.,292658
-b2941a90-24a7-67ad-4d1e-50c0ff7374c4,E,Flan,175,8.73,938-6277 Mi Ave,36402
-4205b2c4-29e9-99ac-48dc-b58d71bb366a,E,Mango Orange Pineapple,175,5.32,Ap #590-6177 Ipsum St.,5483
-c8049168-e5d7-a308-3ef4-bd8ce71d677f,E,Wintergreen,141,2.19,"Ap #910-4206 Tellus, Rd.",096252
-d9dee740-f93b-ba20-3515-4d705d7c89a5,E,Doughnut,114,8.78,4181 Lectus. St.,50717
-9eae09dd-9398-e076-af7b-54cbc51b940e,E,Blueberry,48,8.77,157-7141 Tincidunt. Road,76550
-9345c964-7e7c-99fa-7e83-bce32f71969e,E,Toffee,129,8.03,"P.O. Box 340, 6874 Auctor Street",84183
-2cc494d7-a67c-14ee-e965-facffba0f990,E,Pumpkin Pie,168,0.64,484-2736 Erat Av.,5991
-b9ab2f73-9158-945c-0ee1-8bd5b76d37e1,E,Creme de Menthe,21,7.44,Ap #865-3325 Vel Rd.,258844
-330fa688-d010-7017-a44a-3bb0ab4ace8b,E,Sour,121,4.42,"P.O. Box 985, 8863 Phasellus Av.",74202
-686f7b5c-ca93-e696-81d0-4a146d9aeded,E,Anise,193,0.87,"P.O. Box 117, 8656 Tortor Rd.",69-783
-6efe4f4f-ecdf-4569-cca7-6e8ab8e8d240,E,Kettle Corn,116,3.74,3391 Nec St.,OB5 3LJ
-57e1b908-34d6-8c07-43d1-0223e7411c2b,E,Mango,14,0.43,"P.O. Box 977, 339 Malesuada Rd.",30621
-69e8efcd-fe56-b122-6e64-22e3379053b9,E,Wild Cherry Cream,145,1.23,"P.O. Box 305, 8664 Turpis Rd.",72434
-6a17673d-e96c-7c85-06ac-adbdf34c2b36,E,Black Licorice,130,8.35,607-897 Et Street,A39 2RL
-3dcfef9e-7710-9714-3303-bfcd59e3af8b,E,Caramel Cream,51,1.32,5111 Aliquet St.,5262
-645103b7-8f36-7b7c-53ab-edb5c757a0c8,E,Lemon,93,5.78,Ap #796-6863 Nulla Avenue,7648
-ea7fc42a-a8c6-1c2f-b07e-d98849751c6e,E,Cinnamon,180,8.13,Ap #127-5265 Est Rd.,AF77 3KH
-92c78fa1-9b58-9d2d-bac3-c88ed5853064,E,Cream Soda,48,8.98,889 Suspendisse St.,386399
-0b50ba35-da18-42d6-167a-3dafe55b3c03,E,Spearmint,156,1.99,8659 Tellus Street,7636
-135f4b60-4e11-9737-6db6-c317e007e039,E,Rock and Rye,109,8.16,"Ap #775-7868 Suscipit, Street",44120
-a3233713-95b6-74dc-490a-8b74f959b1a2,E,Fuzzy Navel,58,6.00,4067 Elit Rd.,H7X 2L6
-bb583f50-c4e9-c4aa-8204-b9cdbda0f3f0,E,Mango Orange Pineapple,101,9.71,"P.O. Box 480, 6815 Vel, Road",67572
-33d0e806-043f-aba6-dcec-3f807d328154,E,Elderberry,121,9.74,"P.O. Box 603, 2576 Id Street",61906
-dd6b9b97-fb37-1eb9-f48e-14d6d35ef461,E,Quinine,132,3.19,"P.O. Box 560, 3381 Ridiculus St.",44794
-f282ed9b-1724-ed3d-5979-bf25e4adb9fc,E,Peanut,61,8.17,Ap #385-495 Suspendisse St.,114261
-6e0ef18b-e331-01f8-f4e3-8ac8e22b20c6,E,Cheesecake,72,3.65,"P.O. Box 352, 5437 Montes, Ave",20252
-6549e4a9-3979-34a6-5eec-b194dc03e8dd,E,Irish Cream,121,6.42,"P.O. Box 337, 2097 Phasellus Av.",R7 9HU
-5abb311b-7413-0aa8-8495-507a4b345973,E,Cream Soda,89,8.67,9277 Cursus Road,5955 KN
-9da96b59-c157-9551-d711-8335765671d3,E,Fuzzy Navel,161,6.36,9498 Nisi St.,4673
-100871d6-3894-adde-06c5-0ccb52ed2cea,E,Cheesecake,27,1.87,"465-3177 In, St.",921697
-d403141a-d726-4329-540f-ab3cb00f5863,E,Peanut,41,2.59,Ap #598-6067 Hendrerit. Rd.,457427
-646cabe0-ca37-f4f0-0061-43f8aa3552e5,E,Grape,35,7.23,934-5586 Tincidunt Rd.,87700
-fb650997-00eb-10f5-3f0e-9dc2e54f5aaf,E,Sour,24,4.12,Ap #371-8023 Eu Rd.,7160
-25944612-70c6-148c-3b1d-5085cf8c52c1,E,White Chocolate,196,0.72,"P.O. Box 129, 7692 Proin Av.",7549
-27e19bbc-0607-551e-83ef-9b1a386b45e3,E,Tangerine,51,7.70,"P.O. Box 579, 6007 Ante. Road",7858
-9692682a-d59d-c29a-976c-8a769fa99a5a,E,Grand Mariner,89,3.59,Ap #567-7347 Odio Rd.,5361
-23822db8-10f8-f9eb-e5fa-caf023d97ffb,E,Lemon Bar,147,8.57,"P.O. Box 303, 2577 Aenean St.",40-643
-ba1e1a36-34ec-4411-3c90-4299457e7650,E,Wild Cherry Cream,189,8.85,"P.O. Box 480, 7940 Etiam Road",6258 YT
-5886eac5-5dcb-1315-687a-1161ba165354,E,Orange Brandy,50,2.55,"P.O. Box 730, 8356 Malesuada Avenue",66-395
-1a155ce8-4849-54a4-bbbe-22716d3bf038,E,Pineapple,166,5.88,2731 Malesuada Street,08059
-f1446112-08fd-a87d-c1b0-552bb82da9d8,E,Marshmallow,34,2.38,Ap #861-9051 Non Av.,G6A 0E6
-b4edd47b-8e4c-4729-66be-af8795558543,E,Grape,113,7.75,1840 Ligula. St.,6060
-541d6c0f-1887-8166-3764-f789f97d59c2,E,Blackberry,160,5.35,672 A Ave,KS6 8ZC
-a94efd88-3233-9ece-7078-5966c154f489,E,Tutti Frutti,89,9.55,"P.O. Box 266, 7627 In Ave",6760 QH
-0746bd9f-4abc-1e95-b309-f724b487e918,E,Melon Kiwi,39,6.44,"P.O. Box 236, 6468 Dapibus Avenue",70419
-e6303af1-7f6b-c2cf-6456-41ae8a1a231b,E,Black Licorice,184,5.19,Ap #815-911 Posuere Road,K8L 9G4
-618ad69a-c5b1-125c-a42b-b825dec48c01,E,Plantation Punch,113,4.83,Ap #247-6589 Nec Ave,49-776
-99ee93da-e453-6ceb-f5f0-1b93ad0b1448,E,Almond,164,2.11,6033 Egestas Avenue,45125
-4c8cf3d1-71c3-5833-62ca-3bbb96195ca8,E,Banana,25,8.17,328-9715 Diam Avenue,568646
-f60bbcff-2b21-ad5b-97dd-0e195eeacd27,E,Black Walnut,74,5.56,"191-6712 Ornare, Avenue",68-263
-bd24f1f6-5156-86ea-105b-0f0fd234671a,E,Grapefruit,137,4.49,967-456 Donec Av.,86878
-c2deb833-2a1e-5713-3e9c-ad5e72c1d5b1,E,Black Walnut,164,9.23,Ap #795-4009 Ipsum Street,W60 1DF
-62591efe-f997-0db3-7c92-8a57ffcd004d,E,Maple,78,5.75,577-9037 Curabitur Road,762635
-80b398ca-b352-eeed-4af9-59ac3d4ab04a,E,Grape,167,3.76,Ap #758-8169 In Street,94062
-9393cbed-2499-5e3f-cdfe-d9e25afa3c52,E,Bavarian Cream,159,4.53,Ap #998-4299 Semper Street,N26 2VU
-cb8fb0ee-3bf9-1621-1238-6d848dfa4b86,E,Fenugreek,49,6.71,"P.O. Box 227, 2555 Massa. Road",391257
-01b8c29b-29e8-ff0d-7c3d-7197e453acf0,E,Flan,52,7.62,Ap #739-8383 Vestibulum Street,39-909
-25b54f82-257e-b2ea-7146-2ab76018711a,E,Candy Corn,174,5.08,"P.O. Box 141, 6473 Nisi St.",828263
-4e0a2f61-9c7d-2497-8aed-b0bf97393aee,E,Plum,99,2.79,230-6119 Arcu. Rd.,5748
-c1e3fa7a-4ddd-eb5a-5738-ab2b0817e162,E,Pistachio,180,1.95,Ap #644-7559 Duis Road,02908-963
-2e262665-79fe-4af3-a64c-4cbbf1371466,E,Maple,58,1.17,"Ap #461-5719 Montes, Rd.",99349
-87a921d0-4ee0-b4cb-5894-18ddb91e6b93,E,Caramel,140,4.85,"P.O. Box 372, 6555 Rutrum, Ave",354292
-e8afc88e-c7da-15c5-4faa-e33eaf93c20b,E,Chocolate Mint,13,9.73,822-7103 Dolor. Av.,823339
-019a9247-5921-4072-771e-fe3854741a7e,E,Tequila,91,3.79,968-1000 Lorem Rd.,74407
-f7d41f25-0605-233e-da11-21c51c1a0bc7,E,Apricot,40,0.93,"P.O. Box 321, 5334 Tincidunt, Ave",6093
-87618be2-fa85-36c1-dbd8-b88d99fec7dd,E,Tonic,68,1.36,"P.O. Box 795, 496 Egestas Ave",704567
-5cc7de51-d408-86c9-4731-f6ec3d8efd9e,E,Butter Almond,63,5.24,1801 Magnis St.,5952
-92b61108-9005-216e-2887-ae7ed3b9a1c7,E,Strawberry Kiwi,51,3.71,203-8218 Molestie Road,50204
-88ca7b02-121b-9625-4f42-34bedb6c2379,E,Smoke,29,0.40,Ap #310-3620 Fringilla Rd.,3376
-9ff4470d-045f-cc1b-e1c0-996c86743ef4,E,Lemonade,52,5.23,925-9879 Non Rd.,48901
-15a9a724-f662-a9e7-8bd2-44d9fd835ea3,E,Smoke,174,2.23,965 Magnis Road,41044
-5c3af38a-c15b-0cd8-0f33-5736725ae2fe,E,Quinine,35,7.63,441-3559 Turpis Avenue,E9L 1E4
-6dda28de-807d-489d-94a9-1c2e9c32531e,E,Margarita,85,1.25,5048 Nunc Av.,KR5 1BV
-5ea94561-9fdd-3464-ca42-980dc92ea6f7,E,Pear,80,0.00,977-9202 Nec Rd.,74753
-49451329-50c3-06f5-056a-d61cc52619e1,E,Macadamia Nut,198,6.93,Ap #285-691 Ultrices. Road,210021
-ba23b800-aa92-1f58-0386-4e965616b770,E,Toffee,100,8.60,Ap #366-7965 Sem Road,82-469
-fd710db7-6f2b-5c04-7d0a-0971fd1a896b,E,Coffee,177,5.37,2301 Sed Street,61311
-fca44c1f-2ad4-a38e-81fa-a6184f052a76,E,Pomegranate,57,2.70,154-4039 Tristique Ave,56382
-5b113a00-ae3d-5a53-3562-293683e2ea63,E,Sarsaparilla,152,8.98,4345 Non Avenue,J6X 1J9
-8800381b-addd-6951-0933-21b35160156a,E,Orange Mandarin,160,0.06,607-7126 Placerat. St.,95270
-c1b51a50-b7c7-d947-7060-e55b9337a2f5,E,Long Island Tea,157,1.23,2685 Nisi Av.,K8 9JS
-905cd131-14e9-81ba-27d5-983156d9bbfc,E,Lemon Lime,85,7.35,Ap #883-1163 Aliquet Rd.,TQ1I 4HS
-1e97e563-8f66-360c-1a9c-3d959e6602a3,E,Elderberry,174,6.15,"P.O. Box 982, 7588 Fermentum Avenue",41503
-6efd86cc-1e8f-cbbc-4261-7cbd50b2f5e1,E,Eucalyptus,111,6.94,"P.O. Box 760, 5356 Commodo Rd.",956698
-f02bea98-85fa-4f1c-9d5f-3ebd97c0d405,E,Lemon Lime,190,3.86,468-6203 Pharetra. Ave,581542
-6e14f6b8-f578-b9b9-13f5-2646259c9c5d,E,Lemon,68,4.83,Ap #779-3266 Maecenas Rd.,394980
-2716e176-5322-11f4-7907-201790ec4e68,E,Black Currant,102,6.85,"P.O. Box 600, 3438 Gravida. Av.",20593
-a38547f6-9ef1-da30-ce44-41138802942b,E,Grapefruit,30,9.93,"P.O. Box 186, 5343 Aliquet St.",43428
-804d5d90-7579-8b4d-841d-5c8e1ab3bd54,E,Mint,200,8.13,6395 Tristique Av.,05063
-226e6c93-e768-99eb-2804-1de193877a80,E,Passion Fruit,15,3.58,Ap #455-5904 Luctus Ave,41396
-6d6b764a-0291-8ac5-86ce-5cb336440432,E,Sarsaparilla,75,0.83,"P.O. Box 263, 2134 Tempor Rd.",91181
-01d74ab4-15b0-ab11-9225-9773c2dbb984,E,Maple,31,5.06,"P.O. Box 594, 111 Duis Ave",20715
-b5506e63-4b83-2273-9265-a8deb3fd8353,E,Plum,165,2.61,4009 A Road,9326 KE
-9536f5f1-d0ef-bb98-d297-ae42ac631798,E,Birch Beer,101,3.00,Ap #395-4757 Volutpat. Rd.,A7V 9TJ
-6add3205-e975-e6ac-4338-f9b51a7cdeba,E,Honey,198,9.83,583-4703 Tincidunt Av.,S5Z 6N4
-c33e3c06-cd1d-fd34-d55b-58e413c8c2c3,E,Blackberry,14,3.22,8667 Iaculis Av.,7732
-b3d5197a-c7c3-0e2d-c3be-fff103686ed9,E,Marshmallow,147,7.60,Ap #400-6376 Enim. Ave,10809
-2e59821d-0169-da7a-395d-099a88e60c6b,E,Long Island Tea,180,9.65,413 Risus. Avenue,4236
-9d471ab5-f72e-8cde-bfa7-1c6bec55a284,E,Berry Cola,126,2.53,"P.O. Box 951, 6929 Et Street",752849
-7775cd8f-805b-a11b-0beb-8e79e6291c41,E,Tropical Punch,127,5.97,233-8063 Quisque St.,7681 BR
-7e4e7f02-7c06-52bf-34b9-43b0ec2e3cdc,E,Creme de Menthe,177,5.14,"433-6981 Placerat, Ave",PL37 3BX
-84d940e1-9f80-1575-a0e3-2466d87692a6,E,Tangerine,64,0.45,419-1622 Cum Street,898697
-4c09d0cd-9f74-5639-f902-1bfe45009808,E,Toasted Coconut,130,3.11,"4410 Ullamcorper, Road",ZQ2 5YS
-3b9f2acb-c278-4a09-3869-561e4a682a51,E,Black Walnut,160,6.18,2826 Dictum. Road,S1C 5J7
-45a99ac1-55d8-86e3-fc72-fa78c8f98353,E,Honey,158,3.82,"P.O. Box 193, 7780 Neque. Avenue",57074-857
-9eb589ed-6b7f-3648-ad62-e0b0f3f0799f,E,Quinine,22,7.90,"976-4535 Quis, Rd.",927285
-ffa2e477-51e1-162d-a187-590d056814c4,E,Mixed Berry,177,0.89,425-3639 Tempor Street,6498
-e5aca7ae-b3eb-f03e-1ed2-817b8ae13852,E,Flan,45,2.21,Ap #414-1084 Cras Ave,1246 HU
-226cce95-1ff1-5737-3393-5aee29f5405d,E,Irish Whiskey,188,8.52,"646-5786 At, Road",9288
-7e3937a6-ba8b-24cc-690e-fc110bba4a42,E,Cinnamon,195,4.84,803-3873 Nibh Avenue,0847
-f047d601-042d-b399-5646-1d8520082600,E,Pumpkin Pie,143,8.25,"P.O. Box 346, 6157 Netus St.",1029
-6dbc01d6-9a35-cd2f-8f21-186c17c59eb8,E,Anise,145,9.01,8037 Vel Rd.,48431
-8eaffaed-dbff-d2d6-c3c9-dd101371fc46,E,Butter Rum,165,7.41,170 Elit. Road,9785
-84200e10-98ac-b718-fed1-7a39363c4e3b,E,Wild Cherry Cream,32,4.35,6007 Sagittis St.,8665
-eeb34a96-e407-1a54-7caa-89913ac60767,E,Tutti Frutti,124,0.59,456-1820 Erat. Avenue,6599 WE
-fad882fa-2142-9c70-d37d-1a8ee50329bc,E,Cherry Cola,49,8.81,9656 Mauris Avenue,91220
-45598f91-e8bc-6133-fabf-76b3a4e0d64e,E,Fruit Punch,191,7.85,5161 Ac Rd.,02438
-d004f04b-a69b-33bd-9aea-017e0a17e610,E,Graham Cracker,26,4.90,"P.O. Box 761, 4189 Penatibus Street",28067-597
-4a88db36-b32f-4153-5825-1421a24f640f,E,Kettle Corn,30,9.91,"800 Eget, Avenue",20210
-01992fe1-62c9-58dd-74fd-bb31849590d1,E,Vanilla,130,8.28,"P.O. Box 964, 7774 Velit St.",6919
-fd61b8df-026b-1a04-bd47-cdce0a8492c7,E,Lime,185,7.13,"P.O. Box 265, 6861 Mi Avenue",7467
-0f7b3795-98e0-e3e8-493c-fe1dce4d26a7,E,Blue Raspberry,124,1.55,605-8510 Primis St.,07622
-e238202a-356f-1e3c-a0f3-dc87e780fa7e,E,Apple,196,8.00,Ap #613-3144 Vestibulum Road,70405
-2234b92d-5155-2662-5b3a-57cd259c2dda,E,White Chocolate,10,1.52,6196 Arcu Road,ZV76 7TK
-d56d8129-37f4-ae9d-ed90-5b02e535ad7e,E,Bacon,24,8.36,Ap #498-4243 Nisi. Ave,5083
-1f730973-109b-0778-514f-f927aa24e3b9,E,Flan,180,0.32,1829 Semper Avenue,16712
-48fa0181-541d-22da-f63b-311212178781,E,Prickly Pear,109,2.89,"P.O. Box 466, 2071 Mauris, Road",90730
-e2084b0c-0631-aa5c-1355-85177b864604,E,Peanut,102,6.44,Ap #660-2157 Aliquet Road,2495
-8ac796e7-3936-5665-0664-fe4e5116520b,E,Raspberry Ginger Ale,178,2.17,Ap #687-1059 Nam Street,AB3H 4IS
-0cb813e0-770e-5110-83f4-4b2d0e6c29c5,E,Butter Rum,15,5.00,223-2713 Fusce Rd.,76943
-df904ea2-48a2-c44b-d639-6b66adf4a181,E,Candy Corn,103,7.01,4116 Ipsum. Street,42146
-38896ccc-9a75-2bb9-da7c-a585cc495e2c,E,Black Licorice,26,7.88,Ap #722-6823 Nulla St.,087008
-962d8f51-51f4-819f-0c9c-49901ebea78f,E,Cherry,33,5.94,"P.O. Box 158, 1995 Cursus, Street",74664
-92d7f71e-288d-a4f8-c9f9-6c18b2f856c0,E,Butter Rum,115,7.83,172-917 Penatibus St.,21374
-0c02ec8c-eeda-0ee9-a6f4-2dc53c2bc633,E,Amaretto,61,2.30,"506-5313 Elit, St.",0024 VF
-e1cdfb7a-915d-1a15-e4a3-4a20ec8c471f,E,Pumpkin Pie,13,3.19,"P.O. Box 395, 5258 Purus. Avenue",8916
-1d0bc9db-84e4-3a5c-0752-5b5753200598,E,Watermelon,143,6.07,Ap #113-2600 Fusce Av.,4717
-ba7925f2-2d69-92a5-3726-cc41a90e0efe,E,Cinnamon Roll,135,8.77,"P.O. Box 276, 9833 Euismod Rd.",50913
-67f7a12f-f370-2cd8-8d57-774e149ad764,E,Chocolate Mint,190,7.12,517-2483 Semper. Ave,952913
-8ee8f13f-02ff-167b-d9a4-fdd904b10ca9,E,Long Island Tea,57,9.81,"P.O. Box 978, 5121 Tempus Road",58937
-ea76a13c-7c49-e4bb-a4c5-61e39dc46ae7,E,Amaretto,157,5.59,"Ap #902-8870 Congue, Rd.",61912
-fc96f1b9-774e-f2c3-83ad-e7eb24f33170,E,Horchata,138,8.21,"P.O. Box 544, 344 Lorem Road",533565
-19876e02-7691-7d0d-3fe7-f0a1f6387eca,E,Mango Orange Pineapple,101,1.42,"P.O. Box 277, 1348 Ut Av.",084542
-1f1ba3f8-1b45-8aea-02f5-0761fffce474,E,Butter,12,3.00,Ap #805-420 Cursus St.,61914
-e2d3ebcc-ecc9-c44f-c928-d753cb75c538,E,Cookie Dough,162,7.40,9220 Tempus Rd.,3219 NT
-b0e7df28-9a5e-f1ea-e0ae-e2959c69c74a,E,Plum,152,2.66,957-595 Sed St.,4513
-2c6870e2-1f8d-ae66-bb61-9d39c012a311,E,Caramel Cream,113,1.86,7777 Interdum. Road,3155
-57bb1453-29f7-bc71-efaa-5ce16fa8494e,E,Cinnamon,39,4.16,"P.O. Box 616, 5444 Non Road",1345 PS
-7394586f-a217-feb8-2014-65f1d5e48831,E,Lemon Custard,27,9.84,Ap #304-7629 Nunc Ave,810231
-abf19eae-9cc2-6447-b12d-b29f4cb21261,E,Gingersnap,113,3.03,Ap #746-3701 Arcu. St.,711505
-07cdcada-7229-9d4b-ea62-b9836a14dbbf,E,Chocolate,196,7.25,Ap #282-6400 Tristique Street,7681
-9510be05-32da-ff39-1e69-19b40a7213df,E,Mojito,196,0.78,6070 Commodo Rd.,48410
-373202c8-bc89-93e8-430b-d20718b5844b,E,Blueberry,151,0.39,Ap #116-5013 Sed St.,12984
-5014985a-7e21-e531-3e53-024104892308,E,Mixed Berry,47,1.04,149-2143 Metus. St.,03066-885
-7f7aad96-4b3b-c0a9-286a-461df2189ad2,E,Butterscotch,155,0.00,"P.O. Box 160, 9944 Arcu. Street",63135
-2caeb8fe-bb2a-53a2-0971-fbe313153cc5,E,Spice,83,9.05,"628-9145 Vitae, Avenue",1580
-a431dfc7-98bc-cba3-ebc1-fb5e84886a18,E,Punch,117,2.38,386-6620 At Road,72124
-3d81de07-5580-f896-7b08-2a647c90b10e,E,Butter,124,9.67,128-2240 Dolor St.,80547
-0a1fe76b-1100-bfd3-7c7c-2006304a63a9,E,Ginger Lime,17,0.60,"Ap #714-3626 Eget, Road",40795
-27205bbc-373d-063e-282c-949d1a95b8ef,E,Elderberry,23,3.74,"5567 Rutrum, St.",4401
-337ffb94-2123-a560-d640-6bbc276aec30,E,Pink Lemonade,35,9.22,886-2099 Senectus St.,2268
-00438c21-b4ee-f3c6-9837-b6f9b7a52e73,E,Sassafras,32,7.64,Ap #318-336 Dui. Street,88238
-219e25d7-ab1c-5957-837f-f3e811781696,E,Candy Corn,45,9.19,"806-2737 Sed, Street",40912
-0faf2a6f-3010-f38f-226d-f781e508faea,E,Pecan Roll,72,0.15,Ap #677-8160 Odio. Rd.,63360
-614f7f7c-0fd2-77da-d079-b915e7e3cf59,E,Caramel,31,8.08,999-4423 Mi. Rd.,63735
-56d85ea3-ffdf-8738-e8cb-de0037bbfe6e,E,Bourbon,127,9.64,864 Egestas. Rd.,39271
-6266d840-b7a3-53dc-0620-a24ce2c1b71d,E,Chocolate,95,9.48,Ap #518-8308 Lacus St.,6840 KV
-820e0570-9a76-d516-ed4f-ea28051cc03a,E,Banana,101,7.57,541-3580 Facilisis Ave,46793
-49d51ab0-35fd-0be2-6595-1b14485571e1,E,Grand Mariner,81,1.15,2896 Massa Rd.,6904
-87d22fee-d533-4668-5e71-3e72e983e9bd,E,Cherry,74,3.77,"P.O. Box 281, 6636 Sagittis Ave",104026
-25c922bd-5866-f82c-9f08-123d6b198b0b,E,Long Island Tea,25,8.21,"P.O. Box 268, 7719 Enim Rd.",95879
-ecda523f-8f0a-2c96-e49e-4da8699e1004,E,Chocolate Mint,60,1.06,1243 Orci Rd.,11319
-2c5df23e-30d3-2d1a-e817-ed44da0589fa,E,Lemon Custard,51,4.85,2241 Turpis St.,8294
-c521ae1f-ba6c-313d-cd85-8317c3299663,E,Lemon Lime,108,1.38,137-7980 Arcu. Rd.,573937
-c3f560c3-e0c5-aa76-2109-9b89fcad7ec5,E,Pink Lemonade,170,4.28,"P.O. Box 933, 4865 Libero St.",85248
-a22df199-ffb5-06ca-650b-499185fcc832,E,Birch Beer,135,3.11,"Ap #610-7644 Auctor, St.",67678
-5fd9c7a5-eef4-20da-542f-fad781982236,E,Long Island Tea,86,5.29,630-7027 Leo. Avenue,60-763
-ed634814-6d84-05cb-4486-e2b2f19ac500,E,Toasted Coconut,45,9.40,"P.O. Box 180, 5750 Neque Rd.",263261
-6df99460-6569-2790-ba0c-9285609a8e98,E,Toasted Coconut,165,6.32,"P.O. Box 960, 6380 Massa. St.",6579
-3b423978-69a3-76c8-e5cf-27e635da32f4,E,Orange Mandarin,92,9.81,Ap #615-4730 Aenean St.,5296
-bdcf51c3-1c8f-a876-090d-56eaa4b9e112,E,Orange Mango,80,6.71,Ap #865-3810 Ac St.,1253
-1dd7a6ba-c7d2-fc87-55e4-72ab9855ffce,E,Blackberry,40,5.34,Ap #503-8361 Arcu. Road,97170
-8f8b91dc-f3c5-c22a-10be-223645d7089d,E,Butter Pecan,34,8.46,"P.O. Box 347, 8491 Dui Road",94-160
-179e96ed-5635-67b7-34e4-a9fa744411f9,E,Blackberry,54,4.50,3201 Tempor St.,84401
-61c8946d-3d4c-d292-672b-6cff91a11b15,E,Pistachio,120,0.81,439-8025 Rhoncus. St.,54146
-4f86a051-9d37-0b44-ec12-3ed451594301,E,Coffee,94,5.33,"536-9303 Ullamcorper, St.",600510
-9c31d8e2-a49c-0033-72a1-2f2c35eeb069,E,Lemon Custard,114,1.09,"950-9963 Dolor, Av.",43687
-64d35b95-0881-a929-8d68-59dc63689e0d,E,Raspberry,50,1.37,1587 Pharetra Avenue,660459
-1b0fe6d4-3cf1-34da-59d2-f5728a4f8e9b,E,Lemon Bar,55,2.01,515-1996 Dictum Av.,A2G 9N6
-1f53dee7-02d7-f16c-061f-75fd9acc887a,E,Fenugreek,178,3.10,Ap #222-7369 Donec Rd.,15111
-c2dd5fb0-9b98-d5c8-913b-69af69fbad49,E,Sassafras,36,1.83,"P.O. Box 645, 2473 Suspendisse Av.",73818
-6c62cff1-86e6-ae52-9e71-880df9bfb33d,E,Black Licorice,97,6.99,618-9723 Metus. Road,BE1 6YC
-73c12ee3-949a-0743-6c09-a6f1e12ca3f7,E,Cake Batter,56,7.36,Ap #498-150 Dolor. Ave,7368 JH
-98842b59-7f95-9610-e93e-d4f78a54f1e1,E,Lemon Bar,60,6.66,943-5423 Volutpat Avenue,82941
-51baa772-9c37-5964-d52d-22cc0e50c8bc,E,Raspberry Ginger Ale,110,3.31,Ap #969-1620 Curabitur Avenue,7034
-1e404f41-6b6d-c971-4189-2c52a7148915,E,Orange Mandarin,157,1.55,7487 Euismod Street,12976
-e3044b0c-651c-0670-bbf9-f745e8a76a39,E,Elderberry,65,2.84,"P.O. Box 440, 3983 Blandit Road",2273
-e01ff8d7-562e-32b8-7185-674d84a4936a,E,Graham Cracker,87,4.30,5721 Euismod Av.,MO6 7CV
-8ccd98c6-86d7-abbe-0d7b-6a76fa69004c,E,Vanilla,29,6.43,162-8955 Erat St.,37618
-84e2e7da-934c-6532-6bf7-1d2c7da5e148,E,Root Beer,32,9.08,"P.O. Box 619, 4125 Nisi. St.",M7W 3G3
-0bf42b37-844d-f283-4a30-de283d3f6bd5,E,Watermelon,141,6.29,Ap #708-9644 Turpis Rd.,46-563
-7cf0b348-6644-d803-1f81-42365e769c0e,E,Cherry,36,3.35,456-9547 Ac Avenue,294880
-e0865d7a-7b3f-aecc-4387-5f7ecd087c09,E,Quinine,155,2.44,Ap #571-5147 Mollis St.,4440
-74a25584-e250-87c2-6871-ca175cfdf203,E,Orange Cream,132,6.96,9508 Pretium Av.,62239
-d9b37d1e-568a-d83f-27c7-7e72802e9d8a,E,Bubble Gum,112,7.23,221-5981 Cursus. Ave,4178
-7f4de7e0-658f-4502-5e69-98217af149b2,E,Flan,23,4.07,"P.O. Box 957, 8856 Fusce St.",50203
-9ec4e603-9f50-06ff-2d99-7238cbd75ff9,E,Honey,180,4.63,766-1013 Lacinia Rd.,46046
-1ac5996c-15a0-bbca-8073-37285603b2c8,E,Coconut,147,0.83,977-4959 Est Street,7660
-c9211600-d014-fcbd-7f75-efeb13042d24,E,Lime,185,4.86,"122-9458 Erat, St.",56657
-7b87a4e1-f675-f81e-1511-8be98c58b773,E,Pear,159,4.91,Ap #489-412 Egestas. Avenue,08859-301
-f2fe740d-43ca-3b89-a9e3-ca8327fc2bb9,E,Tropical Punch,26,3.29,120-230 Molestie Rd.,6805
-5936c7e7-5663-3075-0cdd-87b926944454,E,Spearmint,72,7.98,Ap #121-8464 Risus St.,1056
-5502da7f-0088-4e1d-1359-2cc8ecf39c82,E,Wild Cherry Cream,19,0.80,"P.O. Box 423, 4621 Nunc Ave",14595
-45711305-cd53-e05e-3fbd-df00d12dcc3d,E,Blueberry,82,5.43,7198 Eu Rd.,U94 5XC
-e461630a-fe7c-6b84-51fc-05e706f9fd1d,E,Passion Fruit,54,5.75,Ap #291-8378 Suspendisse Ave,7392
-ebcaf115-9baf-6291-939c-7342150e20df,E,Pineapple,103,3.09,7980 Et Street,3132
-5ab99d09-1ba0-b36f-03bf-73ae47f540e5,E,Chocolate Mint,129,6.27,"P.O. Box 336, 5352 Nullam St.",67485
-877352ab-c5a4-53ab-09a0-e853575143f9,E,Marshmallow,48,8.88,"P.O. Box 946, 7328 Magnis Av.",91907
-0a9b472e-f246-ebe2-c826-492b23f978c8,E,Candy Corn,50,2.70,8232 Mauris Street,30-169
-f4fa1e00-bf44-79fc-dac4-1435c480df36,E,Butter Almond,149,2.41,914-4397 Arcu. Street,76-926
-632deabc-2769-fbaf-66d0-ebc241a6504c,E,Tutti Frutti,178,2.12,455-5889 Velit St.,9195 NY
-d0368050-ba79-9d23-d65d-bf663b51dbe4,E,Malted Milk,197,3.01,308-3396 Cum Rd.,87307
-55793553-10bf-bce0-8f58-59fdeac62d84,E,Grapefruit,70,4.41,Ap #895-5532 Diam. St.,3490
-77b27d4a-036f-42b5-d436-68df6497e6e4,E,Caramel,33,5.15,Ap #916-480 Ullamcorper St.,6366
-70ffa006-6af4-26a6-1dfd-928edf2ddd4f,E,Mocha,15,0.38,"P.O. Box 685, 6306 In St.",35936
-bba53109-5506-e14e-6fd8-2308aba54dd0,E,Plantation Punch,134,0.95,"P.O. Box 606, 9065 Sed St.",40140
-3f630e17-a208-e916-29d9-19e192102833,E,Apricot,186,1.19,"P.O. Box 710, 7787 At Ave",K8T 3W0
-1e359d27-fdc1-b724-4690-c03544b42a8b,E,Egg Nog,46,8.17,7191 Aenean Avenue,18397-985
-48e6030a-5d02-2f28-2175-2a9aac40d472,E,Butter,195,6.79,776-754 Nascetur Av.,522048
-4da02408-53d6-3744-12f6-728bc5964883,E,Hazelnut,34,4.13,"P.O. Box 747, 6877 Amet Street",964125
-0dd2d507-ebed-03c1-b491-a941ad39d326,E,Pumpkin Pie,81,1.52,485-5635 Eget Rd.,4072
-d33ac406-5c07-3a1d-916b-627ec5956756,E,Mocha,186,7.41,6493 In St.,95671
-d01edb80-cbf6-29d9-f64e-a56ab70535aa,E,Coconut,19,0.14,Ap #810-1585 Nunc Road,86-822
-817ee620-a65a-56aa-de69-65812881d659,E,Kiwi,47,5.77,3687 Sem Street,C7W 4J1
-8e89d93c-bd25-a1ef-8c54-fb108d5a4d9d,E,Orange Mandarin,117,6.29,3305 Tellus. Road,97958
-8c58b89b-c031-5349-1af3-7ab26421f74d,E,Grand Mariner,60,1.63,6077 Proin St.,89901
-ea365929-b99a-dceb-4592-14bdee5576e5,E,Watermelon,28,3.57,Ap #140-4429 Magnis Rd.,0830
-11d41d4b-c1f6-d00e-da4d-e78c702bcf42,E,Fruit Punch,159,5.22,"P.O. Box 401, 7637 Eu Rd.",53787
-f955bbf7-08c8-fdc1-7ccf-ac81ecb95c99,E,Bacon,127,4.46,152-801 Nec Av.,3306 BS
-1ac0b4ab-35ab-57ac-f4b9-d1a3b56b8195,E,Creme de Menthe,80,9.37,Ap #824-6010 Vehicula Street,7622
-3d59ec7b-4a3d-255d-893d-712618e69769,E,Mango Orange Pineapple,191,1.36,"P.O. Box 829, 6082 Vehicula. St.",377872
-5f93cd48-e8db-adf5-f6db-75d12f6f20ef,E,Black Currant,159,8.70,667-721 Lorem Ave,4661
-e9eff6d5-edda-caa6-9e23-1386836007da,E,Almond,172,6.02,7536 Purus Av.,8442 DL
-ddeaed27-0342-bb03-3786-d3e616605872,E,Rum,12,1.98,676-4859 Convallis Rd.,6711 GM
-b62d159b-9240-7073-f760-692d7ce1408e,E,Cherry Cola,120,8.28,Ap #185-2666 Dui Rd.,18-187
-7f8bcdce-4d79-80f9-8558-b1c6bae0c971,E,Carrot Cake,63,6.44,917-8690 Feugiat Avenue,9844
-c4a3e51c-b06b-ebfb-15f5-3cfbe221f524,E,Flan,108,0.49,Ap #723-523 Ultricies St.,62964-965
-7b897afc-8f55-bc3a-2e16-ff941f4adadb,E,Orange,28,9.67,7700 Consectetuer St.,T9K 9X0
-38ecfd49-320b-1d52-6856-4390f3983203,E,Fenugreek,32,8.18,312-8033 Lorem Road,68243
-bb06033c-6365-888f-a64f-c96f19b15d6f,E,Watermelon,124,5.62,2974 Nisl. St.,73755
-4b2c05f0-43e2-c101-379f-d2f1f8ecb1dd,E,Cake Batter,67,5.21,"P.O. Box 839, 5416 Porttitor Street",19-341
-ddb73af6-d8cd-e990-0df5-99ede8415a95,E,Black Cherry,92,0.24,Ap #696-9183 Et Road,43103
-f2e8878f-7451-02cd-eeab-4009cec60413,E,Mixed Berry,44,4.85,Ap #973-7663 Hendrerit Avenue,78430
-177dd15f-ebee-504d-9a00-f0820a86a5e1,E,Pineapple,46,8.45,"P.O. Box 547, 5346 Non St.",497478
-e93c16db-04b2-d985-c991-04d99d11893f,E,Black Currant,59,7.95,7748 Aliquet. Street,06686-667
-b59fdddc-a301-8559-258c-10c002c7a02f,E,Macadamia Nut,183,9.48,Ap #340-4588 Natoque Rd.,42786
-316754bf-cc3a-d33a-c263-5713910667de,E,Coffee,85,2.64,3136 Vivamus St.,4373 LH
-770fdf7b-e91d-47fc-aa04-0a3d613f283b,E,Raspberry,155,6.00,8946 Ut St.,240813
-9648db5d-2aa1-4dae-c6b1-c5cd45932fb7,E,Gingersnap,41,0.30,"P.O. Box 247, 9500 Eget St.",765109
-db76962d-abbf-16ee-65de-93b547b7f4e6,E,Orange,188,0.89,"P.O. Box 710, 8022 Ultrices Rd.",35967
-74c484bb-739e-0cc3-eefd-745a6756e4bd,E,Elderberry,121,5.26,361-1117 Sit Rd.,7209
-e01903b7-409e-1a28-67c2-354922248e5d,E,Berry Cola,135,0.31,Ap #998-5481 Nibh. St.,527517
-b510c132-f385-5cf7-4ea6-2c35e1358436,E,Lime,154,0.39,Ap #480-5365 Penatibus Rd.,06631-926
-b26c9145-bd71-33a8-d515-016c8486aa16,E,White Chocolate,134,1.30,737 Velit Rd.,50964
-a2f5ae82-c54c-4bba-6f1d-2e0fa217c74e,E,Irish Cream,11,3.30,Ap #597-2199 Ipsum Av.,95016
-3ab58467-e922-11c1-8715-97eefc6ca935,E,Peppermint,63,6.92,"P.O. Box 637, 1040 Fringilla Rd.",02366
-c92bbdb5-f3e3-6c79-8e29-8f71c86f7d27,E,Caramel Cream,102,3.82,"P.O. Box 777, 9661 Lobortis Street",690518
-7a9338e5-1254-6fca-211b-d4cd8ea20976,E,Butter Toffee,161,3.78,2553 Risus. Ave,761635
-5355916e-7421-a448-ca46-7098daba539f,E,Carmel Apple,112,4.92,Ap #230-293 Sem. Road,947006
-ea0581bc-79de-f248-fc95-23b6d73d66e0,E,Cinnamon,38,0.07,"P.O. Box 720, 624 Blandit Av.",18-994
-3c33b9f2-4887-8c49-ddd3-30797da2ef76,E,White Chocolate,170,2.74,"P.O. Box 180, 1028 Cras St.",09337-394
-ff2e03ba-daff-5735-aa38-6228999e97ae,E,Coffee,140,4.14,657-2402 Sem Rd.,K49 1ZL
-17a55cf5-db71-7d16-76f4-a25b51b2874d,E,Apple,161,6.33,7364 Sed St.,34453
-ae7f990b-07e6-dac9-f908-8105d9254273,E,Orange Cream,154,8.24,Ap #340-3371 Facilisis Avenue,R0G 3E9
-e1480453-7c69-d58c-d614-21982481151c,E,Mango Orange Pineapple,29,8.20,526 Fusce Road,14042-894
-7566273a-3ce6-a1d8-176b-7bafa1d0f9af,E,Doughnut,186,6.19,Ap #548-7738 Ante. Rd.,57725
-c84dbcd5-b16d-83b2-9ffb-e9b755a20261,E,Mango,154,7.58,638-5849 Aenean St.,917318
-e3a3ac2b-8595-cbfd-0b20-e0bba7d0ca17,E,Carmel Apple,94,1.20,857-6713 Curabitur Street,30091
-3530bc3a-c500-3c33-caa1-07beb24a03c0,E,Rock and Rye,199,4.56,Ap #686-426 Enim Rd.,99075
-34b008bd-e0c0-955b-f2a5-2d1b728dcb10,E,Orange Cream,35,1.74,Ap #475-4868 Cras Ave,3293
-10b11630-5272-10f6-8144-738b3e17a17e,E,Tart Lemon,62,4.82,"P.O. Box 638, 9677 Convallis Road",18858
-5e2da5d8-6c1b-9853-75f0-e85fb4422778,E,Rum,61,4.48,"P.O. Box 745, 4399 Neque Street",58-636
-9b1b5d6e-782a-6d30-02ad-0de592a178dd,E,Irish Cream,40,3.32,605-3043 Faucibus. Av.,41608
-bbd31075-2518-2644-9f46-bfb7e6d29886,E,Maple,118,0.45,329-6600 Vivamus St.,30774
-00318c63-a1d7-2574-1e57-55f710b32f95,E,Grand Mariner,169,4.88,"P.O. Box 252, 3637 Dui Ave",6137
-6399dfe5-88f4-b5bf-df2d-22561a1a9355,E,Honey,186,9.62,600 Non St.,750442
-d250df46-61cf-e152-1eba-1db87c467779,E,Butter Rum,96,1.00,Ap #810-2955 Sit Av.,25091
-6b54ac7f-0074-a72d-b079-db8f03332adc,E,Tropical Punch,110,2.78,4660 Sit Av.,5165
-073b9dbe-233c-347d-849c-461562ef3174,E,Lemon Lime,78,4.65,1313 Aenean Street,44645
-1a34a1c9-3ef7-13df-9a3d-7519acc4789a,E,Apple,131,4.88,"Ap #255-1775 Est, Avenue",69773-309
-a052e40f-6bc7-24e6-f449-36dea6b7d1d1,E,Spearmint,26,4.69,Ap #866-7011 Sagittis. Street,5702
-6425ac1a-14af-79d4-8225-103b0235808d,E,Mocha Irish Cream,168,4.30,"P.O. Box 511, 4483 Ornare Rd.",C5X 6L8
+OrderType,OrderItemName,Quantity,Price,ShipmentAddress,ZipCode
+E,Lime,100,3.69,541-428 Nulla Avenue,4286
+E,Lemon Bar,17,0.09,Ap #249-5876 Magna. Rd.,I9E 0JN
+E,Fruit Punch,16,7.76,525-8975 Urna. Street,13965
+E,Bubble Gum,185,5.77,473-8850 Tellus Street,657101
+E,Green Onion,84,5.17,Ap #535-7695 Fringilla Street,70060
+E,Fenugreek,17,4.39,Ap #133-7694 Eleifend Ave,239129
+E,Coffee,94,8.41,593-1014 Cras St.,99-977
+E,Cherry,140,4.42,Ap #781-1741 Sem. St.,130336
+E,Grape,62,7.26,Ap #766-9767 Etiam Rd.,49-766
+E,Egg Nog,117,4.59,6213 Tincidunt Road,489962
+E,Coconut,172,5.20,Ap #795-7837 Imperdiet Rd.,123599
+E,Blueberry,114,1.13,"P.O. Box 623, 6126 Enim Av.",9383
+E,Egg Nog,132,1.14,"Ap #304-433 Eget, St.",32094
+E,Plum,163,2.76,"P.O. Box 132, 2889 Et Rd.",24-490
+E,Spice,29,9.01,861-4443 Suspendisse Street,00222
+E,Elderberry,185,0.04,"P.O. Box 991, 442 Dignissim Avenue",40001
+E,Cream Soda,12,1.34,Ap #825-8923 Molestie Ave,70403
+E,Vanilla Cream,191,8.42,"P.O. Box 315, 1873 Suscipit Av.",93027
+E,Butter Toffee,197,4.00,"P.O. Box 303, 1597 Nunc Ave",HE1 0VV
+E,Cotton Candy,111,2.08,3007 Donec Av.,119911
+E,Pear,100,7.28,564-7769 Et Ave,Y5X 8G9
+E,Mocha,78,6.47,7575 Natoque Rd.,7690
+E,Bubble Gum,11,2.43,8768 Accumsan St.,11700
+E,Cake Batter,170,1.90,"6532 Erat, Road",83567
+E,Orange,82,6.14,196-8281 Sollicitudin Av.,5979
+E,Kiwi,18,5.56,1175 Hendrerit Ave,04764
+E,Tangerine,142,9.74,"8418 Vestibulum, St.",79323
+E,Lemon Lime,115,9.03,Ap #343-959 Lobortis Street,66824
+E,Blue Raspberry,122,3.91,989-1309 Neque Rd.,40411
+E,Ginger Ale,58,5.24,2057 Posuere St.,983285
+E,Kiwi,115,2.88,Ap #702-4963 Iaculis Road,8190
+E,Pecan,156,0.28,Ap #668-7319 Tincidunt Road,2611
+E,Tutti Frutti,155,8.85,353-4043 Etiam St.,77664
+E,Mint,85,4.85,"986-1871 Consectetuer, Street",35501
+E,Plum,102,3.93,"Ap #345-5596 Non, St.",0544 KI
+E,Black Currant,199,5.66,8984 Aliquet Rd.,1636
+E,Tangerine,61,1.30,5233 Ac Street,32000
+E,Butter Pecan,190,1.34,778-644 Nullam Ave,20647
+E,Punch,187,9.80,"P.O. Box 335, 1154 Mollis Av.",3955
+E,Cheesecake,97,6.73,2322 Ac Av.,75866
+E,Mango Orange Pineapple,147,1.48,"P.O. Box 324, 411 Dis Rd.",9173
+E,Mojito,165,5.93,657-7683 Dis Ave,54-637
+E,Grapefruit,159,3.44,"P.O. Box 309, 9166 Integer Av.",19106
+E,Cheesecake,84,8.01,4024 Tristique Av.,3693
+E,Mango,39,0.59,842-4406 Et Street,57414
+E,Grand Mariner,100,3.57,Ap #822-9897 Molestie. Street,7663
+E,Hazelnut,63,8.03,933-9716 Lorem Ave,8535
+E,Huckleberry,137,0.77,"P.O. Box 559, 3735 Sodales. Street",440316
+E,Blue Raspberry,97,3.95,727-8286 Mi. Avenue,47616
+E,Orange,179,1.92,"P.O. Box 795, 2991 A Av.",5953
+E,Cinnamon Roll,66,1.75,8204 Tellus Road,8509
+E,Tart Lemon,108,7.63,"943-469 Non, Avenue",9994 HV
+E,Coconut,177,4.75,"P.O. Box 301, 6454 Ante Street",91276
+E,Black Licorice,56,1.26,Ap #934-6877 Nibh. Rd.,50-201
+E,Dill Pickle,75,6.82,962-1034 Eleifend Av.,76942-399
+E,Watermelon,81,9.80,9139 Libero Street,3066
+E,Pina Colada,166,4.30,5061 Cras Rd.,27631
+E,Mocha,149,0.19,Ap #138-1066 Amet Road,278772
+E,Lemon Custard,88,9.84,Ap #690-4883 Fusce St.,88851
+E,Sassafras,10,4.91,"P.O. Box 461, 1528 Magna. Av.",4385 AO
+E,Long Island Tea,111,9.70,Ap #617-1528 Duis Av.,25062
+E,Melon Kiwi,13,1.35,8453 Dis St.,158570
+E,Graham Cracker,95,3.56,"4784 Odio, St.",ZF90 2XX
+E,Nutmeg,105,4.78,"9932 Dui, Rd.",838754
+E,Spearmint,62,2.96,"P.O. Box 269, 9228 Dolor. Rd.",215101
+E,Long Island Tea,68,6.26,Ap #194-2892 Ridiculus St.,8446
+E,Berry Cola,37,9.97,"P.O. Box 231, 3827 Nibh. St.",68704-812
+E,Bavarian Cream,179,9.07,3052 Eleifend St.,21115
+E,Flan,11,4.14,8497 Conubia Street,49445
+E,Bavarian Cream,31,1.24,"Ap #187-8152 Ornare, St.",RL6 7YQ
+E,Hazelnut,164,7.79,"P.O. Box 724, 731 Pharetra Avenue",55146
+E,Mocha Irish Cream,151,1.72,Ap #393-4268 Eu Street,5519
+E,Cheesecake,43,1.34,792-6298 At Street,82581
+E,Orange,16,0.82,9721 Aliquam Road,343634
+E,Vanilla,129,8.38,"P.O. Box 840, 948 Sapien St.",3398
+E,Whipped Cream,110,5.53,216-1914 Suspendisse Road,51380
+E,Toasted Coconut,100,7.27,6023 Luctus Avenue,770668
+E,Orange Pineapple,89,5.95,"P.O. Box 545, 6567 Sed Road",07791
+E,Amaretto,145,1.97,Ap #202-2588 In St.,5290
+E,Key Lime,90,0.31,9618 Vulputate Rd.,49034
+E,Wintergreen,132,0.87,Ap #900-7661 Nisi Road,02692
+E,Smoke,45,1.26,"P.O. Box 542, 7421 Dignissim Rd.",07286
+E,Mocha,94,2.24,Ap #100-6159 Ipsum Avenue,15807
+E,Plantation Punch,104,9.72,806 Maecenas Rd.,41513
+E,Key Lime,120,4.54,Ap #677-5383 Quisque Road,50275
+E,Creme de Menthe,190,8.56,Ap #888-3625 Libero. Rd.,36259
+E,Tonic,102,4.45,"P.O. Box 692, 5436 Est Road",M9H 4K3
+E,Cookie Dough,88,7.38,8129 Dui Street,507588
+E,Mango Orange Pineapple,60,5.26,Ap #500-4128 Pede St.,71261
+E,Butter Milk,60,6.36,751-3652 Orci Avenue,27381
+E,Butter Milk,40,1.20,"Ap #194-3239 A, St.",2434
+E,Mango Orange Pineapple,193,1.56,9724 Mollis. St.,901218
+E,Rum,163,0.43,4905 Lobortis. Av.,6600
+E,Prickly Pear,15,6.80,753-2216 Magnis Ave,668557
+E,Creme de Menthe,186,6.32,"P.O. Box 942, 2133 Aliquet. Street",PQ3U 6ED
+E,Berry Cola,160,3.52,556-4465 Eros Street,BT49 1WF
+E,Long Island Tea,128,7.82,456-327 Urna. Street,79917
+E,Cream Soda,55,3.76,350-295 Ornare Avenue,P9J 7A6
+E,Pomegranate,173,6.50,Ap #114-7807 Quisque Road,70736
+E,Margarita,105,1.38,"P.O. Box 395, 6357 Donec Street",1072
+E,Apricot,10,6.48,"P.O. Box 436, 4058 Eget Ave",70219
+E,Toffee,44,4.20,"P.O. Box 631, 6765 Non Street",54607
+E,Lime,63,7.71,Ap #390-9534 Tempus Rd.,31201
+E,Marshmallow,152,7.18,709-5169 Erat Avenue,U54 2AU
+E,Orange Brandy,187,2.38,753 Sodales St.,36565
+E,Tutti Frutti,141,4.09,2915 Et Street,51924
+E,Grape,190,7.06,"P.O. Box 695, 6226 Ligula. Rd.",72336
+E,Butter Almond,186,7.76,"P.O. Box 221, 9514 Augue. Rd.",S4T 5M8
+E,Orange Mango,167,9.06,"P.O. Box 967, 8001 Et Ave",53394
+E,Blue Raspberry,169,7.69,"8304 Lorem, Av.",43526
+E,Margarita,34,3.74,623-938 Enim. St.,32742
+E,Kettle Corn,48,6.05,6029 Diam Avenue,41807
+E,Butter,57,0.03,5630 In Street,128886
+E,Vanilla,170,8.13,782-4874 Dolor Av.,28634
+E,Macadamia Nut,73,4.54,617-4826 Lorem Av.,3605 CZ
+E,Cherry Cream Spice,106,9.24,Ap #253-4850 Nullam Rd.,01-675
+E,Acai Berry,112,1.09,"P.O. Box 864, 4971 Gravida St.",4818 PY
+E,Candy Corn,95,7.02,719-1133 Nulla. Street,09862
+E,Strawberry,44,9.91,"P.O. Box 702, 222 Sed Avenue",43-448
+E,Pineapple,86,1.56,"P.O. Box 986, 9270 Sed Rd.",31-622
+E,Orange Pineapple,157,9.41,950-171 Dui. Avenue,465526
+E,Dill Pickle,190,7.50,489-4833 Sodales St.,C4Y 5G2
+E,Cherry,56,7.58,3384 Nulla. Street,43662
+E,Passion Fruit,171,9.27,Ap #723-5871 Faucibus St.,80627
+E,Pumpkin Pie,150,3.17,"P.O. Box 659, 2402 Etiam Av.",7672
+E,Plantation Punch,102,0.84,242-3228 Iaculis St.,71419-970
+E,Tequila,183,5.90,"P.O. Box 377, 5872 Nibh St.",61108
+E,Mojito,114,3.50,Ap #577-1637 Ac St.,191294
+E,Toasted Coconut,30,3.07,154-2565 Mauris Rd.,80427
+E,Strawberry,95,1.78,940-3111 Lectus. Rd.,890121
+E,Carrot Cake,115,1.14,Ap #926-2058 Mauris Rd.,57341
+E,Almond,50,1.98,Ap #228-7538 Enim St.,08014-734
+E,Almond,101,9.93,"P.O. Box 439, 8614 Ad Ave",92801
+E,Lemon,49,6.42,987-3478 Risus Street,95-100
+E,Anise,191,3.83,Ap #274-7722 Mus. Rd.,193160
+E,Malted Milk,128,3.68,"P.O. Box 923, 1300 Bibendum St.",9383
+E,Peanut,172,7.35,3615 Nunc Ave,1823 CX
+E,Grape,178,5.27,6373 Non Av.,918568
+E,Sarsaparilla,58,9.27,292-328 Egestas. St.,OU6 3IF
+E,Mixed Berry,90,6.42,9036 Nibh Street,5018
+E,Rock and Rye,137,3.35,Ap #784-118 Quisque Avenue,07227
+E,Coconut,74,7.78,9912 Duis St.,60633-965
+E,Egg Nog,103,6.23,Ap #305-4246 Non Av.,452459
+E,Cheesecake,125,7.95,903-6364 Gravida Avenue,04641
+E,Marshmallow,35,9.94,"P.O. Box 853, 9163 Ornare, Rd.",55989
+E,Orange Pineapple,89,0.87,6364 Massa Av.,G8Z 7P7
+E,Lemon Custard,135,7.46,1590 Arcu Road,5833 QM
+E,Birch Beer,101,1.24,Ap #948-8103 Erat St.,16-022
+E,Apricot,163,8.96,"Ap #771-5977 Ut, Street",0476 NL
+E,Orange Pineapple,178,3.08,"P.O. Box 526, 2613 Odio. Avenue",44424
+E,Almond,84,7.24,"Ap #908-2807 Ut, Ave",55088
+E,Melon Kiwi,82,8.79,283-5312 Mollis. Ave,11732
+E,Grapefruit,90,5.36,3354 Ac Ave,50902
+E,Elderberry,104,7.51,6592 Ipsum Rd.,7688 NW
+E,Rock and Rye,193,4.70,957-3154 Cursus Ave,72918
+E,Butter,178,2.41,Ap #680-4940 Ipsum St.,978832
+E,Toffee,65,2.58,"P.O. Box 900, 8563 Ut Av.",18951
+E,Horchata,181,3.59,"P.O. Box 834, 1729 Convallis Av.",C0R 1Z9
+E,Kettle Corn,100,8.25,Ap #222-7710 Dignissim. Av.,76498
+E,Irish Whiskey,178,2.49,"P.O. Box 571, 4733 Non, Street",26546
+E,Ginger Beer,112,2.18,"P.O. Box 866, 8473 Risus. Ave",14997
+E,Honey,185,8.91,722-328 Phasellus Avenue,892582
+E,Cinnamon Roll,181,5.44,767-1537 Vitae Rd.,55031-707
+E,Butterscotch,114,5.20,4846 Mauris St.,24080
+E,Mocha,176,8.77,"P.O. Box 707, 8880 Nam Av.",09091-822
+E,Wintergreen,63,0.51,530-1753 Dignissim. Av.,054670
+E,Cotton Candy,196,3.50,"Ap #981-5551 Orci, Avenue",3585
+E,Pineapple,192,1.95,Ap #195-5671 Gravida Av.,M46 4EZ
+E,White Chocolate,194,4.95,Ap #964-4520 Velit St.,209472
+E,Bourbon,132,5.60,Ap #296-8203 Curabitur Av.,09-442
+E,Nutmeg,161,7.35,805-3831 Phasellus Rd.,75284
+E,Bubble Gum,56,5.51,"P.O. Box 774, 4346 Luctus Rd.",10429
+E,Orange,67,6.63,747-533 Magna. Rd.,49-538
+E,Kettle Corn,185,0.63,"Ap #681-3568 Non, Road",5210
+E,Mint,86,7.50,Ap #128-7934 Egestas Rd.,8766
+E,Nutmeg,156,1.51,"P.O. Box 101, 4842 Arcu Rd.",51734
+E,Tart Lemon,154,8.06,255-4918 Dictum Ave,32884
+E,Pineapple,104,8.77,Ap #829-4631 Praesent Street,33742
+E,Pineapple,161,4.31,1497 Adipiscing St.,86104
+E,Wild Cherry Cream,128,4.92,152-8353 Proin Rd.,91815
+E,Pineapple,69,5.86,Ap #925-9259 Proin Street,24-869
+E,Black Walnut,136,5.79,"P.O. Box 891, 4417 Turpis. Rd.",413710
+E,Fenugreek,165,2.40,"P.O. Box 186, 7754 Lorem. Rd.",3950
+E,Bacon,64,2.85,Ap #824-2501 Ut Rd.,87-658
+E,Tangerine,32,5.42,298-2365 Lacinia Street,8306 FD
+E,Apple,108,6.96,"P.O. Box 807, 9229 Aliquet St.",89-117
+E,Whipped Cream,163,7.92,4417 Aliquet Avenue,26339
+E,Malted Milk,46,3.80,"P.O. Box 666, 9952 Dapibus Ave",62573
+E,Egg Nog,116,2.56,"P.O. Box 467, 4064 Ut Ave",30103
+E,Macadamia Nut,93,9.72,"P.O. Box 713, 1173 Cum St.",552941
+E,Apricot,56,7.27,Ap #267-2331 Enim Av.,3970
+E,Birch Beer,127,4.05,6189 Lorem Rd.,M4Z 0G6
+E,Acai Berry,78,3.81,Ap #166-1184 Sociis Avenue,02302
+E,Tutti Frutti,13,9.60,Ap #833-4978 Morbi Street,8835
+E,Tequila,99,5.88,2648 Egestas. St.,863745
+E,Candy Corn,105,0.17,"P.O. Box 480, 738 Pellentesque St.",15112
+E,Cream Soda,165,3.62,Ap #768-2234 Ornare. Street,61808
+E,Peppermint,167,1.62,Ap #801-3086 Blandit St.,5744
+E,Almond,128,2.00,"P.O. Box 950, 1339 Velit Av.",26171
+E,Honey,57,7.80,"P.O. Box 392, 7437 Amet, Road",15125
+E,Fruit Punch,139,3.90,424-9137 Fermentum Rd.,30399
+E,Smoke,126,5.26,"9985 Vulputate, St.",60666-582
+E,Pink Lemonade,130,5.67,323-2491 Metus Street,2523
+E,Fuzzy Navel,193,2.21,Ap #413-5736 Arcu. Ave,K3J 0G3
+E,Macadamia Nut,120,2.70,157-6360 Accumsan St.,9831
+E,Cheesecake,100,4.51,9433 Est St.,510211
+E,Tart Lemon,90,6.38,Ap #548-3334 Congue St.,2895
+E,Lime,61,2.81,"P.O. Box 468, 8154 Vestibulum Av.",1911
+E,Black Cherry,110,8.63,1958 Interdum Street,8234
+E,Birch Beer,179,7.56,7043 Malesuada St.,716580
+E,Pink Lemonade,146,4.61,"P.O. Box 913, 5490 Fusce Avenue",11007
+E,Nutmeg,137,2.81,"P.O. Box 665, 9433 Non Av.",87684
+E,Spice,62,8.65,7849 Neque St.,03385
+E,Graham Cracker,108,3.50,785-9673 Aliquam St.,80917
+E,Pumpkin Pie,156,1.87,"Ap #338-4578 Ut, Avenue",56368
+E,Blackberry,62,2.21,5990 Suspendisse Ave,983679
+E,Cinnamon Roll,104,6.20,Ap #808-6673 Non Street,1334
+E,Vanilla Cream,84,7.90,Ap #389-750 Id Rd.,8386
+E,Orange Mandarin,132,1.26,1676 Dui. Rd.,75183
+E,Mixed Berry,186,7.48,758-8170 Pharetra St.,695950
+E,Flan,29,5.00,6358 Neque Rd.,584550
+E,Almond,165,3.24,100 Faucibus. St.,26072
+E,Pecan,126,8.83,3523 Bibendum St.,91449
+E,Fruit Punch,112,1.73,299-5516 Velit Street,409931
+E,Nutmeg,110,2.42,Ap #271-3217 Eget Av.,62457
+E,Almond,93,4.37,491-4463 Ipsum. St.,186733
+E,Vanilla Cream,90,8.45,Ap #813-7190 Quis Av.,M7B 1XD
+E,Ginger Beer,91,5.00,"P.O. Box 509, 1444 Dictum Ave",337203
+E,Margarita,58,3.84,216-2590 Massa. Av.,5339
+E,White Chocolate,156,9.84,"P.O. Box 994, 7663 Molestie. Ave",15212-756
+E,Butter Milk,101,9.93,1921 Tristique St.,T8C 2Y5
+E,Grape,19,6.09,"P.O. Box 923, 5807 Auctor. Rd.",31341
+E,Butter Pecan,15,6.28,7743 Amet St.,22732
+E,Chocolate Mint,46,3.78,869-1489 Pharetra St.,3891
+E,Tonic,156,1.41,"P.O. Box 423, 6461 Cras St.",4435
+E,Bourbon,75,4.41,"P.O. Box 288, 2940 Ac Street",30349
+E,Candy Corn,118,2.77,4037 Varius. Av.,24805
+E,Pear,137,5.94,"P.O. Box 268, 2651 Non Street",U3W 2ZS
+E,Pecan,192,7.24,Ap #886-5923 Pede Ave,9632
+E,Smoke,63,9.99,330-4355 Odio Rd.,97136
+E,Apple,40,6.99,Ap #434-2417 Senectus Av.,7826
+E,Toasted Coconut,68,2.58,Ap #323-6242 Quis Rd.,16812
+E,Black Cherry,174,1.90,"P.O. Box 728, 5767 Mi Road",83897
+E,Watermelon,23,6.31,"214-6631 Ut, Rd.",907469
+E,Chocolate,154,1.47,694-6853 Nam Rd.,82033
+E,Mocha Irish Cream,126,4.90,Ap #928-1141 Nec Ave,67933
+E,Black Currant,134,6.77,503-6234 At Av.,04910
+E,Butter Almond,174,0.11,954-2099 Phasellus Street,9547
+E,Punch,15,3.50,1117 Felis. Rd.,T6S 0Z6
+E,Anise,163,6.09,885-773 Arcu. Rd.,11515
+E,Butter Milk,122,2.81,"P.O. Box 930, 4129 In, Street",C6 1BK
+E,Wild Cherry Cream,62,2.70,Ap #905-406 Luctus Av.,13-281
+E,Butter Toffee,144,6.19,180-819 Felis St.,34710
+E,Anise,38,7.66,"7474 Odio, Rd.",525608
+E,Spearmint,183,8.09,Ap #500-4298 Lacus. Rd.,99712
+E,Lemon Bar,17,8.07,"764-125 Ut, Rd.",39863
+E,Bacon,68,9.29,518-9200 Non Rd.,490497
+E,Blue Raspberry,154,6.97,3181 Amet Avenue,37509-009
+E,Sour,89,5.85,573-7280 Pretium Road,92637
+E,Root Beer,30,0.26,6328 Pharetra Ave,8255 WG
+E,Apple,79,5.05,Ap #400-2663 Ullamcorper. Road,57788
+E,Irish Whiskey,24,6.99,Ap #478-5610 Odio Ave,4622
+E,Blueberry,152,9.99,Ap #142-6074 Integer Street,79-933
+E,Long Island Tea,184,6.74,"P.O. Box 728, 6079 Et Rd.",10498
+E,Plum,150,0.80,"8447 Quis, Ave",32789
+E,Lemon Lime,84,1.68,Ap #589-9654 Erat Street,56807
+E,Orange Mandarin,88,1.27,"P.O. Box 772, 8358 Nec Street",54906
+E,Butter,28,2.38,501-7138 Nec Av.,522101
+E,Tropical Punch,44,7.50,Ap #284-9045 Malesuada St.,H60 5YO
+E,Orange Brandy,122,9.66,769-1124 Id Street,X0N 2K8
+E,Wild Cherry Cream,60,7.17,Ap #336-2970 Ipsum. Av.,325584
+E,Tutti Frutti,44,3.17,"P.O. Box 382, 7424 Erat Street",K6K 8E6
+E,Mixed Berry,78,8.96,747-8881 Penatibus St.,7716
+E,Orange Mandarin,54,5.84,2948 Convallis St.,826959
+E,Mint,198,3.70,3070 Aliquam Avenue,14259
+E,Bacon,83,2.04,"Ap #300-4761 Iaculis, Rd.",M1P 5W8
+E,Orange Cream,164,6.80,Ap #342-9471 Suspendisse St.,216594
+E,Butter Pecan,136,1.12,Ap #606-5462 Molestie Rd.,900597
+E,Black Currant,50,6.50,382-1427 Penatibus Avenue,A64 9RU
+E,Tangerine,70,1.82,"P.O. Box 960, 2234 Faucibus Ave",20682
+E,Coconut,17,7.15,391-7634 Mauris. Road,C4J 0B2
+E,Plum,128,5.33,1285 Mi Street,12-507
+E,Quinine,83,3.70,"P.O. Box 956, 5351 Imperdiet St.",041476
+E,Plantation Punch,64,3.19,912-280 Sagittis Rd.,41919
+E,Lime,165,7.72,274 Luctus. Ave,864267
+E,Cream Soda,180,9.90,Ap #642-2214 Nulla Ave,50718
+E,Root Beer,108,0.17,"P.O. Box 627, 9306 Consequat Avenue",TX0Z 6FM
+E,Peach,196,2.93,"P.O. Box 303, 1055 Lacus. Ave",59852
+E,Amaretto,150,9.73,Ap #881-9768 Mi Av.,46821
+E,Rum,35,3.43,"P.O. Box 561, 6076 Magna. Av.",508723
+E,Orange Mango,184,1.47,"8470 Lectus, St.",2333 XV
+E,Carrot Cake,86,7.18,"945-3190 Ante, Street",7508
+E,Banana,124,7.65,487-4311 Sodales Road,1670
+E,Butterscotch,61,3.85,"P.O. Box 865, 1787 Tellus St.",5757
+E,Peppermint,118,7.87,"P.O. Box 614, 7893 Orci Rd.",4911
+E,Cherry,32,8.57,Ap #586-940 Nunc Road,81104
+E,Carrot Cake,132,5.27,Ap #951-7379 Lobortis. Rd.,02495
+E,Quinine,171,8.26,"951-4966 Lorem, Road",9393
+E,Raspberry Ginger Ale,162,9.35,5333 Sem Avenue,60709
+E,Peppermint,70,6.47,301-5053 Aenean St.,8852
+E,Pear,186,8.72,Ap #744-3642 Eu Road,89408
+E,Peach,12,2.66,917-2780 Aliquet Ave,28645
+E,Passion Fruit,20,9.77,"P.O. Box 772, 5333 Sagittis Rd.",8849
+E,Watermelon,190,0.20,"P.O. Box 381, 7913 Ut Rd.",9977
+E,Vanilla,194,6.12,Ap #861-9159 Mollis Rd.,20302
+E,Prickly Pear,61,7.45,"P.O. Box 789, 5742 Lacus. St.",8944
+E,Mango,90,5.26,4361 Mauris. Rd.,H0E 9E8
+E,Butter Toffee,159,4.17,"9780 Enim, Rd.",6810
+E,Pumpkin,160,9.83,"P.O. Box 919, 7310 Lorem Rd.",24377-962
+E,Peppermint,145,5.11,5238 Integer St.,99423
+E,Key Lime,143,0.15,Ap #124-618 Cum Avenue,4057
+E,Hazelnut,51,9.12,8101 Nec Road,58163
+E,Lemon,124,5.91,792 Nunc St.,85-261
+E,Toffee,42,7.76,"619-6887 Sapien, Rd.",484059
+E,Mojito,68,2.86,"Ap #519-3666 Eu, Ave",35653
+E,Long Island Tea,104,6.86,Ap #506-3571 Nonummy Avenue,48910
+E,Butter Rum,166,6.65,Ap #340-1643 Luctus St.,99642
+E,Blue Raspberry,70,2.70,Ap #841-9677 Magnis Street,37769
+E,Cotton Candy,142,7.65,4500 Molestie St.,585091
+E,Raspberry,145,9.11,901-4118 Dignissim Rd.,6154 TM
+E,Spice,108,8.43,"P.O. Box 523, 6309 Auctor, Avenue",56991
+E,Graham Cracker,134,1.68,437-6000 Primis St.,815662
+E,Cinnamon,112,7.72,136-8671 Vivamus St.,9425
+E,Lime,145,2.75,3131 Lorem. Ave,7931
+E,Hazelnut,112,2.74,550-3323 Mollis Ave,55378
+E,Kettle Corn,117,2.40,"7104 Vestibulum, Ave",RA7B 0IE
+E,Key Lime,96,7.24,Ap #719-3346 Ac Ave,695034
+E,Orange Brandy,58,5.12,614-1454 Ipsum St.,D18 7XW
+E,Cherry Cream Spice,71,5.79,562-9988 Bibendum Rd.,2727
+E,Fenugreek,165,3.88,Ap #711-3145 Natoque Rd.,4623
+E,Bourbon,22,2.08,"P.O. Box 769, 8544 Semper, Street",60801
+E,Butter,93,9.52,"P.O. Box 287, 132 At St.",39247-066
+E,Blueberry,18,3.85,Ap #772-3407 Lectus St.,630372
+E,Plum,99,8.97,7095 Dapibus St.,H7W 2KI
+E,Fuzzy Navel,155,8.80,Ap #843-636 Mattis Ave,85966
+E,Rum,141,7.79,3495 Vehicula Av.,4742
+E,Kettle Corn,32,3.92,"P.O. Box 214, 6554 Augue St.",V2P 4B1
+E,Passion Fruit,191,6.19,Ap #514-5197 Fusce Avenue,R45 1WL
+E,Melon,10,6.34,"P.O. Box 655, 9519 Eu Road",25136
+E,Pina Colada,115,7.10,"P.O. Box 276, 9508 Nunc Road",144508
+E,Cookie Dough,50,4.93,4891 Quisque Av.,16092
+E,Marshmallow,138,3.45,Ap #949-5188 Sagittis. Avenue,04393
+E,Sour,22,2.29,"Ap #462-1056 Urna, Avenue",788888
+E,Vanilla Cream,107,1.59,Ap #814-1929 Proin Avenue,14728-030
+E,Cherry,144,3.67,5494 Ut St.,51053
+E,Vanilla Cream,168,7.39,926-1311 Netus Avenue,2347
+E,Ginger Lime,94,5.05,"P.O. Box 712, 6182 Odio. Rd.",9232 DJ
+E,Mojito,166,6.60,495-7116 Amet St.,C5G 3H6
+E,Almond,124,9.50,Ap #339-7549 Odio Street,31970
+E,Ginger Beer,131,5.12,6908 Ultricies Street,508403
+E,Prickly Pear,67,7.03,216-1213 Ultrices Ave,56544
+E,Kettle Corn,151,5.20,8850 Urna Road,60917
+E,Cola,172,4.83,952-103 Odio St.,28853
+E,Peppermint,68,0.10,1118 Ac Ave,60867
+E,Lemon Custard,103,2.80,"P.O. Box 627, 1094 Urna Road",8268
+E,Tutti Frutti,12,7.95,6174 Enim. Ave,7016
+E,Cream Soda,11,8.58,848-4573 Et Avenue,7407
+E,Caramel,121,2.55,"P.O. Box 464, 4669 Aliquet Street",683654
+E,Cherry,160,4.30,Ap #855-4737 Ac Ave,13643
+E,Mocha Irish Cream,199,3.62,"P.O. Box 355, 3252 Ut, Avenue",00312
+E,Lemon,29,7.82,"P.O. Box 444, 2907 Non, Street",E6T 9Y0
+E,Whipped Cream,31,3.96,9894 Congue Av.,40789
+E,Cream Soda,168,0.42,"P.O. Box 474, 1204 Lacus. Rd.",02871
+E,Whipped Cream,128,1.78,Ap #422-128 Ullamcorper Rd.,9888
+E,Green Onion,157,2.89,"P.O. Box 551, 7799 Tincidunt St.",B68 5ZN
+E,Green Onion,137,0.99,Ap #243-9088 Nec Street,FK9 6OI
+E,Black Cherry,15,2.18,7475 Neque St.,K0M 8K2
+E,Anise,88,5.70,"P.O. Box 328, 5435 Nec, Rd.",9493
+E,Lemon Custard,38,4.04,"P.O. Box 595, 4359 Volutpat. Road",52609
+E,Tequila,71,5.89,365-2385 Aliquet St.,24-051
+E,Plantation Punch,190,3.57,"P.O. Box 796, 4248 Curabitur St.",05279
+E,Mango Orange Pineapple,68,5.99,521-2338 Tellus Ave,6538
+E,Banana,29,2.32,"P.O. Box 363, 1603 Nunc St.",300872
+E,Dill Pickle,44,9.60,510-1139 Tincidunt Av.,531035
+E,Melon Kiwi,85,2.93,"Ap #826-4093 Elit, Road",V7M 5H8
+E,Orange Mandarin,131,2.57,461-4596 Morbi St.,9438
+E,Mojito,150,9.21,8789 Nisi Rd.,9579
+E,Marshmallow,17,9.31,1913 Amet Ave,VY6 4XV
+E,Honey,200,0.50,"P.O. Box 871, 1962 Molestie St.",1652
+E,Pecan Roll,49,3.18,247-5809 Tortor Street,67778
+E,Tart Lemon,13,8.45,9477 Arcu. Rd.,65364
+E,Wild Cherry Cream,126,1.53,"P.O. Box 935, 4975 Vulputate Road",756434
+E,Mango Orange Pineapple,97,7.57,"P.O. Box 520, 270 Amet St.",874839
+E,Black Walnut,29,1.40,4875 Erat. Av.,91116
+E,Plantation Punch,74,2.25,254 Sem Av.,88056
+E,Fuzzy Navel,17,9.01,"P.O. Box 305, 5203 Elit, Rd.",71228
+E,Pistachio,98,0.26,791-4036 Nullam Avenue,31902
+E,Black Licorice,93,1.11,"874-8648 Vel, Avenue",93856
+E,Black Currant,66,4.60,"P.O. Box 817, 2998 Erat. Road",58707
+E,Orange Mango,89,7.77,"P.O. Box 870, 9422 Adipiscing Rd.",97572
+E,Orange Brandy,40,4.60,"P.O. Box 487, 2204 Tellus. Avenue",7262
+E,Toffee,88,9.27,"P.O. Box 286, 6564 Purus. Road",10208
+E,Wild Cherry Cream,26,3.39,"P.O. Box 647, 8329 Diam Avenue",2282
+E,Tropical Punch,87,8.16,Ap #288-5623 Sollicitudin Street,23853
+E,Rock and Rye,47,6.07,Ap #635-7521 Nunc Av.,55691
+E,Creme de Menthe,127,7.77,"Ap #810-4518 Orci, Avenue",7409
+E,Elderberry,84,2.04,6551 Pede Street,96872
+E,Vanilla,91,4.99,Ap #847-949 Consectetuer Rd.,895511
+E,Black Licorice,15,5.42,315-6557 A Avenue,99246
+E,Apple,156,7.69,3811 Eros. Rd.,U0 9RQ
+E,Cream Soda,16,3.94,"235-7497 Pellentesque, St.",57516
+E,Coconut,44,1.86,"P.O. Box 909, 2837 Turpis Av.",41109
+E,Toasted Coconut,14,9.63,289-2176 Interdum St.,8205
+E,Pear,54,4.04,332-944 Semper St.,07888
+E,Peppermint,200,6.22,Ap #616-4804 Mauris Avenue,74283-886
+E,Malted Milk,175,5.90,2616 Purus. Street,371659
+E,Orange Brandy,20,9.49,Ap #950-5648 Mi Av.,27342
+E,Cake Batter,68,2.47,8080 Hendrerit. Street,7603
+E,Raspberry Ginger Ale,79,5.65,3565 Molestie Rd.,95368
+E,Vanilla Cream,188,4.55,Ap #331-2444 Eget Rd.,35331-730
+E,Lemon Custard,42,3.53,808-8375 Massa St.,97-503
+E,Carmel Apple,53,8.59,386-4271 Ac Av.,6614
+E,Lemon Custard,10,7.69,"P.O. Box 585, 8865 Parturient Av.",63447
+E,Pumpkin,140,7.03,648 Eu Rd.,044480
+E,Butter,23,0.24,"8269 Nec, St.",33732
+E,Rock and Rye,139,6.30,"Ap #898-9810 Leo, St.",X71 8AV
+E,Cheesecake,64,8.13,Ap #500-7058 Cras Ave,78516-729
+E,Cranberry,192,1.89,Ap #651-4778 Tincidunt Ave,51061
+E,Acai Berry,185,6.97,"8780 Pede, Road",2601
+E,Tangerine,22,1.85,4679 Arcu Street,04022
+E,Rum,97,4.34,Ap #531-151 Metus Avenue,64-207
+E,Plum,163,2.34,Ap #526-2527 Ipsum Rd.,407296
+E,Horchata,50,9.44,Ap #141-2070 Cursus St.,15705
+E,Lemon Bar,94,2.31,"P.O. Box 742, 7769 Placerat, Road",86377
+E,Doughnut,68,8.40,161-7158 Auctor Ave,31-428
+E,Huckleberry,128,6.40,332-8209 Mollis. St.,PK7 5JP
+E,Papaya,49,3.78,"P.O. Box 724, 1076 In Road",40028
+E,Rock and Rye,68,6.33,Ap #765-7063 Nunc Street,5234 LO
+E,Cinnamon,141,4.95,232-1222 Placerat Road,9764
+E,Orange Brandy,127,4.37,"P.O. Box 687, 6935 Mauris Road",MO13 2CE
+E,Ginger Beer,17,3.98,"P.O. Box 733, 7959 Nec Avenue",171710
+E,Toasted Coconut,181,9.76,4559 Vitae Rd.,25213
+E,Orange Brandy,165,6.92,Ap #654-1752 Ante Avenue,144433
+E,Pistachio,182,0.02,411-2403 Id Street,2031
+E,Cream Soda,164,2.73,Ap #948-678 Mauris St.,994866
+E,Smoke,18,3.74,324-2458 Purus. St.,C8 3RK
+E,Cola,115,0.03,963-7591 Diam. Avenue,G6S 2N0
+E,Tonic,92,1.27,"P.O. Box 154, 9137 Rutrum St.",60254
+E,Almond,35,3.40,457-9782 Ac Street,70200
+E,Tutti Frutti,89,8.30,789-3293 Pretium Road,92678
+E,Candy Corn,103,1.60,"P.O. Box 618, 9042 Blandit St.",23204
+E,Raspberry,59,7.88,5689 Sit Road,8389
+E,Tonic,48,2.48,"P.O. Box 252, 9899 Interdum Av.",C1N 5S6
+E,Marshmallow,124,4.76,Ap #563-2209 Malesuada St.,86003
+E,Pumpkin Pie,88,1.95,Ap #865-7425 Fringilla Road,942579
+E,Lemon Custard,49,5.49,7540 Mi. St.,6612
+E,Maple,107,6.16,"Ap #400-732 Lacus, Rd.",1576
+E,Birch Beer,22,5.22,Ap #941-8318 Fusce St.,6756
+E,Wintergreen,134,1.89,"P.O. Box 547, 9773 Risus. Rd.",62480
+E,Pomegranate,90,8.70,"9087 At, Rd.",83260
+E,Tequila,20,0.24,415-2575 Integer Road,42913
+E,Maple,161,8.51,843-4526 Risus. St.,88834
+E,Orange Mandarin,44,1.14,"5168 Ullamcorper, Av.",47427
+E,Bavarian Cream,184,3.22,1009 Massa. Ave,30011-393
+E,Cherry Cream Spice,117,0.04,"P.O. Box 903, 3926 Enim St.",16480
+E,Rum,91,9.16,125 Dolor. Avenue,9093 ZN
+E,Ginger Lime,171,1.30,Ap #299-9813 Lectus St.,961776
+E,Eucalyptus,196,2.86,687-3582 Pharetra Rd.,238512
+E,Eucalyptus,70,6.09,"P.O. Box 566, 7431 Laoreet, St.",75365
+E,Marshmallow,198,9.94,4853 Amet Avenue,689721
+E,Coffee,95,6.09,"P.O. Box 397, 8218 Molestie Street",4459
+E,Pecan,137,3.30,"P.O. Box 852, 937 Commodo Rd.",50716
+E,Peanut,46,4.26,7462 Ultrices. St.,61610
+E,Pineapple,60,4.10,818-4291 In St.,8618
+E,Acai Berry,158,3.48,234-8149 Arcu St.,R5A 6B7
+E,Cranberry,89,8.83,"6056 Ornare, Avenue",F05 6OQ
+E,Raspberry Ginger Ale,100,0.22,Ap #201-4901 In St.,7357
+E,Peanut,108,7.55,781-8490 Magna St.,2485 GW
+E,Pineapple,83,6.70,Ap #666-7479 Mi. Avenue,5362
+E,Mango,137,9.90,"P.O. Box 966, 3911 Neque Road",5767
+E,Melon,142,2.97,"8444 Vel, St.",74272
+E,Cranberry,117,3.75,Ap #100-1020 Sollicitudin Ave,390568
+E,Pineapple,56,3.95,168-2826 Ipsum Road,668607
+E,Pear,79,9.79,Ap #751-3914 Cum Rd.,69459
+E,Melon,31,5.84,Ap #968-5000 Pellentesque Road,L4F 8GM
+E,Peach,39,6.72,6613 Ornare. Avenue,2403
+E,Apricot,82,5.17,343-3391 Enim Rd.,62164
+E,Mojito,129,6.78,Ap #408-9586 Blandit. Avenue,21946-597
+E,Kettle Corn,18,0.01,7673 Risus. Street,5854 HL
+E,Blueberry,169,8.50,"P.O. Box 709, 8954 Aliquam Av.",ZK8O 5LH
+E,Ginger Beer,160,1.35,Ap #942-7828 Ullamcorper Rd.,9180 IH
+E,Egg Nog,149,9.54,Ap #200-380 Semper Av.,R9G 7X9
+E,Eucalyptus,17,9.89,"P.O. Box 876, 7346 Tincidunt, Road",61908
+E,Mojito,102,1.83,"P.O. Box 136, 496 Fringilla, Av.",4947
+E,Elderberry,112,3.66,"P.O. Box 621, 307 Ipsum Road",50005
+E,Bacon,126,5.56,Ap #177-5009 In Rd.,61482
+E,Bubble Gum,75,7.80,"P.O. Box 541, 4002 Sit St.",85048
+E,White Chocolate,49,9.40,"Ap #244-5523 Mauris, Av.",BB5D 9XZ
+E,Bourbon,134,6.71,Ap #746-5011 Cum St.,10700
+E,Honey,53,0.37,"P.O. Box 486, 9278 Aliquam Avenue",1396 WM
+E,Mojito,166,8.69,Ap #902-4366 Accumsan Ave,49243
+E,Watermelon,126,5.55,"P.O. Box 683, 2204 Sed Avenue",YK5J 3ZB
+E,Melon Kiwi,169,3.92,Ap #196-7553 Suspendisse Av.,46400-067
+E,Butter Pecan,12,0.31,577-1087 Ultrices. Avenue,CO9Y 9EC
+E,Fruit Punch,85,8.75,"P.O. Box 613, 254 Phasellus Avenue",118935
+E,Fuzzy Navel,65,4.87,"P.O. Box 865, 3874 Pulvinar Rd.",FE2 6WZ
+E,Orange Mandarin,32,6.45,315-7035 Pede. Rd.,6065
+E,Cinnamon,19,4.91,9309 Nunc. Rd.,C6G 2K8
+E,Plum,88,0.92,"P.O. Box 312, 1816 Vestibulum Rd.",65304
+E,Kettle Corn,184,7.26,"P.O. Box 936, 1881 Dolor St.",46477
+E,Ginger Lime,53,7.76,"P.O. Box 925, 802 Dui Av.",11733-630
+E,Peanut,182,5.39,Ap #479-6449 Nisi. Road,61706
+E,Kettle Corn,153,2.28,Ap #587-3717 Et St.,48150
+E,Vanilla Cream,75,2.70,2659 Et Av.,5256
+E,White Chocolate,63,4.30,"P.O. Box 923, 8978 Ornare Street",95399
+E,Vanilla,103,2.92,102-1455 Magna. St.,71714
+E,Toasted Coconut,61,4.43,"389-5461 Erat, St.",4457
+E,Butter Milk,59,0.54,1035 Tellus. St.,726689
+E,Cinnamon,127,3.29,"P.O. Box 734, 2598 Ac St.",103966
+E,Plantation Punch,120,9.75,Ap #575-7292 Proin Rd.,9103
+E,Prickly Pear,11,8.81,8719 Nec Rd.,7876
+E,Macadamia Nut,136,8.59,"P.O. Box 432, 2695 Turpis Street",0306 CI
+E,Orange Mango,37,7.30,"Ap #422-7075 Orci, Avenue",99896
+E,Ginger Ale,54,9.61,"P.O. Box 168, 8988 Mauris St.",W7 6YQ
+E,Whipped Cream,156,5.44,8718 Lacus. Rd.,722845
+E,Passion Fruit,143,4.35,805-4057 Sed Avenue,17104
+E,Chocolate,10,2.68,Ap #846-2237 Elit. Rd.,27049-852
+E,Chocolate Mint,100,3.27,"P.O. Box 309, 3351 Vel, Av.",23088
+E,Blueberry,36,1.62,Ap #776-9951 Tincidunt St.,27509
+E,Blue Raspberry,76,7.33,"P.O. Box 546, 6812 Sem Ave",178368
+E,Bubble Gum,11,9.62,Ap #286-7181 Venenatis St.,109588
+E,Quinine,190,2.24,1952 Neque. Av.,18-660
+E,Apricot,19,6.68,Ap #403-9651 Phasellus Rd.,943982
+E,Toasted Coconut,191,3.44,Ap #690-8350 Malesuada Rd.,355044
+E,Orange Mandarin,36,9.98,"9810 Ante, Rd.",01025
+E,Butter Pecan,17,4.08,Ap #147-2407 Sem Rd.,78517-542
+E,Bourbon,99,6.48,"P.O. Box 371, 505 Praesent Street",88713
+E,Strawberry,121,5.66,3802 Lacus Rd.,65814
+E,Vanilla Cream,138,9.03,"P.O. Box 305, 6823 Pharetra St.",7179
+E,Tart Lemon,143,3.68,329-2476 Ut Ave,25113
+E,Whipped Cream,23,1.10,4130 Auctor Rd.,89-977
+E,Grape,168,8.19,979-3052 Sem. Rd.,61641
+E,Wintergreen,13,0.00,Ap #804-8487 Consectetuer Ave,40659
+E,Lemon Lime,168,8.40,Ap #613-8133 Natoque Ave,74542
+E,Wild Cherry Cream,196,8.57,"P.O. Box 716, 3262 Morbi Avenue",8298
+E,Fruit Punch,148,4.98,271-5340 Nulla. Street,H3M 3R8
+E,Pear,74,7.34,9040 Eu Avenue,435369
+E,Lemon Custard,42,5.38,6663 Et Rd.,A1H 8G8
+E,Margarita,36,8.36,Ap #522-7952 Nunc Avenue,5070
+E,Vanilla Cream,49,6.16,1274 Tempus Rd.,B4K 6N7
+E,Cinnamon Roll,185,4.83,5266 Neque Avenue,51221-687
+E,Strawberry Kiwi,149,5.49,513 Sed Road,36-170
+E,Hazelnut,153,9.28,Ap #406-4499 Arcu. St.,516462
+E,Lemon Lime,41,7.00,"P.O. Box 380, 5959 Ridiculus St.",9165
+E,Pina Colada,121,4.34,4274 Eu Rd.,J8M 3N7
+E,Lemon Custard,80,1.91,Ap #615-4436 Praesent St.,V5G 9L1
+E,Berry Cola,177,5.35,5617 Adipiscing Rd.,UM8 0BQ
+E,Orange Brandy,130,2.63,"P.O. Box 663, 5977 Pede Av.",9735
+E,Lemon Bar,31,0.31,3893 Fringilla Av.,24479
+E,Horchata,100,5.53,"622-7390 Est, Ave",8759
+E,Wild Cherry Cream,153,2.29,5784 Blandit Ave,38294
+E,Maple,78,4.41,5589 In Avenue,74440
+E,Nutmeg,128,3.29,Ap #327-4220 Phasellus Ave,1032 US
+E,Hazelnut,134,3.36,"8918 Elit, St.",44211
+E,Irish Cream,30,7.42,811-4751 Porttitor St.,90012
+E,Grapefruit,93,7.92,659-6483 Lobortis St.,K62 3BU
+E,Banana,198,9.88,Ap #528-5598 Id Rd.,K5R 3H8
+E,Butterscotch,39,2.29,Ap #654-1903 Purus Street,10602
+E,Carrot Cake,58,4.53,1128 Ultricies Rd.,7370
+E,Coconut,184,5.87,5855 Curabitur St.,43258
+E,Chocolate Mint,36,9.53,"784-4494 Convallis, Avenue",0148 IQ
+E,Marshmallow,65,8.46,"P.O. Box 472, 9543 Eu Rd.",5250
+E,Mango Orange Pineapple,137,6.58,"P.O. Box 670, 4020 Primis St.",5830
+E,Sarsaparilla,133,5.19,"P.O. Box 808, 1157 Quam. St.",41211
+E,Peppermint,81,2.36,4114 Imperdiet Av.,69833
+E,Acai Berry,108,9.09,469-6210 Eu Rd.,2222
+E,Melon Kiwi,104,2.85,7184 Lobortis Ave,03352
+E,Apricot,118,1.99,2455 Eu Street,850944
+E,Blueberry,162,0.33,681-8601 Nunc Avenue,3406
+E,Lemonade,122,9.92,Ap #301-1910 Augue Street,33940
+E,Cherry,172,5.20,"P.O. Box 467, 3654 Molestie Ave",43159
+E,Cookie Dough,106,6.64,Ap #204-7907 Non Rd.,651799
+E,Punch,16,2.15,"P.O. Box 881, 1587 Mollis. Rd.",842347
+E,Butter Milk,95,5.20,"557-2393 Nec, Av.",63658
+E,Carrot Cake,165,6.97,144-5209 Libero. Ave,3152
+E,Egg Nog,101,3.45,"P.O. Box 381, 5146 Id, Rd.",17264
+E,Grapefruit,79,4.33,Ap #964-7232 Nisi St.,97515
+E,Lemon,64,5.68,"P.O. Box 169, 2135 Porttitor Rd.",50-259
+E,Lemon,30,4.79,2320 Urna Road,1003
+E,Almond,67,5.75,499-7950 Pede. St.,5713
+E,Pineapple,124,4.46,Ap #528-3178 Posuere Street,78543
+E,Tart Lemon,106,4.60,"606-5793 Tincidunt, Road",12683
+E,Orange Pineapple,200,5.05,"P.O. Box 294, 4993 Odio Rd.",R2M 0L0
+E,Kiwi,31,6.14,"P.O. Box 128, 887 Vel, Ave",96901
+E,Creme de Menthe,23,1.51,676-6530 Fringilla Rd.,S2P 0L5
+E,Pomegranate,124,8.90,"P.O. Box 675, 4520 Tristique Ave",76947
+E,Key Lime,101,1.19,"P.O. Box 578, 3911 Imperdiet Rd.",20514
+E,Bourbon,11,3.46,Ap #572-4695 Lorem St.,7342
+E,Carrot Cake,131,9.16,"P.O. Box 126, 3866 Sed Road",35092
+E,Pecan,50,8.95,Ap #515-3084 Quam St.,50711
+E,Ginger Ale,125,5.99,7455 Morbi Road,578848
+E,Fuzzy Navel,196,3.34,"Ap #595-1170 Lorem, Rd.",41909
+E,Coffee,16,2.65,"P.O. Box 340, 5145 Nulla. Rd.",42705
+E,Papaya,139,0.68,484-5584 Habitant Rd.,1405
+E,Almond,184,7.94,514-6546 Donec St.,1608
+E,Grapefruit,69,5.03,636 Arcu. Road,1150
+E,Eucalyptus,39,3.17,"P.O. Box 678, 1692 Fringilla Street",2062
+E,Black Currant,164,8.57,"P.O. Box 706, 5691 Elit. Av.",84844
+E,Maple,19,2.43,5158 Eu Street,5076
+E,Toffee,140,7.11,"P.O. Box 665, 2244 Suscipit Ave",1469 FT
+E,Bourbon,196,4.14,Ap #555-8008 Egestas. Rd.,2867
+E,Mocha Irish Cream,87,5.95,164-4328 Erat Road,4273 FT
+E,Passion Fruit,45,7.78,"P.O. Box 507, 3757 Nam St.",N7Z 8N8
+E,Bourbon,160,4.68,7987 Diam Avenue,47781
+E,Orange Mango,21,2.56,2778 Ante. Ave,8550
+E,Lemon,32,9.91,"P.O. Box 266, 2749 Lectus. Street",96673
+E,Candy Corn,170,5.10,653-9898 Neque. Av.,6958
+E,Coconut,53,4.64,"P.O. Box 924, 8573 Ac Avenue",0993 GC
+E,Spearmint,137,9.83,7293 Cursus Street,10812
+E,Mojito,102,7.37,Ap #253-6584 Aliquet Rd.,639050
+E,Coffee,127,0.99,Ap #849-6582 Ut Rd.,97533
+E,Black Cherry,25,3.09,869 Varius Av.,98-726
+E,Margarita,60,9.80,Ap #192-954 Donec Ave,K3Z 3S8
+E,Raspberry,153,4.72,Ap #804-5597 Ipsum. St.,64-596
+E,Flan,137,5.97,5464 Neque Rd.,97751-455
+E,Smoke,49,1.73,4421 Ac Street,091236
+E,Sour,72,5.16,369-5988 Integer Avenue,78061
+E,Hazelnut,21,8.31,602-6746 Cursus Rd.,59140
+E,Eucalyptus,193,6.26,142-8683 Duis Av.,86668
+E,Plantation Punch,21,6.86,5914 Tempor Ave,63587
+E,Cheesecake,86,9.89,210-843 Eu Avenue,226657
+E,Pina Colada,72,9.11,"P.O. Box 638, 9206 Interdum. Avenue",37815
+E,Sarsaparilla,90,0.60,"P.O. Box 783, 6939 Malesuada Street",978620
+E,Hazelnut,73,3.83,Ap #448-1086 Fusce Av.,1719
+E,Key Lime,84,2.81,9896 Malesuada Road,05-400
+E,Cherry,110,1.33,836-9333 Luctus Ave,20211
+E,Fenugreek,149,8.29,"P.O. Box 388, 1296 Mauris Rd.",829393
+E,Orange Pineapple,165,8.27,3079 Sit St.,9298
+E,Pink Lemonade,102,7.99,"148 Eget, Road",926860
+E,Melon,36,2.11,5388 Lorem Rd.,9210
+E,Butterscotch,136,4.53,Ap #261-7442 Nullam Road,10739
+E,Cotton Candy,186,1.59,Ap #272-5089 Hendrerit Av.,0557 HO
+E,Bourbon,84,5.73,Ap #181-8745 Luctus St.,29602
+E,Candy Corn,180,9.48,Ap #855-9090 Enim. Street,02261
+E,Black Cherry,154,2.05,412-6587 Mollis. St.,84-475
+E,Almond,116,9.40,"P.O. Box 375, 3296 At, St.",VD71 5HH
+E,Cinnamon Roll,18,9.06,Ap #732-7475 Aliquam Street,43447
+E,Cranberry,95,2.79,Ap #154-5329 Nisi Avenue,5051
+E,Orange,50,2.77,126-8450 Metus Av.,Y5T 6M1
+E,Coffee,121,4.57,"Ap #936-8317 Montes, Av.",42-794
+E,Mixed Berry,74,0.33,"Ap #665-8494 Ac, St.",985872
+E,Black Cherry,158,0.25,8425 Nunc Road,SY4 1GT
+E,Mango,190,1.40,"2375 Nec, Avenue",29390
+E,Butter Almond,161,2.78,Ap #188-2434 Sagittis Rd.,2665
+E,Toasted Coconut,117,5.06,Ap #297-2740 Aliquam Street,LF81 1ZB
+E,Chocolate,173,8.07,245-4946 Velit Road,20241
+E,Pecan,112,3.02,107-5773 Curae; St.,6158
+E,Lemonade,185,4.61,5695 Purus. St.,75062
+E,Cranberry,31,7.87,"P.O. Box 119, 9263 Sed Rd.",662479
+E,Butter,43,5.68,Ap #186-3978 Phasellus Rd.,11954
+E,Chocolate,32,7.75,"P.O. Box 573, 2683 Congue. Ave",1690
+E,Punch,102,1.35,"449-2421 Nec, Av.",43790
+E,Huckleberry,161,8.50,480-5013 Quam. Road,2531
+E,Wintergreen,79,6.35,"P.O. Box 398, 6936 Tempus St.",98-460
+E,Pineapple,165,4.36,102-2535 Morbi Avenue,90578
+E,Almond,97,0.06,9395 Nisi. Street,57401
+E,Mocha,68,0.09,283-3174 Fermentum Av.,66289-471
+E,Kettle Corn,106,6.05,5220 Augue St.,65260
+E,Cream Soda,28,0.41,"P.O. Box 870, 7081 Elit Ave",65732
+E,Anise,80,5.23,8921 Scelerisque Street,3600 FX
+E,Butter Rum,162,7.09,7566 Cras Rd.,7696
+E,Long Island Tea,195,8.76,806-1641 Ligula. Av.,6386
+E,Apple,163,5.62,8952 Sit Av.,04980
+E,Watermelon,145,6.71,3819 Pellentesque Road,09871
+E,Lemonade,145,8.58,271-9059 At Rd.,40305
+E,Passion Fruit,78,3.85,Ap #214-4486 Tristique Rd.,57422-816
+E,Wintergreen,26,2.11,247-7484 Nullam Avenue,15904
+E,Whipped Cream,126,8.12,Ap #137-1712 Arcu Avenue,736590
+E,Acai Berry,182,0.56,344-8558 Neque St.,61764
+E,Orange Mandarin,182,2.02,"P.O. Box 619, 3490 At Rd.",51604-589
+E,Bubble Gum,134,2.98,Ap #485-3719 Magna. Rd.,26496-281
+E,Lemon,165,3.19,732-4000 Mauris. Rd.,N3A 7M0
+E,Eucalyptus,15,7.08,"P.O. Box 115, 4326 Ut Av.",10605
+E,Pear,159,3.44,Ap #828-1656 Et St.,503405
+E,Cinnamon Roll,42,4.91,Ap #683-4456 Hendrerit. Road,M6Z 8K1
+E,Black Walnut,173,1.77,9694 Odio St.,65032
+E,Graham Cracker,172,6.61,"P.O. Box 384, 6499 Eu, Avenue",7520
+E,Butter Toffee,27,6.65,Ap #409-6817 Ultrices. Rd.,4378
+E,Gingersnap,55,2.12,3164 Proin St.,5436 PD
+E,Cola,155,8.01,Ap #300-3615 Mauris. St.,5145
+E,Candy Corn,125,4.75,"P.O. Box 781, 3278 Ut, Rd.",9262
+E,Hazelnut,145,1.45,"P.O. Box 263, 4557 Laoreet Rd.",6879
+E,Cranberry,121,8.40,318-6624 Fringilla Road,45762
+E,Pineapple,12,6.06,"6495 Lectus, Rd.",620400
+E,Lime,54,2.40,"P.O. Box 777, 4384 Magna Ave",21077
+E,Pina Colada,134,5.78,585-2257 Vestibulum Avenue,47408
+E,Melon Kiwi,196,3.66,4066 Integer Ave,3811 YB
+E,Cola,55,9.92,"P.O. Box 209, 3173 Tempor Street",26-459
+E,Butter Pecan,177,5.70,115-2623 Dui St.,697389
+E,Lemonade,88,3.66,"P.O. Box 316, 4896 Cras Avenue",4632
+E,Butter,25,7.86,Ap #955-4370 Elementum Av.,32-990
+E,Butter Rum,14,4.30,894-1548 Ipsum Road,7268
+E,Butter Pecan,104,0.65,635-7304 Est Rd.,56519
+E,Mocha,131,9.14,4147 Et Av.,053489
+E,Orange Mango,102,3.15,Ap #391-2217 At Rd.,8835
+E,Sarsaparilla,60,2.60,"Ap #262-5147 Non, Ave",48-426
+E,Wild Cherry Cream,171,4.45,"P.O. Box 400, 4881 Sociis Rd.",753233
+E,Macadamia Nut,57,9.90,569 Dolor Ave,98542
+E,Melon Kiwi,174,0.50,7084 Diam. Ave,5730
+E,Ginger Lime,155,1.32,6329 Justo Rd.,8418
+E,Whipped Cream,39,2.30,"P.O. Box 523, 4804 Gravida Rd.",17901
+E,Coconut,65,1.30,Ap #672-6709 Nunc Road,2501 MH
+E,Orange Brandy,107,1.70,9371 Suscipit Ave,590191
+E,Pecan,200,8.87,Ap #948-5608 Magnis St.,56087
+E,Doughnut,182,3.18,956-7780 Tristique Av.,6201
+E,Tropical Punch,142,4.82,"P.O. Box 154, 1716 Tellus St.",6692 GG
+E,Key Lime,188,2.30,Ap #386-2178 Augue Avenue,9555
+E,Huckleberry,53,8.94,188-3228 Lobortis St.,292658
+E,Flan,175,8.73,938-6277 Mi Ave,36402
+E,Mango Orange Pineapple,175,5.32,Ap #590-6177 Ipsum St.,5483
+E,Wintergreen,141,2.19,"Ap #910-4206 Tellus, Rd.",096252
+E,Doughnut,114,8.78,4181 Lectus. St.,50717
+E,Blueberry,48,8.77,157-7141 Tincidunt. Road,76550
+E,Toffee,129,8.03,"P.O. Box 340, 6874 Auctor Street",84183
+E,Pumpkin Pie,168,0.64,484-2736 Erat Av.,5991
+E,Creme de Menthe,21,7.44,Ap #865-3325 Vel Rd.,258844
+E,Sour,121,4.42,"P.O. Box 985, 8863 Phasellus Av.",74202
+E,Anise,193,0.87,"P.O. Box 117, 8656 Tortor Rd.",69-783
+E,Kettle Corn,116,3.74,3391 Nec St.,OB5 3LJ
+E,Mango,14,0.43,"P.O. Box 977, 339 Malesuada Rd.",30621
+E,Wild Cherry Cream,145,1.23,"P.O. Box 305, 8664 Turpis Rd.",72434
+E,Black Licorice,130,8.35,607-897 Et Street,A39 2RL
+E,Caramel Cream,51,1.32,5111 Aliquet St.,5262
+E,Lemon,93,5.78,Ap #796-6863 Nulla Avenue,7648
+E,Cinnamon,180,8.13,Ap #127-5265 Est Rd.,AF77 3KH
+E,Cream Soda,48,8.98,889 Suspendisse St.,386399
+E,Spearmint,156,1.99,8659 Tellus Street,7636
+E,Rock and Rye,109,8.16,"Ap #775-7868 Suscipit, Street",44120
+E,Fuzzy Navel,58,6.00,4067 Elit Rd.,H7X 2L6
+E,Mango Orange Pineapple,101,9.71,"P.O. Box 480, 6815 Vel, Road",67572
+E,Elderberry,121,9.74,"P.O. Box 603, 2576 Id Street",61906
+E,Quinine,132,3.19,"P.O. Box 560, 3381 Ridiculus St.",44794
+E,Peanut,61,8.17,Ap #385-495 Suspendisse St.,114261
+E,Cheesecake,72,3.65,"P.O. Box 352, 5437 Montes, Ave",20252
+E,Irish Cream,121,6.42,"P.O. Box 337, 2097 Phasellus Av.",R7 9HU
+E,Cream Soda,89,8.67,9277 Cursus Road,5955 KN
+E,Fuzzy Navel,161,6.36,9498 Nisi St.,4673
+E,Cheesecake,27,1.87,"465-3177 In, St.",921697
+E,Peanut,41,2.59,Ap #598-6067 Hendrerit. Rd.,457427
+E,Grape,35,7.23,934-5586 Tincidunt Rd.,87700
+E,Sour,24,4.12,Ap #371-8023 Eu Rd.,7160
+E,White Chocolate,196,0.72,"P.O. Box 129, 7692 Proin Av.",7549
+E,Tangerine,51,7.70,"P.O. Box 579, 6007 Ante. Road",7858
+E,Grand Mariner,89,3.59,Ap #567-7347 Odio Rd.,5361
+E,Lemon Bar,147,8.57,"P.O. Box 303, 2577 Aenean St.",40-643
+E,Wild Cherry Cream,189,8.85,"P.O. Box 480, 7940 Etiam Road",6258 YT
+E,Orange Brandy,50,2.55,"P.O. Box 730, 8356 Malesuada Avenue",66-395
+E,Pineapple,166,5.88,2731 Malesuada Street,08059
+E,Marshmallow,34,2.38,Ap #861-9051 Non Av.,G6A 0E6
+E,Grape,113,7.75,1840 Ligula. St.,6060
+E,Blackberry,160,5.35,672 A Ave,KS6 8ZC
+E,Tutti Frutti,89,9.55,"P.O. Box 266, 7627 In Ave",6760 QH
+E,Melon Kiwi,39,6.44,"P.O. Box 236, 6468 Dapibus Avenue",70419
+E,Black Licorice,184,5.19,Ap #815-911 Posuere Road,K8L 9G4
+E,Plantation Punch,113,4.83,Ap #247-6589 Nec Ave,49-776
+E,Almond,164,2.11,6033 Egestas Avenue,45125
+E,Banana,25,8.17,328-9715 Diam Avenue,568646
+E,Black Walnut,74,5.56,"191-6712 Ornare, Avenue",68-263
+E,Grapefruit,137,4.49,967-456 Donec Av.,86878
+E,Black Walnut,164,9.23,Ap #795-4009 Ipsum Street,W60 1DF
+E,Maple,78,5.75,577-9037 Curabitur Road,762635
+E,Grape,167,3.76,Ap #758-8169 In Street,94062
+E,Bavarian Cream,159,4.53,Ap #998-4299 Semper Street,N26 2VU
+E,Fenugreek,49,6.71,"P.O. Box 227, 2555 Massa. Road",391257
+E,Flan,52,7.62,Ap #739-8383 Vestibulum Street,39-909
+E,Candy Corn,174,5.08,"P.O. Box 141, 6473 Nisi St.",828263
+E,Plum,99,2.79,230-6119 Arcu. Rd.,5748
+E,Pistachio,180,1.95,Ap #644-7559 Duis Road,02908-963
+E,Maple,58,1.17,"Ap #461-5719 Montes, Rd.",99349
+E,Caramel,140,4.85,"P.O. Box 372, 6555 Rutrum, Ave",354292
+E,Chocolate Mint,13,9.73,822-7103 Dolor. Av.,823339
+E,Tequila,91,3.79,968-1000 Lorem Rd.,74407
+E,Apricot,40,0.93,"P.O. Box 321, 5334 Tincidunt, Ave",6093
+E,Tonic,68,1.36,"P.O. Box 795, 496 Egestas Ave",704567
+E,Butter Almond,63,5.24,1801 Magnis St.,5952
+E,Strawberry Kiwi,51,3.71,203-8218 Molestie Road,50204
+E,Smoke,29,0.40,Ap #310-3620 Fringilla Rd.,3376
+E,Lemonade,52,5.23,925-9879 Non Rd.,48901
+E,Smoke,174,2.23,965 Magnis Road,41044
+E,Quinine,35,7.63,441-3559 Turpis Avenue,E9L 1E4
+E,Margarita,85,1.25,5048 Nunc Av.,KR5 1BV
+E,Pear,80,0.00,977-9202 Nec Rd.,74753
+E,Macadamia Nut,198,6.93,Ap #285-691 Ultrices. Road,210021
+E,Toffee,100,8.60,Ap #366-7965 Sem Road,82-469
+E,Coffee,177,5.37,2301 Sed Street,61311
+E,Pomegranate,57,2.70,154-4039 Tristique Ave,56382
+E,Sarsaparilla,152,8.98,4345 Non Avenue,J6X 1J9
+E,Orange Mandarin,160,0.06,607-7126 Placerat. St.,95270
+E,Long Island Tea,157,1.23,2685 Nisi Av.,K8 9JS
+E,Lemon Lime,85,7.35,Ap #883-1163 Aliquet Rd.,TQ1I 4HS
+E,Elderberry,174,6.15,"P.O. Box 982, 7588 Fermentum Avenue",41503
+E,Eucalyptus,111,6.94,"P.O. Box 760, 5356 Commodo Rd.",956698
+E,Lemon Lime,190,3.86,468-6203 Pharetra. Ave,581542
+E,Lemon,68,4.83,Ap #779-3266 Maecenas Rd.,394980
+E,Black Currant,102,6.85,"P.O. Box 600, 3438 Gravida. Av.",20593
+E,Grapefruit,30,9.93,"P.O. Box 186, 5343 Aliquet St.",43428
+E,Mint,200,8.13,6395 Tristique Av.,05063
+E,Passion Fruit,15,3.58,Ap #455-5904 Luctus Ave,41396
+E,Sarsaparilla,75,0.83,"P.O. Box 263, 2134 Tempor Rd.",91181
+E,Maple,31,5.06,"P.O. Box 594, 111 Duis Ave",20715
+E,Plum,165,2.61,4009 A Road,9326 KE
+E,Birch Beer,101,3.00,Ap #395-4757 Volutpat. Rd.,A7V 9TJ
+E,Honey,198,9.83,583-4703 Tincidunt Av.,S5Z 6N4
+E,Blackberry,14,3.22,8667 Iaculis Av.,7732
+E,Marshmallow,147,7.60,Ap #400-6376 Enim. Ave,10809
+E,Long Island Tea,180,9.65,413 Risus. Avenue,4236
+E,Berry Cola,126,2.53,"P.O. Box 951, 6929 Et Street",752849
+E,Tropical Punch,127,5.97,233-8063 Quisque St.,7681 BR
+E,Creme de Menthe,177,5.14,"433-6981 Placerat, Ave",PL37 3BX
+E,Tangerine,64,0.45,419-1622 Cum Street,898697
+E,Toasted Coconut,130,3.11,"4410 Ullamcorper, Road",ZQ2 5YS
+E,Black Walnut,160,6.18,2826 Dictum. Road,S1C 5J7
+E,Honey,158,3.82,"P.O. Box 193, 7780 Neque. Avenue",57074-857
+E,Quinine,22,7.90,"976-4535 Quis, Rd.",927285
+E,Mixed Berry,177,0.89,425-3639 Tempor Street,6498
+E,Flan,45,2.21,Ap #414-1084 Cras Ave,1246 HU
+E,Irish Whiskey,188,8.52,"646-5786 At, Road",9288
+E,Cinnamon,195,4.84,803-3873 Nibh Avenue,0847
+E,Pumpkin Pie,143,8.25,"P.O. Box 346, 6157 Netus St.",1029
+E,Anise,145,9.01,8037 Vel Rd.,48431
+E,Butter Rum,165,7.41,170 Elit. Road,9785
+E,Wild Cherry Cream,32,4.35,6007 Sagittis St.,8665
+E,Tutti Frutti,124,0.59,456-1820 Erat. Avenue,6599 WE
+E,Cherry Cola,49,8.81,9656 Mauris Avenue,91220
+E,Fruit Punch,191,7.85,5161 Ac Rd.,02438
+E,Graham Cracker,26,4.90,"P.O. Box 761, 4189 Penatibus Street",28067-597
+E,Kettle Corn,30,9.91,"800 Eget, Avenue",20210
+E,Vanilla,130,8.28,"P.O. Box 964, 7774 Velit St.",6919
+E,Lime,185,7.13,"P.O. Box 265, 6861 Mi Avenue",7467
+E,Blue Raspberry,124,1.55,605-8510 Primis St.,07622
+E,Apple,196,8.00,Ap #613-3144 Vestibulum Road,70405
+E,White Chocolate,10,1.52,6196 Arcu Road,ZV76 7TK
+E,Bacon,24,8.36,Ap #498-4243 Nisi. Ave,5083
+E,Flan,180,0.32,1829 Semper Avenue,16712
+E,Prickly Pear,109,2.89,"P.O. Box 466, 2071 Mauris, Road",90730
+E,Peanut,102,6.44,Ap #660-2157 Aliquet Road,2495
+E,Raspberry Ginger Ale,178,2.17,Ap #687-1059 Nam Street,AB3H 4IS
+E,Butter Rum,15,5.00,223-2713 Fusce Rd.,76943
+E,Candy Corn,103,7.01,4116 Ipsum. Street,42146
+E,Black Licorice,26,7.88,Ap #722-6823 Nulla St.,087008
+E,Cherry,33,5.94,"P.O. Box 158, 1995 Cursus, Street",74664
+E,Butter Rum,115,7.83,172-917 Penatibus St.,21374
+E,Amaretto,61,2.30,"506-5313 Elit, St.",0024 VF
+E,Pumpkin Pie,13,3.19,"P.O. Box 395, 5258 Purus. Avenue",8916
+E,Watermelon,143,6.07,Ap #113-2600 Fusce Av.,4717
+E,Cinnamon Roll,135,8.77,"P.O. Box 276, 9833 Euismod Rd.",50913
+E,Chocolate Mint,190,7.12,517-2483 Semper. Ave,952913
+E,Long Island Tea,57,9.81,"P.O. Box 978, 5121 Tempus Road",58937
+E,Amaretto,157,5.59,"Ap #902-8870 Congue, Rd.",61912
+E,Horchata,138,8.21,"P.O. Box 544, 344 Lorem Road",533565
+E,Mango Orange Pineapple,101,1.42,"P.O. Box 277, 1348 Ut Av.",084542
+E,Butter,12,3.00,Ap #805-420 Cursus St.,61914
+E,Cookie Dough,162,7.40,9220 Tempus Rd.,3219 NT
+E,Plum,152,2.66,957-595 Sed St.,4513
+E,Caramel Cream,113,1.86,7777 Interdum. Road,3155
+E,Cinnamon,39,4.16,"P.O. Box 616, 5444 Non Road",1345 PS
+E,Lemon Custard,27,9.84,Ap #304-7629 Nunc Ave,810231
+E,Gingersnap,113,3.03,Ap #746-3701 Arcu. St.,711505
+E,Chocolate,196,7.25,Ap #282-6400 Tristique Street,7681
+E,Mojito,196,0.78,6070 Commodo Rd.,48410
+E,Blueberry,151,0.39,Ap #116-5013 Sed St.,12984
+E,Mixed Berry,47,1.04,149-2143 Metus. St.,03066-885
+E,Butterscotch,155,0.00,"P.O. Box 160, 9944 Arcu. Street",63135
+E,Spice,83,9.05,"628-9145 Vitae, Avenue",1580
+E,Punch,117,2.38,386-6620 At Road,72124
+E,Butter,124,9.67,128-2240 Dolor St.,80547
+E,Ginger Lime,17,0.60,"Ap #714-3626 Eget, Road",40795
+E,Elderberry,23,3.74,"5567 Rutrum, St.",4401
+E,Pink Lemonade,35,9.22,886-2099 Senectus St.,2268
+E,Sassafras,32,7.64,Ap #318-336 Dui. Street,88238
+E,Candy Corn,45,9.19,"806-2737 Sed, Street",40912
+E,Pecan Roll,72,0.15,Ap #677-8160 Odio. Rd.,63360
+E,Caramel,31,8.08,999-4423 Mi. Rd.,63735
+E,Bourbon,127,9.64,864 Egestas. Rd.,39271
+E,Chocolate,95,9.48,Ap #518-8308 Lacus St.,6840 KV
+E,Banana,101,7.57,541-3580 Facilisis Ave,46793
+E,Grand Mariner,81,1.15,2896 Massa Rd.,6904
+E,Cherry,74,3.77,"P.O. Box 281, 6636 Sagittis Ave",104026
+E,Long Island Tea,25,8.21,"P.O. Box 268, 7719 Enim Rd.",95879
+E,Chocolate Mint,60,1.06,1243 Orci Rd.,11319
+E,Lemon Custard,51,4.85,2241 Turpis St.,8294
+E,Lemon Lime,108,1.38,137-7980 Arcu. Rd.,573937
+E,Pink Lemonade,170,4.28,"P.O. Box 933, 4865 Libero St.",85248
+E,Birch Beer,135,3.11,"Ap #610-7644 Auctor, St.",67678
+E,Long Island Tea,86,5.29,630-7027 Leo. Avenue,60-763
+E,Toasted Coconut,45,9.40,"P.O. Box 180, 5750 Neque Rd.",263261
+E,Toasted Coconut,165,6.32,"P.O. Box 960, 6380 Massa. St.",6579
+E,Orange Mandarin,92,9.81,Ap #615-4730 Aenean St.,5296
+E,Orange Mango,80,6.71,Ap #865-3810 Ac St.,1253
+E,Blackberry,40,5.34,Ap #503-8361 Arcu. Road,97170
+E,Butter Pecan,34,8.46,"P.O. Box 347, 8491 Dui Road",94-160
+E,Blackberry,54,4.50,3201 Tempor St.,84401
+E,Pistachio,120,0.81,439-8025 Rhoncus. St.,54146
+E,Coffee,94,5.33,"536-9303 Ullamcorper, St.",600510
+E,Lemon Custard,114,1.09,"950-9963 Dolor, Av.",43687
+E,Raspberry,50,1.37,1587 Pharetra Avenue,660459
+E,Lemon Bar,55,2.01,515-1996 Dictum Av.,A2G 9N6
+E,Fenugreek,178,3.10,Ap #222-7369 Donec Rd.,15111
+E,Sassafras,36,1.83,"P.O. Box 645, 2473 Suspendisse Av.",73818
+E,Black Licorice,97,6.99,618-9723 Metus. Road,BE1 6YC
+E,Cake Batter,56,7.36,Ap #498-150 Dolor. Ave,7368 JH
+E,Lemon Bar,60,6.66,943-5423 Volutpat Avenue,82941
+E,Raspberry Ginger Ale,110,3.31,Ap #969-1620 Curabitur Avenue,7034
+E,Orange Mandarin,157,1.55,7487 Euismod Street,12976
+E,Elderberry,65,2.84,"P.O. Box 440, 3983 Blandit Road",2273
+E,Graham Cracker,87,4.30,5721 Euismod Av.,MO6 7CV
+E,Vanilla,29,6.43,162-8955 Erat St.,37618
+E,Root Beer,32,9.08,"P.O. Box 619, 4125 Nisi. St.",M7W 3G3
+E,Watermelon,141,6.29,Ap #708-9644 Turpis Rd.,46-563
+E,Cherry,36,3.35,456-9547 Ac Avenue,294880
+E,Quinine,155,2.44,Ap #571-5147 Mollis St.,4440
+E,Orange Cream,132,6.96,9508 Pretium Av.,62239
+E,Bubble Gum,112,7.23,221-5981 Cursus. Ave,4178
+E,Flan,23,4.07,"P.O. Box 957, 8856 Fusce St.",50203
+E,Honey,180,4.63,766-1013 Lacinia Rd.,46046
+E,Coconut,147,0.83,977-4959 Est Street,7660
+E,Lime,185,4.86,"122-9458 Erat, St.",56657
+E,Pear,159,4.91,Ap #489-412 Egestas. Avenue,08859-301
+E,Tropical Punch,26,3.29,120-230 Molestie Rd.,6805
+E,Spearmint,72,7.98,Ap #121-8464 Risus St.,1056
+E,Wild Cherry Cream,19,0.80,"P.O. Box 423, 4621 Nunc Ave",14595
+E,Blueberry,82,5.43,7198 Eu Rd.,U94 5XC
+E,Passion Fruit,54,5.75,Ap #291-8378 Suspendisse Ave,7392
+E,Pineapple,103,3.09,7980 Et Street,3132
+E,Chocolate Mint,129,6.27,"P.O. Box 336, 5352 Nullam St.",67485
+E,Marshmallow,48,8.88,"P.O. Box 946, 7328 Magnis Av.",91907
+E,Candy Corn,50,2.70,8232 Mauris Street,30-169
+E,Butter Almond,149,2.41,914-4397 Arcu. Street,76-926
+E,Tutti Frutti,178,2.12,455-5889 Velit St.,9195 NY
+E,Malted Milk,197,3.01,308-3396 Cum Rd.,87307
+E,Grapefruit,70,4.41,Ap #895-5532 Diam. St.,3490
+E,Caramel,33,5.15,Ap #916-480 Ullamcorper St.,6366
+E,Mocha,15,0.38,"P.O. Box 685, 6306 In St.",35936
+E,Plantation Punch,134,0.95,"P.O. Box 606, 9065 Sed St.",40140
+E,Apricot,186,1.19,"P.O. Box 710, 7787 At Ave",K8T 3W0
+E,Egg Nog,46,8.17,7191 Aenean Avenue,18397-985
+E,Butter,195,6.79,776-754 Nascetur Av.,522048
+E,Hazelnut,34,4.13,"P.O. Box 747, 6877 Amet Street",964125
+E,Pumpkin Pie,81,1.52,485-5635 Eget Rd.,4072
+E,Mocha,186,7.41,6493 In St.,95671
+E,Coconut,19,0.14,Ap #810-1585 Nunc Road,86-822
+E,Kiwi,47,5.77,3687 Sem Street,C7W 4J1
+E,Orange Mandarin,117,6.29,3305 Tellus. Road,97958
+E,Grand Mariner,60,1.63,6077 Proin St.,89901
+E,Watermelon,28,3.57,Ap #140-4429 Magnis Rd.,0830
+E,Fruit Punch,159,5.22,"P.O. Box 401, 7637 Eu Rd.",53787
+E,Bacon,127,4.46,152-801 Nec Av.,3306 BS
+E,Creme de Menthe,80,9.37,Ap #824-6010 Vehicula Street,7622
+E,Mango Orange Pineapple,191,1.36,"P.O. Box 829, 6082 Vehicula. St.",377872
+E,Black Currant,159,8.70,667-721 Lorem Ave,4661
+E,Almond,172,6.02,7536 Purus Av.,8442 DL
+E,Rum,12,1.98,676-4859 Convallis Rd.,6711 GM
+E,Cherry Cola,120,8.28,Ap #185-2666 Dui Rd.,18-187
+E,Carrot Cake,63,6.44,917-8690 Feugiat Avenue,9844
+E,Flan,108,0.49,Ap #723-523 Ultricies St.,62964-965
+E,Orange,28,9.67,7700 Consectetuer St.,T9K 9X0
+E,Fenugreek,32,8.18,312-8033 Lorem Road,68243
+E,Watermelon,124,5.62,2974 Nisl. St.,73755
+E,Cake Batter,67,5.21,"P.O. Box 839, 5416 Porttitor Street",19-341
+E,Black Cherry,92,0.24,Ap #696-9183 Et Road,43103
+E,Mixed Berry,44,4.85,Ap #973-7663 Hendrerit Avenue,78430
+E,Pineapple,46,8.45,"P.O. Box 547, 5346 Non St.",497478
+E,Black Currant,59,7.95,7748 Aliquet. Street,06686-667
+E,Macadamia Nut,183,9.48,Ap #340-4588 Natoque Rd.,42786
+E,Coffee,85,2.64,3136 Vivamus St.,4373 LH
+E,Raspberry,155,6.00,8946 Ut St.,240813
+E,Gingersnap,41,0.30,"P.O. Box 247, 9500 Eget St.",765109
+E,Orange,188,0.89,"P.O. Box 710, 8022 Ultrices Rd.",35967
+E,Elderberry,121,5.26,361-1117 Sit Rd.,7209
+E,Berry Cola,135,0.31,Ap #998-5481 Nibh. St.,527517
+E,Lime,154,0.39,Ap #480-5365 Penatibus Rd.,06631-926
+E,White Chocolate,134,1.30,737 Velit Rd.,50964
+E,Irish Cream,11,3.30,Ap #597-2199 Ipsum Av.,95016
+E,Peppermint,63,6.92,"P.O. Box 637, 1040 Fringilla Rd.",02366
+E,Caramel Cream,102,3.82,"P.O. Box 777, 9661 Lobortis Street",690518
+E,Butter Toffee,161,3.78,2553 Risus. Ave,761635
+E,Carmel Apple,112,4.92,Ap #230-293 Sem. Road,947006
+E,Cinnamon,38,0.07,"P.O. Box 720, 624 Blandit Av.",18-994
+E,White Chocolate,170,2.74,"P.O. Box 180, 1028 Cras St.",09337-394
+E,Coffee,140,4.14,657-2402 Sem Rd.,K49 1ZL
+E,Apple,161,6.33,7364 Sed St.,34453
+E,Orange Cream,154,8.24,Ap #340-3371 Facilisis Avenue,R0G 3E9
+E,Mango Orange Pineapple,29,8.20,526 Fusce Road,14042-894
+E,Doughnut,186,6.19,Ap #548-7738 Ante. Rd.,57725
+E,Mango,154,7.58,638-5849 Aenean St.,917318
+E,Carmel Apple,94,1.20,857-6713 Curabitur Street,30091
+E,Rock and Rye,199,4.56,Ap #686-426 Enim Rd.,99075
+E,Orange Cream,35,1.74,Ap #475-4868 Cras Ave,3293
+E,Tart Lemon,62,4.82,"P.O. Box 638, 9677 Convallis Road",18858
+E,Rum,61,4.48,"P.O. Box 745, 4399 Neque Street",58-636
+E,Irish Cream,40,3.32,605-3043 Faucibus. Av.,41608
+E,Maple,118,0.45,329-6600 Vivamus St.,30774
+E,Grand Mariner,169,4.88,"P.O. Box 252, 3637 Dui Ave",6137
+E,Honey,186,9.62,600 Non St.,750442
+E,Butter Rum,96,1.00,Ap #810-2955 Sit Av.,25091
+E,Tropical Punch,110,2.78,4660 Sit Av.,5165
+E,Lemon Lime,78,4.65,1313 Aenean Street,44645
+E,Apple,131,4.88,"Ap #255-1775 Est, Avenue",69773-309
+E,Spearmint,26,4.69,Ap #866-7011 Sagittis. Street,5702
+E,Mocha Irish Cream,168,4.30,"P.O. Box 511, 4483 Ornare Rd.",C5X 6L8

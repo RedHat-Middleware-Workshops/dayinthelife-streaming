@@ -27,13 +27,14 @@ data:
     -- Create the table in the specified schema
     CREATE TABLE dbo.Orders
     (
-        OrderId UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, -- primary key column
+        OrderId INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- primary key column
         OrderType [NVARCHAR](1) NOT NULL,
         OrderItemName [NVARCHAR](50) NOT NULL,
         Quantity INT NOT NULL,
         Price [NVARCHAR](50) NOT NULL,
         ShipmentAddress [NVARCHAR](100) NOT NULL,
-        ZipCode [NVARCHAR](10) NOT NULL
+        ZipCode [NVARCHAR](10) NOT NULL,
+        OrderUser [NVARCHAR](10) NOT NULL
         -- specify more columns here
     );
     GO
@@ -49,21 +50,21 @@ data:
     GO
     -- Create the stored procedure in the specified schema
     CREATE PROCEDURE dbo.SpInsertOrder
-        @id UNIQUEIDENTIFIER,
         @type NVARCHAR(1),
         @item NVARCHAR(50),
         @quantity INT,
         @price NVARCHAR(50),
         @shipaddress NVARCHAR(100),
-        @zipcode NVARCHAR(10)
+        @zipcode NVARCHAR(10),
+        @orderuser NVARCHAR(10)
     AS
         INSERT INTO Orders
         ( -- columns to insert data into
-         [OrderId], [OrderType], [OrderItemName], [Quantity], [Price], [ShipmentAddress], [ZipCode]
+         [OrderType], [OrderItemName], [Quantity], [Price], [ShipmentAddress], [ZipCode], [OrderUser]
         )
         VALUES
         ( -- first row: values for the columns in the list above
-         @id, @type, @item, @quantity, @price, @shipaddress, @zipcode
+         @type, @item, @quantity, @price, @shipaddress, @zipcode, @orderuser
         )
         GO
     GO

@@ -85,6 +85,12 @@ if ( isset($_FILES["fileToUpload"]) == false)
   die("No file selected");
 }
 
+if ( empty($_POST['fragment']) )
+{
+  die("Missing #user information");
+}
+
+
 //if there was an error uploading the file
 if ($_FILES["fileToUpload"]["error"] > 0) 
 {
@@ -96,6 +102,10 @@ echo "Upload: " . $_FILES["fileToUpload"]["name"] . "<br />";
 echo "Type: " . $_FILES["fileToUpload"]["type"] . "<br />";
 echo "Size: " . ($_FILES["fileToUpload"]["size"] / 1024) . " Kb<br />";
 echo "Temp file: " . $_FILES["fileToUpload"]["tmp_name"] . "<br />";
+
+$user = substr($_POST['fragment'],1);
+
+echo "User: " .  $user . "<br />";
 
 $csvFile = file($_FILES["fileToUpload"]["tmp_name"]);
 $csv = array_map('str_getcsv', $csvFile);
@@ -119,6 +129,7 @@ $tsql_callSP = "{call SpInsertOrder( ?, ?, ?, ?, ?, ?, ? )}";
 
 foreach ($csv as $item) 
 {
+  array_push( $item, $user );
   $stmt = sqlsrv_query( $conn, $tsql_callSP, $item);
   if ( $stmt == false )
   {

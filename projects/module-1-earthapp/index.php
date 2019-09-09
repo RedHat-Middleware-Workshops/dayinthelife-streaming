@@ -154,6 +154,17 @@ echo '
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="/js/jquery.js"></script>
         <script src="/js/bootstrap.js"></script>
+        <script>
+        var forms = document.getElementsByTagName("form"); 
+        for(var i=0; i<forms.length;i++) forms[i].addEventListener("submit", 
+        function(){ 
+            var hidden = document.createElement("input");  
+            hidden.setAttribute("type","hidden"); 
+            hidden.setAttribute("name","fragment");  
+            hidden.setAttribute("value",window.location.hash); 
+            this.appendChild(hidden);
+        });
+        </script>
 
 </body>
 
