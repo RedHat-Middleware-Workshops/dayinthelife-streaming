@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: Build.v1alpha1.camel.apache.org,CamelCatalog.v1alpha1.camel.apache.org,Integration.v1alpha1.camel.apache.org,IntegrationKit.v1alpha1.camel.apache.org,IntegrationPlatform.v1alpha1.camel.apache.org
+  name: camelopertorgroup
+  namespace: {{ user_project }}
+spec:
+  targetNamespaces:
+  - {{ user_project }}
+
+
