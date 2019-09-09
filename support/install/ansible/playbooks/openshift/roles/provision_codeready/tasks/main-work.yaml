@@ -1,0 +1,99 @@
+---
+- name: Evaluate {{ codeready_project }} namespace if not exists 
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: '{{ codeready_project }}'
+    state: present
+
+- name: Evaluate CodeReady CatalogSourceConfig
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-csc.yaml.j2') }}"
+
+- name: Evaluate Eclipse CodeReady Operator Group
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-operatorgroup.yaml.j2') }}"
+
+- name: Evaluate CodeReady Subscription
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-subscription.yaml.j2') }}"
+
+- name: Evaluate CodeReady Cluster
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-cluster.yaml.j2') }}"
+
+- name: Wait for CodeReady operator to install
+  k8s_facts:
+      api_version: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      name: 'crwoperator.v1.2.0'
+      namespace: '{{ codeready_project }}'
+  register: csv_status
+  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
+  retries: 10
+  delay: 30
+
+- name: extract route_subdomain
+  k8s_facts:
+    kind: Ingress
+  register: route_subdomain_r
+
+- set_fact:
+    route_subdomain: "{{ route_subdomain_r.resources[0].spec.domain | trim }}"
+
+- name: Wait for codeready to be running
+  uri:
+    url: http://codeready-{{ codeready_project }}.{{ route_subdomain }}/api/system/state
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 30
+
+- name: Search for CodeReady ConfigMap
+  k8s_facts:
+    kind: ConfigMap
+    namespace: che
+    name: custom
+  register: codeready_cm
+
+- name: show cm object
+  debug:
+    msg: "Codeready Configmap: {{ codeready_cm }}"
+
+#Workaround for PVC problem
+- name: Alternative to volumeBindingMode=WaitForFirstConsumer
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'cm-custom-codeready.yaml.j2') }}"
+
+- name: Search for CodeReady Pod
+  k8s_facts:
+    kind: Pod
+    namespace: '{{ codeready_project }}'
+    label_selectors:
+    - app = codeready
+    - component = codeready
+  register: codeready_pod
+
+- name: Restart CodeReady Pod
+  k8s:
+    state: absent
+    api_version: v1
+    kind: Pod
+    name: "{{ codeready_pod.resources[0].metadata.name }}"
+    namespace: '{{ codeready_project }}'
+
+- name: wait for CRW to be running after PVC workaround
+  uri:
+    url: http://codeready-codeready.{{ route_subdomain }}/dashboard/
+  register: result
+  until: result.status == 200
+  retries: "120"
+  delay: "15"
+  tags: eclipse-che
+

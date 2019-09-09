@@ -1,41 +1,14 @@
 ---
-- name: Evaluate {{ codeready_project }} namespace if not exists 
-  k8s:
-    api_version: v1
-    kind: Namespace
-    name: '{{ codeready_project }}'
-    state: present
+# add keycloak realm
+- name: Get SSO username
+  shell: |
+    oc get deployment keycloak -n '{{ codeready_project }}' -o=jsonpath={'.spec.template.spec.containers[0].env[?(@.name=="SSO_ADMIN_USERNAME")].value'}
+  register: sso_admin_username
 
-- name: Evaluate CodeReady CatalogSourceConfig
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'codeready-csc.yaml.j2') }}"
-
-- name: Evaluate Eclipse CodeReady Operator Group
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'codeready-operatorgroup.yaml.j2') }}"
-
-- name: Evaluate CodeReady Subscription
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'codeready-subscription.yaml.j2') }}"
-
-- name: Evaluate CodeReady Cluster
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'codeready-cluster.yaml.j2') }}"
-
-- name: Wait for CodeReady operator to install
-  k8s_facts:
-      api_version: operators.coreos.com/v1alpha1
-      kind: ClusterServiceVersion
-      name: 'crwoperator.v1.2.0'
-      namespace: '{{ codeready_project }}'
-  register: csv_status
-  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
-  retries: 10
-  delay: 30
+- name: Get SSO password
+  shell: |
+    oc get deployment keycloak -n '{{ codeready_project }}'  -o=jsonpath={'.spec.template.spec.containers[0].env[?(@.name=="SSO_ADMIN_PASSWORD")].value'}
+  register: sso_admin_password
 
 - name: extract route_subdomain
   k8s_facts:
@@ -45,55 +18,39 @@
 - set_fact:
     route_subdomain: "{{ route_subdomain_r.resources[0].spec.domain | trim }}"
 
-- name: Wait for codeready to be running
+- name: Get SSO admin token
   uri:
-    url: http://codeready-{{ codeready_project }}.{{ route_subdomain }}/api/system/state
-    status_code: 200
-  register: result
-  until: result.status == 200
-  retries: 60
-  delay: 30
+    url: http://keycloak-codeready.{{ route_subdomain }}/auth/realms/master/protocol/openid-connect/token
+    method: POST
+    body_format: form-urlencoded
+    body: "username={{ sso_admin_username.stdout }}&password={{ sso_admin_password.stdout }}&grant_type=password&client_id=admin-cli"
+    status_code: 200,201,204
+  register: sso_admin_token
 
-- name: Search for CodeReady ConfigMap
-  k8s_facts:
-    kind: ConfigMap
-    namespace: che
-    name: custom
-  register: codeready_cm
+- set_fact:
+    master_access_token_bearer: "{{ sso_admin_token.json | json_query('access_token') }}"
 
-- name: show cm object
+- name: Print SSO connection info
   debug:
-    msg: "Codeready Configmap: {{ codeready_cm }}"
+    msg: "url: http://keycloak-codeready.{{ route_subdomain }} username: {{ sso_admin_username.stdout }} password: {{ sso_admin_password.stdout }}"
 
-#Workaround for PVC problem
-- name: Alternative to volumeBindingMode=WaitForFirstConsumer
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'cm-custom-codeready.yaml.j2') }}"
-
-- name: Search for CodeReady Pod
-  k8s_facts:
-    kind: Pod
-    namespace: '{{ codeready_project }}'
-    label_selectors:
-    - app = codeready
-    - component = codeready
-  register: codeready_pod
-
-- name: Restart CodeReady Pod
-  k8s:
-    state: absent
-    api_version: v1
-    kind: Pod
-    name: "{{ codeready_pod.resources[0].metadata.name }}"
-    namespace: '{{ codeready_project }}'
-
-- name: wait for CRW to be running after PVC workaround
+- name: pre-create {{ codeready_generate_user_count }} users in codeready realm with format (user%d)
   uri:
-    url: http://codeready-codeready.{{ route_subdomain }}/dashboard/
-  register: result
-  until: result.status == 200
-  retries: "120"
-  delay: "15"
-  tags: eclipse-che
+    url: http://keycloak-codeready.{{ route_subdomain }}/auth/admin/realms/codeready/users
+    method: POST
+    body: "{{ lookup('template','codeready-user.json.j2') }}"
+    body_format: json
+    status_code: 201,409
+    headers:
+      Authorization: "Bearer {{ master_access_token_bearer }}"
+      Content-Type: "application/json"
+  vars:
+    username: "{{ item }}"
+  with_sequence: start={{ codeready_generate_user_count|int if codeready_generate_user_count|int < 1 else 1}} end={{ codeready_generate_user_count }} format=user%d
+  when: codeready_generate_user_count|int > 0
 
+- name: add factory to users
+  include_tasks: add_factory_multi.yml
+  with_sequence: start={{ codeready_generate_user_count|int if codeready_generate_user_count|int < 1 else 1}} end={{ codeready_generate_user_count }} format=user%d
+  when:
+    - codeready_generate_user_count|int > 0

@@ -4,11 +4,11 @@
     - set_fact:
         my_user: "{{ item }}"
 
-    - name: get auth token from keycloak che realm
+    - name: get auth token from keycloak codeready realm
       uri:
-        url: http://keycloak-{{ project_name }}.{{ route_suffix }}/auth/realms/che/protocol/openid-connect/token
+        url: http://keycloak-codeready.{{ route_subdomain }}/auth/realms/codeready/protocol/openid-connect/token
         method: POST
-        body: "username={{ my_user }}&password={{ che_generate_user_password }}&grant_type=password&client_id=admin-cli"
+        body: "username={{ my_user }}&password=openshift&grant_type=password&client_id=admin-cli"
         status_code: 200
         headers:
           Content-Type: "application/x-www-form-urlencoded"
@@ -19,13 +19,13 @@
 
     - name: Install factory from json content
       uri:
-        url: http://che-{{ project_name }}.{{ route_suffix }}/api/factory
+        url: http://codeready-codeready.{{ route_subdomain }}/api/factory
         method: POST
-        body: "{{ lookup( 'template', install_factory_template_filename ) }}"
+        body: "{{ lookup( 'template', 'codeready-factory.json.j2' ) }}"
         body_format: json
         status_code: 200,201
         headers:
           Authorization: "Bearer {{ user_access_token_bearer }}"
       vars:
         username: "{{ my_user }}"
-        password: "{{ che_generate_user_password }}"
+        password: "openshift"
