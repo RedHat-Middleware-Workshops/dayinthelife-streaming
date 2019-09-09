@@ -1,4 +1,5 @@
 :walkthrough: Stream change events from your database
+:terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-integration.git-citizen-integrator-track-lab06/
 :user-password: openshift
 
@@ -29,11 +30,23 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 *Credentials*
 
+[type=walkthroughResource,serviceName=openshift]
+.Openshift
+****
+* link:{openshift-host}/[Open Console, window="_blank"]
+****
+
+[type=walkthroughResource]
+.Terminal
+****
+* link:{terminal-url}/[Open Terminal, window="_blank"]
+****
+
 [time=10]
 [id="configure-cdc-connectors"]
 == Configure CDC connectors for Kafka Connect
 
-. Open your terminal window.
+. Open a new browser tab and navigate to the link:{terminal-url}/[terminal window, window="_blank"].
 . Change to your user namespace.
 +
 [source,bash,subs="attributes+"]
