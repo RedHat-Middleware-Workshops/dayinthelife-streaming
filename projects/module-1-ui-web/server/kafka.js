@@ -10,8 +10,9 @@ const env = require('env-var')
  *
  * This is not exposed on the ocp router!
  */
-module.exports = function getKafkaMessages () {
-  const labUser = env.get('LAB_USER', 'user1').asString()
+exports.getKafkaConsumer = function () {
+  // Needs to be set to username with number, e.g "user1"
+  const labUser = env.get('USERNAME').required().asString()
   const kafkaHost = env.get(
     'KAFKA_HOST',
     'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
@@ -37,11 +38,6 @@ module.exports = function getKafkaMessages () {
           { topic }
         ]
       )
-
-      consumer.on('error', (err) => {
-        log.error('consumer encountered an error', err)
-        reject(err)
-      })
 
       resolve(consumer)
     })

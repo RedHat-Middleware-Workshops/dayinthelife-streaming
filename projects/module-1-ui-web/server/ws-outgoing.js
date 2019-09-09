@@ -1,10 +1,14 @@
 'use strict'
 
 const WebSocket = require('ws')
+const { getKafkaConsumer } = require('./kafka')
+const { resolve } = require('path')
 const env = require('env-var')
+const csv = require('csvtojson')
 const log = require('./log')
-const kafka = require('./kafka')
-const sockets = []
+
+// Parsing is async. It returns a promise that will resolve eventually
+const sampleOrders = csv().fromFile(resolve(__dirname, '../fixtures/orders.csv')).then((data) => Promise.resolve(data))
 
 /**
  * Configures a WebSocket server that sends data to connected clients.
@@ -17,59 +21,65 @@ exports.configureClientWebSocketServer = function (server) {
   wss.on('connection', async (sock) => {
     log.info('client connected to client socket server')
 
-    sockets.push(sock)
+    // Placeholder for kafka.Consumer instance
+    let consumer
 
     sock.on('close', () => {
-      // Remove this socket from the connected sockets list
-      sockets.splice(sockets.indexOf(sock, 1))
-    })
-
-    const kafkaConsumer = await kafka()
-
-    kafkaConsumer.on('message', (msg) => {
-      log.debug('kafka message received', msg)
-      sock.send(JSON.stringify(msg))
+      if (consumer) {
+        // Cleanup kafka connection if necessary
+        consumer.close()
+        consumer.client.close()
+      }
     })
 
     if (WS_MOCK_DATA_ENABLED) {
+      log.info('mock data enabled for connected client')
+
       const send = () => {
         if (sock.readyState === WebSocket.OPEN) {
+          log.info('queuing send of mock data')
           // Send at least one payload every 5 seconds
-          setTimeout(() => {
-            const data = {
-              datetime: Date.now(),
-              department: 'Sales',
-              itemId: Math.round(Math.random() * 20000),
-              qty: Math.round(Math.random() * 1000),
-              price: (Math.random() * 50).toFixed(2)
-            }
+          setTimeout(async () => {
+            const orders = await sampleOrders
+            const data = orders[Math.floor(Math.random() * orders.length - 1)]
 
             log.info('sending mock data to client: %j', data)
 
-            sock.send(JSON.stringify(data))
+            sock.send(JSON.stringify({
+              data,
+              ts: Date.now()
+            }))
 
             // Queue another send
             send()
           }, Math.random() * 5000)
+        } else {
+          log.warn(`not sending mock data. socket.readyState was ${sock.readyState}`)
         }
       }
 
       send()
+    } else {
+      consumer = await getKafkaConsumer()
+
+      consumer.on('error', (err) => {
+        log.error('kafka consumer encountered an error', err)
+        // Close the websocket. This forces client to reconnect. Clients
+        // reconnecting will reestablish the kafka connection
+        sock.close()
+      })
+
+      consumer.on('message', (msg) => {
+        log.trace('received kafka payload, forwarding to ws:', msg)
+        sock.send(
+          JSON.stringify({
+            data: JSON.parse(msg.value.payload.after),
+            ts: msg.value.payload.ts_ms
+          })
+        )
+      })
     }
   })
 
   log.info('client facing websocket server listening on application http port')
-}
-
-/**
- * Send a given payload to connected clients.
- * @param {Object} payload
- */
-exports.sendPayloadToClients = function (payload) {
-  if (typeof payload !== 'string') {
-    log.trace('serialising payload to send:', payload)
-    payload = JSON.stringify(payload)
-  }
-
-  sockets.forEach((sock) => sock.send(payload))
 }

@@ -29,29 +29,44 @@ function updateStatus (symbol) {
 }
 
 function processMessage (e) {
+  // {
+  //   data: {
+  //     "OrderId": "6817D382-CDBA-E369-FE20-FF7C79DE5A26",
+  //     "OrderType": "E",
+  //     "OrderItemName": "Lemon Bar",
+  //     "Quantity": 17,
+  //     "Price": "0.09",
+  //     "ShipmentAddress": "Ap #249-5876 Magna. Rd.",
+  //     "ZipCode": "I9E 0JN"
+  //   },
+  //   ts: 1568062055995
+  // }
   const tableEl = document.getElementById('notifications-table-body')
-  const data = JSON.parse(e.data)
-  const time = data['datetime']
-  const dept = data['department']
+  const payload = JSON.parse(e.data)
+  const time = payload['ts']
+  const data = payload['data']
 
   // Create new row and entries
   const trEl = document.createElement('tr')
   const tdTimeEl = document.createElement('td')
-  const tdDeptEl = document.createElement('td')
-  const tdJsonEl = document.createElement('td')
-
-  const jsonPreEl = document.createElement('pre')
-  jsonPreEl.innerHTML = e.data
-  tdJsonEl.appendChild(jsonPreEl)
+  const tdItemEl = document.createElement('td')
+  const tdQtyEl = document.createElement('td')
+  const tdPriceEl = document.createElement('td')
+  const tdZipEl = document.createElement('td')
 
   // Will need to do some formatting on these
   tdTimeEl.innerHTML = new Date(time).toLocaleString()
-  tdDeptEl.innerHTML = dept
+  tdItemEl.innerHTML = data['OrderItemName']
+  tdQtyEl.innerHTML = data['Quantity']
+  tdPriceEl.innerHTML = data['Price']
+  tdZipEl.innerHTML = data['ZipCode']
 
   // Append entries to row
   trEl.appendChild(tdTimeEl)
-  trEl.appendChild(tdDeptEl)
-  trEl.appendChild(tdJsonEl)
+  trEl.appendChild(tdItemEl)
+  trEl.appendChild(tdQtyEl)
+  trEl.appendChild(tdPriceEl)
+  trEl.appendChild(tdZipEl)
 
   // Add new row with animation
   tableEl.prepend(trEl)

@@ -1,0 +1,195 @@
+{
+  "schema": {
+    "type": "struct",
+    "fields": [
+      {
+        "type": "struct",
+        "fields": [
+          {
+            "type": "string",
+            "optional": false,
+            "field": "OrderId"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "OrderType"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "OrderItemName"
+          },
+          {
+            "type": "int32",
+            "optional": false,
+            "field": "Quantity"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "Price"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "ShipmentAddress"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "ZipCode"
+          }
+        ],
+        "optional": true,
+        "name": "user1.earth.dbo.Orders.Value",
+        "field": "before"
+      },
+      {
+        "type": "struct",
+        "fields": [
+          {
+            "type": "string",
+            "optional": false,
+            "field": "OrderId"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "OrderType"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "OrderItemName"
+          },
+          {
+            "type": "int32",
+            "optional": false,
+            "field": "Quantity"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "Price"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "ShipmentAddress"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "ZipCode"
+          }
+        ],
+        "optional": true,
+        "name": "user1.earth.dbo.Orders.Value",
+        "field": "after"
+      },
+      {
+        "type": "struct",
+        "fields": [
+          {
+            "type": "string",
+            "optional": false,
+            "field": "version"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "connector"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "name"
+          },
+          {
+            "type": "int64",
+            "optional": false,
+            "field": "ts_ms"
+          },
+          {
+            "type": "string",
+            "optional": true,
+            "name": "io.debezium.data.Enum",
+            "version": 1,
+            "parameters": {
+              "allowed": "true,last,false"
+            },
+            "default": "false",
+            "field": "snapshot"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "db"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "schema"
+          },
+          {
+            "type": "string",
+            "optional": false,
+            "field": "table"
+          },
+          {
+            "type": "string",
+            "optional": true,
+            "field": "change_lsn"
+          },
+          {
+            "type": "string",
+            "optional": true,
+            "field": "commit_lsn"
+          }
+        ],
+        "optional": false,
+        "name": "io.debezium.connector.sqlserver.Source",
+        "field": "source"
+      },
+      {
+        "type": "string",
+        "optional": false,
+        "field": "op"
+      },
+      {
+        "type": "int64",
+        "optional": true,
+        "field": "ts_ms"
+      }
+    ],
+    "optional": false,
+    "name": "user1.earth.dbo.Orders.Envelope"
+  },
+  "payload": {
+    "before": null,
+    "after": {
+      "OrderId": "6817D382-CDBA-E369-FE20-FF7C79DE5A26",
+      "OrderType": "E",
+      "OrderItemName": "Lemon Bar",
+      "Quantity": 17,
+      "Price": "0.09",
+      "ShipmentAddress": "Ap #249-5876 Magna. Rd.",
+      "ZipCode": "I9E 0JN"
+    },
+    "source": {
+      "version": "0.10.0.Beta2-redhat-00001",
+      "connector": "sqlserver",
+      "name": "user1.earth",
+      "ts_ms": 1568059123186,
+      "snapshot": "true",
+      "db": "InternationalDB",
+      "schema": "dbo",
+      "table": "Orders",
+      "change_lsn": null,
+      "commit_lsn": "00000027:00001120:0001"
+    },
+    "op": "r",
+    "ts_ms": 1568059123186
+  }
+}

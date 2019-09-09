@@ -2,12 +2,16 @@ h1, h2, h3, h4, p, tr, td, thead, span {
   font-family: 'Roboto', sans-serif;
 }
 
+tbody tr {
+  line-height: 2em;
+}
+
 p {
   line-height: 16pt;
 }
 
 header {
-  background: #17252A;
+  background: #E27D60;
   color: white;
   padding: 0.5em 1em;
   margin: 0;
