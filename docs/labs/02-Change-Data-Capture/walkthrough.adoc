@@ -162,8 +162,8 @@ EOF
 It's now time to test the full integration between the Earth and Moon Orders system.
 
 . Launch a new tab on your web browser.
-. Navigate to the link:http://www-shared-app-earth.{openshift-app-host}/[PHP app] in a new browser tab.
-. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File].
+. Navigate to the link:http://www-shared-app-earth.{openshift-app-host}/[PHP app, window="_blank"] in a new browser tab.
+. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
 . Load the file in the PHP app.
 
 // check earth topic created
