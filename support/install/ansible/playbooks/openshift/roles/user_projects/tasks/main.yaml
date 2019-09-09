@@ -16,3 +16,9 @@
     - { user: 'user{{ item }}', namespace: '{{ db_earth_namespace }}', role: 'view' }
   loop_control:
     loop_var: item_project
+
+- name: Lazy Christina just wants to install this web app for now TBC
+  shell: oc new-app weimeilin/dilii-ui:latest -n 'user{{ item }}'
+
+- name: Lazy Christina just want to exposed UI route for now TBC
+  shell: oc expose service dilii-ui -n 'user{{ item }}'
