@@ -21,6 +21,17 @@
     state: present
     resource_definition: "{{ lookup('template', 'codeready-subscription.yaml.j2') }}"
 
+- name: Wait for CodeReady CRD
+  k8s_facts:
+    api_version: apiextensions.k8s.io/v1beta1
+    kind: CustomResourceDefinition
+    name: checlusters.org.eclipse.che
+  register: r_codeready_crd
+  retries: 200
+  delay: 10
+  ignore_errors: yes
+  until: r_codeready_crd.resources | list | length == 1
+
 - name: Evaluate CodeReady Cluster
   k8s:
     state: present
@@ -41,7 +52,7 @@
   k8s_facts:
     kind: Ingress
   register: route_subdomain_r
-
+  
 - set_fact:
     route_subdomain: "{{ route_subdomain_r.resources[0].spec.domain | trim }}"
 

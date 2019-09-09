@@ -1,0 +1,387 @@
+:walkthrough: Event Driven Architecture
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-integration.git-citizen-integrator-track-lab01/
+:user-password: openshift
+
+ifdef::env-github[]
+:next-lab-url: ../lab02/walkthrough.adoc
+endif::[]
+
+[id='event-driven-architecture']
+= Lab 1 - Event Driven Architecture
+
+Since the acquisition, the International Inc.’s Development team has been pressured to make the transition smooth quickly. They have decided to start with a small notification project where it notifies both internal departments and external partners when an order has been placed. In this lab you will learn how to use Camel K to establish a simple Event Driven call. The old application uses traditional API calls to trigger system modification, your job is to use Camel K to re-write the notification application rather then using pure REST implementation convert it to event driven architecture.
+
+Audience: Enterprise Integrators, System Architects, Developers, Data Integrators
+
+*Overview*
+
+Camel K is a lightweight cloud integration platform based on the Apache Camel framework. It runs natively on Kubernetes and Openshift and it’s specifically designed for serverless and microservice architectures.
+
+AMQ online enable developers to provision messaging when and where they need it through a browser console. The AMQ online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+
+*Why Red Hat?*
+
+To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
+
+AMQ streams component makes Apache Kafka “OpenShift native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
+
+*Skipping The Lab*
+
+*Credentials*
+
+
+VIDEO INSTRUCTIONS FOR REFERENCE 
+https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=sharing
+
+[time=5]
+[id="Setup Workspace and Camel K"]
+== Setup Your workspace
+. Go to http://codeready-codeready.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com
+  login with your ID and PWD
+. Go to the factories on the top right, choose dilii, it will take you to the factory setting page.
+. Click on OPEN on the top right. 
+. Wait for the workspace to start
+. Click on the manage command on the top, run the following in orders
+	1. Download Kamel Binary
+	2. Unzip Kamel
+	3. Setup apicall
+	4. Setup eventdriven
+. Close all commends, and go back to project explorer. 
+
+
+=== Intall your Camel K Operator
+
+. Go to OpenShift Console
+. To your user project, user%d
+. Go to the Installed Operators and click on Camel K Operator
+. Click on the Integration Platform
+. Create Integration Platform by clicking on the button, and save
+. 
+
+[time=10]
+=== Create your topic 
+
+==== Setup AMQ Online namespace
+. Go to 
+ https://console-workshop-operators.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+ and login with your ID and PWD
+
+. Create your AMQ namespace instance 
+ - Namespace: user%d
+ - Name: user%d
+ - Type: Standard
+ - Address Space Plan: standard-small
+ - Authentication Service: standard-authentication
+
+
+==== Create an Topic
+. Click on the namespace you just created in the conole, it will take you to your online console.
+. Login with your openshift credential. 
+. Create a new topic by click on create button on the top
+	- Name: incomingorders
+	- Type: Topic
+. Select Small Topic as plan
+. And done
+
+==== Setting authentication and authorization for your topic
+. Create your message user to authenticate
+. Go to your Openshift console, in your namespace, click on "Installed Operators" on the lefthand side and select AMQ Online
+. Find "message user" tab, create new message user
+. Update the content, replace the namespace to your user%id (your username) and change the authorized address to incomingorders
+
++
+[source,bash,subs="attributes+"]
+----
+apiVersion: user.enmasse.io/v1beta1
+kind: MessagingUser
+metadata:
+  name: user%d.user
+  namespace: user1
+spec:
+  authentication:
+    password: ZW5tYXNzZQ==
+    type: password
+  authorization:
+    - addresses:
+        - incomingorders
+      operations:
+        - send
+        - recv
+  username: user
+EOF
+----
+. Click create and your topic is ready
+
+[time=20]
+[id="Setup Workspace and Camel K"]
+== Event Driven Architecture
+. Go back to the codeready env. 
+. In your workspace, open StreamingLife/eventdriven/OrderService.java by double click on it. 
+. Update the BROKER_URL with your new addressspace service url
+
++
+[source,bash,subs="attributes+"]
+----
+oc get addressspace user1 -n user1 -o jsonpath='{.status.endpointStatuses[?(@.name == "messaging")].serviceHost}'
+EOF
+----
+
+. In the Camel Route, tell camel where to send the info to by inserting following destination code into to("");
+
++
+[source,bash,subs="attributes+"]
+----
+amqp:topic:incomingorders?exchangePattern=InOnly&subscriptionDurable=false
+EOF
+----
+
+. Open a new Terminal, login to openshift 
++
+[source,bash,subs="attributes+"]
+----
+oc login https://api.cluster-diyii-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com:6443
+EOF
+----
+
+. In the same terminal, under StreamingLife/eventdriven/f
+exec the following command to run the Orderservice in OpenShift
+
++
+[source,bash,subs="attributes+"]
+----
+./kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  InventoryService.java
+EOF
+----
+
+. Look at the various CRs in the Operator menu, and when the integration is running, see the API Standard Doc generated automatically using the following URL
++
+[source,bash,subs="attributes+"]
+----
+http://order-service-event-user1.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+EOF
+----
+
+. Go back to the codeready env, in your workspace, open InventoryService.java
+. Update the BROKER_URL with your addressspace service url (same from previous steps)
+
+. In the Camel Route, tell camel where to recv the info to by inserting following destination code into from("");
+
++
+[source,bash,subs="attributes+"]
+----
+amqp:topic:incomingorders?subscriptionDurable=false
+EOF
+----
+
+. Open a new Terminal, under StreamingLife/eventdriven
+  exec the following command to run the Inventory Service in OpenShift
++
+[source,bash,subs="attributes+"]
+----
+./kamel run --name=inventory-service -d camel-jackson -d camel-ahc-ws -d camel-amqp  InventoryService.java
+EOF
+----
+
+. Check the event notification dashboard, go to 
++
+[source,bash,subs="attributes+"]
+----
+http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+EOF
+----
+
+. Send in the order in Terminal
++
+[source,bash,subs="attributes+"]
+----
+curl -X POST \
+  http://order-service-event-user1.apps.cluster-CLUSTER.YOUR_CLUSTER.open.redhat.com/place \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+	"orderId": 1,
+	"itemId": 1,
+	"orderItemName": "item",
+	"quantity": 1,
+	"price": 2,
+	"address": "hello",
+	"zipCode": 2222
+}'
+
+EOF
+----
+
+. Check the result in event notification dashboard, also check your AMQ Online Console for number of msg out. 
++
+[source,bash,subs="attributes+"]
+----
+http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+EOF
+----
+
+. Go back to the codeready env, in your workspace, open SalesService.java
+. Update the BROKER_URL with your addressspace service url (same from previous steps)
+
+. Setup your AMQP endpoint configuration in Camel
+
++
+[source,bash,subs="attributes+"]
+----
+AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
+getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
+EOF
+----
+
+. In the Camel Route, tell camel where to recv the info to by inserting following destination code into from("");
+
++
+[source,bash,subs="attributes+"]
+----
+amqp:topic:incomingorders?subscriptionDurable=false
+EOF
+----
+
+. In the Camel Route, tell camel where to send the notification to by inserting following destination code into to("");
+in our case, we are sending websocket data to our dashboard
+
++
+[source,bash,subs="attributes+"]
+----
+ahc-ws://dilii-uiws:8181/echo
+EOF
+----
+
+. Open a new Terminal, under StreamingLife/eventdriven
+  exec the following command to run the Inventory Service in OpenShift
++
+[source,bash,subs="attributes+"]
+----
+./kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
+EOF
+----
+
+. Check the event notification dashboard, go to 
++
+[source,bash,subs="attributes+"]
+----
+http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+EOF
+----
+
+. Send in the order in Terminal
++
+[source,bash,subs="attributes+"]
+----
+curl -X POST \
+  http://order-service-event-user1.apps.cluster-CLUSTER.YOUR_CLUSTER.open.redhat.com/place \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+	"orderId": 1,
+	"itemId": 1,
+	"orderItemName": "item",
+	"quantity": 1,
+	"price": 2,
+	"address": "hello",
+	"zipCode": 2222
+}'
+
+. Go back to the codeready env, in your workspace, open ShippingService.java
+. Update the BROKER_URL with your addressspace service url (same from previous steps)
+
+. Setup your AMQP endpoint configuration in Camel
+
++
+[source,bash,subs="attributes+"]
+----
+AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
+getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
+EOF
+----
+
+. Lets create a camel route that recv from the Topic to websocket;
+
++
+[source,bash,subs="attributes+"]
+----
+
+from("amqp:topic:incomingorders?subscriptionDurable=false")
+            .unmarshal(jacksonDataFormat)
+            .bean(SalesNotification.class, "getSalesNotification(${body['orderId']},${body['price']} )")
+            .marshal(salesDataFormat)
+            .convertBodyTo(String.class)
+            .log("Sales Notified ${body}")
+            .to("ahc-ws://dilii-uiws:8181/echo")
+            ;
+EOF
+----
+
+
+. Open a new Terminal, under StreamingLife/eventdriven
+  exec the following command to run the Inventory Service in OpenShift
++
+[source,bash,subs="attributes+"]
+----
+./kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
+EOF
+----
+
+. Check the event notification dashboard, go to 
++
+[source,bash,subs="attributes+"]
+----
+http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+EOF
+----
+
+. Send in the order in Terminal
++
+[source,bash,subs="attributes+"]
+----
+curl -X POST \
+  http://order-service-event-user1.apps.cluster-CLUSTER.YOUR_CLUSTER.open.redhat.com/place \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+	"orderId": 1,
+	"itemId": 1,
+	"orderItemName": "item",
+	"quantity": 1,
+	"price": 2,
+	"address": "hello",
+	"zipCode": 2222
+}'
+
+EOF
+----
+
+. Check the result in event notification dashboard, also check your AMQ Online Console for number of msg out. 
++
+[source,bash,subs="attributes+"]
+----
+http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+EOF
+----
+
+[time=10]
+=== Challenge, add an International Shipping Dep that listens to the same notification and also display the result in the dashboard
+With following payload info
+. orderId;
+. itemId;
+. quantity;
+. address;
+
+
+[time=5]
+[id="summary"]
+== Summary
+
+TBD - Can someone help??!!
+You can now proceed to link:{next-lab-url}[Lab 2].
+
+[time=4]
+[id="further-reading"]
+== Notes and Further Reading
+
+* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
+* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
