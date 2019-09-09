@@ -40,24 +40,20 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 ----
 oc project {user-username}
 ----
-+
-// workaround for IST (use your own)
-oc apply -f ~/Downloads/6872572_rhpds-secret.yaml -n {user-username}
-oc secrets link default 6872572-rhpds-pull-secret --for=pull -n {user-username}
 
-. Create a `KafkaConnectS2I` Kubernetes Custom Resource to define your connector.
+. Create a `KafkaConnect` Kubernetes Custom Resource to define your connector.
 +
 [source,bash,subs="attributes+"]
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
-kind: KafkaConnectS2I
+kind: KafkaConnect
 metadata:
   name: debezium
 spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+  image: 'quay.io/hguerreroo/debezium-connect:0.10.0-sqlsrv'
   replicas: 1
-  insecureSourceRepository: true
   config:
     group.id: {user-username}-connect-cluster
     offset.storage.topic: {user-username}-connect-cluster-offsets
@@ -66,14 +62,7 @@ spec:
 EOF
 ----
 
-. Wait for the default build to finish and deploy the first pod.
-
-. Start a new build but this time point it to download the debezium connector plugin for SQL Server.
-+
-[source,bash,subs="attributes+"]
-----
-oc start-build debezium-connect --from-archive http://central.maven.org/maven2/io/debezium/debezium-connector-sqlserver/0.10.0.Beta2/debezium-connector-sqlserver-0.10.0.Beta2-plugin.tar.gz --follow --no-cache -n {user-username}
-----
+. Wait for the default deployment to finish and deploy the first pod.
 
 . Expose the Kafka Connect REST API.
 +
