@@ -67,6 +67,8 @@ spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
   image: 'quay.io/hguerreroo/debezium-connect:0.10.0-sqlsrv'
   replicas: 1
+  jvmOptions:
+    gcLoggingEnabled: false
   config:
     group.id: {user-username}-connect-cluster
     offset.storage.topic: {user-username}-connect-cluster-offsets
