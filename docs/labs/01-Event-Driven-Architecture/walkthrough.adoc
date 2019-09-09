@@ -30,6 +30,9 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 *Credentials*
 
 
+VIDEO INSTRUCTIONS FOR REFERENCE 
+https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=sharing
+
 [time=5]
 [id="Setup Workspace and Camel K"]
 == Setup Your workspace
@@ -374,7 +377,7 @@ With following payload info
 == Summary
 
 TBD - Can someone help??!!
-You can now proceed to link:{next-lab-url}[Lab 3].
+You can now proceed to link:{next-lab-url}[Lab 2].
 
 [time=4]
 [id="further-reading"]
