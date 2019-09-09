@@ -41,7 +41,7 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 oc project {user-username}
 ----
 
-. Create a `KafkaConnectS2I` Kubernetes Custom Resource to define your connector.
+. Create a `KafkaConnect` Kubernetes Custom Resource to define your connector.
 +
 [source,bash,subs="attributes+"]
 ----
@@ -62,14 +62,7 @@ spec:
 EOF
 ----
 
-. Wait for the default build to finish and deploy the first pod.
-
-. Start a new build but this time point it to download the debezium connector plugin for SQL Server.
-+
-[source,bash,subs="attributes+"]
-----
-oc start-build debezium-connect --from-archive http://central.maven.org/maven2/io/debezium/debezium-connector-sqlserver/0.10.0.Beta2/debezium-connector-sqlserver-0.10.0.Beta2-plugin.tar.gz --follow --no-cache -n {user-username}
-----
+. Wait for the default deployment to finish and deploy the first pod.
 
 . Expose the Kafka Connect REST API.
 +
