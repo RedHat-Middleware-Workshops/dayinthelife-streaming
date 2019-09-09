@@ -1,0 +1,124 @@
+{
+  "v": "4.0",
+  "name": "dilii",
+  "workspace": {
+    "defaultEnv": "default",
+    "environments": {
+      "default": {
+        "machines": {
+          "dev-machine": {
+            "attributes": {
+              "memoryLimitBytes": "4294967296"
+            },
+            "servers": {
+              "springboot": {
+                "port": "8080",
+                "attributes": {},
+                "protocol": "http"
+              }
+            },
+            "volumes": {
+              "m2": {
+                "path": "/home/jboss/.m2"
+              },
+              "javadata": {
+                "path": "/home/jboss/jdtls/data"
+              }
+            },
+            "installers": [
+              "org.eclipse.che.exec",
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.ws-agent",
+              "org.eclipse.che.ls.camel",
+              "org.eclipse.che.ls.java",
+              "com.redhat.bayesian.lsp"
+            ],
+            "env": {}
+          }
+        },
+        "recipe": {
+          "type": "dockerimage",
+          "content": "registry.redhat.io/codeready-workspaces/stacks-java-rhel8"
+        }
+      }
+    },
+    "projects": [
+      {
+        "links": [],
+        "name": "StreamingLife",
+        "attributes": {
+          "contribute_to_branch": [
+            "master"
+          ]
+        },
+        "type": "blank",
+        "source": {
+          "location": "https://github.com/weimeilin79/streaminglife-lab1.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "path": "/StreamingLife",
+        "description": "",
+        "problems": [],
+        "mixins": [
+          "pullrequest"
+        ]
+      }
+    ],
+    "name": "dilii",
+    "attributes": {},
+    "commands": [
+      {
+        "commandLine": "MAVEN_OPTS='-Xmx200m' && mvn clean package -f ${current.project.path}/pom.xml",
+        "name": "build",
+        "attributes": {
+          "goal": "Build",
+          "previewUrl": ""
+        },
+        "type": "mvn"
+      },
+      {
+        "commandLine": "${HOME}/stack-analysis.sh -f ${current.project.path}/pom.xml -p ${current.project.path}",
+        "name": "dependency_analysis",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "wget https://github.com/apache/camel-k/releases/download/1.0.0-M1/camel-k-client-1.0.0-M1-linux-64bit.tar.gz",
+        "name": "Download Kamel Binary",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "tar -xvf camel-k-client-1.0.0-M1-linux-64bit.tar.gz",
+        "name": "Unzip Kamel",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "cp kamel ${current.project.path}/apicall",
+        "name": "setup apicall",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      },
+      {
+        "commandLine": "cp kamel ${current.project.path}/eventdriven",
+        "name": "setup eventdriven",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      }
+    ],
+    "links": []
+  }
+}
