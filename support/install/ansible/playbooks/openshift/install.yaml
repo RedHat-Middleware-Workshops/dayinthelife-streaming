@@ -7,7 +7,7 @@
       vars:
         codeready_version: "1.2.0"
         codeready_project: "codeready"
-        codeready_generate_user_count : {{ usersno }}
+        codeready_generate_user_count : "{{ usersno }}"
       tags: provision_codeready
     - include_role:
         name: provision_streams
