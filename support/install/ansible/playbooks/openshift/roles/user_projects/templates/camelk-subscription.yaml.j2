@@ -2,7 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   labels:
-    csc-owner-name: installed-community-openshift-operators
+    csc-owner-name: installed-community-openshift-operators-{{ user_project }}
     csc-owner-namespace: openshift-marketplace
   name: camel-k
   namespace: '{{ user_project }}'
@@ -10,7 +10,7 @@ spec:
   channel: alpha
   installPlanApproval: Automatic
   name: camel-k
-  source: installed-community-openshift-operators
+  source: installed-community-openshift-operators-{{ user_project }}
   sourceNamespace: '{{ user_project }}'
   startingCSV: camel-k-operator.v1.0.0-m1
 

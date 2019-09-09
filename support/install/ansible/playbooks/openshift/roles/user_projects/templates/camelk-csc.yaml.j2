@@ -3,7 +3,7 @@ kind: CatalogSourceConfig
 metadata:
   finalizers:
   - finalizer.catalogsourceconfigs.operators.coreos.com
-  name: installed-community-openshift-operators
+  name: installed-community-openshift-operators-{{ user_project }}
   namespace: openshift-marketplace
 spec:
   csDisplayName: Community Operators
