@@ -9,11 +9,11 @@
         codeready_project: "codeready"
         codeready_generate_user_count : "{{ usersno }}"
       tags: provision_codeready
-    - include_role:
-        name: provision_camelk
-      vars:
-        operators_project: "workshop-operators"
-      tags: provision_camelk
+#    - include_role:
+#        name: provision_camelk
+#      vars:
+#        operators_project: "workshop-operators"
+#      tags: provision_camelk
     - include_role:
         name: provision_streams
       vars:
