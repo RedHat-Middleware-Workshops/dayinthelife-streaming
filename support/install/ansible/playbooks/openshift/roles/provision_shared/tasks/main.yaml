@@ -46,52 +46,12 @@
     shell: "oc set volume dc/mssql-server-linux --add --name=earth-data \
             --type=configmap --mount-path=/opt/workshop \
             --configmap-name=earth-data-sql -n {{ db_earth_namespace }}"
+  - name: Add Post Hook
+    shell: "oc set deployment-hook dc/mssql-server-linux -n {{ db_earth_namespace }} --post \
+            -c mssql-server-linux --failure-policy=retry --volumes earth-data \
+            -- /opt/mssql-tools/bin/sqlcmd -S mssql-server-linux.shared-db-earth.svc \
+            -U sa -P Password! -i /opt/workshop/earth-data.sql"
   when: (db_exists.resources is undefined) or (db_exists.resources | length == 0)
-
-- name: Wait for db to start
-  k8s_facts:
-    kind: DeploymentConfig
-    name: mssql-server-linux
-    namespace: '{{ db_earth_namespace }}'
-    api_version: v1
-  register: dc
-  until: dc.resources is defined and dc.resources | length > 0
-  retries: 60
-  delay: 30
-
-- name: Set Expected Replicas
-  set_fact:
-    mssql_replicas: '{{ dc.resources[0].spec.replicas }}'
-
-- name: Wait for mssql readiness
-  k8s_facts:
-    kind: DeploymentConfig
-    name: mssql-server-linux
-    namespace: '{{ db_earth_namespace }}'
-    api_version: v1
-  register: dc
-  until: (dc.resources[0].status.readyReplicas is defined) and 
-        ((dc.resources[0].status.readyReplicas | int) == (mssql_replicas | int))
-  retries: 60
-  delay: 30
-
-- name: Get DB pod name
-  k8s_facts:
-    kind: Pod
-    label_selectors:
-      - deploymentconfig = mssql-server-linux
-    namespace: '{{ db_earth_namespace }}'
-    api_version: v1
-  register: mssql_pods
-
-- name: Set DB Pod Name
-  set_fact:
-    mssql_name: '{{ mssql_pods.resources[0].metadata.name }}'
-
-- name: Load  data into db
-  shell: oc exec -n {{ db_earth_namespace }} {{ mssql_name }} \
-        -- /opt/mssql-tools/bin/sqlcmd -U sa -P 'Password!' \
-        -i /opt/workshop/earth-data.sql
 
 - name: Create Earth Application Namespace
   k8s:
