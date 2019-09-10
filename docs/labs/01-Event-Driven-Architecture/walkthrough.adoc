@@ -108,7 +108,6 @@ spec:
         - send
         - recv
   username: user
-EOF
 ----
 . Click create and your topic is ready
 
@@ -123,7 +122,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 oc get addressspace user1 -n user1 -o jsonpath='{.status.endpointStatuses[?(@.name == "messaging")].serviceHost}'
-EOF
 ----
 
 . In the Camel Route, tell camel where to send the info to by inserting following destination code into to("");
@@ -132,7 +130,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 amqp:topic:incomingorders?exchangePattern=InOnly&subscriptionDurable=false
-EOF
 ----
 
 . Open a new Terminal, login to openshift 
@@ -220,7 +217,6 @@ http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
 ----
 AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
 getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
-EOF
 ----
 
 . In the Camel Route, tell camel where to recv the info to by inserting following destination code into from("");
@@ -229,7 +225,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 amqp:topic:incomingorders?subscriptionDurable=false
-EOF
 ----
 
 . In the Camel Route, tell camel where to send the notification to by inserting following destination code into to("");
@@ -239,7 +234,6 @@ in our case, we are sending websocket data to our dashboard
 [source,bash,subs="attributes+"]
 ----
 ahc-ws://dilii-uiws:8181/echo
-EOF
 ----
 
 . Open a new Terminal, under StreamingLife/eventdriven
@@ -248,7 +242,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 ./kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
-EOF
 ----
 
 . Check the event notification dashboard, go to 
@@ -256,7 +249,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
-EOF
 ----
 
 . Send in the order in Terminal
@@ -276,7 +268,7 @@ curl -X POST \
 	"address": "hello",
 	"zipCode": 2222
 }'
-
+---
 . Go back to the codeready env, in your workspace, open ShippingService.java
 . Update the BROKER_URL with your addressspace service url (same from previous steps)
 
@@ -287,7 +279,6 @@ curl -X POST \
 ----
 AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
 getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
-EOF
 ----
 
 . Lets create a camel route that recv from the Topic to websocket;
@@ -304,7 +295,6 @@ from("amqp:topic:incomingorders?subscriptionDurable=false")
             .log("Sales Notified ${body}")
             .to("ahc-ws://dilii-uiws:8181/echo")
             ;
-EOF
 ----
 
 
@@ -314,7 +304,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 ./kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
-EOF
 ----
 
 . Check the event notification dashboard, go to 
@@ -322,7 +311,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
-EOF
 ----
 
 . Send in the order in Terminal
@@ -342,8 +330,6 @@ curl -X POST \
 	"address": "hello",
 	"zipCode": 2222
 }'
-
-EOF
 ----
 
 . Check the result in event notification dashboard, also check your AMQ Online Console for number of msg out. 
@@ -351,7 +337,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
-EOF
 ----
 
 [time=10]
