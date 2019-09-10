@@ -62,6 +62,8 @@ exports.configureClientWebSocketServer = function (server) {
     } else {
       consumer = await getKafkaConsumer()
 
+      log.info('consumer created')
+
       consumer.on('error', (err) => {
         log.error('kafka consumer encountered an error', err)
         // Close the websocket. This forces client to reconnect. Clients
@@ -70,7 +72,7 @@ exports.configureClientWebSocketServer = function (server) {
       })
 
       consumer.on('message', (msg) => {
-        log.trace('received kafka payload, forwarding to ws:', msg)
+        log.debug('received payload from kafka, forwarding to ws:', msg)
         sock.send(
           JSON.stringify({
             data: JSON.parse(msg.value.payload.after),

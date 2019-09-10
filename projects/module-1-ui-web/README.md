@@ -1,6 +1,6 @@
-# Module Zero UI
+# Lab 2 UI
 This UI connects to a WebSocket server and displays the most recently received
-events.
+Orders by streaming them from a Kafka topic.
 
 ## Setup
 
@@ -20,20 +20,26 @@ frontend. The data format is as a JSON Object with the following structure:
 
 ```
 {
-    datetime: Int,
-    department: String,
-    itemId: Int,
-    qty: Int,
-    price: String
+    data: {
+        "OrderId": "6817D382-CDBA-E369-FE20-FF7C79DE5A26",
+        "OrderType": "E",
+        "OrderItemName": "Lemon Bar",
+        "Quantity": 17,
+        "Price": "0.09",
+        "ShipmentAddress": "Ap #249-5876 Magna. Rd.",
+        "ZipCode": "I9E 0JN"
+    },
+    ts: 1568062055995
 }
 ```
+
+This matches what the server builds from a Kafka payload in production mode.
 
 ### Variables
 
 * PORT (default: 8080) - HTTP traffic port
-* WSS_INCOMING_PAYLOAD_PORT (default: 8181) - Port that a WebSocket server listens on for payloads to send connected clients.
 * WS_MOCK_DATA_ENABLED (default: false) - Determines if mock data should be sent to clients. 
-* WS_CONNECTION_STRING (default: undefined) - Use this to have the frontend connect to a different socket server
+* WS_CONNECTION_STRING (default: same as frontend host) - Use this to have the frontend connect to a different socket server. By default it uses the host for the frontend
 * LOG_LEVEL (default: info) - Logging level of trace, debug, info, etc.
 
 ### Deployment as Container
@@ -51,10 +57,7 @@ You can run the image via Docker with this command:
 docker run -d -p 8080:8080 -p 8181:8181 $TAG_NAME:latest
 ```
 
-You can connect to ws://localhost:8181 to send payloads that will be proxied
-to clients viewing the webpage served on http://localhost:8080.
-
-Or you can push it to a registry and deploy on a container platform, e.g OpenShift.
+Push it to a registry and deploy on a container platform, e.g OpenShift.
 
 
 ## Icon Attribution

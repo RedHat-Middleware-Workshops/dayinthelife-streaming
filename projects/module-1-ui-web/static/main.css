@@ -3,7 +3,7 @@ h1, h2, h3, h4, p, tr, td, thead, span {
 }
 
 tbody tr {
-  line-height: 2em;
+  line-height: 2.2em;
 }
 
 p {
@@ -74,7 +74,7 @@ tbody td pre {
 /* WebSocket status indicator */
 #status-panel {
   position: absolute;
-  bottom: 5vh;
+  top: 2vh;
   right: 2vw;
 }
 
@@ -99,4 +99,17 @@ tbody td pre {
 }
 #status-icon.green {
   background: green;
+}
+
+.charts {
+  display: flex;
+  align-items: center;
+}
+
+.charts > div {
+  flex: 1;
+}
+
+#price-qty-line-chart-container {
+  padding: 1.5em;
 }

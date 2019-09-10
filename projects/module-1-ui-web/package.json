@@ -1,11 +1,12 @@
 {
-  "name": "module-0-ui-web",
+  "name": "module-1-ui-web",
   "version": "1.0.0",
   "description": "",
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "standard --fix server/**/*.js frontend/**/*.js",
+    "format": "standard --fix server/**/*.js frontend/*.js",
     "build": "browserify -e frontend/event-stream.js -o static/event-stream.js",
     "nodeshift": "nodeshift --strictSSL=false",
     "start": "node server/index.js",
@@ -24,6 +25,7 @@
     "kube-probe": "~0.3.2",
     "make-promises-safe": "~5.0.0",
     "pino": "~5.13.0",
+    "randomcolor": "^0.5.4",
     "ws": "~7.1.2"
   },
   "devDependencies": {

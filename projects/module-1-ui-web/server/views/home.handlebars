@@ -1,24 +1,38 @@
 {{!-- <p>The table below lists the latest events recorded in the Shopify system. These will update in realtime when the status indiator in the bottom right reports being "Connected" to the WebSocket server.</p> --}}
-<h3>Orders  </h3>
 <div id="status-panel">
   <span id="status-text">Status: Connected</span>
   <span id="status-icon" class="red">✖</span>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th width="20%">Datetime</th>
-      <th width="28%">Item Name</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>ZIP Code</th>
-    </tr>
-  </thead>
-  <tbody id="notifications-table-body">
-  </tbody>
-</table>
+<div class="charts">
+  <div class="left">
+    <h3>Order Price vs. Quantity</h3>
+    <div id="price-qty-line-chart-container">
+      <canvas id="price-qty-line-chart" width="400" height="400"></canvas>
+    </div>
+  </div>
+  <div class="right">
+    <h3>Realtime Feed</h3>
+    <table>
+      <thead>
+        <tr>
+          <th width="25%">Datetime</th>
+          <th width="35%">Item Name</th>
+          {{!-- <th>Quantity</th>
+          <th>Price</th> --}}
+          <th>ZIP Code</th>
+        </tr>
+      </thead>
+      <tbody id="notifications-table-body">
+      </tbody>
+    </table>
+  </div>
+</div>
 
+<h3>Total Product Value (Quantities * Price)</h3>
+<canvas id="order-value-bar-chart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script src="/static/event-stream.js"></script>
 <script>
   window.connectToEventStream('{{WS_CONNECTION_STRING}}')

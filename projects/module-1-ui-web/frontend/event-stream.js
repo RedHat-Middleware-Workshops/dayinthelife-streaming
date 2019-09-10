@@ -4,11 +4,52 @@
  * Sockette simplifies WebSocket reconnect logic, JSON, events, etc.
  */
 const Sockette = require('sockette')
-
+const randomColor = require('randomcolor')
 const STATUS = {
   NOT_CONNECTED: '✖',
   CONNECTED: '✔'
 }
+
+const MAX_TABLE_ROWS = 10
+
+const priceQtyLineChartCtx = document.getElementById('price-qty-line-chart').getContext('2d')
+const priceQtyLineChart = new window.Chart(priceQtyLineChartCtx, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Quantity',
+      data: [],
+      backgroundColor: 'rgba(226,125,96,0.5)',
+      borderColor: 'rgb(226,125,96)',
+      fill: false
+    }, {
+      label: 'Price',
+      data: [],
+      backgroundColor: 'rgba(58,175,169, 0.25)',
+      borderColor: 'rgb(58,175,169)',
+      fill: false
+    }]
+  }
+})
+
+const orderValueBarChartCtx = document.getElementById('order-value-bar-chart').getContext('2d')
+const orderValueBarChart = new window.Chart(orderValueBarChartCtx, {
+  type: 'bar',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Order Values',
+      data: [],
+      backgroundColor: []
+    }]
+  },
+  options: {
+    legend: {
+      display: false
+    }
+  }
+})
 
 /**
  * Update the bottom right stats
@@ -26,6 +67,44 @@ function updateStatus (symbol) {
   } else {
     iconEl.className = 'red'
   }
+}
+
+/**
+ * Add incoming price and quantity to the graph
+ * @param {Number} price
+ * @param {Number} qty
+ */
+function updatePriceQtyChart (price, qty) {
+  priceQtyLineChart.data.labels.push('')
+  priceQtyLineChart.data.datasets.forEach((dataset) => {
+    if (dataset.label === 'Price') {
+      dataset.data.push(parseFloat(price))
+    } else {
+      dataset.data.push(parseFloat(qty))
+    }
+  })
+
+  priceQtyLineChart.update()
+}
+
+/**
+ * Track the total income/value of specific order items
+ * @param {Order} order
+ */
+function updateOrderValueBarChart (order) {
+  const existingEntry = orderValueBarChart.data.labels.find(l => l === order['OrderItemName'])
+
+  if (existingEntry) {
+    const idx = orderValueBarChart.data.labels.indexOf(existingEntry)
+    const curValue = orderValueBarChart.data.datasets[0].data[idx]
+    orderValueBarChart.data.datasets[0].data[idx] = parseFloat(curValue + (order['Quantity'] * order['Price'])).toFixed(2)
+  } else {
+    orderValueBarChart.data.labels.push(order['OrderItemName'])
+    orderValueBarChart.data.datasets[0].data.push(parseFloat((order['Quantity'] * order['Price']).toFixed(2)))
+    orderValueBarChart.data.datasets[0].backgroundColor.push(randomColor())
+  }
+
+  orderValueBarChart.update()
 }
 
 function processMessage (e) {
@@ -55,7 +134,7 @@ function processMessage (e) {
   const tdZipEl = document.createElement('td')
 
   // Will need to do some formatting on these
-  tdTimeEl.innerHTML = new Date(time).toLocaleString()
+  tdTimeEl.innerHTML = new Date(time).toLocaleTimeString()
   tdItemEl.innerHTML = data['OrderItemName']
   tdQtyEl.innerHTML = data['Quantity']
   tdPriceEl.innerHTML = data['Price']
@@ -64,8 +143,8 @@ function processMessage (e) {
   // Append entries to row
   trEl.appendChild(tdTimeEl)
   trEl.appendChild(tdItemEl)
-  trEl.appendChild(tdQtyEl)
-  trEl.appendChild(tdPriceEl)
+  // trEl.appendChild(tdQtyEl)
+  // trEl.appendChild(tdPriceEl)
   trEl.appendChild(tdZipEl)
 
   // Add new row with animation
@@ -73,10 +152,29 @@ function processMessage (e) {
   trEl.className = 'animated flash'
 
   const rows = tableEl.children
-  if (rows.length >= 8) {
+  if (rows.length >= MAX_TABLE_ROWS) {
     tableEl.removeChild(tableEl.lastChild)
   }
+
+  updatePriceQtyChart(data['Price'], data['Quantity'])
+  updateOrderValueBarChart(data)
 }
+
+// Pre-seed the table with empty rows
+;(function () {
+  const tableEl = document.getElementById('notifications-table-body')
+  const rows = tableEl.children
+  for (let i = rows.length; i < MAX_TABLE_ROWS; i++) {
+    const tr = document.createElement('tr')
+    for (let j = 0; j < 3; j++) {
+      const td = document.createElement('td')
+      td.innerHTML = '&nbsp;'
+      tr.appendChild(td)
+    }
+
+    tableEl.append(tr)
+  }
+})()
 
 /**
  * This function will be invoked by a script on the homepage.
@@ -93,7 +191,7 @@ window.connectToEventStream = function (connectionString) {
   new Sockette(connectionString, {
     // Will try reconnect for a minute before giving up (every 6 seconds with 10 attempts)
     timeout: 6000,
-    maxAttempts: 10,
+    maxAttempts: 60,
 
     onopen: (e) => {
       console.log('Connected!', e)
