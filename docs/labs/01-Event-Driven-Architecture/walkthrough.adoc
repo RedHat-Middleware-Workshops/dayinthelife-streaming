@@ -268,10 +268,10 @@ curl -X POST \
 	"address": "hello",
 	"zipCode": 2222
 }'
----
+----
+
 . Go back to the codeready env, in your workspace, open ShippingService.java
 . Update the BROKER_URL with your addressspace service url (same from previous steps)
-
 . Setup your AMQP endpoint configuration in Camel
 
 +
