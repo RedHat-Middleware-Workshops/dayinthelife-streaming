@@ -37,13 +37,13 @@ exports.configureClientWebSocketServer = function (server) {
 
       const send = () => {
         if (sock.readyState === WebSocket.OPEN) {
-          log.info('queuing send of mock data')
+          log.trace('queuing send of mock data')
           // Send at least one payload every 5 seconds
           setTimeout(async () => {
             const orders = await sampleOrders
             const data = orders[Math.floor(Math.random() * orders.length - 1)]
 
-            log.info('sending mock data to client: %j', data)
+            log.debug('sending mock data to client: %j', data)
 
             sock.send(JSON.stringify({
               data,
@@ -52,7 +52,7 @@ exports.configureClientWebSocketServer = function (server) {
 
             // Queue another send
             send()
-          }, Math.random() * 2000)
+          }, Math.random() * 3500)
         } else {
           log.warn(`not sending mock data. socket.readyState was ${sock.readyState}`)
         }
@@ -72,7 +72,8 @@ exports.configureClientWebSocketServer = function (server) {
       })
 
       consumer.on('message', (msg) => {
-        log.debug('received payload from kafka, forwarding to ws:', msg)
+        log.info('received payload from kafka, forwarding to ws')
+        log.debug('payload from kafka is:\n%j', msg)
         sock.send(
           JSON.stringify({
             data: JSON.parse(msg.value.payload.after),

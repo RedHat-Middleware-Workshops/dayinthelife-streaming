@@ -10,7 +10,7 @@
     "build": "browserify -e frontend/event-stream.js -o static/event-stream.js",
     "nodeshift": "nodeshift --strictSSL=false",
     "start": "node server/index.js",
-    "start-dev": "concurrently 'watchify frontend/event-stream.js -o static/event-stream.js' 'LOG_LEVEL=trace WS_MOCK_DATA_ENABLED=true nodemon server/index.js | pino-pretty'"
+    "start-dev": "concurrently 'watchify frontend/event-stream.js -o static/event-stream.js' 'LOG_LEVEL=trace WS_MOCK_DATA_ENABLED=true nodemon server/index.js | pino-pretty -t'"
   },
   "keywords": [],
   "author": "Evan Shortiss",

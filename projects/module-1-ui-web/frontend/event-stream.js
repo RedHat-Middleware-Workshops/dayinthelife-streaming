@@ -109,9 +109,35 @@ function updateOrderValueBarChart (order) {
     const curValue = orderValueBarChart.data.datasets[0].data[idx]
     orderValueBarChart.data.datasets[0].data[idx] = parseFloat(curValue + (order['Quantity'] * order['Price'])).toFixed(2)
   } else {
-    orderValueBarChart.data.labels.push(order['OrderItemName'])
-    orderValueBarChart.data.datasets[0].data.push(parseFloat((order['Quantity'] * order['Price']).toFixed(2)))
-    orderValueBarChart.data.datasets[0].backgroundColor.push(randomColor())
+    // Keep things ordered alphabetically in the chart
+    const data = orderValueBarChart.data.datasets[0].data.slice(0)
+    const labels = orderValueBarChart.data.labels.slice(0)
+    const colors = orderValueBarChart.data.datasets[0].backgroundColor.slice(0)
+
+    labels.push(order['OrderItemName'])
+    colors.push(randomColor())
+    data.push(parseFloat((order['Quantity'] * order['Price']).toFixed(2)))
+
+    const labelsAndValues = labels.reduce((memo, label, idx) => {
+      memo[label] = {
+        value: data[idx],
+        color: colors[idx]
+      }
+      return memo
+    }, {})
+
+    orderValueBarChart.data.labels = []
+    orderValueBarChart.data.datasets[0].data = []
+    orderValueBarChart.data.datasets[0].backgroundColor = []
+
+    Object.keys(labelsAndValues).sort().forEach((label) => {
+      const value = labelsAndValues[label].value
+      const color = labelsAndValues[label].color
+
+      orderValueBarChart.data.labels.push(label)
+      orderValueBarChart.data.datasets[0].data.push(value)
+      orderValueBarChart.data.datasets[0].backgroundColor.push(color)
+    })
   }
 
   orderValueBarChart.update()
@@ -161,6 +187,7 @@ function processMessage (e) {
   tableEl.prepend(trEl)
   trEl.className = 'animated flash'
 
+  // Limit table row count
   let rowLen = tableEl.children.length
   while (rowLen > MAX_TABLE_ROWS) {
     tableEl.removeChild(tableEl.lastChild)

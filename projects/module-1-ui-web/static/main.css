@@ -6,6 +6,10 @@ tbody tr {
   line-height: 2.2em;
 }
 
+p, h1, h2, h3 {
+  color: #47525E;
+}
+
 p {
   line-height: 16pt;
 }
@@ -21,7 +25,9 @@ header {
 header h2 {
   vertical-align: super;
   margin: 1em;
+  text-shadow: 0 0 1px #000;
   display: inline-block;
+  color: white;
 }
 
 header img {
