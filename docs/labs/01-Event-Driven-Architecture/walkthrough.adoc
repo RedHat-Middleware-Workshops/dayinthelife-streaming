@@ -38,7 +38,7 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 == Setup Your workspace
 . Go to http://codeready-codeready.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com
   login with your ID and PWD
-. Go to the factories on the top right, choose dilii, it will take you to the factory setting page.
+. Go to the factories on the top left, choose dilii, it will take you to the factory setting page.
 . Click on OPEN on the top right. 
 . Wait for the workspace to start
 . Click on the manage command on the top, run the following in orders
