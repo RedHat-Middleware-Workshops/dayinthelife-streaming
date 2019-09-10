@@ -75,14 +75,24 @@ function updateStatus (symbol) {
  * @param {Number} qty
  */
 function updatePriceQtyChart (price, qty) {
-  priceQtyLineChart.data.labels.push('')
   priceQtyLineChart.data.datasets.forEach((dataset) => {
     if (dataset.label === 'Price') {
       dataset.data.push(parseFloat(price))
     } else {
       dataset.data.push(parseFloat(qty))
     }
+
+    if (dataset.data.length > MAX_TABLE_ROWS) {
+      // Remove the oldest data point
+      dataset.data.shift()
+    }
   })
+
+  if (priceQtyLineChart.data.datasets[0].data.length < MAX_TABLE_ROWS) {
+    // Need to add labels up to our defined max entries
+    // Hacky, but chart.js expects a label per point
+    priceQtyLineChart.data.labels.push('')
+  }
 
   priceQtyLineChart.update()
 }
@@ -151,9 +161,10 @@ function processMessage (e) {
   tableEl.prepend(trEl)
   trEl.className = 'animated flash'
 
-  const rows = tableEl.children
-  if (rows.length >= MAX_TABLE_ROWS) {
+  let rowLen = tableEl.children.length
+  while (rowLen > MAX_TABLE_ROWS) {
     tableEl.removeChild(tableEl.lastChild)
+    rowLen--
   }
 
   updatePriceQtyChart(data['Price'], data['Quantity'])

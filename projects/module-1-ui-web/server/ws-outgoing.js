@@ -52,7 +52,7 @@ exports.configureClientWebSocketServer = function (server) {
 
             // Queue another send
             send()
-          }, Math.random() * 5000)
+          }, Math.random() * 2000)
         } else {
           log.warn(`not sending mock data. socket.readyState was ${sock.readyState}`)
         }
