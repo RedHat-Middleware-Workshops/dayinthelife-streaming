@@ -116,8 +116,8 @@ EOF
 [id="Setup Workspace and Camel K"]
 == Event Driven Architecture
 . Go back to the codeready env. 
-. In your workspace, open StreamingLife/eventdriven/OrderService.java by double click on it. 
-. Update the BROKER_URL with your new addressspace service url
+. In your workspace, open StreamingLife/eventdriven/OrderService.java by double clicking on it. 
+. Update the BROKER_URL with your new addressspace service url.  You can retrieve your new addresspace service URL by executing the following command:
 
 +
 [source,bash,subs="attributes+"]
@@ -140,7 +140,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 oc login https://api.cluster-diyii-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com:6443
-EOF
 ----
 
 . In the same terminal, under StreamingLife/eventdriven/f
@@ -149,8 +148,7 @@ exec the following command to run the Orderservice in OpenShift
 +
 [source,bash,subs="attributes+"]
 ----
-./kamel run --name=inventory-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  InventoryService.java
-EOF
+./kamel run --name=order-event-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  OrderService.java
 ----
 
 . Look at the various CRs in the Operator menu, and when the integration is running, see the API Standard Doc generated automatically using the following URL
@@ -158,7 +156,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 http://order-service-event-user1.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
-EOF
 ----
 
 . Go back to the codeready env, in your workspace, open InventoryService.java
@@ -170,7 +167,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 amqp:topic:incomingorders?subscriptionDurable=false
-EOF
 ----
 
 . Open a new Terminal, under StreamingLife/eventdriven
@@ -179,7 +175,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 ./kamel run --name=inventory-service -d camel-jackson -d camel-ahc-ws -d camel-amqp  InventoryService.java
-EOF
 ----
 
 . Check the event notification dashboard, go to 
@@ -187,7 +182,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
-EOF
 ----
 
 . Send in the order in Terminal
@@ -207,8 +201,6 @@ curl -X POST \
 	"address": "hello",
 	"zipCode": 2222
 }'
-
-EOF
 ----
 
 . Check the result in event notification dashboard, also check your AMQ Online Console for number of msg out. 
@@ -216,7 +208,6 @@ EOF
 [source,bash,subs="attributes+"]
 ----
 http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
-EOF
 ----
 
 . Go back to the codeready env, in your workspace, open SalesService.java
