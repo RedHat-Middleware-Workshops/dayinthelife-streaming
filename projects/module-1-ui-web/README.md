@@ -45,10 +45,10 @@ This matches what the server builds from a Kafka payload in production mode.
 ### Deployment as Container
 
 Build using the following command from this directory. Replace `$TAG_NAME` with
-your chosen tag name.
+your chosen tag name. The npm registry settings are optional:
 
 ```
-docker build . -t $TAG_NAME
+docker build --build-arg NPM_REGISTRY_URL=$REG_URL --build-arg NPM_CAFILE_URL=$REG_CA_URL . -t dil-streaming-earth-dashboard
 ```
 
 You can run the image via Docker with this command:
