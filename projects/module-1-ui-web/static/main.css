@@ -1,0 +1,125 @@
+h1, h2, h3, h4, p, tr, td, thead, span {
+  font-family: 'Roboto', sans-serif;
+}
+
+tbody tr {
+  line-height: 2.2em;
+}
+
+p, h1, h2, h3 {
+  color: #47525E;
+}
+
+p {
+  line-height: 16pt;
+}
+
+header {
+  background: #E27D60;
+  color: white;
+  padding: 0.5em 1em;
+  margin: 0;
+  box-shadow: 0 0 5px #aaa;
+}
+
+header h2 {
+  vertical-align: super;
+  margin: 1em;
+  text-shadow: 0 0 1px #000;
+  display: inline-block;
+  color: white;
+}
+
+header img {
+  height: 2em;
+  display: inline-block;
+}
+
+.content {
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body div.main {
+  position: relative;
+  padding: 1em;
+  font-size: 13pt;
+  min-height: 85vh;
+}
+
+/* Results table from WebSocket */
+table {
+  width: 100%;
+  table-layout: fixed;
+  border: 2px solid #3AAFA9;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #3AAFA9;
+  color: white;
+  text-align: left;
+}
+
+thead th {
+  padding: 1em;
+}
+
+tbody td {
+  padding-left: 1em;
+}
+
+tbody td {
+  border-top: 2px solid #3AAFA9;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+tbody td pre {
+  overflow: scroll;
+}
+
+/* WebSocket status indicator */
+#status-panel {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+}
+
+#status-text {
+  font-size: 10pt;
+  color: #47525E;
+}
+
+#status-icon {
+  display: inline-block;
+  color: white;
+  border-radius: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  line-height: 1.5em;
+  font-size: 9pt;
+}
+
+#status-icon.red {
+  background: red;
+}
+#status-icon.green {
+  background: green;
+}
+
+.charts {
+  display: flex;
+  align-items: center;
+}
+
+.charts > div {
+  flex: 1;
+}
+
+#price-qty-line-chart-container {
+  padding: 1.5em;
+}

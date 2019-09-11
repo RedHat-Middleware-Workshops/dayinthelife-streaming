@@ -1,0 +1,6 @@
+static/event-stream.js
+node_modules
+.DS_Store
+tmp
+logs.txt
+package-lock.json
