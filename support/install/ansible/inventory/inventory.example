@@ -11,7 +11,7 @@ master
 ansible_user=ec2-user
 
 [master]
-master1.GUID.internal
+master1.CITY-GUID.internal
 
 [workshop]
 localhost ansible_connection=local
@@ -20,4 +20,7 @@ localhost ansible_connection=local
 eval_openshift_master_config_path=/etc/origin/master/master-config.yaml
 
 [workshop:vars]
+ocp_domain=CITY-GUID.openshiftworkshop.com
+ocp_apps_domain=apps.CITY-GUID.openshiftworkshop.com
 usersno=15
+is_on_RHPDS=false
