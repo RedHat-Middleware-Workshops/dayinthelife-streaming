@@ -41,7 +41,7 @@
   k8s_facts:
       api_version: operators.coreos.com/v1alpha1
       kind: ClusterServiceVersion
-      name: 'crwoperator.v1.2.0'
+      name: 'crwoperator.v1.2.2'
       namespace: '{{ codeready_project }}'
   register: csv_status
   until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
