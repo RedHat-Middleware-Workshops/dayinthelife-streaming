@@ -36,7 +36,7 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 [time=5]
 [id="Setup Workspace and Camel K"]
 == Setup Your workspace
-. Go to http://codeready-codeready.{openshift-app-host}
+. Go to link:http://codeready-codeready.{openshift-app-host}/[codeready console, window="_blank"]
   login with your ID and PWD {user-username}/{user-password}
 . Go to the factories on the top left, choose dilii, it will take you to the factory setting page.
 . Click on OPEN on the top right. 
@@ -63,7 +63,7 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 
 ==== Setup AMQ Online namespace
 . Go to 
- https://console-workshop-operators.{openshift-app-host}/
+ link:https://console-workshop-operators.{openshift-app-host}/[AMQ Online console, window="_blank"]
  and login with your ID and PWD
 
 . Create your AMQ namespace instance 
