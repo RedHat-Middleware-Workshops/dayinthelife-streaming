@@ -36,8 +36,8 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 [time=5]
 [id="Setup Workspace and Camel K"]
 == Setup Your workspace
-. Go to http://codeready-codeready.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com
-  login with your ID and PWD
+. Go to http://codeready-codeready.{openshift-app-host}
+  login with your ID and PWD {user-username}/{user-password}
 . Go to the factories on the top left, choose dilii, it will take you to the factory setting page.
 . Click on OPEN on the top right. 
 . Wait for the workspace to start
@@ -63,12 +63,12 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 
 ==== Setup AMQ Online namespace
 . Go to 
- https://console-workshop-operators.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+ https://console-workshop-operators.{openshift-app-host}/
  and login with your ID and PWD
 
 . Create your AMQ namespace instance 
- - Namespace: user%d
- - Name: user%d
+ - Namespace: {user-username}
+ - Name: {user-username}
  - Type: Standard
  - Address Space Plan: standard-small
  - Authentication Service: standard-authentication
@@ -87,7 +87,7 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 . Create your message user to authenticate
 . Go to your Openshift console, in your namespace, click on "Installed Operators" on the lefthand side and select AMQ Online
 . Find "message user" tab, create new message user
-. Update the content, replace the namespace to your user%id (your username) and change the authorized address to incomingorders
+. Update the content, replace the namespace to your {user-username} (your username) and change the authorized address to incomingorders
 
 +
 [source,bash,subs="attributes+"]
@@ -95,8 +95,8 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 apiVersion: user.enmasse.io/v1beta1
 kind: MessagingUser
 metadata:
-  name: user%d.user
-  namespace: user1
+  name: {user-username}.user
+  namespace: {user-username}
 spec:
   authentication:
     password: ZW5tYXNzZQ==
@@ -121,7 +121,7 @@ spec:
 +
 [source,bash,subs="attributes+"]
 ----
-oc get addressspace user1 -n user1 -o jsonpath='{.status.endpointStatuses[?(@.name == "messaging")].serviceHost}'
+oc get addressspace {user-username} -n {user-username} -o jsonpath='{.status.endpointStatuses[?(@.name == "messaging")].serviceHost}'
 ----
 
 . In the Camel Route, tell camel where to send the info to by inserting following destination code into to("");
@@ -152,7 +152,7 @@ exec the following command to run the Orderservice in OpenShift
 +
 [source,bash,subs="attributes+"]
 ----
-http://order-service-event-user1.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+http://order-service-event-{user-username}.{openshift-app-host}/
 ----
 
 . Go back to the codeready env, in your workspace, open InventoryService.java
@@ -178,7 +178,7 @@ amqp:topic:incomingorders?subscriptionDurable=false
 +
 [source,bash,subs="attributes+"]
 ----
-http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+http://dilii-ui-{user-username}.{openshift-app-host}/
 ----
 
 . Send in the order in Terminal
@@ -186,7 +186,7 @@ http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
 [source,bash,subs="attributes+"]
 ----
 curl -X POST \
-  http://order-service-event-user1.apps.cluster-CLUSTER.YOUR_CLUSTER.open.redhat.com/place \
+  http://order-service-event-{user-username}.{openshift-app-host}/place \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d '{
@@ -204,7 +204,7 @@ curl -X POST \
 +
 [source,bash,subs="attributes+"]
 ----
-http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+http://dilii-ui-{user-username}.{openshift-app-host}/
 ----
 
 . Go back to the codeready env, in your workspace, open SalesService.java
@@ -248,7 +248,7 @@ ahc-ws://dilii-uiws:8181/echo
 +
 [source,bash,subs="attributes+"]
 ----
-http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+http://dilii-ui-{user-username}.{openshift-app-host}/
 ----
 
 . Send in the order in Terminal
@@ -256,7 +256,7 @@ http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
 [source,bash,subs="attributes+"]
 ----
 curl -X POST \
-  http://order-service-event-user1.apps.cluster-CLUSTER.YOUR_CLUSTER.open.redhat.com/place \
+  http://order-service-event-{user-username}.{openshift-app-host}/place \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d '{
@@ -310,7 +310,7 @@ from("amqp:topic:incomingorders?subscriptionDurable=false")
 +
 [source,bash,subs="attributes+"]
 ----
-http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+http://dilii-ui-{user-username}.{openshift-app-host}/
 ----
 
 . Send in the order in Terminal
@@ -318,7 +318,7 @@ http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
 [source,bash,subs="attributes+"]
 ----
 curl -X POST \
-  http://order-service-event-user1.apps.cluster-CLUSTER.YOUR_CLUSTER.open.redhat.com/place \
+  http://order-service-event-{user-username}.{openshift-app-host}/place \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d '{
@@ -336,7 +336,7 @@ curl -X POST \
 +
 [source,bash,subs="attributes+"]
 ----
-http://dilii-ui-user%d.apps.cluster-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com/
+http://dilii-ui-{user-username}.{openshift-app-host}/
 ----
 
 [time=10]
@@ -352,7 +352,6 @@ With following payload info
 [id="summary"]
 == Summary
 
-TBD - Can someone help??!!
 You can now proceed to link:{next-lab-url}[Lab 2].
 
 [time=4]
