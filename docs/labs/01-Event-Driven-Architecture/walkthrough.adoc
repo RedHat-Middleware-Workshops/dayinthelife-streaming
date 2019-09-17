@@ -351,6 +351,7 @@ With following payload info
 [time=5]
 [id="summary"]
 == Summary
+In this lab you have created cloud native integration services that listen to events using Camel K. And has setup topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible, and reactive. 
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 
