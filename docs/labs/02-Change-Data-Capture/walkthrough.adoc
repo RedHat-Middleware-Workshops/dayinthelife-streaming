@@ -222,16 +222,16 @@ cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-hos
 EOF
 ----
 
-. Copy the instanceID as you will need it in later steps.
+. Notice the `base_uri`, it represents the REST resource for your customer.
 
-. Use the previuos instanceID to request subscription to the topics.
+. Use the previuos `base_uri` to request subscription to the topics.
 +
 [source,bash,subs="attributes+"]
 ----
 curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["{user-username}.earth.dbo.Orders"]}'
 ----
 
-. Consume some records.
+. Now you can start to consume some records. Notice that you need to send `json` as the accept type.
 +
 [source,bash,subs="attributes+"]
 ----
