@@ -27,5 +27,5 @@
 - name: Delete {{ codeready_project }} Namespace
   k8s:
     state: absent
-    kind: Namespaceg
+    kind: Namespace
     name: '{{ codeready_project }}'
