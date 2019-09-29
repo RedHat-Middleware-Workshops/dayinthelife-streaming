@@ -1,4 +1,21 @@
 ---
+
+- name: BUG in Camel K, need to delete CSC in {{ item }} namespace
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: CatalogSourceConfig
+    name: installed-community-openshift-operators-{{ item }}
+    namespace: openshift-marketplace
+
+- name: BUG in Camel K, need to unsubscribe Camel in {{ item }} namespace
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: Subscription
+    name: camel-k
+    namespace: '{{ item }}'
+
 - name: Delete {{ item }} Namespace
   k8s:
     state: absent

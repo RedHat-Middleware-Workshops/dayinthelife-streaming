@@ -1,0 +1,26 @@
+---
+- name: Delete Code Ready Cluster
+  k8s:
+    state: absent
+    api_version: org.eclipse.che/v1
+    kind: CheCluster
+    name: 'codeready'
+    namespace: '{{ codeready_project }}'
+
+- name: Delete Subscription
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: codeready-workspaces
+    namespace: '{{ codeready_project }}'
+
+- name: Delete CatalogSourceConfig
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: CatalogSourceConfig
+    name: installed-redhat-codeready
+    namespace: openshift-marketplace
+
+
