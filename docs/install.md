@@ -130,7 +130,7 @@ It will a take a couple of minutes to install the Open Banking environment.
 
 When installation is over, you can point the attendants to the Solution Explorer web page where they can start working on the walkthroughs
 
-```bash
+```sudo bash
 https://tutorial-web-app-webapp.apps.GUID.openshiftworkshop.com/
 ```
 
