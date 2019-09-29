@@ -84,54 +84,7 @@ The recommended way to install the workshop is running the ansible playbook from
 
 1. Edit the inventory with the correct environment hostnames according to your environment *GUID*.
 
-    ```bash
+    ```sudo bash
     vi inventory/integreatly.example
     ```
 
-1. Replace `master1.GUID.internal` under `[master]` where *GUID* is your environment identifier. Replace the `ocp_domain` and the `ocp_apps_domain` with your environment *GUID*. Also make sure the `userno` aligns with the number of users you provisioned originally in the Integreatly workshop.
-
-    ```yaml
-    ...
-
-    [master]
-    master1.GUID.internal      <---------
-    ...
-
-    [workshop:vars]
-    sso_project=sso
-    gogs_project=gogs
-    microcks_project=microcks
-    apicurio_project=apicurio
-    namespace=threescale
-    backend_project=international
-    configure_only=false
-    ocp_domain=GUID.openshiftworkshop.com      <---------
-    ocp_apps_domain=apps.GUID.openshiftworkshop.com      <---------
-    usersno=101      <---------
-    che=false
-
-    ...
-
-    ```
-
-1. Become super user running the following command.
-
-    ```bash
-    sudo su
-    ```
-
-1. Run the Ansible playbook.
-
-    ```bash
-    ansible-playbook -i inventory/integreatly.example playbooks/openshift/integreatly-install.yml
-    ```
-
-It will a take a couple of minutes to install the Open Banking environment.
-
-When installation is over, you can point the attendants to the Solution Explorer web page where they can start working on the walkthroughs
-
-```sudo bash
-https://tutorial-web-app-webapp.apps.GUID.openshiftworkshop.com/
-```
-
-Don't forget to replace *GUID* with your environment value. -->
