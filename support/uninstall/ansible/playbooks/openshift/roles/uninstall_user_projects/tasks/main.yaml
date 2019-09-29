@@ -42,5 +42,5 @@
 - name: Delete {{ item }} Namespace
   k8s:
     state: absent
-    kind: Namespaceg
+    kind: Namespace
     name: 'user{{ item }}'
