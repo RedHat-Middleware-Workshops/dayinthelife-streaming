@@ -3,6 +3,11 @@
   hosts: workshop
   tasks:
     - include_role:
+        name: uninstall_codeready
+      vars:
+        codeready_project: "codeready"
+      tags: uninstall_codeready
+    - include_role:
         name: uninstall_streams
       vars:
         operators_project: "workshop-operators"
@@ -21,6 +26,6 @@
         - "shared-app-earth"
       tags: remove_workshop_projects
     - include_role:
-        name: uninstall_project
+        name: uninstall_user_projects
       with_sequence: start=1 end={{ usersno }} format=user%d
-      tags: remove_user_projects
+      tags: uninstall_user_projects

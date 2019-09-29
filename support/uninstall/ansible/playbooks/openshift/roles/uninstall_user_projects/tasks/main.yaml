@@ -1,0 +1,46 @@
+---
+- name: BUG in Camel K, need to delete CSC in user{{ item }} namespace
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: CatalogSourceConfig
+    name: installed-community-openshift-operators-user{{ item }}
+    namespace: openshift-marketplace
+
+- name: BUG in Camel K, need to unsubscribe Camel in user{{ item }} namespace
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: Subscription
+    name: camel-k
+    namespace: 'user{{ item }}'
+
+- name: Delete user{{ item }} for admin in user{{ item }}
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: RoleBinding
+    name: 'user{{ item }}-admin-user{{ item }}-namespace'
+    namespace: 'user{{ item }}'
+    
+- name: Delete user{{ item }} for view in {{ kafka_earth_namespace }}
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: RoleBinding
+    name: 'user{{ item }}-view-{{ kafka_earth_namespace }}-namespace'
+    namespace: 'user{{ item }}'
+
+- name: Delete user{{ item }} for view in {{ db_earth_namespace }}
+  k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: RoleBinding
+    name: 'user{{ item }}-view-{{ db_earth_namespace }}-namespace'
+    namespace: 'user{{ item }}'
+
+- name: Delete {{ item }} Namespace
+  k8s:
+    state: absent
+    kind: Namespaceg
+    name: 'user{{ item }}'
