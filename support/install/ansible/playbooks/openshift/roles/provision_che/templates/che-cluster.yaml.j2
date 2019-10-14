@@ -6,6 +6,8 @@ metadata:
 spec:
   server:
     cheImageTag: ''
+    devfileRegistryImage: ''
+    pluginRegistryImage: ''
     tlsSupport: false
     selfSignedCert: false
   database:
@@ -24,6 +26,6 @@ spec:
     identityProviderClientId: ''
   storage:
     pvcStrategy: per-workspace
-    pvcClaimSize: 2Gi
+    pvcClaimSize: 1Gi
     preCreateSubPaths: true
 

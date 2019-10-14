@@ -1,15 +1,16 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
+  generation: 1
   labels:
-    csc-owner-name: eclipse-che
+    csc-owner-name: installed-community-{{ che_project }}
     csc-owner-namespace: openshift-marketplace
   name: eclipse-che
   namespace: '{{ che_project }}'
 spec:
-  channel: final
+  channel: stable
   installPlanApproval: Automatic
   name: eclipse-che
-  source: eclipse-che
+  source: installed-community-{{ che_project }}
   sourceNamespace: '{{ che_project }}'
-  startingCSV: eclipse-che.v'{{ che_version }}'
+  startingCSV: eclipse-che.v{{ che_version }}
