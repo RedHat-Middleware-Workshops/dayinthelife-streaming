@@ -1,5 +1,5 @@
 /** 
-kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-http4 OrderService.java --dev
+kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-http OrderService.java --dev
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
@@ -41,9 +41,9 @@ public class OrderService extends RouteBuilder {
             .setBody(simple("${headers.myinputBody}"))
             
             .multicast().parallelProcessing()
-            .to("http4://inventory-service/notify/order?bridgeEndpoint=true",
-                "http4://sales-service/notify/order?bridgeEndpoint=true",
-                "http4://shipping-service/notify/order?bridgeEndpoint=true")
+            .to("http://inventory-service/notify/order?bridgeEndpoint=true",
+                "http://sales-service/notify/order?bridgeEndpoint=true",
+                "http://shipping-service/notify/order?bridgeEndpoint=true")
             .end()
             .removeHeaders("*")
             .setBody().constant("DONE")
