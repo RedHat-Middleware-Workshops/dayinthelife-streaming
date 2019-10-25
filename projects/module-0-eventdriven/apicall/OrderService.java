@@ -1,5 +1,5 @@
 /** 
-kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow  OrderService.java --dev
+kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-http4 OrderService.java --dev
 */
 import java.util.HashMap;
 import org.apache.camel.Processor;
