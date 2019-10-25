@@ -18,7 +18,7 @@
     loop_var: item_project
 
 - name: Lazy Christina just wants to install this web app for now TBC
-  shell: oc new-app weimeilin/dilii-ui:latest -n 'user{{ item }}'
+  shell: oc new-app quay.io/weimeilin79/dilii-ui:latest -n 'user{{ item }}'
 
 - name: Lazy Christina just wants to this web app websocket for now TBC
   shell: oc expose dc dilii-ui --port=8181 --name=dilii-uiws  -n 'user{{ item }}'
