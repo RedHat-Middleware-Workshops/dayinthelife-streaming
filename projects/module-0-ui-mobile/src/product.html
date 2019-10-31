@@ -142,7 +142,8 @@
 				},
 				method: "post"
 			};
-			fetch("http://order-service-api-myproject.192.168.99.106.nip.io/place", request)
+			fetch("http://localhost:8080/place", request)
+			// fetch("http://order-service-api-myproject.192.168.99.106.nip.io/place", request)
 				.then(
 					function(response) {
 						console.log('Response', response);
@@ -153,7 +154,13 @@
 						}
 						response.json().then(function(data) {
 							console.log('data', data);
-							var res = JSON.parse(data);
+							var res = data;
+							try {
+								res = JSON.parse(data);
+							}
+							catch(err) {
+								console.warn(err);
+							}
 							$('#exampleModal').modal('show');
 							$('#modal-title').text('Your ' + res.inventory.flavor + ' order')
 							var c = $('#modal-content')
@@ -164,7 +171,7 @@
 					}
 				)
 				.catch(function(err) {
-					console.log('Fetch Error :-S', err);
+					console.error('Fetch Error :-S', err);
 				});
 		}
 	</script>
