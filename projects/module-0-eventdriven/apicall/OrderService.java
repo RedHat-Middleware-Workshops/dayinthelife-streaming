@@ -2,11 +2,13 @@
 kamel run --name=order-service-api -d camel-swagger-java -d camel-jackson -d camel-undertow  OrderService.java --dev
 */
 import java.util.HashMap;
+import javax.ws.rs.core.MediaType;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.Exchange;
 import org.apache.camel.component.jackson.JacksonDataFormat;
+import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
 
 public class OrderService extends RouteBuilder {
 
@@ -19,6 +21,7 @@ public class OrderService extends RouteBuilder {
             .apiProperty("cors", "true")
             .apiProperty("api.title", "Order API")
             .apiProperty("api.version", "1.0")
+            .enableCORS(true)
             .port("8080")
             .bindingMode(RestBindingMode.json);
 
@@ -37,17 +40,17 @@ public class OrderService extends RouteBuilder {
             //.unmarshal(jacksonDataFormat)
             .setHeader("myinputBody",simple("${body}"))
             .log("inputBody 1 --> ${headers.myinputBody}")
-            .removeHeader("CamelHttp*").setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http4.HttpMethods.POST))
+            .removeHeader("CamelHttp*").setHeader(Exchange.HTTP_METHOD, constant(org.apache.camel.component.http.HttpMethods.POST))
             .setBody(simple("${headers.myinputBody}"))
             
-            .multicast().parallelProcessing()
-            .to("http4://inventory-service/notify/order?bridgeEndpoint=true",
-                "http4://sales-service/notify/order?bridgeEndpoint=true",
-                "http4://shipping-service/notify/order?bridgeEndpoint=true")
+            .multicast(new GroupedBodyAggregationStrategy())
+            .to("http://inventory-service/notify/order?bridgeEndpoint=true&chunked=false",
+                "http://invoice-service/notify/order?bridgeEndpoint=true&chunked=false")
             .end()
             .removeHeaders("*")
-            .setBody().constant("DONE")
             .log("return from parallelProcessing ${body}")
+            .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON))
+            .setBody(simple("{\"inventory\":${body[0]},\"invoice\":${body[1]}}"))
             .log("-----DONE ${headers}")
                 
         ;
