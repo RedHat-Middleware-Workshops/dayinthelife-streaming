@@ -1,0 +1,172 @@
+<!doctype html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>products - Marshmallow Shop</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/mobile.css">
+	<script src="js/mobile.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="page">
+		<div id="header">
+			<div>
+				<a href="index.html" class="logo"><img src="images/logo.png" alt=""></a>
+				<ul id="navigation">
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li class="selected">
+						<a href="product.html">Product</a>
+					</li>
+					<li>
+						<a href="contact.html">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="body">
+			<div class="header">
+				<div>
+					<h1>Flavors</h1>
+				</div>
+			</div>
+			<div>
+				<ul>
+					<li>
+						<h1>All Time Classics</h1>
+						<p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
+					</li>
+					<li>
+						<img src="images/kiwi.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('kiwi')">Order Kiwi</button>
+					</li>
+					<li>
+						<img src="images/mango.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('mango')">Order Mango</button>
+					</li>
+					<li>
+						<img src="images/cantaloupe.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('cantaloupe')">Order Cantaloupe</button>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<h1>Berry Special</h1>
+						<p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
+					</li>
+					<li>
+						<img src="images/blackberry.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('blackberry')">Order blackberry</button>
+					</li>
+					<li>
+						<img src="images/strawberry.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('strawberry')">Order Strawberry</button>
+					</li>
+					<li>
+						<img src="images/blueberry.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('blueberry')">Order BLUEBERRY</button>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<h1>Fruit Blast</h1>
+						<p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
+					</li>
+					<li>
+						<img src="images/grapes.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('grape')">Order Grapes</button>
+					</li>
+					<li>
+						<img src="images/green-apple.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('green-apple')">Order Green Apple</button>
+					</li>
+					<li>
+						<img src="images/pineapple.jpg" alt="">
+						<button class="btn btn-primary" onclick="placeOrder('pineapple')">Order Pineapple</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="footer">
+			<div>
+				<div class="connect">
+					<a href="http://freewebsitetemplates.com/go/facebook/" class="facebook">facebook</a>
+					<a href="http://freewebsitetemplates.com/go/twitter/" class="twitter">twitter</a>
+					<a href="http://freewebsitetemplates.com/go/googleplus/" class="googleplus">googleplus</a>
+					<a href="http://pinterest.com/fwtemplates/" class="pinterest">pinterest</a>
+				</div>
+				<p>&copy; 2023 Fleur de Lune. All Rights Reserved.</p>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modal-title">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modal-content">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+			</div>
+			</div>
+		</div>
+	</div>
+	<script src="./js/main.js"></script>
+	<script>
+		var orderTemplate = {
+			orderId: '1',
+			itemId: '1',
+			orderItemName: 'unknown',
+			quantity: 1,
+			price: 2,
+			address: '123 Evergreen Terrace',
+			zipCode: '2222'
+		};
+		function placeOrder(flavor) {
+			var thisOrder = Object.assign({}, orderTemplate);
+			thisOrder.orderItemName = flavor
+			var request = {
+				body: JSON.stringify(thisOrder),
+				headers: {
+					"Accept": "application/json , text/plain ,*/*",
+					"Content-Type": "application/json",
+				},
+				method: "post"
+			};
+			fetch("http://order-service-api-myproject.192.168.99.106.nip.io/place", request)
+				.then(
+					function(response) {
+						console.log('Response', response);
+						if (response.status !== 200) {
+							console.log('Looks like there was a problem. Status Code: ' +
+							response.status);
+							return;
+						}
+						response.json().then(function(data) {
+							console.log('data', data);
+							var res = JSON.parse(data);
+							$('#exampleModal').modal('show');
+							$('#modal-title').text('Your ' + res.inventory.flavor + ' order')
+							var c = $('#modal-content')
+							c.text('Order: ' + res.invoice.invoiceId)
+							c.append('<br>')
+							c.append('Amount: $ ' + res.invoice.amount + ' ' + res.invoice.currency);
+						});
+					}
+				)
+				.catch(function(err) {
+					console.log('Fetch Error :-S', err);
+				});
+		}
+	</script>
+</body>
+</html>
