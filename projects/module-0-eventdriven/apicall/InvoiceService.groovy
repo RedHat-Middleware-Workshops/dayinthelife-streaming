@@ -7,15 +7,29 @@ rest {
         apiContextPath '/api-docs'
         port '8080'
     }
+}
 
-    path('/my/path') { 
-        get {
-            to 'direct:notify'
-        }
+beans {
+    processInvoice = processor {
+        it.out.body = [
+            orderId: it.in.body.orderId,
+            itemId: it.in.body.itemId,
+            department: 'invoicing',
+            datetime: new Date(),
+            amount: (it.in.body.quantity * it.in.body.price),
+            currency: 'USD',
+            invoiceId: 'B-0' + (Math.floor(1000 + Math.random() * 9999))
+        ]
     }
 }
 
+rest().post("/notify/order")
+    .route()
+        .to('direct:notify')
+
 from('direct:notify')
-    .setBody()
-        .constant('Hello Camel K!')
+    .unmarshal().json()
+    .log('Inventory Notified ${body}')
+    .process('processInvoice')
+    .marshal().json()
     .to('log:info')
