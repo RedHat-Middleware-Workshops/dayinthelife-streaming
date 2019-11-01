@@ -1,5 +1,5 @@
 /*
-kamel run InvoiceService.groovy --dev
+kamel run InvoiceService.groovy --name invoice-service -d camel-undertow -d camel-jackson -d camel-swagger-java --dev
 */
 rest {
     configuration { 
@@ -30,6 +30,7 @@ rest().post("/notify/order")
 from('direct:notify')
     .unmarshal().json()
     .log('Inventory Notified ${body}')
+    .delay(5000).asyncDelayed()
     .process('processInvoice')
     .marshal().json()
     .to('log:info')

@@ -1,21 +1,25 @@
 /*
-kamel run InventoryService.js --name inventory-service -d camel-undertow -d camel-jackson -d camel-swagger-java --dev
+kamel run InventoryEvents.js --name inventory-events -d camel-amqp -d camel-jackson --dev
 */
 const Processor = Java.type("org.apache.camel.Processor");
 const p = Java.extend(Processor);
 const proc = new p(processInventory);
 
-c = restConfiguration();
-c.setComponent('undertow');
-c.setPort('8080');
+const ConnectionFactory = Java.type("org.apache.qpid.jms.JmsConnectionFactory");
 
-rest('/')
-    .post('notify/order')
-    .to('direct:notify');
+cf = new ConnectionFactory();
+cf.setRemoteURI('amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local');
 
-from('direct:notify')
+components.get('amqp')
+    .setConnectionFactory(cf);
+
+from('amqp:topic:notify/orders?exchangePattern=InOnly')
     .log('Inventory Notified ${body}')
+    .unmarshal().json()
+    .setHeader('reply-to').simple('${body[username]}')
+    .marshal().json()
     .process(proc)
+    .toD('amqp:queue:notifications/${headers.reply-to}?exchangePattern=InOnly')
     .to('log:info');
 
 function processInventory(e) {

@@ -51,6 +51,7 @@ public class OrderService extends RouteBuilder {
             .log("return from parallelProcessing ${body}")
             .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON))
             .setBody(simple("{\"inventory\":${body[0]},\"invoice\":${body[1]}}"))
+            .unmarshal().json()
             .log("-----DONE ${headers}")
                 
         ;
