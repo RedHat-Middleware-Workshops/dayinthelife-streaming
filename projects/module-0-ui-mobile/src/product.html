@@ -36,56 +36,38 @@
 			<div>
 				<ul>
 					<li>
-						<h1>All Time Classics</h1>
+						<h1>All Time Classic REST API</h1>
 						<p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
 					</li>
 					<li>
 						<img src="images/kiwi.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('kiwi')">Order Kiwi</button>
+						<button class="btn btn-primary" onclick="placeOrder('kiwi', 'api')">Order Kiwi</button>
 					</li>
 					<li>
 						<img src="images/mango.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('mango')">Order Mango</button>
+						<button class="btn btn-primary" onclick="placeOrder('mango', 'api')">Order Mango</button>
 					</li>
 					<li>
 						<img src="images/cantaloupe.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('cantaloupe')">Order Cantaloupe</button>
+						<button class="btn btn-primary" onclick="placeOrder('cantaloupe', 'api')">Order Cantaloupe</button>
 					</li>
 				</ul>
 				<ul>
 					<li>
-						<h1>Berry Special</h1>
+						<h1>New Async Special</h1>
 						<p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
 					</li>
 					<li>
 						<img src="images/blackberry.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('blackberry')">Order blackberry</button>
+						<button class="btn btn-primary" onclick="placeOrder('blackberry', 'events')">Order blackberry</button>
 					</li>
 					<li>
 						<img src="images/strawberry.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('strawberry')">Order Strawberry</button>
+						<button class="btn btn-primary" onclick="placeOrder('strawberry', 'events')">Order Strawberry</button>
 					</li>
 					<li>
 						<img src="images/blueberry.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('blueberry')">Order BLUEBERRY</button>
-					</li>
-				</ul>
-				<ul>
-					<li>
-						<h1>Fruit Blast</h1>
-						<p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
-					</li>
-					<li>
-						<img src="images/grapes.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('grape')">Order Grapes</button>
-					</li>
-					<li>
-						<img src="images/green-apple.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('green-apple')">Order Green Apple</button>
-					</li>
-					<li>
-						<img src="images/pineapple.jpg" alt="">
-						<button class="btn btn-primary" onclick="placeOrder('pineapple')">Order Pineapple</button>
+						<button class="btn btn-primary" onclick="placeOrder('blueberry', 'events')">Order BLUEBERRY</button>
 					</li>
 				</ul>
 			</div>
@@ -123,6 +105,7 @@
 	<script src="./js/main.js"></script>
 	<script>
 		var orderTemplate = {
+			username: 'jdoe',
 			orderId: '1',
 			itemId: '1',
 			orderItemName: 'unknown',
@@ -131,7 +114,10 @@
 			address: '123 Evergreen Terrace',
 			zipCode: '2222'
 		};
-		function placeOrder(flavor) {
+		var d = $('#exampleModal');
+		var t = $('#modal-title');
+		var c = $('#modal-content');
+		function placeOrder(flavor, callType) {
 			var thisOrder = Object.assign({}, orderTemplate);
 			thisOrder.orderItemName = flavor
 			var request = {
@@ -142,32 +128,31 @@
 				},
 				method: "post"
 			};
-			fetch("http://localhost:8080/place", request)
-			// fetch("http://order-service-api-myproject.192.168.99.106.nip.io/place", request)
+			// fetch("http://localhost:8080/place", request)
+			fetch("http://order-service-"+callType+"-myproject.192.168.99.106.nip.io/place", request)
 				.then(
 					function(response) {
 						console.log('Response', response);
-						if (response.status !== 200) {
+						if (response.status !== 200 && response.status !== 202) {
 							console.log('Looks like there was a problem. Status Code: ' +
 							response.status);
 							return;
 						}
-						response.json().then(function(data) {
-							console.log('data', data);
-							var res = data;
-							try {
-								res = JSON.parse(data);
-							}
-							catch(err) {
-								console.warn(err);
-							}
-							$('#exampleModal').modal('show');
-							$('#modal-title').text('Your ' + res.inventory.flavor + ' order')
-							var c = $('#modal-content')
-							c.text('Order: ' + res.invoice.invoiceId)
-							c.append('<br>')
-							c.append('Amount: $ ' + res.invoice.amount + ' ' + res.invoice.currency);
-						});
+						if (response.status == 200) {
+							response.json().then(function(data) {
+								console.log('data', data);
+								d.modal('show');
+								t.text('Your ' + data.inventory.flavor + ' order');
+								c.text('Order: ' + data.invoice.invoiceId);
+								c.append('<br>');
+								c.append('Amount: $ ' + data.invoice.amount + ' ' + data.invoice.currency);
+							});
+						}
+						else {
+							d.modal('show');
+							t.text('Your order has been accepted');
+							c.text('processing your order...');
+						}
 					}
 				)
 				.catch(function(err) {
