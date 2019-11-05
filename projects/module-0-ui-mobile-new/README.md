@@ -16,10 +16,17 @@ npm run start:dev
 
 ## Deployment to OpenShift
 
+The included `Dockerfile` can be used to build and push an image. Alternatively
+use these commands from the root of this directory.
+
 ```
+oc login $YOUR_CLUSTER_URL
+npm install
 npm run nodeshift
 ```
 
+Remember to set the `ORDERS_REST_BASE_URL` environment variable in the
+`DeploymentConfig` on Kubernetes/OpenShift.
 
 ### Environment Variables
 
