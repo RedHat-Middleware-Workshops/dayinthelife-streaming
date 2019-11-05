@@ -1,0 +1,19 @@
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+.order-btn {
+  text-align: center;
+}
+
+.order-btn button {
+  background: #E32A62;
+  border-radius: 0;
+  font-family: roboto-regular-webfont;
+  font-size: 12pt;
+  padding: 0.5em;
+  color: white;
+}
