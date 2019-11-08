@@ -1,12 +1,11 @@
 /*
 kamel run --name invoice-events -d camel-jackson -d camel-amqp InvoiceEvents.groovy --dev
 */
+
 camel {
     components {
         amqp {
-            connectionFactory = new org.apache.qpid.jms.JmsConnectionFactory(
-                new URI('amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local')
-            )
+            connectionFactory new org.apache.qpid.jms.JmsConnectionFactory(new URI('amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local'))
         }
     }
 }

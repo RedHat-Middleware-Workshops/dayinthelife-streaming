@@ -29,7 +29,7 @@ rest()
 
 from('direct:placeorder')
     .unmarshal().json()
-    .log('Inventory Notified ${body}')
+    .log('placeorder--> ${body}')
     .marshal().json()
     .to('amqp:topic:notify/orders?exchangePattern=InOnly')
     .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(202)
