@@ -43,7 +43,6 @@ public class OrderServiceEvents extends RouteBuilder {
         jacksonDataFormat.setUnmarshalType(Order.class);
 
         from("direct:placeorder")
-            .unmarshal().json()
             .log("placeorder--> ${body}")
             .marshal().json()
             .to("amqp:topic:notify/orders?exchangePattern=InOnly")
