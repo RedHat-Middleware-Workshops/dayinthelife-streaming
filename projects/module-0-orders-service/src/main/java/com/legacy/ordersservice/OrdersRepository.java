@@ -13,8 +13,8 @@ public class OrdersRepository {
     }
 
     public String placeOrder(Order order) {
-        String res1 = this.restOperations.postForObject("http://inventory-service-myproject.192.168.99.106.nip.io/notify/order",order, String.class);
-        String res2 = this.restOperations.postForObject("http://invoice-service-myproject.192.168.99.106.nip.io/notify/order", order, String.class);
+        String res1 = this.restOperations.postForObject("http://inventory-service/notify/order",order, String.class);
+        String res2 = this.restOperations.postForObject("http://invoice-service/notify/order", order, String.class);
         return createObject(res1, res2);
     }
 
