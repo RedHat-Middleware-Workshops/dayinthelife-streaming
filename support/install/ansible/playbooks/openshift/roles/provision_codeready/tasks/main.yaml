@@ -6,11 +6,6 @@
     name: '{{ codeready_project }}'
     state: present
 
-- name: Evaluate CodeReady CatalogSourceConfig
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'codeready-csc.yaml.j2') }}"
-
 - name: Evaluate Eclipse CodeReady Operator Group
   k8s:
     state: present

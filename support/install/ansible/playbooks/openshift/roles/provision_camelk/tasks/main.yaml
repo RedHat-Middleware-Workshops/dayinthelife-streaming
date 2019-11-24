@@ -13,11 +13,6 @@
     name: workshop-operators
     namespace: '{{ operators_project }}'
 
-- name: Evaluate Camel K CatalogSourceConfig
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'camelk-csc.yaml.j2') }}"
-
 - name: Evaluate Camel K Subscription
   k8s:
     state: present

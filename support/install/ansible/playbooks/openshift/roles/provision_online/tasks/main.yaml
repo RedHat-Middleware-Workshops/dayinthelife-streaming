@@ -13,11 +13,6 @@
     name: workshop-operators
     namespace: '{{ operators_project }}'
 
-- name: Evaluate Online CatalogSourceConfig
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'online-csc.yaml.j2') }}"
-
 - name: Evaluate Online Subscription
   k8s:
     state: present

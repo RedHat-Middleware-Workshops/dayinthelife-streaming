@@ -13,11 +13,6 @@
     name: workshop-operators
     namespace: '{{ operators_project }}'
 
-- name: Evaluate Streams CatalogSourceConfig
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'streams-csc.yaml.j2') }}"
-
 - name: Evaluate Streams Subscription
   k8s:
     state: present

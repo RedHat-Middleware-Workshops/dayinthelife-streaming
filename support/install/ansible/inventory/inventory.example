@@ -4,23 +4,11 @@ ansible_connection=local
 [local]
 127.0.0.1
 
-[OSEv3:children]
-master
-
-[OSEv3:vars]
-ansible_user=ec2-user
-
-[master]
-master1.CITY-GUID.internal
-
 [workshop]
 localhost ansible_connection=local
 
-[master:vars]
-eval_openshift_master_config_path=/etc/origin/master/master-config.yaml
-
 [workshop:vars]
-ocp_domain=CITY-GUID.openshiftworkshop.com
-ocp_apps_domain=apps.CITY-GUID.openshiftworkshop.com
-usersno=15
-is_on_RHPDS=false
+usersno=2
+codeready_version="1.2.0"
+streams_version="1.3.0"
+online_version="1.3.1"

@@ -25,24 +25,3 @@
 
 - name: Lazy Christina just want to exposed UI route for now TBC
   shell: oc expose service dilii-ui -n 'user{{ item }}'
-
-- name: BUG in Camel K, need to create CSC  in each namespace
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'camelk-csc.yaml.j2') }}"
-  vars:
-    user_project: "user{{ item }}"
-
-- name: BUG in Camel K, need to create operator group in each namespace
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'camelk-operatorgroup.yaml.j2') }}"
-  vars:
-    user_project: "user{{ item }}"
-
-- name: BUG in Camel K, need to create operator subscrption in each namespace
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'camelk-subscription.yaml.j2') }}"
-  vars:
-    user_project: "user{{ item }}"
