@@ -48,13 +48,13 @@
     kind: Ingress
   register: route_subdomain_r
   
-- set_fact:
+- name: subdomain route
+  set_fact:
     route_subdomain: "{{ route_subdomain_r.resources[0].spec.domain | trim }}"
 
 - name: Wait for codeready to be running
   uri:
     url: http://codeready-{{ codeready_project }}.{{ route_subdomain }}/api/system/state
-    status_code: 200
   register: result
   until: result.status == 200
   retries: 60
@@ -123,7 +123,8 @@
     status_code: 200,201,204
   register: sso_admin_token
 
-- set_fact:
+- name: access token
+  set_fact:
     master_access_token_bearer: "{{ sso_admin_token.json | json_query('access_token') }}"
 
 - name: Print SSO connection info

@@ -34,6 +34,11 @@
         app_earth_namespace: "shared-app-earth"
       tags: provision_streams
     - include_role:
+        name: provision_webapp
+      vars:
+        webapp_namespace: "webapp"
+      tags: provision_webapp
+    - include_role:
         name: user_projects
       with_sequence: start=1 end={{ usersno }} format=%d
       vars:

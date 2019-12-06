@@ -12,3 +12,5 @@ usersno=2
 codeready_version="1.2.0"
 streams_version="1.3.0"
 online_version="1.3.1"
+webapp_version='2.19.4'
+webapp_operator_release_tag='v0.0.36'

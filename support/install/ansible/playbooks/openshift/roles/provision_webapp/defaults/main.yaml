@@ -1,0 +1,10 @@
+webapp_client_id: tutorial-web-app
+webapp_operator_template_path: /home/tutorial-web-app-operator/deploy/template/tutorial-web-app.yml
+webapp_operator_resources: 'https://github.com/integr8ly/tutorial-web-app-operator/archive/{{webapp_operator_release_tag}}.zip'
+webapp_operator_resource_items:
+  - rbac.yaml
+  - sa.yaml
+  - crd.yaml
+  - operator.yaml
+webapp_walkthrough_locations:
+  - 'https://github.com/RedHatWorkshops/dayinthelife-streaming.git?walkthroughsFolder=/docs/labs/'
