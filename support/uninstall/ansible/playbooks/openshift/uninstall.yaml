@@ -18,14 +18,19 @@
         operators_project: "workshop-operators"
       tags: provision_online
     - include_role:
+        name: uninstall_webapp
+      vars:
+        webapp_namespace: "webapp"
+      tags: provision_online
+    - include_role:
         name: uninstall_project
       loop:
         - "workshop-operators"
         - "shared-db-earth" 
         - "shared-kafka-earth"
         - "shared-app-earth"
+        - "webapp"
       tags: remove_workshop_projects
-
     - include_role:
         name: uninstall_user_projects
       vars:
