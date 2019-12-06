@@ -3,12 +3,9 @@ kind: Subscription
 metadata:
   name: codeready-workspaces
   namespace: '{{ codeready_project }}'
-  labels:
-    csc-owner-name: installed-redhat-codeready
-    csc-owner-namespace: openshift-marketplace
 spec:
-  channel: final
+  channel: latest
   installPlanApproval: Automatic
   name: codeready-workspaces
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
+  source: codeready-workspaces
+  sourceNamespace: codeready

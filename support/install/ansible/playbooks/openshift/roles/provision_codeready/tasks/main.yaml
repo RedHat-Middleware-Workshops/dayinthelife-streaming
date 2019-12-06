@@ -11,6 +11,11 @@
     state: present
     resource_definition: "{{ lookup('template', 'codeready-operatorgroup.yaml.j2') }}"
 
+- name: Evaluate CodeReady CatalogSourceConfig
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'codeready-csc.yaml.j2') }}"
+
 - name: Evaluate CodeReady Subscription
   k8s:
     state: present

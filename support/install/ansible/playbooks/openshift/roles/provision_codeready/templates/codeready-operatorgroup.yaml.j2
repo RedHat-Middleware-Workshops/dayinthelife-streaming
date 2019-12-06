@@ -3,9 +3,6 @@ kind: OperatorGroup
 metadata:
   name: codeready-operator-group
   namespace: '{{ codeready_project }}'
-  generateName: che-
-  annotations:
-    olm.providedAPIs: CheCluster.v1.org.eclipse.che
 spec:
   targetNamespaces:
   - '{{ codeready_project }}'
