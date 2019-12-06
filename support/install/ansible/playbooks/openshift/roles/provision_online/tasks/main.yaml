@@ -63,3 +63,9 @@
   with_fileglob:
     - '{{ amq_online_tmp }}/install/components/example-plans/*'
     - '{{ amq_online_tmp }}/install/components/example-authservices/standard-authservice.yaml'
+
+- name: Process workarounds
+  k8s:
+    state: present
+    namespace: '{{ operators_project }}'
+    resource_definition: "{{ lookup('template', 'permissions-workaround.yaml.j2') }}"
