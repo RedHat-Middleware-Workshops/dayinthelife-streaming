@@ -38,11 +38,11 @@ The recommended way to install the workshop is running the ansible playbook from
 1. Run the Ansible playbook. if you are running in bastion, please use sudo to have the right permission.
 
     ```bash
-    bash ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml
+    bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
     ```
 
-    Bastion:
+    From bastion:
 
     ```bash
-    sudo bash ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml
+    sudo bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
     ```
