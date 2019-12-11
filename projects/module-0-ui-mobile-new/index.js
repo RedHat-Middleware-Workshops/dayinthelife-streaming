@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 app.get('/product', (req, res) => res.render('product.handlebars', { activePage: { product: true } }))
 app.get('/contact', (req, res) => res.render('contact.handlebars', { activePage: { contact: true } }))
 
-app.post('/order/rest', json(), async (req, res) => {
+app.post('/order/rest', json(), async (req, res, next) => {
   log.info('placing order with body: %j', req.body)
 
   // Uncomment this to easily test the ordering
@@ -65,20 +65,24 @@ app.post('/order/rest', json(), async (req, res) => {
   //   amount: '7.50'
   // })
 
-  const response = await http.post(new URL('/place', ORDERS_REST_BASE_URL), {
-    json: true,
-    body: req.body
-  })
+  try {
+    const response = await http.post(new URL('/place', ORDERS_REST_BASE_URL), {
+      json: true,
+      body: req.body
+    })
 
-  if (!req.session.orders) {
-    req.session.orders = []
+    if (!req.session.orders) {
+      req.session.orders = []
+    }
+
+    // Store the order result in the user session
+    // Can be used to render order history or similar
+    req.session.orders.push(response.body)
+
+    res.json(response.body)
+  } catch (e) {
+    next(boom.internal('error placing order', e))
   }
-
-  // Store the order result in the user session
-  // Can be used to render order history or similar
-  req.session.orders.push(response.body)
-
-  res.json(response.body)
 })
 
 app.post('/order/async', json(), (req, res, next) => {
