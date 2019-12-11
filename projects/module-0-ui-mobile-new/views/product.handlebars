@@ -218,9 +218,9 @@
           pending.classList.remove('visible')
           result.classList.add('visible')
 
-          document.getElementById('invoice-product').innerText = `Flavor: ${json.flavor}`
-          document.getElementById('invoice-id').innerText = `Order: ${json.invoiceId}`
-          document.getElementById('invoice-amt').innerText = `Amount: $${json.amount}`
+          document.getElementById('invoice-product').innerText = `Flavor: ${json.inventory.flavor}`
+          document.getElementById('invoice-id').innerText = `Order: ${json.invoice.invoiceId}`
+          document.getElementById('invoice-amt').innerText = `Amount: ${json.invoice.amount} ${json.invoice.currency}`
         }
 
         window.closeModal = function () {
