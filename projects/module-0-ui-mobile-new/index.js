@@ -66,7 +66,7 @@ app.post('/order/rest', json(), async (req, res) => {
   // })
 
   const response = await http.post(new URL('/place', ORDERS_REST_BASE_URL), {
-    body: JSON.stringify(req.body)
+    json: req.body
   })
 
   if (!req.session.orders) {
