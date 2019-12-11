@@ -65,7 +65,7 @@ app.post('/order/rest', json(), async (req, res) => {
   //   amount: '7.50'
   // })
 
-  const response = await http.post(new URL('/order/rest', ORDERS_REST_BASE_URL), {
+  const response = await http.post(new URL('/place', ORDERS_REST_BASE_URL), {
     json: true,
     body: req.body
   })
