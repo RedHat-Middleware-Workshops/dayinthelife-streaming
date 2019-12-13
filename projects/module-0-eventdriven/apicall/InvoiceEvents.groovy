@@ -1,15 +1,6 @@
 /*
-kamel run --name invoice-events -d camel-jackson -d camel-amqp InvoiceEvents.groovy --dev
+kamel run InvoiceEvents.groovy --name invoice-events -d camel-jackson -d camel-amqp --configmap amqp-properties --dev
 */
-
-camel {
-    components {
-        amqp {
-            connectionFactory new org.apache.qpid.jms.JmsConnectionFactory(new URI('amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local'))
-        }
-    }
-}
-
 beans {
     processInvoice = processor {
         it.out.body = [
@@ -25,13 +16,13 @@ beans {
     }
 }
 
-from('amqp:topic:notify/orders?exchangePattern=InOnly')
+from('amqp:topic:incomingorders?exchangePattern=InOnly')
     .log('Invoicing Notified ${body}')
     .unmarshal().json()
-    .delay(5000).asyncDelayed()
+    .delay(30000).asyncDelayed()
     .process('processInvoice')
     .marshal().json()
     .convertBodyTo(String.class)
     .log('H:${headers}')
-    .toD('amqp:queue:notifications/${headers.reply-to}?exchangePattern=InOnly')
+    .toD('amqp:queue:notifications?exchangePattern=InOnly')
     .to('log:info')

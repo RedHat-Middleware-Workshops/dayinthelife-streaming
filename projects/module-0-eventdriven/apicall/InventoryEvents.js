@@ -1,25 +1,18 @@
 /*
-kamel run InventoryEvents.js --name inventory-events -d camel-amqp -d camel-jackson --dev
+kamel run InventoryEvents.js --name inventory-events -d camel-amqp -d camel-jackson --configmap amqp-properties --dev
 */
 const Processor = Java.type("org.apache.camel.Processor");
 const p = Java.extend(Processor);
 const proc = new p(processInventory);
 
-const ConnectionFactory = Java.type("org.apache.qpid.jms.JmsConnectionFactory");
-
-cf = new ConnectionFactory();
-cf.setRemoteURI('amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local');
-
-components.get('amqp')
-    .setConnectionFactory(cf);
-
-from('amqp:topic:notify/orders?exchangePattern=InOnly')
+from('amqp:topic:incomingorders?exchangePattern=InOnly')
     .log('Inventory Notified ${body}')
     .unmarshal().json()
     .setHeader('reply-to').simple('${body[username]}')
     .marshal().json()
+    .delay(10000).asyncDelayed()
     .process(proc)
-    .toD('amqp:queue:notifications/${headers.reply-to}?exchangePattern=InOnly')
+    .toD('amqp:queue:notifications?exchangePattern=InOnly')
     .to('log:info');
 
 function processInventory(e) {

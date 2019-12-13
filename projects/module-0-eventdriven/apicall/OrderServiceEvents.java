@@ -1,5 +1,5 @@
 /** 
-kamel run --name=order-service-events -d camel-amqp -d camel-swagger-java -d camel-jackson -d camel-undertow  OrderServiceEvents.java --dev
+kamel run OrderServiceEvents.java --name=order-service-events -d camel-amqp -d camel-swagger-java -d camel-jackson -d camel-undertow --configmap amqp-properties --dev
 */
 import java.util.HashMap;
 import javax.ws.rs.core.MediaType;
@@ -16,11 +16,6 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
 
 public class OrderServiceEvents extends RouteBuilder {
-
-    @BindToRegistry
-    public javax.jms.ConnectionFactory connectionFactory() {
-        return new org.apache.qpid.jms.JmsConnectionFactory("amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local");
-    }
 
     @Override
     public void configure() throws Exception {
@@ -45,7 +40,7 @@ public class OrderServiceEvents extends RouteBuilder {
         from("direct:placeorder")
             .log("placeorder--> ${body}")
             .marshal().json()
-            .to("amqp:topic:notify/orders?exchangePattern=InOnly")
+            .to("amqp:topic:incomingorders?exchangePattern=InOnly")
             .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(202)
             .setBody(simple("Order Placed"))
             .to("log:info");
