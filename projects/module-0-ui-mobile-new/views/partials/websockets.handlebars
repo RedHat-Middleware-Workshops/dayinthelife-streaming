@@ -1,0 +1,59 @@
+<script src="https://cdn.jsdelivr.net/npm/rhea@1.0.15/dist/rhea.min.js"></script>
+<script src="/js/config/mq_config.js"></script>
+<script>
+    Noty.overrideDefaults({
+        layout   : 'topRight',
+        closeWith: ['click', 'button'],
+        animation: {
+            open : 'animated fadeInRight',
+            close: 'animated fadeOutRight'
+        },
+        callbacks: {
+            onTemplate: function() {
+                if (this.options.type === 'reply') {
+                    this.barDom.innerHTML = '<div class="my-custom-template noty_body">';
+                    this.barDom.innerHTML += '<div class="noty-header"><a href="' + this.options.category_link + '">' + this.options.category + '</a> <span class="noty-bull">&bull;</span> <span class="noty-date">' + this.options.date + '</span></div>';
+                    this.barDom.innerHTML += '<h3 class="from-name">' + this.options.from + '</h3>';
+                    this.barDom.innerHTML += '<p class="noty-reply">' + this.options.text + '</p>';
+                    this.barDom.innerHTML += '<img src="' + this.options.avatar + '">';
+                    this.barDom.innerHTML += '<div>';
+                }
+            }
+        }
+    });
+    var server = config.mq_server;
+    var client = require('rhea');
+    client.options.username = config.mq_username;
+    client.options.password = config.mq_password;
+    var ws = client.websocket_connect(WebSocket);
+    var connection = client.connect({
+        "connection_details": ws(
+            server,
+            [
+                "binary",
+                "AMQPWSB10",
+                "amqp"
+            ]),
+        "reconnect": false,
+        transport: 'tls',
+        servername: server,
+        rejectUnauthorized: false
+    });
+    var sender = connection.open_sender(config.mq_destination);
+    client.on("message", function (context) {
+        var m = JSON.parse(context.message.body);
+        if (m.inventory) {
+            new Noty({
+                type: 'info',
+                text: 'Your ' + m.inventory.flavor + ' order was successfully processed!'
+            }).show();
+        }
+        if (m.invoice) {
+            new Noty({
+                type: 'reply',
+                text: 'Your payment of $' + m.invoice.amount + ' ' + m.invoice.currency + ' is confirmed!'
+            }).show();
+        }
+    });
+    connection.open_receiver(config.mq_destination);
+</script>

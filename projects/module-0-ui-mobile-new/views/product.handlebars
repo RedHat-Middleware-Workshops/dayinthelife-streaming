@@ -15,19 +15,19 @@
       <li>
         <img src="images/kiwi.jpg" alt="">
         <div class="order-btn">
-          <button onclick="placeOrder('kiwi', 'api')">Order Kiwi &nbsp;<i class="fas fa-cart-plus"></i></button>
+          <button onclick="placeOrder('kiwi', 'rest')">Order Kiwi &nbsp;<i class="fas fa-cart-plus"></i></button>
         </div>
       </li>
       <li>
         <img src="images/mango.jpg" alt="">
         <div class="order-btn">
-          <button onclick="placeOrder('mango', 'api')">Order Mango &nbsp;<i class="fas fa-cart-plus"></i></button>
+          <button onclick="placeOrder('mango', 'rest')">Order Mango &nbsp;<i class="fas fa-cart-plus"></i></button>
         </div>
       </li>
       <li>
         <img src="images/cantaloupe.jpg" alt="">
         <div class="order-btn">
-          <button onclick="placeOrder('cantaloupe', 'api')">Order Cantaloupe &nbsp;<i class="fas fa-cart-plus"></i></button>
+          <button onclick="placeOrder('cantaloupe', 'rest')">Order Cantaloupe &nbsp;<i class="fas fa-cart-plus"></i></button>
         </div>
       </li>
     </ul>
@@ -39,19 +39,19 @@
       <li>
         <img src="images/blackberry.jpg" alt="">
         <div class="order-btn">
-          <button onclick="placeOrder('blackberry', 'events')">Order Blackberry &nbsp;<i class="fas fa-cart-plus"></i></button>
+          <button onclick="placeOrder('blackberry', 'event')">Order Blackberry &nbsp;<i class="fas fa-cart-plus"></i></button>
         </div>
       </li>
       <li>
         <img src="images/strawberry.jpg" alt="">
         <div class="order-btn">
-          <button onclick="placeOrder('strawberry', 'events')">Order Strawberry &nbsp;<i class="fas fa-cart-plus"></i></button>
+          <button onclick="placeOrder('strawberry', 'event')">Order Strawberry &nbsp;<i class="fas fa-cart-plus"></i></button>
         </div>
       </li>
       <li>
         <img src="images/blueberry.jpg" alt="">
         <div class="order-btn">
-          <button onclick="placeOrder('blueberry', 'events')">Order Blueberry &nbsp;<i class="fas fa-cart-plus"></i></button>
+          <button onclick="placeOrder('blueberry', 'event')">Order Blueberry &nbsp;<i class="fas fa-cart-plus"></i></button>
         </div>
       </li>
     </ul>
@@ -223,6 +223,14 @@
           document.getElementById('invoice-amt').innerText = `Amount: ${json.invoice.amount} ${json.invoice.currency}`
         }
 
+        function showError (message) {
+          new Noty({
+            layout: 'center',
+            type: 'error',
+            text: message
+          }).show();
+        }
+
         window.closeModal = function () {
           modal.classList.remove('visible')
           result.classList.remove('visible')
@@ -230,13 +238,6 @@
         }
 
         window.placeOrder = async function (flavor, callType) {
-          // Make the modal and pending submission box visible
-          modal.classList.add('visible')
-          pending.classList.add('visible')
-
-          // Make sure the modal is visible
-          modal.style.height = `${document.body.scrollHeight}px`
-
           const order = Object.assign({}, orderTemplate, {
             orderItemName: flavor
           });
@@ -249,51 +250,33 @@
             },
             method: 'POST'
           };
+          
+          if (callType === "rest") {
+            // Make the modal and pending submission box visible
+            modal.classList.add('visible')
+            pending.classList.add('visible')
+
+            // Make sure the modal is visible
+            modal.style.height = `${document.body.scrollHeight}px`
+          }
 
           try {
-            const response = await fetch('/order/rest', options)
+            const response = await fetch('/order/' + type, options)
 
             if (response.status === 200) {
               const json = await response.json()
               // Add a slight delay so the loading screen is always visible
               setTimeout(() => renderOrderResult(json), 500)
             } else {
-              // Redirect to a generic error page
-              window.location.href = '/error'
+              showError("Could not process!");
             }
           } catch (e) {
-            window.location.href = '/error'
+            showError("Could not process!");
           }
-
-          fetch("http://order-service-"+callType+"-myproject.192.168.99.106.nip.io/place", request)
-            .then(
-              function(response) {
-                console.log('Response', response);
-                if (response.status !== 200 && response.status !== 202) {
-                  console.log('Looks like there was a problem. Status Code: ' +
-                  response.status);
-                  return;
-                }
-                if (response.status == 200) {
-                  response.json().then(function(data) {
-                    console.log('data', data);
-                    d.modal('show');
-                    t.text('Your ' + data.inventory.flavor + ' order');
-                    c.text('Order: ' + data.invoice.invoiceId);
-                    c.append('<br>');
-                    c.append('Amount: $ ' + data.invoice.amount + ' ' + data.invoice.currency);
-                  });
-                }
-                else {
-                  d.modal('show');
-                  t.text('Your order has been accepted');
-                  c.text('processing your order...');
-                }
-              }
-            )
-            .catch(function(err) {
-              console.error('Fetch Error :-S', err);
-            });
+          
+          if (callType === "event") {
+            console.log("event call: " + JSON.stringify(order));
+          }
         }
       })(window)
     </script>
