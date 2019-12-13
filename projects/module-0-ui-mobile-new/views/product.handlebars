@@ -261,14 +261,23 @@
           }
 
           try {
-            const response = await fetch('/order/' + type, options)
+            const response = await fetch('/order/' + callType, options)
 
             if (response.status === 200) {
               const json = await response.json()
-              // Add a slight delay so the loading screen is always visible
-              setTimeout(() => renderOrderResult(json), 500)
+              if (callType === "rest") {
+                // Add a slight delay so the loading screen is always visible
+                setTimeout(() => renderOrderResult(json), 500)
+              }
+              else {
+                new Noty({
+                  layout: 'center',
+                  type: 'info',
+                  text: json
+                }).show();
+              }
             } else {
-              showError("Could not process!");
+              showError("Could not process! " + response.statusText);
             }
           } catch (e) {
             showError("Could not process!");

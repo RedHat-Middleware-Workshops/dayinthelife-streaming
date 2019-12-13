@@ -42,16 +42,17 @@
     var sender = connection.open_sender(config.mq_destination);
     client.on("message", function (context) {
         var m = JSON.parse(context.message.body);
-        if (m.inventory) {
+        console.log("message: " + m);
+        if (m.department === 'inventory') {
             new Noty({
                 type: 'info',
-                text: 'Your ' + m.inventory.flavor + ' order was successfully processed!'
+                text: 'Your ' + m.flavor + ' order was successfully processed!'
             }).show();
         }
-        if (m.invoice) {
+        if (m.department === 'invoicing') {
             new Noty({
                 type: 'reply',
-                text: 'Your payment of $' + m.invoice.amount + ' ' + m.invoice.currency + ' is confirmed!'
+                text: 'Your payment of $' + m.amount + ' ' + m.currency + ' is confirmed!'
             }).show();
         }
     });

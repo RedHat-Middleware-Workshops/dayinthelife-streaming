@@ -11,7 +11,7 @@ const keycloak = require('./lib/keycloak')
 const http = require('got')
 const { session } = require('./lib/session')
 const { json } = require('body-parser')
-const { HTTP_PORT, ORDERS_REST_BASE_URL } = require('./lib/config')(process.env)
+const { HTTP_PORT, ORDERS_REST_BASE_URL, ORDERS_EVENT_BASE_URL } = require('./lib/config')(process.env)
 
 const app = express()
 
@@ -85,9 +85,26 @@ app.post('/order/rest', json(), async (req, res, next) => {
   }
 })
 
-app.post('/order/async', json(), (req, res, next) => {
-  // TODO
-  next(boom.notImplemented())
+app.post('/order/event', json(), async (req, res, next) => {
+  log.info('placing order with body: %j', req.body)
+  try {
+    const response = await http.post(new URL('/place', ORDERS_EVENT_BASE_URL), {
+      json: true,
+      body: req.body
+    })
+
+    if (!req.session.orders) {
+      req.session.orders = []
+    }
+
+    // Store the order result in the user session
+    // Can be used to render order history or similar
+    req.session.orders.push(response.body)
+
+    res.json(response.body)
+  } catch (e) {
+    next(boom.internal('error placing order', e))
+  }
 })
 
 // Provide a friendly 404 page for all unknown routes

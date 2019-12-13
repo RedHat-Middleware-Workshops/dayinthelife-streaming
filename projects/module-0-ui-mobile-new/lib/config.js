@@ -27,6 +27,9 @@ module.exports = (env) => {
     SESSION_SECRET: get('SESSION_SECRET', randomSessionSecret).asString(),
 
     // Ordering HTTP API base url, e.g http://orders.svc.local:8080/
-    ORDERS_REST_BASE_URL: get('ORDERS_REST_BASE_URL').asUrlString()
+    ORDERS_REST_BASE_URL: get('ORDERS_REST_BASE_URL').asUrlString(),
+
+    // Ordering HTTP API base url, e.g http://orders.svc.local:8080/
+    ORDERS_EVENT_BASE_URL: get('ORDERS_EVENT_BASE_URL').asUrlString()
   }
 }
