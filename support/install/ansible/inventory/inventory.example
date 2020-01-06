@@ -11,6 +11,6 @@ localhost ansible_connection=local
 usersno=2
 codeready_version="2.0.0"
 streams_version="1.3.0"
-online_version="1.3.1"
+online_version="1.3.2"
 webapp_version='2.19.4'
 webapp_operator_release_tag='0.0.36'
