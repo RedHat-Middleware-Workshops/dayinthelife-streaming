@@ -1,0 +1,12 @@
+apiVersion: user.enmasse.io/v1beta1
+kind: MessagingUser
+metadata:
+  name: demo.user
+spec:
+  username: user
+  authentication:
+    type: password
+    password: cGFzc3dvcmQ=
+  authorization:
+    - addresses: ["incomingorders", "notifications"]
+      operations: ["send", "recv"]
