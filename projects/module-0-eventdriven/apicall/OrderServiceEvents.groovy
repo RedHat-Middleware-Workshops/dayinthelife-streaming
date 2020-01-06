@@ -5,7 +5,7 @@ camel {
     components {
         amqp {
             connectionFactory = new org.apache.qpid.jms.JmsConnectionFactory(
-                new URI('amqp://event-bus-amqp-0-svc.messaging.svc.cluster.local')
+                new URI('amqp://messaging-siu6nrccvk.workshop-operators.svc')
             )
         }
     }
@@ -31,7 +31,7 @@ from('direct:placeorder')
     .unmarshal().json()
     .log('placeorder--> ${body}')
     .marshal().json()
-    .to('amqp:topic:notify/orders?exchangePattern=InOnly')
+    .to('amqp:topic:incomingorders?exchangePattern=InOnly')
     .setHeader(Exchange.HTTP_RESPONSE_CODE).constant(202)
     .setBody(simple("Order Placed"))
     .to('log:info')
