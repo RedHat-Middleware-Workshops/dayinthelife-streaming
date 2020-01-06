@@ -12,7 +12,8 @@ Installing with Ansible requires creating an inventory file with the variables f
 
 If you want to install locally, please make sure to update your Ansible version to at least 2.6 and the CLI tool for OCP 4.
 
-* Ansible 2.6+
+* Ansible 2.9.2 +
+* oc CLI 4.2.x +
 * OpenShift Container Platform 4.2+
 
 ### Procedure to install dayinthelife-streaming
