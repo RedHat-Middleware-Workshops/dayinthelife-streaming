@@ -1,13 +1,11 @@
 apiVersion: operators.coreos.com/v1
 kind: CatalogSourceConfig
 metadata:
-  finalizers:
-  - finalizer.catalogsourceconfigs.operators.coreos.com
-  generation: 3
-  name: installed-community-{{ che_project }}
+  name: installed-community-che
   namespace: openshift-marketplace
 spec:
   csDisplayName: Community Operators
   csPublisher: Community
   packages: eclipse-che
-  targetNamespace: '{{ che_project }}'
+  targetNamespace: {{ che_project }}
+  source: community-operators
