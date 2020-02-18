@@ -3,11 +3,15 @@
   hosts: workshop
   tasks:
     - include_role:
-        name: provision_codeready
+        name: provision_fuse
       vars:
-        codeready_project: "codeready"
-        codeready_generate_user_count : "{{ usersno }}"
-      tags: provision_codeready
+        fuse_project: "fuse"
+      tags: provision_fuse
+    - include_role:
+        name: provision_che
+      vars:
+        che_project: "che"
+      tags: provision_che
     - include_role:
         name: provision_camelk
       vars:
