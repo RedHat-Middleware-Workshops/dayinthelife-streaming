@@ -36,7 +36,9 @@ The recommended way to install the workshop is running the ansible playbook from
     cd dayinthelife-streaming/support/install/ansible/
     ```
 
-1. Run the Ansible playbook. if you are running in bastion, please use sudo to have the right permission.
+1. Run the Ansible playbook. The fool-proof way is to run it from the bastion server.  Otherwise, if you are confident your local Ansible / Python libraries are the latest and greatest, you can try running the playbook from your own machine (at your own risk).
+
+    Own machine:
 
     ```bash
     bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
@@ -45,5 +47,6 @@ The recommended way to install the workshop is running the ansible playbook from
     From bastion:
 
     ```bash
+    sudo yum install python-openshift
     sudo bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
     ```
