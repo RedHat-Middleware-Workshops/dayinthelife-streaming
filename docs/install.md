@@ -13,14 +13,14 @@ Installing with Ansible requires creating an inventory file with the variables f
 If you want to install locally, please make sure to update your Ansible version to at least 2.6 and the CLI tool for OCP 4.
 
 * Ansible 2.9.2 +
-* oc CLI 4.2.x +
-* OpenShift Container Platform 4.2+
+* OpenShift command-line interface (CLI) 4.3.x +
+* OpenShift Container Platform 4.3+
 
 ### Procedure to install dayinthelife-streaming
 
-The recommended way to install the workshop is running the ansible playbook from the OpenShift4 workshop cluster bastion machine. This is the fastest way to run the installer as it's already running in the cluster closest to the master node.
+The recommended way to install the workshop is running the ansible playbook from the OpenShift4.3 workshop cluster bastion machine. This is the fastest way to run the installer as it's already running in the cluster closest to the master node.
 
-1. Provision the *OpenShift 4.2 Workshop* service from Red Hat Product Demo System (RHPDS).  Remember to take note of the *GUID* with your cluster environment variable.
+1. Provision the *OpenShift 4.3 Workshop* service from Red Hat Product Demo System (RHPDS).  Remember to take note of the *GUID* with your cluster environment variable.
 
 1. Via the CLI, verify you are logged in as cluster admin to your newly provisioned OCP cluster using the `oc` command.
 
