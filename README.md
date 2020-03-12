@@ -13,10 +13,7 @@
 * AMQ Streams
 * AMQ Online
 * Camel K
-* DataVirt on Fuse Online 
 * Fuse Online
-* GraphQL 
-* 3Scale
 * OpenShift 4.x
 
 ### Background: 
@@ -32,7 +29,7 @@ As you’re part of International Inc.’s Development team, you have been taske
 ## Workshop Modules
 
 
-### Module Zero:
+### Module One:
 Taste of event driven and why. 
 (Move http call to async msg calls)
 
@@ -40,14 +37,14 @@ Since the acquisition, the International Inc.’s Development team has been pres
 
 * Create a new Topic on AMQ Online
 * Migrate the REST integration to a messaging broker
-* Add another external partner for notification 
+* Difference between API calls and event driven 
+* Fault tolerance 
 
-### Module One:
+### Module Two:
 Sharing real time data/event from earth to the moon
 (Legacy to Cloud Data sharing between cluster in a hybrid environment)
 
 To expand Sales channels,  “Fleur de lune” no longer limit their market to the existing youngster customer base. “International Inc” has helped them expand their sales channel by taking orders from Major retailers, shopping malls and even local pharmacies. Orders are coming in from earth, they need to be also synced up to the ones received by the moon’s local e-commerce.
-
 
 
 * Install Kafka (on Legacy)
@@ -56,47 +53,27 @@ To expand Sales channels,  “Fleur de lune” no longer limit their market to t
 * Config Kafka Connect (with everything pre-installed in the cloud)
 
 
+### Module Three:
 
-### Module Two:
-Processing complex and multiple source IoT events
-(Complex event processing)
+Edge to Data Lake - Orchestrating and composing events 
 
-Utilizing the existing inter-planet transportation already established from “International Inc”, most of the operation cost for  “Fleur de lune” was the shipping cost between earth and moon.  Now, thanks to “International Inc”, they can minimize the cost of shipment by using their service. 
+Utilizing the existing inter-planet transportation already established from “International Inc”, most of the operation cost for  “Fleur de lune” was the shipping cost between earth and moon.  Now, thanks to “International Inc”, they can minimize the cost of shipment by using their service. To provide better customer experience. Closely monitoring the harvest and harvest batch shipping schedule, make Fleur De Lune more proactive. And faster respond to any emergency that may impact their business. 
 
 
-* Connect IoT data (simulator) to AMQ Online 
-* Bridge AMQ online events from IoT to Kafka using Camel-K and write to DB (for module four) also sending it as cloud events to trigger KNative
-* Time window base processing from Kafka using Streams API (functional programming)
-* Sends off result to earth (display on UI) of the estimate space cargo-ship (Mirror Maker)
+* Connect IoT data (simulator) to AMQ Online  (Task 1)
+* Bridge AMQ online events from IoT to Kafka using Camel-K and write to DB (for module four). Couple of EIP is introduced in this section. Splitter, WireTap. (Task 2)
+* Introducing online caching for shipping. Connect to Data Grid to access shipping data.  (Task 3)
 
 
  
-### Module Three:
-A meteor shower has just hit a couple of the devices on some marshmallow farms, resulting in the incorrect count of the harvest inventory. This needs to be corrected so we can request asking the right amount from the cargo ship!
+### Module Four:
+A meteor shower has just hit a couple of the devices on some marshmallow farms, resulting in the incorrect cost estimation. This needs to be corrected so we can request asking the right amount from the cargo ship!
 
 * Disaster STRIKES!! Data recovery and replaying events (IoT Breakdown)
 * Start Up simulator (Needs to check if we can write back to the same offset)
 * Replay CEP
 
 
-### Module Four:
-Monopoly Fine! Providing Data as a Service across domains
-(Government regulation)
+### TODO
 
-Congratulations!!!! The space marshmallow was a hit, it’s revenue goes up, shareholders are happy. BUT! Governments starts to notice the growth of the market and are paying attention to how low tax has become for Space products. They quickly place a new regulation which requires partial donation to the NGOs from the revenue to counteract Monopoly. 
-
-* DV expose harvest data in DB
-* Drools to calculate donation and write to DB or expose as API calculate on the fly
-* Camel creates a gateway for internal users WEBUI (GraphQL) and also with REST
-* Expose GraphQL using 3scale
-
-
-### Module Five:
-Applying business policies in Service Mesh
-(This is why we need Business policy in Service Mesh level)
-
-The new donation to NGO and the tax regulation caught International Inc by surprise. To allow higher revenue in the annual report for their stockholders. The CFO decided to introduce new tax strategy in International Inc, since Fleur de lune and International Inc are still separate legal entities, International Inc needs  Fleur de lune to create a chargeback mechanism, as they will be billing International Inc for all services, even data services for the sake of tax reduction. 
-
-* Expose harvest info using Fuse Online
-* Configure Policy using 3scale 
-* Applying Policy to Service Mesh
+Data Virt
