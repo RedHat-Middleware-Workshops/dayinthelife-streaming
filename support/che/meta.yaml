@@ -16,7 +16,7 @@ deprecate:
 spec:
   containers:
     - image: "quay.io/weimeilin79/dilws:latest"
-      name: vscode-apache-camel
+      name: dil-ws
       memoryLimit: "2G"
   extensions:
     - https://github.com/camel-tooling/camel-lsp-client-vscode/releases/download/0.0.14/camel-tooling.vscode-apache-camel-0.0.14.vsix
