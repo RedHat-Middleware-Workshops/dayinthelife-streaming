@@ -12,8 +12,18 @@ spec:
     parameters:
       OPENSHIFT_OAUTHCLIENT_ID: "{{ webapp_client_id }}"
       OPENSHIFT_OAUTH_HOST: "oauth-openshift.{{ openshift_host }}"
-      THREESCALE_WILDCARD_DOMAIN: "{{ openshift_host }}"
       OPENSHIFT_HOST: "console-openshift-console.{{ openshift_host }}"
+      INSTALLED_SERVICES: |-
+        { 
+          "3scale":{ 
+              "Host":"https://3scale-admin.apps.cluster-eventing-fd3a.eventing-fd3a.example.opentlc.com",
+              "Version":"2.7.0.GA"
+          },
+          "codeready":{ 
+              "Host":"https://che-che.apps.cluster-eventing-fd3a.eventing-fd3a.example.opentlc.com",
+              "Version":"2.0.0"
+          }
+        }
       OPENSHIFT_VERSION: "4"
 {% if webapp_walkthrough_locations is defined  %}
       WALKTHROUGH_LOCATIONS: "{{ webapp_walkthrough_locations|join(',') }}"
