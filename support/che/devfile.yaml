@@ -1,0 +1,25 @@
+---
+apiVersion: 1.0.0
+metadata:
+  generateName: dil-streaming-
+projects:
+  -
+    name: FleurDeLune
+    source:
+      type: git
+      location: "https://github.com/RedHatWorkshops/dayinthelife-streaming"
+      sparseCheckoutDir: "projects"
+components:
+  -
+    type: chePlugin
+    id: redhat/vscode-xml/latest
+  -
+    type: chePlugin
+    id: redhat/vscode-apache-camel/latest
+  -
+    type: chePlugin
+    id: redhat/java/latest
+  - 
+    alias: exec-plugin
+    type: chePlugin
+    reference: https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/che/meta.yaml
