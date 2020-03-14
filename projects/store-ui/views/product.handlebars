@@ -1,0 +1,302 @@
+<div id="body">
+  <div class="header">
+    <div>
+      <h1>Flavors</h1>
+    </div>
+  </div>
+
+  {{!-- Product list panel --}}
+  <div>
+
+
+    {{!-- /* TODO: INSERT HERE NEW FLAVORS */ --}}
+
+
+    {{!-- /* TODO: INSERT HERE NEW FLAVORS */ --}}
+
+    <ul>
+      <li>
+        <h1>All Time Classic REST API</h1>
+        <p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
+      </li>
+      <li>
+        <img src="images/kiwi.jpg" alt="">
+        <div class="order-btn">
+          <button onclick="placeOrder('kiwi', 'rest')">Order Kiwi &nbsp;<i class="fas fa-cart-plus"></i></button>
+        </div>
+      </li>
+      <li>
+        <img src="images/mango.jpg" alt="">
+        <div class="order-btn">
+          <button onclick="placeOrder('mango', 'rest')">Order Mango &nbsp;<i class="fas fa-cart-plus"></i></button>
+        </div>
+      </li>
+      <li>
+        <img src="images/cantaloupe.jpg" alt="">
+        <div class="order-btn">
+          <button onclick="placeOrder('cantaloupe', 'rest')">Order Cantaloupe &nbsp;<i class="fas fa-cart-plus"></i></button>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  {{!-- The modal UI. Hidden by default --}}
+  <div id="order-modal">
+    <div class="result">
+      <h2>Order Success</h2>
+      <p id="invoice-product"></p>
+      <p id="invoice-id"></p>
+      <p id="invoice-amt"></p>
+
+      <button onclick="closeModal()">Close</button>
+    </div>
+
+    <div class="pending">
+      <h2>Processing your order...</h2>
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <style>
+      @media only screen
+        and (min-device-width: 320px)
+        and (max-device-width: 480px)
+        and (-webkit-min-device-pixel-ratio: 2)
+        and (orientation: portrait) {
+          #main div ul li:first-child {
+            float: left;
+            margin: inherit;
+          }
+          #main div ul li {
+            float: none;
+            margin: 0 auto;
+          }
+      }
+
+      div#order-modal {
+        padding: 0;
+        background: rgba(50, 50, 50, 0.5);
+        margin: 0;
+        max-width: 100vw;
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        top: 0;
+      }
+
+      div#order-modal button {
+        margin-top: 1em;
+        background: #c8c10d;
+        border: 1px solid;
+        border-radius: 0;
+        font-family: roboto-regular-webfont;
+        font-size: 12pt;
+        padding: 0.5em 1.5em;
+        color: white;
+        text-align: center;
+      }
+
+      #order-modal.visible {
+        display: inherit;
+      }
+
+      #order-modal div.result, #order-modal div.pending {
+        display: none;
+      }
+
+      #order-modal div.pending.visible, #order-modal div.result.visible {
+        display: inherit;
+        font-family: magra-bold-webfont;
+        padding: 2em;
+        text-align: center;
+        color: white;
+        background: #E32A62;
+        margin: 10vh auto;
+        max-width: 70vw;
+        box-shadow: #333 0px 5px 10px;
+      }
+
+      .lds-ellipsis {
+        padding: 0 !important;
+      }
+      .lds-ellipsis div {
+        padding: 0 !important;
+      }
+      .lds-ellipsis {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-ellipsis div {
+        position: absolute;
+        top: 27px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: white;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+      }
+      .lds-ellipsis div:nth-child(1) {
+        left: 6px;
+        animation: lds-ellipsis1 0.6s infinite;
+      }
+      .lds-ellipsis div:nth-child(2) {
+        left: 6px;
+        animation: lds-ellipsis2 0.6s infinite;
+      }
+      .lds-ellipsis div:nth-child(3) {
+        left: 26px;
+        animation: lds-ellipsis2 0.6s infinite;
+      }
+      .lds-ellipsis div:nth-child(4) {
+        left: 45px;
+        animation: lds-ellipsis3 0.6s infinite;
+      }
+      @keyframes lds-ellipsis1 {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes lds-ellipsis3 {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0);
+        }
+      }
+      @keyframes lds-ellipsis2 {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(19px, 0);
+        }
+      }
+    </style>
+
+    <script>
+      (function (window) {
+        Noty.overrideDefaults({
+            layout   : 'topRight',
+            closeWith: ['click', 'button'],
+            animation: {
+                open : 'animated fadeInRight',
+                close: 'animated fadeOutRight'
+            },
+            {{!-- callbacks: {
+                onTemplate: function() {
+                    if (this.options.type === 'reply') {
+                        this.barDom.innerHTML = '<div class="my-custom-template noty_body">';
+                        this.barDom.innerHTML += '<div class="noty-header"><a href="' + this.options.category_link + '">' + this.options.category + '</a> <span class="noty-bull">&bull;</span> <span class="noty-date">' + this.options.date + '</span></div>';
+                        this.barDom.innerHTML += '<h3 class="from-name">' + this.options.from + '</h3>';
+                        this.barDom.innerHTML += '<p class="noty-reply">' + this.options.text + '</p>';
+                        this.barDom.innerHTML += '<img src="' + this.options.avatar + '">';
+                        this.barDom.innerHTML += '<div>';
+                    }
+                }
+            } --}}
+        });
+
+        const orderTemplate = {
+          username: 'jdoe',
+          orderId: '1',
+          itemId: '1',
+          orderItemName: 'unknown',
+          quantity: 1,
+          price: 2,
+          address: '123 Evergreen Terrace',
+          zipCode: '2222'
+        };
+
+        const modal = document.getElementById('order-modal')
+        const pending = document.querySelector('#order-modal .pending')
+        const result = document.querySelector('#order-modal .result')
+
+        function renderOrderResult (json) {
+          pending.classList.remove('visible')
+          result.classList.add('visible')
+
+          document.getElementById('invoice-product').innerText = `Flavor: ${json.inventory.flavor}`
+          document.getElementById('invoice-id').innerText = `Order: ${json.invoice.invoiceId}`
+          document.getElementById('invoice-amt').innerText = `Amount: ${json.invoice.amount} ${json.invoice.currency}`
+        }
+
+        function showError (message) {
+          new Noty({
+            layout: 'center',
+            type: 'error',
+            text: message,
+            modal: true,
+            callbacks: {
+              onShow: function() {
+                modal.classList.remove('visible')
+                result.classList.remove('visible')
+                pending.classList.remove('visible')
+              }
+            }
+          }).show();
+        }
+
+        window.closeModal = function () {
+          modal.classList.remove('visible')
+          result.classList.remove('visible')
+          pending.classList.remove('visible')
+        }
+
+        window.placeOrder = async function (flavor, callType) {
+          const order = Object.assign({}, orderTemplate, {
+            orderItemName: flavor
+          });
+
+          const options = {
+            body: JSON.stringify(order),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            method: 'POST'
+          };
+          
+          if (callType === "rest") {
+            // Make the modal and pending submission box visible
+            modal.classList.add('visible')
+            pending.classList.add('visible')
+
+            // Make sure the modal is visible
+            modal.style.height = `${document.body.scrollHeight}px`
+          }
+
+          try {
+            console.log("placing order: " + JSON.stringify(order));
+
+            const response = await fetch('/order/' + callType, options)
+
+            if (response.status === 200) {
+              const json = await response.json()
+              if (callType === "rest") {
+                // Add a slight delay so the loading screen is always visible
+                setTimeout(() => renderOrderResult(json), 500)
+              }
+              {{!-- /* TODO: PROCESSS EVENT RESPONSE */ --}}
+
+
+              {{!-- /* TODO: PROCESSS EVENT RESPONSE */--}}
+            } else {
+              showError("Could not process! " + response.statusText);
+            }
+          } catch (e) {
+            showError("Could not process!");
+          }          
+        }
+      })(window)
+    </script>
+  </div>
+
+</div>

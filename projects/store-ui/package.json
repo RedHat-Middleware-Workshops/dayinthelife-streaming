@@ -1,0 +1,49 @@
+{
+  "name": "www-store",
+  "version": "1.0.0",
+  "description": "Store frontend UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "format": "standard --fix app.js **/**.js",
+    "build": "npm run copy:patternfly-assets",
+    "copy:patternfly-assets": "cp -R node_modules/@patternfly/patternfly/assets public && cp node_modules/@patternfly/patternfly/patternfly.min.css public/patternfly.min.css && cp node_modules/@patternfly/patternfly/patternfly-addons.css public/patternfly-addons.css",
+    "coverage": "nyc npm test",
+    "openshift": "nodeshift --strictSSL=false --nodeVersion=10.x",
+    "postinstall": "npm run copy:patternfly-assets",
+    "start": "node .",
+    "start:dev": "LOG_LEVEL=trace NODE_ENV=local nodemon . | pino-pretty -t",
+    "start:inspect": "LOG_LEVEL=trace NODE_ENV=local node --inspect . | pino-pretty -t"
+  },
+  "keywords": [],
+  "author": "Evan Shortiss",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "~8.0.1",
+    "@hapi/joi": "~16.1.7",
+    "@patternfly/patternfly": "~2.40.4",
+    "body-parser": "^1.19.0",
+    "env-var": "~5.1.0",
+    "express": "~4.17.1",
+    "express-handlebars": "~3.1.0",
+    "express-session": "~1.17.0",
+    "got": "^9.6.0",
+    "handlebars": "~4.5.1",
+    "helmet": "~3.21.2",
+    "keycloak-connect": "~7.0.1",
+    "kube-probe": "~0.3.2",
+    "pino": "~5.13.5"
+  },
+  "devDependencies": {
+    "nodemon": "~1.19.4",
+    "nodeshift": "~3.1.1",
+    "nyc": "~14.1.1",
+    "pino-pretty": "~3.2.2",
+    "standard": "~14.3.1"
+  }
+}
