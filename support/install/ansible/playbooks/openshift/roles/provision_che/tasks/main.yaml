@@ -39,7 +39,7 @@
       namespace: '{{ che_project }}'
   register: csv_status
   until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
-  retries: 10
+  retries: 30
   delay: 30
 
 - name: Evaluate Eclipse Che Cluster
