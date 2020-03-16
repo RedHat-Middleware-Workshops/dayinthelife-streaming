@@ -16,11 +16,11 @@ spec:
       INSTALLED_SERVICES: |-
         { 
           "3scale":{ 
-              "Host":"https://3scale-admin.apps.cluster-eventing-fd3a.eventing-fd3a.example.opentlc.com",
+              "Host":"https://3scale-admin.{{ openshift_host }}",
               "Version":"2.7.0.GA"
           },
           "codeready":{ 
-              "Host":"https://che-che.apps.cluster-eventing-fd3a.eventing-fd3a.example.opentlc.com",
+              "Host":"http://che-che.{{ openshift_host }}",
               "Version":"2.0.0"
           }
         }
