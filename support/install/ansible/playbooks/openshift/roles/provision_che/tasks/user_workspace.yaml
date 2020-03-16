@@ -69,13 +69,20 @@
     status_code: '204'
   register: update_result
 
-- name: Create workspace for {{ user }} from devfile
-  uri:
-    url: http://che-{{ che_project }}.{{ route_subdomain }}/api/workspace/devfile?start-after-create=true&namespace={{ user_id }}
-    method: POST
-    headers:
-      Content-Type: 'text/yaml'
-      Authorization: 'Bearer {{ access_token }}'
-    body: '{{ lookup("template", "./templates/che-devfile.yaml.j2") }}'
-    status_code: '201'
-  register: workspace_devfile
+- name: Create user namespace if not already there
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: 'user{{ item }}'
+    state: present
+
+#- name: Create workspace for user{{ item }} from devfile
+#  uri:
+#    url: http://che-{{ che_project }}.{{ route_subdomain }}/api/workspace/devfile?start-after-create=true&namespace=user{{ item }}
+#    method: POST
+#    headers:
+#      Content-Type: 'text/yaml'
+#      Authorization: 'Bearer {{ access_token }}'
+#    body: '{{ lookup("template", "./templates/che-devfile.yaml.j2") }}'
+#    status_code: '201'
+#  register: workspace_devfile
