@@ -32,7 +32,7 @@
     resource_definition: "{{ lookup('template', 'che-subscriptionyaml.j2') }}"
 
 - name: Wait for Che operator to install
-  k8s_info:
+  k8s_facts:
       api_version: operators.coreos.com/v1alpha1
       kind: ClusterServiceVersion
       name: 'eclipse-che.v{{ che_version }}'
@@ -48,7 +48,7 @@
     resource_definition: "{{ lookup('template', 'che-cluster.yaml.j2') }}"
 
 - name: extract route_subdomain
-  k8s_info:
+  k8s_facts:
     kind: Ingress
   register: route_subdomain_r
   
@@ -65,7 +65,7 @@
   delay: 30
 
 - name: Extract key_cloak_admin_password
-  k8s_info: 
+  k8s_facts: 
     kind: Deployment
     name: keycloak
     namespace: '{{ che_project }}'
