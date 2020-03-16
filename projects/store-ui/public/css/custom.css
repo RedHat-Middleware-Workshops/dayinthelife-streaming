@@ -1,0 +1,57 @@
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+.order-btn {
+  text-align: center;
+}
+
+.order-btn button {
+  background: #E32A62;
+  border-radius: 0;
+  font-family: roboto-regular-webfont;
+  font-size: 12pt;
+  padding: 0.5em;
+  color: white;
+}
+
+#noty_layout__topRight {
+  width: 460px;
+}
+
+.noty_type__reply {
+  background-color: #fff;
+  position: relative;
+  padding: 0 10px 0 20px;
+  border-radius: 10px !important;
+  box-shadow: 1px 1px 20px rgba(0,0,0,.2)
+}
+
+.noty_type__reply img {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.noty_type__reply h3 {
+  margin-bottom: 0;
+}
+
+.noty_type__reply p {
+  margin-top: 0px;
+}
+
+.noty_type__reply .noty-bull {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.noty_type__reply a {
+  color: #1493BD;
+  text-decoration: none;
+}
