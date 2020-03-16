@@ -72,13 +72,18 @@
     name: 'user{{ item }}'
     state: present
 
-#- name: Create workspace for user{{ item }} from devfile
-#  uri:
-#    url: http://che-{{ che_project }}.{{ route_subdomain }}/api/workspace/devfile?start-after-create=true&namespace=user{{ item }}
-#    method: POST
-#    headers:
-#      Content-Type: 'text/yaml'
-#      Authorization: 'Bearer {{ access_token }}'
-#    body: '{{ lookup("template", "./templates/che-devfile.yaml.j2") }}'
-#    status_code: '201'
-#  register: workspace_devfile
+- name: Grant user access
+  k8s:
+      state: present
+      resource_definition: '{{ lookup("template", "user-rolebinding.yaml.j2") }}'
+      
+- name: Create workspace for user{{ item }} from devfile
+  uri:
+    url: http://che-{{ che_project }}.{{ route_subdomain }}/api/workspace/devfile?start-after-create=true&namespace=user{{ item }}
+    method: POST
+    headers:
+      Content-Type: 'text/yaml'
+      Authorization: 'Bearer {{ access_token }}'
+    body: '{{ lookup("template", "./templates/che-devfile.yaml.j2") }}'
+    status_code: '201'
+  register: workspace_devfile
