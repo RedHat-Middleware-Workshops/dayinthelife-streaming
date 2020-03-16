@@ -20,17 +20,11 @@
 
 - name: Wait for Online operator to install
   k8s_facts:
-      api_version: operators.coreos.com/v1alpha1
-      kind: ClusterServiceVersion
-      name: 'amqonline.{{ online_version }}'
-      namespace: '{{ operators_project }}'
-  register: csv_status
-  until: >-
-    (csv_status.resources is defined) 
-    and (csv_status.resources|length>0) 
-    and (csv_status.resources[0].status is defined) 
-    and (csv_status.resources[0].status.phase is defined) 
-    and (csv_status.resources[0].status.phase == 'Succeeded')
+    api_version: apiextensions.k8s.io/v1beta1
+    kind: CustomResourceDefinition
+    name: addressspaceplans.admin.enmasse.io
+  register: crd_online
+  until: crd_online.resources | list | length == 1
   retries: 10
   delay: 30
 
@@ -52,17 +46,21 @@
   unarchive:
       src: https://access.redhat.com/node/4306051/423/0/14663711
       dest: '{{ amq_online_tmp }}'
-      creates: '{{ amq_online_tmp }}/install'
       remote_src: yes
+
+- name: Retrieve files
+  find:
+    paths: 
+      - '{{ amq_online_tmp }}/install/components/example-plans/*'
+      - '{{ amq_online_tmp }}/install/components/example-authservices/'
+  register: install_files
 
 - name: Create Online Plan Examples
   k8s:
     state: present
     namespace: '{{ operators_project }}'
     src: '{{ item }}'
-  with_fileglob:
-    - '{{ amq_online_tmp }}/install/components/example-plans/*'
-    - '{{ amq_online_tmp }}/install/components/example-authservices/standard-authservice.yaml'
+  with_items: "{{ install_files.files | map(attribute='path') | list }}"
 
 - name: Process workarounds
   k8s:

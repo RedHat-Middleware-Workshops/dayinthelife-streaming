@@ -38,15 +38,6 @@ The recommended way to install the workshop is running the ansible playbook from
 
 1. Run the Ansible playbook. The fool-proof way is to run it from the bastion server.  Otherwise, if you are confident your local Ansible / Python libraries are the latest and greatest, you can try running the playbook from your own machine (at your own risk).
 
-    Own machine:
-
     ```bash
     bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
-    ```
-
-    From bastion:
-
-    ```bash
-    sudo yum install python-openshift
-    sudo bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
     ```
