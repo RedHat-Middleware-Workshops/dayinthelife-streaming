@@ -171,8 +171,10 @@ It's now time to test the full integration between the Earth and Moon Orders sys
 . Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
 . Navigate to the link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[PHP app, window="_blank"] in a new browser tab.
 It can be found from your Openshift console-> project: www->routes. 
+Note: Make sure to add /#user1 to the route. 
 
 . Load the file in the PHP app.
+If this is successfully completed, you will see the csv data imported on the PHP page.
 
 // check earth topic created
 
