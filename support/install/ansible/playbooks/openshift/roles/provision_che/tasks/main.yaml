@@ -16,11 +16,6 @@
     namespace: '{{ che_project }}'
     state: absent
 
-#- name: Evaluate Eclipse Che CatalogSourceConfig
-#  k8s:
-#    state: present
-#    resource_definition: "{{ lookup('template', 'che-csc.yaml.j2') }}"
-
 - name: Evaluate Eclipse Che Operator Group
   k8s:
     state: present

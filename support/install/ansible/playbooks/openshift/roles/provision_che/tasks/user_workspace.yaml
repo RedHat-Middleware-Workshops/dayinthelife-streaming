@@ -65,18 +65,7 @@
     status_code: '204'
   register: update_result
 
-- name: Create user namespace if not already there
-  k8s:
-    api_version: v1
-    kind: Namespace
-    name: 'user{{ item }}'
-    state: present
-
-- name: Grant user access
-  k8s:
-      state: present
-      resource_definition: '{{ lookup("template", "user-rolebinding.yaml.j2") }}'
-      
+   
 - name: Create workspace for user{{ item }} from devfile
   uri:
     url: http://che-{{ che_project }}.{{ route_subdomain }}/api/workspace/devfile?start-after-create=true&namespace=user{{ item }}

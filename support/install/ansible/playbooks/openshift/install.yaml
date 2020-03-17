@@ -20,11 +20,6 @@
         fuse_project: "fuse"
       tags: provision_fuse
     - include_role:
-        name: provision_che
-      vars:
-        che_project: "che"
-      tags: provision_che
-    - include_role:
         name: provision_camelk
       vars:
         operators_project: "workshop-operators"
@@ -59,3 +54,9 @@
         kafka_earth_namespace: "shared-kafka-earth"
         app_earth_namespace: "shared-app-earth"
       tags: user_projects
+    - include_role:
+        name: provision_che
+      vars:
+        che_project: "che"
+      tags: provision_che
+    
