@@ -54,9 +54,4 @@
         kafka_earth_namespace: "shared-kafka-earth"
         app_earth_namespace: "shared-app-earth"
       tags: user_projects
-    - include_role:
-        name: provision_che
-      vars:
-        che_project: "che"
-      tags: provision_che
     
