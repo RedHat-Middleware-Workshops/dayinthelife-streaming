@@ -139,7 +139,7 @@ We refer to the process of replicating data between Kafka clusters "mirroring" t
 
 The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter. 
 
-. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_.
+. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kakfa cluster)
 +
 [source,bash,subs="attributes+"]
 ----
