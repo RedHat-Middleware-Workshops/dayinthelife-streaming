@@ -6,13 +6,12 @@ data:
   kafka.properties: |2+
     consumer.group=premium
     camel.component.kafka.brokers=my-cluster-kafka-bootstrap.workshop-operators.svc:9092
-
     camel.component.infinispan.configuration.hosts=example-infinispan.user1.svc:11222
     camel.component.infinispan.configuration.configurationUri=client.properties
   client.properties: |2+
     infinispan.client.hotrod.use_auth=true
     infinispan.client.hotrod.auth_username=developer
-    infinispan.client.hotrod.auth_password=8JPd39uSeTtNcy7e
+    infinispan.client.hotrod.auth_password=password
     infinispan.client.hotrod.auth_realm=default
     infinispan.client.hotrod.sasl_mechanism=SCRAM-SHA-512
     infinispan.client.hotrod.marshaller=org.infinispan.commons.marshall.JavaSerializationMarshaller

@@ -51,7 +51,7 @@ public class Inventory extends RouteBuilder{
                 .otherwise()
                     .log("Utility ${body}")
                     .marshal().json()
-                    .to("kafka:my-topic?groupId=sender")
+                    .to("kafka:user1-utility?groupId=sender")
                 .end()
         ;
 

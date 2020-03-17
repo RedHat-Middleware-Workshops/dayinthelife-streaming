@@ -36,23 +36,33 @@ public class ConsoleService extends RouteBuilder{
             .bindingMode(RestBindingMode.json);
 
         rest()
-            .post("/premium")
+            .get("/query")
+                .to("direct:query")
+            .get("/premium")
                 .to("direct:premium")
-            .post("/standard")
-                .to("direct:standard");
+            .get("/standard")
+                .to("direct:standard")
+        ;
 
         from("direct:premium")
+            .log("GETTING premium")
             .setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.GET)
             .setHeader(InfinispanConstants.KEY).constant("premium")
-            .to("infinispan:default")         
+            .to("infinispan:default")
+            //.to("mustache:premium.mustache")         
+            .log("${body}")
         ;
-    
+
         from("direct:standard")
             .setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.GET)
             .setHeader(InfinispanConstants.KEY).constant("standard")
             .to("infinispan:default")         
+            .log("${body}")
         ;
 
+        
+    
+        
         
     }
 

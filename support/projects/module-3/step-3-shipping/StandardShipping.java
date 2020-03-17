@@ -30,8 +30,8 @@ public class StandardShipping extends RouteBuilder{
             .to("infinispan:default")         
         ;
 
+        //USE API
         from("kafka:user1-premium?groupId=standard-shipping")
-        .streamCaching()
             .setHeader("marshmallow").simple("${body}")
             .setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.GET)
             .setHeader(InfinispanConstants.KEY).constant("standard")
