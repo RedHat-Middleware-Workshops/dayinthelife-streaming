@@ -108,6 +108,10 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 }
 EOF
 ----
+You can check that the connector is correctly depolyed by doing a GET at the connector endpoint on a browser 
+http://kafka-connect-{user-username}.{openshift-app-host}/connectors 
+
+
 
 [time=5]
 [id="deploying-apache-kafka"]
