@@ -1,0 +1,258 @@
+:walkthrough: Cloud-Native Integration with EIPs
+:terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
+:user-password: openshift
+
+ifdef::env-github[]
+:next-lab-url: ../lab04/walkthrough.adoc
+endif::[]
+
+[id='cloud-native-integration']
+= Lab 3 - Cloud-Native Integration with EIPs
+
+In this lab you will stream events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake, in addition to streaming the messages to a Standard and Premium Shipping topic on Kafka.
+
+Audience: Enterprise Integrators, System Architects, Developers, Data Integrators
+
+*Overview*
+
+Apache Kafka is the de facto standard for asynchronous event propagation between microservices. Things get challenging, though, when adding a service’s database to the picture: how can you avoid inconsistencies between Kafka and the database?
+
+Enter change data capture (CDC) and Debezium. By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
+
+*Why Red Hat?*
+
+To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
+
+AMQ streams component makes Apache Kafka “OpenShift native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
+
+*Skipping The Lab*
+
+*Credentials*
+
+[type=walkthroughResource,serviceName=openshift]
+.Openshift
+****
+* link:{openshift-host}/[Open Console, window="_blank"]
+****
+
+[type=walkthroughResource]
+.Terminal
+****
+* link:{terminal-url}/[Open Terminal, window="_blank"]
+****
+
+[time=10]
+[id="configure-cdc-connectors"]
+== Configure CDC connectors for Kafka Connect
+
+. Open a new browser tab and navigate to the link:{terminal-url}/[terminal window, window="_blank"].
+. Change to your user namespace.
++
+[source,bash,subs="attributes+"]
+----
+oc project {user-username}
+----
+
+. Create a `KafkaConnect` Kubernetes Custom Resource to define your connector.
++
+[source,bash,subs="attributes+"]
+----
+cat << EOF | oc apply -n {user-username} -f -
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaConnect
+metadata:
+  name: debezium
+spec:
+  bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+  image: 'quay.io/hguerreroo/debezium-connect:0.10.0-sqlsrv'
+  replicas: 1
+  jvmOptions:
+    gcLoggingEnabled: false
+  config:
+    group.id: {user-username}-connect-cluster
+    offset.storage.topic: {user-username}-connect-cluster-offsets
+    config.storage.topic: {user-username}-connect-cluster-configs
+    status.storage.topic: {user-username}-connect-cluster-status
+EOF
+----
+
+. Wait for the default deployment to finish and deploy the first pod.
+
+. Expose the Kafka Connect REST API.
++
+[source,bash,subs="attributes+"]
+----
+oc expose service debezium-connect-api --name kafka-connect -n {user-username}
+----
+
+. Create a new connector config to react to changes in the `Orders` table called `orders-connector`.
++
+[source,bash,subs="attributes+"]
+----
+cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
+{
+  "name": "orders-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "mssql-server-linux.shared-db-earth.svc",
+    "database.port": "1433",
+    "database.user": "sa",
+    "database.password": "Password!",
+    "database.dbname": "InternationalDB",
+    "database.server.name": "{user-username}.earth",
+    "table.whitelist": "dbo.Orders",
+    "database.history.kafka.bootstrap.servers": "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092",
+    "database.history.kafka.topic": "{user-username}.earth.dbhistory"
+  }
+}
+EOF
+----
+
+[time=5]
+[id="deploying-apache-kafka"]
+== Deploying Apache Kafka on OpenShift
+
+AMQ streams component uses powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on Red Hat OpenShift® Container Platform.
+
+In this section you will learn how to start a local Kafka cluster that will represent the startup _Moon_ deployment.
+
+. Deploy the startup _Moon_ AMQ streams Kafka cluster.
++
+[source,bash,subs="attributes+"]
+----
+oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n {user-username}
+----
+
+. Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
+
+
+[time=10]
+[id="replicating-to-other-kafka-clusters"]
+== Replicating to other Kafka clusters
+
+We refer to the process of replicating data between Kafka clusters "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
+
+The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
+
+. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_.
++
+[source,bash,subs="attributes+"]
+----
+cat << EOF | oc apply -n {user-username} -f -
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaMirrorMaker
+metadata:
+  name: earth-moon
+spec:
+  replicas: 1
+  consumer:
+    bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+    groupId: mirror-maker-{user-username}
+    config:
+      auto.offset.reset: earliest
+  producer:
+    bootstrapServers: 'moon-kafka-bootstrap.{user-username}.svc:9092'
+  whitelist: {user-username}.earth.*
+EOF
+----
+
+[time=10]
+[id="loading-earth-orders"]
+== Loading Earth Orders
+
+It's now time to test the full integration between the Earth and Moon Orders system.
+
+. Launch a new tab on your web browser.
+. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
+. Navigate to the link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[PHP app, window="_blank"] in a new browser tab.
+. Load the file in the PHP app.
+
+// check earth topic created
+
+// check moon topic created
+
+[time=10]
+[id="enabling-http-access"]
+== Enabling HTTP access to Kafka
+
+Apache Kafka uses a custom protocol on top of TCP/IP for communication between applications and the cluster. There are many client implementations for different programming languages, from Java to Golang, from Python to C# and many more.
+
+However, there are scenarios where it is not possible to use the clients, or indeed the native protocol. Communicating with an Apache Kafka cluster using a standard protocol like HTTP/1.1 eases development these scenarios.
+
+. Create the http `KafkaBridge` Custom Resource.
++
+[source,bash,subs="attributes+"]
+----
+cat << EOF | oc apply -n {user-username} -f -
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaBridge
+metadata:
+  name: http
+spec:
+  bootstrapServers: 'moon-kafka-bootstrap.{user-username}.svc:9092'
+  http:
+    port: 8080
+  replicas: 1
+EOF
+----
+
+. Expose the bridge HTTP REST API service as a route for external access.
++
+[source,bash,subs="attributes+"]
+----
+oc expose service http-bridge-service --name kafka-bridge -n {user-username}
+----
+
+. Wait for the bridge to be deployed.
+
+. Create consumer to test the connection to your topic.
++
+[source,bash,subs="attributes+"]
+----
+cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group -H 'content-type: application/vnd.kafka.v2+json' -d @-
+{
+    "name": "{user-username}",
+    "format": "json",
+    "auto.offset.reset": "earliest",
+    "enable.auto.commit": "false",
+    "fetch.min.bytes": "1024",
+    "consumer.request.timeout.ms": "30000"
+}
+EOF
+----
+
+. Notice the `base_uri`, it represents the REST resource for your customer.
+
+. Use the previuos `base_uri` to request subscription to the topics.
++
+[source,bash,subs="attributes+"]
+----
+curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["{user-username}.earth.dbo.Orders"]}'
+----
+
+. Now you can start to consume some records. Notice that you need to send `json` as the accept type.
++
+[source,bash,subs="attributes+"]
+----
+curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/records -H 'accept: application/vnd.kafka.json.v2+json'
+----
+
+. Do it again until there is no more records to read.
+
+[time=5]
+[id="summary"]
+== Summary
+
+In this lab you used Debezium CDC connectors to react to change events from SQL Server and send them to Apache Kafka running on OpenShift through Red Hat AMQ streams.
+
+Open source connectors enable integrations with your local systems landscape. Explore Kafka, Camel, and Debezium connectors to connect APIs and services for event-driven application architectures (EDA). Red Hat offers supported versions of these connectors via AMQ Streams and Fuse.
+
+You can now proceed to link:{next-lab-url}[Lab 3].
+
+[time=4]
+[id="further-reading"]
+== Notes and Further Reading
+
+* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
+* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
