@@ -192,6 +192,16 @@ The data will thus be imported into MSSQL.
 
 [time=10]
 [id="enabling-http-access"]
+
+. At this point if all configuration is correct, you will be able to see messages in the moon cluster.
++
+[source,bash,subs="attributes+"]
+----
+oc rsh moon-kafka-0
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic user1.earth.dbo.Orders --from-beginning
+----
+The next section is about REST enabling access to the moon topic.
+
 == Enabling HTTP access to Kafka
 
 Apache Kafka uses a custom protocol on top of TCP/IP for communication between applications and the cluster. There are many client implementations for different programming languages, from Java to Golang, from Python to C# and many more. 
