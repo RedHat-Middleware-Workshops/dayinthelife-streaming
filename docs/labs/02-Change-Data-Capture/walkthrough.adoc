@@ -163,6 +163,10 @@ EOF
 
 [time=10]
 [id="loading-earth-orders"]
+
+== Testing that mirror maker works 
+
+
 == Loading Earth Orders
 
 
