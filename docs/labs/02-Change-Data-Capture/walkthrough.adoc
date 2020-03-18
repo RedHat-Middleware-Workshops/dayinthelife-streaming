@@ -168,9 +168,9 @@ EOF
 
 
 It's now time to test the full integration between the Earth and Moon Orders system.
-.We will first load the csv data into MSSQL using a PHP app
-.Debezium will populate data from MSSQL into the Earth Kafka topic
-.Mirror Maker will then mirror the data in the Earth cluster to the Moon cluster.
+. We will first load the csv data into MSSQL using a PHP app
+. ebezium will populate data from MSSQL into the Earth Kafka topic
+. Mirror Maker will then mirror the data in the Earth cluster to the Moon cluster.
 
 . Launch a new tab on your web browser.
 . Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
