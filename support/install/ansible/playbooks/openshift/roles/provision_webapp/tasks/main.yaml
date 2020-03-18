@@ -70,3 +70,13 @@
   k8s:
     state: present
     resource_definition: "{{ lookup('template', 'oauthclient.yaml.j2') }}"
+
+- name: Create extra-services ConfigMap
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'extra-services.yaml.j2') }}"
+
+- name: Mount ConfigMap
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'tutorial-web-app.yaml.j2') }}"

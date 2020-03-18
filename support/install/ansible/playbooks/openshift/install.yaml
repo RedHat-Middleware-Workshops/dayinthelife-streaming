@@ -45,6 +45,7 @@
         name: provision_webapp
       vars:
         webapp_namespace: "webapp"
+        configmap_name: "extra-services"
       tags: provision_webapp
     - include_role:
         name: user_projects
