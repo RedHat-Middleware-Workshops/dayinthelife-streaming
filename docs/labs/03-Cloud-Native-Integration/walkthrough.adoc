@@ -61,7 +61,7 @@ Your password is: `{user-password}`
 
 [time=5]
 [id="provision-amq-topic"]
-== In this task, you'll provision an messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+== Provision AMQ Topic.
 
 . Navigate to the AMQ console: {amqonline-url}[AMQ Online, window="_blank", id="{context}-3"].  Click *Log in with OpenShift*.
 +
