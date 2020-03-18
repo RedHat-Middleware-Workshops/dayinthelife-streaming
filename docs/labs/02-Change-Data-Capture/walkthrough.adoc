@@ -1,6 +1,6 @@
 :walkthrough: Stream change events from your database
 :terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-integration.git-citizen-integrator-track-lab06/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03/
 :user-password: openshift
 
 ifdef::env-github[]
@@ -108,8 +108,8 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 }
 EOF
 ----
-You can check that the connector is correctly depolyed by doing a GET at the connector endpoint on a browser 
-http://kafka-connect-{user-username}.{openshift-app-host}/connectors 
+You can check that the connector is correctly depolyed by doing a GET at the connector endpoint on a browser
+http://kafka-connect-{user-username}.{openshift-app-host}/connectors
 
 
 
@@ -135,9 +135,9 @@ oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-strea
 [id="replicating-to-other-kafka-clusters"]
 == Replicating to other Kafka clusters
 
-We refer to the process of replicating data between Kafka clusters "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters. 
+We refer to the process of replicating data between Kafka clusters "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
 
-The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter. 
+The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
 
 . Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kakfa cluster)
 +
@@ -164,7 +164,7 @@ EOF
 [time=10]
 [id="loading-earth-orders"]
 
-== Testing that mirror maker works 
+== Testing that mirror maker works
 
 
 == Loading Earth Orders
@@ -179,8 +179,8 @@ It's now time to test the full integration between the Earth and Moon Orders sys
 . Launch a new tab on your web browser.
 . Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
 . Navigate to the link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[PHP app, window="_blank"] in a new browser tab.
-It can be found from your Openshift console-> project: www->routes. 
-Note: Make sure to add /#user1 to the route. 
+It can be found from your Openshift console-> project: www->routes.
+Note: Make sure to add /#user1 to the route.
 
 . Load the file in the PHP app.
 If this is successfully completed, you will see the csv data  on the PHP page.
@@ -192,19 +192,9 @@ The data will thus be imported into MSSQL.
 
 [time=10]
 [id="enabling-http-access"]
-
-. At this point if all configuration is correct, you will be able to see messages in the moon cluster.
-+
-[source,bash,subs="attributes+"]
-----
-oc rsh moon-kafka-0
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic user1.earth.dbo.Orders --from-beginning
-----
-The next section is about REST enabling access to the moon topic.
-
 == Enabling HTTP access to Kafka
 
-Apache Kafka uses a custom protocol on top of TCP/IP for communication between applications and the cluster. There are many client implementations for different programming languages, from Java to Golang, from Python to C# and many more. 
+Apache Kafka uses a custom protocol on top of TCP/IP for communication between applications and the cluster. There are many client implementations for different programming languages, from Java to Golang, from Python to C# and many more.
 
 However, there are scenarios where it is not possible to use the clients, or indeed the native protocol. Communicating with an Apache Kafka cluster using a standard protocol like HTTP/1.1 eases development these scenarios.
 
@@ -238,7 +228,7 @@ oc expose service http-bridge-service --name kafka-bridge -n {user-username}
 +
 [source,bash,subs="attributes+"]
 ----
-cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group -H 'content-type: application/vnd.kafka.v2+json' -d @- 
+cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group -H 'content-type: application/vnd.kafka.v2+json' -d @-
 {
     "name": "{user-username}",
     "format": "json",
