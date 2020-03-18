@@ -1,6 +1,6 @@
 :walkthrough: Cloud-Native Integration with EIPs
 :terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
-:amq-url: https://console-workshop-operators.{openshift-app-host}/
+:amqonline-url: https://console-workshop-operators.{openshift-app-host}/
 :che-url: http://che-che.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
 :user-password: openshift
@@ -44,7 +44,7 @@ Your password is: `{user-password}`
 [type=walkthroughResource]
 .AMQ
 ****
-* link:{amq-url}/[Open AMQ Online, window="_blank"]
+* link:{amqonline-url}/[Open AMQ Online, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=openshift]
@@ -63,7 +63,7 @@ Your password is: `{user-password}`
 [id="develop-camel-k"]
 == This is a getting started lab, learn what is Camel K and get familiar with Che
 
-. Navigate to the AMQ Online console: {amq-url}[AMQ Online, window="_blank", id="{context}-3"].
+. Navigate to the AMQ Online console: {amqonline-url}[AMQ Online, window="_blank", id="{context}-3"].
 . Login to AMQ Online using your credentials.
 . Create a topic on AMQ Online called `mytopic`.
 . Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
