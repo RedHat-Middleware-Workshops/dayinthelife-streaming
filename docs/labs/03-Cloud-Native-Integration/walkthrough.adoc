@@ -59,9 +59,9 @@ Your password is: `{user-password}`
 * link:{terminal-url}/[Open Terminal, window="_blank"]
 ****
 
-[time=10]
-[id="develop-camel-k"]
-== This is a getting started lab, learn what is Camel K and get familiar with Che
+[time=5]
+[id="provision-amq-topic"]
+== In this task, you'll provision an messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 . Navigate to the AMQ console: {amqonline-url}[AMQ Online, window="_blank", id="{context}-3"].  Click *Log in with OpenShift*.
 +
@@ -85,6 +85,42 @@ image::images/1.1.3-topic.png[1.1.3-topic, role="integr8ly-img-responsive"]
 +
 image::images/1.1.4-address-space.png[1.1.4-address-space, role="integr8ly-img-responsive"]
 
+. Wait a few minutes for the Address Space to provision in your OpenShift namespace. Once the *Status* turns to `Active`, click on the *{user-username}* link.
++
+image::images/1.1.5-create-topic.png[1.1.5-create-topic, role="integr8ly-img-responsive"]
+
+. If you receive a certificate warning, click *Hide advanced* then *Proceed...*
++
+image::images/1.1.6-cert-warning.png[1.1.6-cert-warning, role="integr8ly-img-responsive"]
+
+. Click the *+ Create* button to create the topic.
++
+image::images/1.1.7-create-topic.png[1.1.7-create-topic, role="integr8ly-img-responsive"]
+
+. Enter the following details, then click *Next*:
+** Name: *`mytopic`*
+** Type: *topic*
++
+image::images/1.1.8-topic-details.png[1.1.8-topic-details, role="integr8ly-img-responsive"]
+
+. Choose `Small Topic` then click *Next* and finally *Create*.
++
+image::images/1.1.9-topic-details.png[1.1.9-topic-details, role="integr8ly-img-responsive"]
+
+. Please wait a few minutes for the topic to provision.  Once the queue is provisioned, the topic name (`mytopic`) should have a green checkmark next to it.
++
+image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integr8ly-img-responsive"]
+
+[type=verification]
+Were you able to successfully provision the topic in AMQ Online?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="startup-che-workspace"]
+== Provision Eclipse Che Workspace
+
 . Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 . Login to Che, see workspace.
 . Get the AMQ Online address for userX. Update the config Map Create the config map.
@@ -102,11 +138,7 @@ camel.component.amqp.configuration.connection-factory.remoteURI=amqp://messaging
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
 
-[type=verification]
-Were you able to successfuly run the Edge Simulator using Camel-K?
 
-[type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=5]
 [id="summary"]
