@@ -35,13 +35,13 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 Your username is: `{user-username}` +
 Your password is: `<assigned password from Instructor>`
 
-[type=walkthroughResource,serviceName=enmasse]
+[type=walkthroughResource]
 .Enmasse
 ****
 * link:{enmasse-url}/[Open AMQ Online, window="_blank"]
 ****
 
-[type=walkthroughResource,serviceName=che]
+[type=walkthroughResource]
 .Che
 ****
 * link:{che-url}/[Open Che, window="_blank"]
@@ -53,7 +53,7 @@ Your password is: `<assigned password from Instructor>`
 * link:{openshift-host}/[Open Console, window="_blank"]
 ****
 
-[type=walkthroughResource,serviceName=terminal]
+[type=walkthroughResource]
 .Terminal
 ****
 * link:{terminal-url}/[Open Terminal, window="_blank"]
