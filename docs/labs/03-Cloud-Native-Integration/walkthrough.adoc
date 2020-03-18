@@ -63,9 +63,28 @@ Your password is: `{user-password}`
 [id="develop-camel-k"]
 == This is a getting started lab, learn what is Camel K and get familiar with Che
 
-. Navigate to the AMQ Online console: {amqonline-url}[AMQ Online, window="_blank", id="{context}-3"].
-. Login to AMQ Online using your credentials.
-. Create a topic on AMQ Online called `mytopic`.
+. Navigate to the AMQ console: {amqonline-url}[AMQ Online, window="_blank", id="{context}-3"].  Click *Log in with OpenShift*.
++
+image::images/1.1.1-login.png[1.1.1-login, role="integr8ly-img-responsive"]
+
+. Login to AMQ Online using your credentials (`{user-username}` and `{user-password}`). Click *Log In*.
++
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+
+. Click the *Create* button.
++
+image::images/1.1.3-topic.png[1.1.3-topic, role="integr8ly-img-responsive"]
+
+. Create an Address Space using the following details, then click *Next* and finally *Finish*:
+
+** Namespace: *`{user-username}`*
+** Name: *`{user-username}`*
+** Type: *`Standard`*
+** Address space plan: *`standard-small`*
+** Authentication Service: *`standard-authservice`*
++
+image::images/1.1.4-address-space.png[1.1.4-address-space, role="integr8ly-img-responsive"]
+
 . Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 . Login to Che, see workspace.
 . Get the AMQ Online address for userX. Update the config Map Create the config map.
