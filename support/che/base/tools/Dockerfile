@@ -1,15 +1,21 @@
-# Copyright (c) 2020 Red Hat, Inc.
-# This program and the accompanying materials are made
-# available under the terms of the Eclipse Public License 2.0
-# which is available at https://www.eclipse.org/legal/epl-2.0/
-#
-# SPDX-License-Identifier: EPL-2.0
-#
-# Contributors:
-#   Red Hat, Inc. - initial API and implementation
-FROM quay.io/eclipse/che-java8-maven:7.10.0
+FROM centos:8
 
-ENV OC_CLIENT_VERSION 4.3.5
+
+RUN dnf update -y && \
+dnf install -y wget && \
+dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
+dnf install -y nodejs && \
+dnf install -y maven && \
+dnf clean all
 
 ADD oc /usr/bin
 
+# Set environment variables.
+ENV HOME /root
+
+# Define working directory.
+WORKDIR /projects
+
+ADD entrypoint.sh /entrypoint.sh
+
+CMD /entrypoint.sh tail -f /dev/null
