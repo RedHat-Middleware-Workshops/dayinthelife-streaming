@@ -76,3 +76,4 @@
     body: '{{ lookup("template", "./templates/che-devfile.yaml.j2") }}'
     status_code: '201'
   register: workspace_devfile
+  ignore_errors: yes
