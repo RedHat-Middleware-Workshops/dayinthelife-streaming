@@ -50,6 +50,7 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 . Change to your user namespace.
 +
 [source,bash,subs="attributes+"]
+
 ----
 oc project {user-username}
 ----
@@ -57,6 +58,7 @@ oc project {user-username}
 . Create a `KafkaConnect` Kubernetes Custom Resource to define your connector.
 +
 [source,bash,subs="attributes+"]
+Note: dont forget to change ALL occurences of {user-username} to say user1
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
@@ -89,6 +91,7 @@ oc expose service debezium-connect-api --name kafka-connect -n {user-username}
 . Create a new connector config to react to changes in the `Orders` table called `orders-connector`.
 +
 [source,bash,subs="attributes+"]
+Note: dont forget to change ALL occurences of {user-username} to say user1
 ----
 cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
 {
@@ -108,9 +111,10 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 }
 EOF
 ----
-You can check that the connector is correctly depolyed by doing a GET at the connector endpoint on a browser
+Test: You can check that the connector is correctly deployed by doing a GET at the connector endpoint on a browser
 http://kafka-connect-{user-username}.{openshift-app-host}/connectors
 
+You should be able to see something like this..(screenshot below)
 
 
 [time=5]
