@@ -1,1 +1,5 @@
 #for all lab4 instructions
+
+. We have harvest data in a MS-SQLServer database.
+. We have the Order data in the Postgres database as we saw in the previous exercise.
+The object of this lab will be to create a unified view of this data using Data Virtualization.
