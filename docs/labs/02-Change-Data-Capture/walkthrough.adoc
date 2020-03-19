@@ -192,7 +192,9 @@ The Php app looks like this on launch.
 
 image::images/dil-lab2-phpapp.png[]
 If this is successfully completed, you will see the csv data  on the PHP page.
+
 image::images/dil-lab2-importeddataintophp.png[]
+
 The data will thus be imported into MSSQL.
 
 Test: This step is optional but helpful to avoid troubleshooting. Here is how to check that the data is loaded from the file into MS SQLserver
