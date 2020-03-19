@@ -198,6 +198,12 @@ image::images/dil-lab2-importeddataintophp.png[]
 The data will thus be imported into MSSQL.
 
 Test: This step is optional but helpful to avoid troubleshooting. Here is how to check that the data is loaded from the file into MS SQLserver
+cd /opt/mssql-tools/bin
+./sqlcmd -S mssql-server-linux.shared-db-earth.svc -U sa -P Password! -d InternationalDB
+
+image::images/sqlcommands.png[]
+
+. Open the Terminal on the Openshift console into the MSSQL Server pod and run the following commands
 
 // check earth topic created
 
