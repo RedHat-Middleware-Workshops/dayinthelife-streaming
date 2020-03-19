@@ -51,7 +51,7 @@
 - name: Retrieve files
   find:
     paths: 
-      - '{{ amq_online_tmp }}/install/components/example-plans/*'
+      - '{{ amq_online_tmp }}/install/components/example-plans/'
       - '{{ amq_online_tmp }}/install/components/example-authservices/'
   register: install_files
 
