@@ -20,6 +20,7 @@
   loop:
     - { user: 'user{{ item }}', namespace: 'user{{ item }}', role: 'admin' }
     - { user: 'user{{ item }}', namespace: 'user{{ item }}-che', role: 'admin' }
+    - { user: 'user{{ item }}', namespace: 'fuse-user{{ item }}', role: 'admin' }
     - { user: 'user{{ item }}', namespace: '{{ kafka_earth_namespace }}', role: 'view' }
     - { user: 'user{{ item }}', namespace: '{{ db_earth_namespace }}', role: 'view' }
   loop_control:

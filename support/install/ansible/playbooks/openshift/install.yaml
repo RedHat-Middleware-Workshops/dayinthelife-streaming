@@ -15,11 +15,6 @@
       set_fact:
         ansible_python_interpreter: "/opt/virtualenvs/k8s/bin/python"
     - include_role:
-        name: provision_fuse
-      vars:
-        fuse_project: "fuse"
-      tags: provision_fuse
-    - include_role:
         name: provision_camelk
       vars:
         operators_project: "workshop-operators"
@@ -55,6 +50,11 @@
         kafka_earth_namespace: "shared-kafka-earth"
         app_earth_namespace: "shared-app-earth"
       tags: user_projects
+    - include_role:
+        name: provision_fuse
+      vars:
+        fuse_project: "fuse"
+      tags: provision_fuse
     - include_role:
         name: provision_che
       vars:
