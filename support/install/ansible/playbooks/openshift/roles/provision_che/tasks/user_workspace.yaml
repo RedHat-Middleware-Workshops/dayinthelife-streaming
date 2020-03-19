@@ -77,3 +77,12 @@
     status_code: '201'
   register: workspace_devfile
   ignore_errors: yes
+
+# RHPDS sepecific
+- name: Delete the core limit range in  user{{ item }}-che from RHPDS setting
+  k8s:
+    api_version: v1
+    kind: LimitRange
+    name: 'user{{ item }}-che-core-resource-limits'
+    namespace: '{{ che_project }}-che'
+    state: absent
