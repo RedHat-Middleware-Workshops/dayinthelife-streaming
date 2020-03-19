@@ -50,6 +50,7 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 . Change to your user namespace.
 +
 [source,bash,subs="attributes+"]
+
 ----
 oc project {user-username}
 ----
@@ -57,6 +58,7 @@ oc project {user-username}
 . Create a `KafkaConnect` Kubernetes Custom Resource to define your connector.
 +
 [source,bash,subs="attributes+"]
+Note: dont forget to change ALL occurences of {user-username} to say user1
 ----
 cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
@@ -89,6 +91,7 @@ oc expose service debezium-connect-api --name kafka-connect -n {user-username}
 . Create a new connector config to react to changes in the `Orders` table called `orders-connector`.
 +
 [source,bash,subs="attributes+"]
+Note: dont forget to change ALL occurences of {user-username} to say user1
 ----
 cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
 {
@@ -108,10 +111,12 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 }
 EOF
 ----
-You can check that the connector is correctly depolyed by doing a GET at the connector endpoint on a browser
+Test: You can check that the connector is correctly deployed by doing a GET at the connector endpoint on a browser
 http://kafka-connect-{user-username}.{openshift-app-host}/connectors
 
+You should be able to see something like this..(screenshot below)
 
+image::images/orderconnector.png[]
 
 [time=5]
 [id="deploying-apache-kafka"]
@@ -183,8 +188,25 @@ It can be found from your Openshift console-> project: www->routes.
 Note: Make sure to add /#user1 to the route.
 
 . Load the file in the PHP app.
+The Php app looks like this on launch.
+
+image::images/dil-lab2-phpapp.png[]
 If this is successfully completed, you will see the csv data  on the PHP page.
+
+image::images/dil-lab2-importeddataintophp.png[]
+
 The data will thus be imported into MSSQL.
+
+Test: This step is optional but helpful to avoid troubleshooting. Here is how to check that the data is loaded from the file into MS SQLserver.
+. Open the Terminal on the Openshift console into the MSSQL Server pod and run the following commands.
+You can oc rsh into the sqlserver pod as well.
+
+.  cd /opt/mssql-tools/bin
+. ./sqlcmd -S mssql-server-linux.shared-db-earth.svc -U sa -P Password! -d InternationalDB
+
+image::images/sqlcommands.png[]
+
+
 
 // check earth topic created
 
