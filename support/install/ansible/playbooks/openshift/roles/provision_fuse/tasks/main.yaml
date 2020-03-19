@@ -1,31 +1,4 @@
 ---
-- name: Evaluate {{ fuse_project }} namespace if not exists 
-  k8s:
-    api_version: v1
-    kind: Namespace
-    name: '{{ fuse_project }}'
-    state: present
-
-# RHPDS sepecific
-- name: Delete the core limit range in  {{ fuse_project }} from RHPDS setting
-  k8s:
-    api_version: v1
-    kind: LimitRange
-    name: '{{ fuse_project }}-core-resource-limits'
-    namespace: '{{ fuse_project }}'
-    state: absent
-
-- name: Evaluate Syndesis Operator Group
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'fuse-operatorgroup.yaml.j2') }}"
-
-- name: Evaluate Syndesis Subscription
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'fuse-subscriptionyaml.j2') }}"
-
-
 - name: Get data from samples-registry-credentials in openshift 
   k8s_facts:
       api_version: v1
@@ -39,44 +12,26 @@
 
 - set_fact:
     docker_config_json: "{{ samples_registry.resources[0].data.dockerconfigjson | trim }}"
+    
+- name: Subscribe Operator first, because it takes too long 
+  include_tasks: single_user.yaml
+  with_sequence: start=1 end={{ usersno }} 
+  when:
+    - usersno|int > 0
 
-- name: Evaluate Syndesis Secrets
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'fuse-secret.yaml.j2') }}"
+- name:  pause for 2 minutes, because operator takes sometime to run, it may fail, just re-run  
+  pause:
+    minutes: 2
+    
+- name: Create Fuse Online Cluster
+  include_tasks: single_cluster.yaml
+  with_sequence: start=1 end={{ usersno }} 
+  when:
+    - usersno|int > 0
 
-- name: Wait for Syndesis operator to install
-  k8s_facts:
-      api_version: operators.coreos.com/v1alpha1
-      kind: ClusterServiceVersion
-      name: 'fuse-online-operator.v{{ fuse_version }}'
-      namespace: '{{ fuse_project }}'
-  register: csv_status
-  until: (csv_status.resources is defined) and (csv_status.resources|length>0) and (csv_status.resources[0].status.phase == 'Succeeded')
-  retries: 10
-  delay: 30
-
-
-- name: Evaluate Syndesis Cluster
-  k8s:
-    state: present
-    resource_definition: "{{ lookup('template', 'fuse-cluster.yaml.j2') }}"
-
-- name: extract route_subdomain
-  k8s_facts:
-    kind: Ingress
-  register: route_subdomain_r
-  
-- set_fact:
-    route_subdomain: "{{ route_subdomain_r.resources[0].spec.domain | trim }}"
-
-- name: Make sure Syndesis server is running
-  k8s_facts:
-    kind: Pod
-    label_selectors:
-      - app=syndesis 
-      - syndesis.io/component=syndesis-server 
-  register: server_pod_detail
-  until: (server_pod_detail.resources is defined) and (server_pod_detail.resources|length>0) and (server_pod_detail.resources[0].status.phase == 'Running')
-  retries: 10
-  delay: 30
+# Turn off this, it takes too long to start 
+#- name: Check status of Fuse Online Servers
+#  include_tasks: server_run_check.yaml
+#  with_sequence: start=1 end={{ usersno }} 
+#  when:
+#    - usersno|int > 0

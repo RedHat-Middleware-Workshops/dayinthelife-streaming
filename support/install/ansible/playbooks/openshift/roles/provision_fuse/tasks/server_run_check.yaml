@@ -1,0 +1,15 @@
+- name: Define User Fuse Name
+  set_fact: 
+    user_fuse_project: '{{ fuse_project }}-user{{ item }}'
+    
+- name: Make sure Syndesis server is running
+  k8s_facts:
+    kind: Pod
+    label_selectors:
+      - app=syndesis 
+      - syndesis.io/component=syndesis-server 
+    namespace: '{{ user_fuse_project }}'
+  register: server_pod_detail
+  until: (server_pod_detail.resources is defined) and (server_pod_detail.resources|length>0) and (server_pod_detail.resources[0].status.phase == 'Running')
+  retries: 10
+  delay: 30
