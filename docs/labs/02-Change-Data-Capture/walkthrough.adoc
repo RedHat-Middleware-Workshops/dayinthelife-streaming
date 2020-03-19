@@ -117,7 +117,7 @@ http://kafka-connect-{user-username}.{openshift-app-host}/connectors
 You should be able to see something like this..(screenshot below)
 +
 
-image::../images/orderconnector.png
+image::../images/orderconnector.png[]
 
 [time=5]
 [id="deploying-apache-kafka"]
