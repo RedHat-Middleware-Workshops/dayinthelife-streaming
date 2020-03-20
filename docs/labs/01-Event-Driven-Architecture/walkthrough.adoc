@@ -1,6 +1,7 @@
 :walkthrough: Event Driven Architecture
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-citizen-integrator-track-lab01/
 :codeready-url: http://che-che.{openshift-app-host}/
+:fuse-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 :user-password: openshift
 
 ifdef::env-github[]
@@ -38,6 +39,10 @@ https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=shari
 .Red Hat CodeReady Workspaces
 ****
 * link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
+****
+.Red Hat OpenShift Developer Console
+****
+* link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank]
 ****
 
 :sectnums:
@@ -656,6 +661,403 @@ A green check mark will show that the resources were successfully deployed.
 [id="Fuse Online Services"]
 == Develop Fuse Online Services
 
+
+=== Access Fuse Online
+
+. Access the link:{fuse-url}[Fuse Online Console] and login using your credentials.
++
+image::
+
+. Click *Allow selected permissions* to _Authorize Access_ to your account information.
++
+image::images/fuse-authorize.png[Authorize Access to Fuse, role="integr8ly-img-responsive"]
+
+. We will need to create the connections to the _topics_ created in the previous task. Click on the *Connections* menu option on the left side.
++
+image::images/fuse-connections.png[Fuse Connections Menu, role="integr8ly-img-responsive"]
+
+=== Create connection to AMQ Online
+
+. Click on *Create Connection* button on the right top side.
++
+image::images/fuse-create-connection.png[Fuse Create Connection, role="integr8ly-img-responsive"]
+
+. Fuse includes several connectors available to establish connectivity to cloud services. In this case click on the *AMQP Message Broker* one.
++
+image::images/fuse-amqp-broker.png[AMQP Message Broker Connector, role="integr8ly-img-responsive"]
+
+. In the followin page, add the *Connection URI* for connecting to the AMQ Online _AddressSpace_. You will need to replace the `{your-host}` with the value you save from the previous task.
++
+[source,none,subs="attributes+"]
+----
+amqp://{your-host.svc}
+----
++
+image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
+
+. Scroll down the same page and click on the *Validate* button to check the connections was been established. 
++
+image::images/fuse-validate.png[Connection Validation, role="integr8ly-img-responsive"]
+
+. You will see a green message back in the top.
++
+image::images/fuse-validation-success.png[Connection Validation Success, role="integr8ly-img-responsive"]
+
+. Click on *Next>* button.
++
+image::images/fuse-connector-next.png[Connector Next, role="integr8ly-img-responsive"]
+
+. In the next step, replace the *Name* with `AMQ Online` and finally click the *Save* button.
++
+image::images/fuse-connection-name.png[Connector Name, role="integr8ly-img-responsive"]
+
+=== Create Place Order API
+
+. Time to begin with the first integration. Click on the *Integration* menu option on the left side.
++
+image::images/fuse-integrations.png[Fuse Integrations, role="integr8ly-img-responsive"]
+
+. Click on the *Create Integration* button on the center of the screen or the top right side.
++
+image::images/fuse-create-integration.png[Fuse Create Integration, role="integr8ly-img-responsive"]
+
+. Start by clicking the *API Provider* option.
++
+image::images/fuse-api-provider.png[Fuse API Provider, role="integr8ly-img-responsive"]
+
+. We will create a _RESTful API_ from scratch. Select the *Create* option and click on *Next* button.
++
+image::images/fuse-create-api.png[Fuse Create API, role="integr8ly-img-responsive"]
+
+. The API editor is based on the link:http://apicurio.com/[Apicurio] community project. Begin adding a _Path_ to your API by clicking on *Add a path*.
++
+image::images/fuse-add-path.png[API Add Path, role="integr8ly-img-responsive"]
+
+. Fill in `/place` in the *Path* textbox and click *Add*.
++
+image::images/fuse-place-path.png[API /place Path, role="integr8ly-img-responsive"]
+
+. Next we need to define the _data schema_. Click on *Add a data type*.
++
+image::images/fuse-data-type.png[API Data Type, role="integr8ly-img-responsive"]
+
+. Fill in `order` in the *Name* field. Fuse can use a JSON example to _bootstrap_ the schema properties. Paste the following code in the *JSON Example* field. 
++
+[source,json,subs="attributes+"]
+----
+{
+   "username":"jdoe",
+   "orderId":"1",
+   "itemId":"1",
+   "orderItemName":"kiwi",
+   "quantity":1,
+   "price":2,
+   "address":"123 Evergreen Terrace",
+   "zipCode":"2222"
+}
+
+----
++
+image::images/fuse-type-definition.png[API Type Definition, role="integr8ly-img-responsive"]
+
+. Finally click on *Save* button.
++
+image::images/fuse-schema-save.png[API Save Type Definition, role="integr8ly-img-responsive"]
++
+[NOTE]
+====
+Notice that the there is _another_ save button in the top right. Beware NOT to click on that one.
+====
+
+. Click back on the */place* path on the left side. Scroll down the right panel and click on *Post* operation and then click on *Add Operation* button.
++
+image::images/fuse-place-operation.png[API Place Operation, role="integr8ly-img-responsive"]
+
+. This will enable the _Operation info_ panel. Fill in the following data in the corresponding fields:
++
+* *Summary*: `API to Event endpoint`
+* *Operation ID*: `order`
+* *Description*: `Order item`
++
+image::images/fuse-operation-info.png[API Operation Info, role="integr8ly-img-responsive"]
+
+. Scroll down and click on *Add a request body* to enable the dropdown *Request Body Type*. Select `order`.
++
+image::images/fuse-request-body.png[API Operation Body, role="integr8ly-img-responsive"]
++
+[NOTE]
+====
+Did you notice that the warning icon disapeared?
+====
+
+. Now click on *Add a response* under the _RESPONSES_ section. Select `201 Created` from the dropdown menu. Finally click on the *Save* button.
++
+image::images/fuse-response-code.png[API Operation Response, role="integr8ly-img-responsive"]
+
+. Type `Order sent` on the response *Description* and select `String` from the both *Response Type* dropdown menus.
++
+[NOTE]
+====
+You can add an example if you are planning to mock this API defintion.
+====
+
+. Remember to name your API `Place Orders`. Finally hit the *Save* button to store your API definition.
++
+image::images/fuse-response-type.png[API Response Type, role="integr8ly-img-responsive"]
+
+. Review your API information. If everything is fine click on *Next*.
++
+image::images/fuse-review-api.png[Review API, role="integr8ly-img-responsive"]
+
+=== Create Order API Flow
+
+. We are ready to star this _place order_ flow. Click on the *Create flow* button.
++
+image::images/fuse-create-flow.png[Create Flow, role="integr8ly-img-responsive"]
+
+. You will be presented with the basics of your integration. Click the *+* button to add a new step to your integration.
++
+image::images/fuse-add-to.png[Add To Integration, role="integr8ly-img-responsive"]
+
+. Select *AMQ Online* from the available _connections_.
++
+image::images/fuse-connect-amq.png[Add AMQ Online, role="integr8ly-img-responsive"]
+
+. Click the *Select* button next to the *Publish messages* option.
++
+image::images/fuse-select-publish.png[Publish Messages, role="integr8ly-img-responsive"]
+
+. Fill in the _topic_ name `incomingorders` in the *Destination name* textbox and select `Topic` from the *Destination type* combobox. Then, click the *Next* button.
++
+image::images/fuse-destination-name.png[Destination Name, role="integr8ly-img-responsive"]
+
+. In this screen, select `JSON Instance` from the *Select Type* menu. Type `order` in the *Data Type Name* field and paste the following code in the *Definition* field:
++
+[source,json,subs="attributes+"]
+----
+{
+   "username":"jdoe",
+   "orderId":"1",
+   "itemId":"1",
+   "orderItemName":"kiwi",
+   "quantity":1,
+   "price":2,
+   "address":"123 Evergreen Terrace",
+   "zipCode":"2222"
+}
+----
++
+image::images/fuse-message-type.png[Destination Type, role="integr8ly-img-responsive"]
+
+. Scroll down and click the *Next* button.
+
+. Click on the _Warning_ icon and then click the *Add a data mapping step* to map between the API and the messaging formats.
++
+image::images/fuse-add-mapper.png[Add Mapper, role="integr8ly-img-responsive"]
+
+. This is the _Atlas Mapper_ it allows us to map between API and Messaging schemas. Expand the `body` option on the left side under *1 - Request* and drag and drop each one of the fields from the left _Source_ to right _Target_ side.
++
+image::images/fuse-field-mapper.png[Fields Mapper, role="integr8ly-img-responsive"]
+
+. Click on the *+* button between _Publish messages_ and _Provide API Return Path_ to add another mapper for the API return value.
++
+image::images/fuse-return-mapper.png[Return Mapper, role="integr8ly-img-responsive"]
+
+. Select the *Data Mapper* option for the connection.
++
+image::images/fuse-connection-mapper.png[Connection Mapper, role="integr8ly-img-responsive"]
+
+. Expand the *Constants* section and add a _string_ with the _value_ `Order Received!`. Drag and drop it to the righ side under `body`. Then click the *Done* button.
++
+image::images/fuse-map-response.png[Map Response, role="integr8ly-img-responsive"]
+
+. Click the *Publish* button.
++
+image::images/fuse-publish-api.png[Publis API Integration, role="integr8ly-img-responsive"]
+
+. Type `order` in the *Name* and `Order API to Event` in the *Description* fields. Then click the *Save and Publish* button to deploy your integration.
++
+image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-responsive"]
+
+It will take a moment for Fuse to deploy your integration. It will compile and package an Apache Camel route into a _container_ image to be deployed in OpenShift. Fuse does all this steps automatically, so you don't need to learn how to build and deploy a container on Kubernetes. Wait a few minutes for the process to complete.
+
+image::images/fuse-building-integration.png[Building Integration, role="integr8ly-img-responsive"]
+
+=== Test your Integration
+
+. Copy the *External URL* from your Fuse integration. We will use this endpoint to test the integration.
++
+image::images/fuse-external-url.png[External URL, role="integr8ly-img-responsive"]
+
+. Get back to the CodeReady Workspaces IDE and issue the following command in the terminal window:
++
+[source,bash,subs="attributes+"]
+----
+curl -v -X POST \
+  http://i-order.fuse:8080/place \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d  \
+  '{
+    "orderId": 978,
+    "itemId": 135790,
+    "orderItemName": "Mango",
+    "quantity": 1,
+    "price": 2.50,
+    "address": "hello",
+    "zipCode": "15555"
+  }'
+----
++ You should receive a message back similar to the following one:
++
+[source,none,subs="attributes+"]
+----
+...
+* upload completely sent off: 162 out of 162 bytes
+< HTTP/1.1 201 Created
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 0
+< X-Application-Context: application
+< Date: Fri, 20 Mar 2020 15:17:28 GMT
+< 
+* Curl_http_done: called premature == 0
+* Connection #0 to host i-order.fuse left intact
+----
+
+*Excelent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
+
+=== Add Extensions
+
+Fuse offers several connectors and components out of the box, but advanced users can also create new ones to enhance the power of the console. In this scenario, we have created some extensions to deliver _custom_ identifiers and timestamps.
+
+. Expand the *Customizations* menu and select the *Extensions* menu option on the left side.
++
+image::images/fuse-extensions.png[Extension Customizations, role="integr8ly-img-responsive"]
+
+. Click on *Import Extension* button in the center of the screen.
++
+image::images/fuse-import-extension.png[Import Extension, role="integr8ly-img-responsive"]
+
+. Download the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-custom-1.0.0.jar[Syndesis Custom Extension] from the company's github repository. Save it to your local system.
+
+. Click in the _dotted border_ rectangle and select the `syndesis-extension-custom-1.0.0.jar` file from your *Downloads* folder.
++
+image::images/fuse-import-jar.png[Import Extension Jar, role="integr8ly-img-responsive"]
+
+. Click on the *Import Extension* button.
++
+image::images/fuse-extension-import.png[Import Extension Review, role="integr8ly-img-responsive"]
+
+Your extension should now be listed in the *Extensions* page.
+
+image::images/fuse-extensions-list.png[Extension Page, role="integr8ly-img-responsive"]
+
+=== Create Inventory Flow
+
+. Time to create a new integration. Click on the *Integration* menu on the left side menu.
++
+image::images/fuse-new-inventory.png[Create Inventory, role="integr8ly-img-responsive"]
+
+. Click on *Create Integration*.
++
+image::images/fuse-create-inventory.png[Create Inventory Integration, role="integr8ly-img-responsive"]
+
+. We will start to read from the AMQ _topic_. Click on *AMQ Online*.
++
+image::images/fuse-start-amq.png[Start AMQ Online, role="integr8ly-img-responsive"]
+
+. You need to _subscribe for messages_. Click on the *Select* button.
++
+image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-img-responsive"]
+
+. Fill in `incomingorders` in the *Destination name* field and select `Topic` from the *Destination Type* combobox. Then, click *Next* button.
++
+image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
+
+. In the next step select `JSON Instance` from the *Select Type* combobox and paste the follwing code in the *Defintion*:
++
+[source,json,subs="attributes+"]
+----
+{
+   "username":"jdoe",
+   "orderId":"1",
+   "itemId":"1",
+   "orderItemName":"kiwi",
+   "quantity":1,
+   "price":2,
+   "address":"123 Evergreen Terrace",
+   "zipCode":"2222"
+}
+----
++
+image::images/fuse-start-datatype.png[Output Data Type, role="integr8ly-img-responsive"]
+
+. Click the *Next* button.
+
+. In the next screen, click on *AMQ Online* again, as we are going to publish a message back to AMQ.
++
+image::images/fuse-finish-amq.png[Finish AMQ Online, role="integr8ly-img-responsive"]
+
+. Click on the *Select* button from the _Publish message_ option.
++
+image::images/fuse-finish-publish.png[Publish Message, role="integr8ly-img-responsive"]
+
+. In this screen, fill in `notifications` in the *Destination name* and select `Topic` as the *type*.
++
+image::images/fuse-topic-notifications.png[Publish Destination, role="integr8ly-img-responsive"]
+
+. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following code on the *Definiton*. Then `inventorystatus` in the *Data Type Name*.
++
+[source,json,subs="attributes+"]
+----
+{
+   "orderId":"C1234",
+   "itemId":"C2312312",
+   "department":"inventory",
+   "datetime":"2019-01-01",
+   "quantity":3,
+   "flavor":"kiwi",
+   "inventoryId":"338927483"
+}
+----
++
+image::images/fuse-inventorystatus-schema.png[Destination Schema, role="integr8ly-img-responsive"]
+
+. Click *Next* to proceed to the flow.
+
+. Click the *+* button to add the _custom_ generators.
++
+image::images/fuse-connection-assignuuid.png[Inventory Add AssignUUID, role="integr8ly-img-responsive"]
+
+. Click *Next* to get back to the flow.
+
+. Time to add a mapper to assign the values of the output message. Click the *+* button between *AssignUUID* and *Publish messages*.
++
+image::images/fuse-inventory-mapper.png[Inventory Add Mapper, role="integr8ly-img-responsive"]
+
+. Click on *Data Mapper*.
++
+image::images/fuse-type-mapper.png[Add Type Mapper, role="integr8ly-img-responsive"]
+
+. Create a *Constants* by clicking the *+* icon and fill in the value  `inventory` and type _String_.
++
+image::images/fuse-add-constant.png[Add Constant Mapper, role="integr8ly-img-responsive"]
+
+. Then click *Save*.
++
+image::images/fuse-inventory-constant.png[Iventory Constant, role="integr8ly-img-responsive"]
+
+
+
+
+
+=== Access Fuse Online
+=== Access Fuse Online
+
+
+*Congratulations!* Your services are out and running.
+
 [time=10]
 [id="Develop Events Service"]
 == Develop the Events Service
@@ -770,55 +1172,17 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 
 . Review the succesful deployment by clicking on the *Open URL* icon on the deployment.
 
-
-
-
+*Very good!* Now is time to update the Frontend.
 
 [time=10]
 [id="Update Frontend"]
-== Update Frontend for Event-driven
-
-
-##########
-
-+
-image::images/inventory-web.png[Inventory Web, role="integr8ly-img-responsive"]
-+
-[source,bash,subs="attributes+"]
-----
-oc new-app inventory
-----
-
-. Go to link:{codeready-url}[codeready console, window="_blank"]
-  login with your ID and PWD {user-username}/{user-password}
-. Go to the factories on the top left, choose dilii, it will take you to the factory setting page.
-. Click on OPEN on the top right. 
-. Wait for the workspace to start
-. Click on the manage command on the top, run the following in orders
-	1. Download Kamel Binary
-	2. Unzip Kamel
-	3. Setup apicall
-	4. Setup eventdriven
-. Close all commends, and go back to project explorer. 
-
-
-=== Intall your Camel K Operator
-
-. Go to OpenShift Console
-. To your user project, user%d
-. Go to the Installed Operators and click on Camel K Operator
-. Click on the Integration Platform
-. Create Integration Platform by clicking on the button, and save
-. 
-
-[time=10]
-=== Update the Store frontend UI
+== Update Frontend UI for Event-driven
 
 ==== Add the new Async flavors to the UI
 
 . Navigate to the `store-ui` project and open the *product.handlebars* file under `views/`.
 +
-image::images/store-ui-project.png[Store UI Project, role="integr8ly-img-responsive"]
+image::images/store-product.png[Store UI Product File, role="integr8ly-img-responsive"]
 
 . Look for line *12* and paste the following code between the `/* TODO: INSERT HERE NEW FLAVORS */` markers:
 +
@@ -850,7 +1214,7 @@ image::images/store-ui-project.png[Store UI Project, role="integr8ly-img-respons
     </ul>
 ----
 
-. Scroll all the way down to line *288* and paste the next lines between `/* TODO: PROCESSS EVENT RESPONSE */`:
+. Scroll all the way down to line *310* and paste the next lines between `/* TODO: PROCESSS EVENT RESPONSE */`:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -863,12 +1227,16 @@ image::images/store-ui-project.png[Store UI Project, role="integr8ly-img-respons
               }
 ----
 
-. Next, open the *events.handlebars* under `views/partials` and paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
+. Next, open the *events.handlebars* under `views/partials`.
++
+image::images/store-events.png[Store UI Events File, role="integr8ly-img-responsive"]
+
+. Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
 +
 [source,bash,subs="attributes+"]
 ----
         constructor() {
-            this.source = new EventSource("//events-{user-username}.{openshift-app-host}:8080/consume");
+            this.source = new EventSource("//events-{user-username}.{openshift-app-host}/consume");
             this.source.onopen = (e) => console.log(e);
             this.source.onmessage = ({ data }) => this.updateDoc(data);
         }
@@ -896,295 +1264,11 @@ image::images/store-ui-project.png[Store UI Project, role="integr8ly-img-respons
 ----
 npm run openshift
 ----
-
-[time=10]
-=== Create your topic 
-
-==== Setup AMQ Online namespace
-. Go to 
- link:https://console-workshop-operators.{openshift-app-host}/[AMQ Online console, window="_blank"]
- and login with your ID and PWD
-
-. Create your AMQ namespace instance 
- - Namespace: {user-username}
- - Name: {user-username}
- - Type: Standard
- - Address Space Plan: standard-small
- - Authentication Service: standard-authentication
-
-
-==== Create an Topic
-. Click on the namespace you just created in the conole, it will take you to your online console.
-. Login with your openshift credential. 
-. Create a new topic by click on create button on the top
-	- Name: incomingorders
-	- Type: Topic
-. Select Small Topic as plan
-. And done
-
-==== Setting authentication and authorization for your topic
-. Create your message user to authenticate
-. Go to your Openshift console, in your namespace, click on "Installed Operators" on the lefthand side and select AMQ Online
-. Find "message user" tab, create new message user
-. Update the content, replace the namespace to your {user-username} (your username) and change the authorized address to incomingorders
-
 +
-[source,bash,subs="attributes+"]
-----
-apiVersion: user.enmasse.io/v1beta1
-kind: MessagingUser
-metadata:
-  name: {user-username}.user
-  namespace: {user-username}
-spec:
-  authentication:
-    password: ZW5tYXNzZQ==
-    type: password
-  authorization:
-    - addresses:
-        - incomingorders
-      operations:
-        - send
-        - recv
-  username: user
-----
-. Click create and your topic is ready
-
-[time=20]
-[id="Setup Workspace and Camel K"]
-== Event Driven Architecture
-. Go back to the codeready env. 
-. In your workspace, open StreamingLife/eventdriven/OrderService.java by double clicking on it. 
-. Update the BROKER_URL with your new addressspace service url.  You can retrieve your new addresspace service URL by executing the following command:
-
-+
-[source,bash,subs="attributes+"]
-----
-oc get addressspace {user-username} -n {user-username} -o jsonpath='{.status.endpointStatuses[?(@.name == "messaging")].serviceHost}'
-----
-
-. In the Camel Route, tell camel where to send the info to by inserting following destination code into to("");
-
-+
-[source,bash,subs="attributes+"]
-----
-amqp:topic:incomingorders?exchangePattern=InOnly&subscriptionDurable=false
-----
-
-. Open a new Terminal, login to openshift 
-+
-[source,bash,subs="attributes+"]
-----
-oc login https://api.cluster-diyii-YOUR_CLUSTER.YOUR_CLUSTER.open.redhat.com:6443
-----
-
-. In the same terminal, under StreamingLife/eventdriven/f
-exec the following command to run the Orderservice in OpenShift
-
-+
-[source,bash,subs="attributes+"]
-----
-./kamel run --name=order-event-service -d camel-swagger-java -d camel-jackson -d camel-undertow -d camel-ahc-ws -d camel-amqp  OrderService.java
-----
-
-. Look at the various CRs in the Operator menu, and when the integration is running, see the API Standard Doc generated automatically using the following URL
-+
-[source,bash,subs="attributes+"]
-----
-http://order-service-event-{user-username}.{openshift-app-host}/
-----
-
-. Go back to the codeready env, in your workspace, open InventoryService.java
-. Update the BROKER_URL with your addressspace service url (same from previous steps)
-
-. In the Camel Route, tell camel where to recv the info to by inserting following destination code into from("");
-
-+
-[source,bash,subs="attributes+"]
-----
-amqp:topic:incomingorders?subscriptionDurable=false
-----
-
-. Open a new Terminal, under StreamingLife/eventdriven
-  exec the following command to run the Inventory Service in OpenShift
-+
-[source,bash,subs="attributes+"]
-----
-./kamel run --name=inventory-service -d camel-jackson -d camel-ahc-ws -d camel-amqp  InventoryService.java
-----
-
-. Check the event notification dashboard, go to 
-+
-[source,bash,subs="attributes+"]
-----
-http://dilii-ui-{user-username}.{openshift-app-host}/
-----
-
-. Send in the order in Terminal
-+
-[source,bash,subs="attributes+"]
-----
-curl -X POST \
-  http://order-service-event-{user-username}.{openshift-app-host}/place \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -d '{
-	"orderId": 1,
-	"itemId": 1,
-	"orderItemName": "item",
-	"quantity": 1,
-	"price": 2,
-	"address": "hello",
-	"zipCode": 2222
-}'
-----
-
-. Check the result in event notification dashboard, also check your AMQ Online Console for number of msg out. 
-+
-[source,bash,subs="attributes+"]
-----
-http://dilii-ui-{user-username}.{openshift-app-host}/
-----
-
-. Go back to the codeready env, in your workspace, open SalesService.java
-. Update the BROKER_URL with your addressspace service url (same from previous steps)
-
-. Setup your AMQP endpoint configuration in Camel
-
-+
-[source,bash,subs="attributes+"]
-----
-AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
-getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
-----
-
-. In the Camel Route, tell camel where to recv the info to by inserting following destination code into from("");
-
-+
-[source,bash,subs="attributes+"]
-----
-amqp:topic:incomingorders?subscriptionDurable=false
-----
-
-. In the Camel Route, tell camel where to send the notification to by inserting following destination code into to("");
-in our case, we are sending websocket data to our dashboard
-
-+
-[source,bash,subs="attributes+"]
-----
-ahc-ws://dilii-uiws:8181/echo
-----
-
-. Open a new Terminal, under StreamingLife/eventdriven
-  exec the following command to run the Inventory Service in OpenShift
-+
-[source,bash,subs="attributes+"]
-----
-./kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
-----
-
-. Check the event notification dashboard, go to 
-+
-[source,bash,subs="attributes+"]
-----
-http://dilii-ui-{user-username}.{openshift-app-host}/
-----
-
-. Send in the order in Terminal
-+
-[source,bash,subs="attributes+"]
-----
-curl -X POST \
-  http://order-service-event-{user-username}.{openshift-app-host}/place \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -d '{
-	"orderId": 1,
-	"itemId": 1,
-	"orderItemName": "item",
-	"quantity": 1,
-	"price": 2,
-	"address": "hello",
-	"zipCode": 2222
-}'
-----
-
-. Go back to the codeready env, in your workspace, open ShippingService.java
-. Update the BROKER_URL with your addressspace service url (same from previous steps)
-. Setup your AMQP endpoint configuration in Camel
-
-+
-[source,bash,subs="attributes+"]
-----
-AMQPConnectionDetails amqpDetail = new AMQPConnectionDetails(BROKER_URL,USERNAME,PWD,false);
-getContext().getRegistry().bind("amqpDetail",AMQPConnectionDetails.class,amqpDetail);
-----
-
-. Lets create a camel route that recv from the Topic to websocket;
-
-+
-[source,bash,subs="attributes+"]
-----
-
-from("amqp:topic:incomingorders?subscriptionDurable=false")
-            .unmarshal(jacksonDataFormat)
-            .bean(SalesNotification.class, "getSalesNotification(${body['orderId']},${body['price']} )")
-            .marshal(salesDataFormat)
-            .convertBodyTo(String.class)
-            .log("Sales Notified ${body}")
-            .to("ahc-ws://dilii-uiws:8181/echo")
-            ;
-----
-
-
-. Open a new Terminal, under StreamingLife/eventdriven
-  exec the following command to run the Inventory Service in OpenShift
-+
-[source,bash,subs="attributes+"]
-----
-./kamel run --name=sales-service -d camel-jackson -d camel-ahc-ws -d camel-amqp SalesService.java
-----
-
-. Check the event notification dashboard, go to 
-+
-[source,bash,subs="attributes+"]
-----
-http://dilii-ui-{user-username}.{openshift-app-host}/
-----
-
-. Send in the order in Terminal
-+
-[source,bash,subs="attributes+"]
-----
-curl -X POST \
-  http://order-service-event-{user-username}.{openshift-app-host}/place \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -d '{
-	"orderId": 1,
-	"itemId": 1,
-	"orderItemName": "item",
-	"quantity": 1,
-	"price": 2,
-	"address": "hello",
-	"zipCode": 2222
-}'
-----
-
-. Check the result in event notification dashboard, also check your AMQ Online Console for number of msg out. 
-+
-[source,bash,subs="attributes+"]
-----
-http://dilii-ui-{user-username}.{openshift-app-host}/
-----
-
-[time=10]
-=== Challenge, add an International Shipping Dep that listens to the same notification and also display the result in the dashboard
-With following payload info
-. orderId;
-. itemId;
-. quantity;
-. address;
+[NOTE]
+====
+Be sure to switch to your _working_ project and the correct _store-ui_ folder.
+====
 
 
 [time=5]
