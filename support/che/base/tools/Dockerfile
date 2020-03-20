@@ -11,7 +11,7 @@ dnf clean all
 ADD oc /usr/bin
 
 # Set environment variables.
-ENV HOME /root
+ENV HOME /projects
 
 # Define working directory.
 WORKDIR /projects
