@@ -551,9 +551,11 @@ Your order should be back again!
 
 [time=10]
 [id="Create AMQ Topics"]
-=== Create your AMQ Online Topic 
+== Create your AMQ Online Topic 
 
-==== Create an Address Space
+TODO
+
+=== Create an Address Space
 
 Let's create an **Address Space** using the AMQ Online Operator. 
 
