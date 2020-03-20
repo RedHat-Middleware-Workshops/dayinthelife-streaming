@@ -31,18 +31,20 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 *Credentials*
 
+Use the following credentials to login into the web consoles:
 
-VIDEO INSTRUCTIONS FOR REFERENCE 
-https://drive.google.com/file/d/1N9iDwWWJGlWKitTtuihDZDfnae3kjO5h/view?usp=sharing
+* Username: {user-username}
+* Password: {user-password}
 
-[type=walkthroughResource,serviceName=amqonline]
+[type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
 ****
 * link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
+[type=walkthroughResource]
 .Red Hat OpenShift Developer Console
 ****
-* link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank]
+* link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 ****
 
 :sectnums:
@@ -76,11 +78,14 @@ You can also click on the name of the workspace in the center, and then click on
 +
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
 +
-This IDE is based on Eclipse Che, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
+[NOTE]
+====
+This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it. 
+
+You can close the _Problems_ and _Output_ views to clear space.
+====
 
 . The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we clone from the git repository.
-+
-TODO UPDATE SCREENSHOT
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
@@ -136,13 +141,13 @@ image::images/codeready-inventory.png[Inventory Service, role="integr8ly-img-res
 +
 Inventory service implements a simple _RESTful API_ using *Quarkus*. 
 
-. Open the `InventoryResource.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
+. Open the `InventoryResource.java` file under 'src/main/java/com/redhat/cloudnative' and check the provided code.
 +
 image::images/inventory-resource.png[InventoryResource.java, role="integr8ly-img-responsive"]
 +
 The REST service defines a simple _POST_ endpoint `/notify/order` to receive the `Order` notifications as JSON. This service calls the `InventoryNotification` service.
 
-. Open the `InventoryNotification.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
+. Open the `InventoryNotification.java` file under 'src/main/java/com/redhat/cloudnative' and check the provided code.
 +
 image::images/inventory-notification.png[InventoryNotification.java, role="integr8ly-img-responsive"]
 +
@@ -279,7 +284,7 @@ oc new-app inventory; oc expose svc/inventory
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
 +
 image::images/topology-inventory.png[Topology Inventory, role="integr8ly-img-responsive"]
 
@@ -303,7 +308,7 @@ The second element of the architecture is the _Invoice Service_ that handles the
 +
 image::images/codeready-invoice.png[Invoice Service, role="integr8ly-img-responsive"]
 
-. Open the `InvoiceResource.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
+. Open the `InvoiceResource.java` file under 'src/main/java/com/redhat/cloudnative' and check the provided code.
 +
 image::images/invoice-resource.png[InvoiceResource.java, role="integr8ly-img-responsive"]
 
@@ -346,7 +351,7 @@ oc new-app invoice; oc expose svc/invoice
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
 +
 image::images/topology-invoice.png[Topology Invoice, role="integr8ly-img-responsive"]
 
@@ -364,13 +369,13 @@ The thrid element of the architecture is the _Order Service_ that works as the f
 +
 image::images/codeready-order.png[Order Service, role="integr8ly-img-responsive"]
 
-. Open the `OrderServiceController.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
+. Open the `OrderServiceController.java` file under 'src/main/java/com/legacy/ordersservice' and check the provided code.
 +
 image::images/order-controller.png[OrderServiceController.java, role="integr8ly-img-responsive"]
 +
 You can see a traditional Spring Boot REST Controller with one endpoint receiveing JSON _POST_ calls to the `/place` path.
 
-. Open the `OrdersRepository.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
+. Open the `OrdersRepository.java` file under 'src/main/java/com/legacy/ordersservice' and check the provided code.
 +
 image::images/order-repository.png[OrderRepository.java, role="integr8ly-img-responsive"]
 +
@@ -416,7 +421,7 @@ oc new-app order; oc expose svc/order
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
 +
 image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"]
 
@@ -474,7 +479,7 @@ oc annotate route www-store --overwrite haproxy.router.openshift.io/timeout=3m
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
@@ -512,7 +517,7 @@ Congratulations! Your _Mango_ order was sucessful! Everything is fine and sunshi
 
 The application is working correctly, but what happens when a service _fails_? 
 
-. Get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank]
+. Get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
 . Click on the *inventory* service deployment. 
 +
@@ -539,7 +544,7 @@ image::images/couldnot-process.png[Could Not Process Error, role="integr8ly-img-
 The service was not able to fulfill the order was the inventory service was out, we even had to wait some time to get the response back because of timeouts.
 ====
 
-. Dismiss the error dialog and get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank]
+. Dismiss the error dialog and get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +
@@ -889,7 +894,7 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 [source,bash,subs="attributes+"]
 ----
 curl -v -X POST \
-  http://i-order.fuse:8080/place \
+  http://i-order.fuse-{user-username}.svc:8080/place \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d  \
@@ -1060,7 +1065,7 @@ image::images/codeready-events.png[Events Service, role="integr8ly-img-responsiv
 +
 Inventory service implements _Server-Side Events_ (SSE) using *Quarkus* and link:https://smallrye.io/smallrye-reactive-messaging/[SmallRye Reactive Messaging]. 
 
-. Open the `EventsResource.java` file under `src/main/java/com/redhat/eventdriven` and check the provided code.
+. Open the `EventsResource.java` file under 'src/main/java/com/redhat/eventdriven' and check the provided code.
 +
 image::images/events-resource.png[EventsResource.java, role="integr8ly-img-responsive"]
 +
@@ -1093,10 +1098,10 @@ This will be the base we will use to build our service.
 +
 [NOTE]
 ====
-Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS. This will enable an estable connection from the browser.
+Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable an estable connection from the browser.
 ====
 
-. Most of the configuration is located in a properties file where we can add the MicroProfile connection settings for the message broker. Open `application.properties` file in `src/main/resources/` and add the following configuration:
+. Most of the configuration is located in a properties file where we can add the MicroProfile connection settings for the message broker. Open `application.properties` file in 'src/main/resources/' and add the following configuration:
 +
 [source,java,subs="attributes+"]
 ----
@@ -1154,7 +1159,7 @@ oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "na
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window=_blank], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
 +
 image::images/topology-events.png[Topology Events, role="integr8ly-img-responsive"]
 
