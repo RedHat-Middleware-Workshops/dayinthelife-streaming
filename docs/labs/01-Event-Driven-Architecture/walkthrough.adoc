@@ -661,12 +661,11 @@ A green check mark will show that the resources were successfully deployed.
 [id="Fuse Online Services"]
 == Develop Fuse Online Services
 
+Fuse online works great //TODO
 
 === Access Fuse Online
 
 . Access the link:{fuse-url}[Fuse Online Console] and login using your credentials.
-+
-image::
 
 . Click *Allow selected permissions* to _Authorize Access_ to your account information.
 +
@@ -1171,6 +1170,8 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 [id="Update Frontend"]
 == Update Frontend UI for Event-driven
 
+Adding text //TODO
+
 ==== Add the new Async flavors to the UI
 
 . Navigate to the `store-ui` project and open the *product.handlebars* file under `views/`.
@@ -1209,7 +1210,7 @@ image::images/store-product.png[Store UI Product File, role="integr8ly-img-respo
 
 . Scroll all the way down to line *310* and paste the next lines between `/* TODO: PROCESSS EVENT RESPONSE */`:
 +
-[source,bash,subs="attributes+"]
+[source,json,subs="attributes+"]
 ----
               else {
                 new Noty({
@@ -1226,7 +1227,7 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
 
 . Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
 +
-[source,bash,subs="attributes+"]
+[source,json,subs="attributes+"]
 ----
         constructor() {
             this.source = new EventSource("//events-{user-username}.{openshift-app-host}/consume");
