@@ -1049,13 +1049,6 @@ image::images/fuse-add-constant.png[Add Constant Mapper, role="integr8ly-img-res
 image::images/fuse-inventory-constant.png[Iventory Constant, role="integr8ly-img-responsive"]
 
 
-
-
-
-=== Access Fuse Online
-=== Access Fuse Online
-
-
 *Congratulations!* Your services are out and running.
 
 [time=10]
