@@ -880,17 +880,11 @@ image::images/fuse-publish-api.png[Publis API Integration, role="integr8ly-img-r
 +
 image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-responsive"]
 
-It will take a moment for Fuse to deploy your integration. It will compile and package an Apache Camel route into a _container_ image to be deployed in OpenShift. Fuse does all this steps automatically, so you don't need to learn how to build and deploy a container on Kubernetes. Wait a few minutes for the process to complete.
-
+. It will take a moment for Fuse to deploy your integration. It will compile and package an Apache Camel route into a _container_ image to be deployed in OpenShift. Fuse does all this steps automatically, so you don't need to learn how to build and deploy a container on Kubernetes. Wait a few minutes for the process to complete.
++
 image::images/fuse-building-integration.png[Building Integration, role="integr8ly-img-responsive"]
 
-=== Test your Integration
-
-. Copy the *External URL* from your Fuse integration. We will use this endpoint to test the integration.
-+
-image::images/fuse-external-url.png[External URL, role="integr8ly-img-responsive"]
-
-. Get back to the CodeReady Workspaces IDE and issue the following command in the terminal window:
+. Test your integration. Get back to the CodeReady Workspaces IDE and issue the following command in the terminal window:
 +
 [source,bash,subs="attributes+"]
 ----
