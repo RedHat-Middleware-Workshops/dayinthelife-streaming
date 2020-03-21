@@ -249,7 +249,7 @@ kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apac
 
 . After the Camel-K command has finished deploying, it should run via the terminal without errors.
 +
-image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
+image::images/3.1.11-camel-k-inventory.png[3.1.11-camel-k-inventory, role="integr8ly-img-responsive"]
 
 . We can verify that orders are inserted into the database tables (premium and standard), by returning to the OpenShift Developer Console, selecting postgresql and clicking the running pod.
 +
