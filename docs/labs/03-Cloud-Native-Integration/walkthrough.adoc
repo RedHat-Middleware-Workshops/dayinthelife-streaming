@@ -113,21 +113,60 @@ Verify that you followed each step in the procedure above. If you are still havi
 == Provision Eclipse Che Workspace
 
 . Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
-. Login to Che, see workspace.
-. Get the AMQ Online address for userX. Update the config Map Create the config map.
+
+. Login to Che using your credentials (`{user-username}` and `{user-password}`).
++
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+
+. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
++
+image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
+
+. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/module-3/step1-simulator` folder.
++
+image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
+
+. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
++
+image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
+
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
++
+image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
+
+. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
++
+image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
+
+. Once you've logged into OpenShift via the CLI, run the following commands to update `edge-config` configmap.
 +
 [source,bash,subs="attributes+"]
 ----
+oc project user2
+cd /projects/FleurDeLune/support/projects/module-3/step-1-simulator
 oc create configmap edge-config  --from-file=edge.properties
-camel.component.amqp.configuration.connection-factory.remoteURI=amqp://messaging-yez4fz7xkj.workshop-operators.svc:5672?amqp.saslMechanisms=PLAIN
 ----
 
-. Start the simulator
+. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  Notice that this simple simulator fires every 5 seconds, creates a JSON object and sends it via AMQP to your AMQ Online **mytopic**.
++
+image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
+
+. Try deploying and running the *EdgeSimulator* Camel-K route by executing the following command
 +
 [source,bash,subs="attributes+"]
 ----
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
+
+. Give the deployment 2-5 minutes to run.  Navigate back to the *OpenShift Administrator Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
++
+image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
+
+[type=verification]
+Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=5]
 [id="summary"]
