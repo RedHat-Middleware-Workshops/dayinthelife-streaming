@@ -1,5 +1,4 @@
 :walkthrough: Cloud-Native Integration with EIPs
-:terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
 :che-url: http://che-che.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
 :user-password: openshift
@@ -46,12 +45,6 @@ Your password is: `{user-password}`
 .Openshift
 ****
 * link:{openshift-host}/[Open Console, window="_blank"]
-****
-
-[type=walkthroughResource]
-.Terminal
-****
-* link:{terminal-url}/[Open Terminal, window="_blank"]
 ****
 
 [time=5]
@@ -167,6 +160,78 @@ Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="setup-order-inventory"]
+== Setup Order Inventory with AMQ Streams
+
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"]
+
+. Login to OpenShift Developer Console using your credentials (`{user-username}` and `{user-password}`).
+
+. Select the *Developer* drop-down, then select *Project: user2*, *+Add* and click on the `From Catalog` link.
++
+image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
+
+. In the *Filter by keyword...* box, enter `Postgresql`, then select the **PostgreSQL (Ephemeral)** template.  Click the **Instantiate Template** button.
++
+image::images/3.1.5-postgres-template.png[3.1.5-postgres-template, role="integr8ly-img-responsive"]
+
+. Update the following template details leaving the remaining default values untouched, then click **Create**:
+** PostgreSQL Connection Username: *`user`*
+** PostgreSQL Connection Password: *`password`*
++
+image::images/3.1.6-postgres-details.png[3.1.6-postgres-details, role="integr8ly-img-responsive"]
+
+. Wait for the pod to deploy (30 seconds - 1 minute).  Click on *Topology* then click the `postgresql` pod.
++
+image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-responsive"]
+
+. Click on the *Terminal* tab and enter the following:
++
+[source,bash,subs="attributes+"]
+----
+psql -d sampledb -U user
+
+CREATE TABLE premium (
+	mmid bigint NOT NULL,
+	diameter integer NOT NULL,
+    weight decimal NOT NULL,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE standard (
+	weight decimal NOT NULL,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+----
+
+. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `step-2-inventory` project.  Examine the `Inventory.java` file and notice that we have 3 kafka topics that we need to setup.  Update those kafka endpoints with your correct username:
++
+** `{user-username}-premium`
+** `{user-username}-standard`
+** `{user-username}-utility`
++
+image::images/3.1.8-update-inventory-java.png[3.1.8-update-inventory-java, role="integr8ly-img-responsive"]
+
+. Return to the OpenShift Developer console, click **+Add** then click **From Catalog** link.
++
+image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
+
+. In the filter box type `topic` then select **Kafka topic**.  Click **Create**.  Replace the name `my-topic` with our topic name `{user-username}-premium`, and update the cluster name to `moon`.  Click **Create**.
++
+image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integr8ly-img-responsive"]
+
+. Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
 [time=5]
 [id="summary"]
