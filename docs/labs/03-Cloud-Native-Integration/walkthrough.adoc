@@ -233,6 +233,44 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 
 . Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
+. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **step-2-inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
++
+image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
+
+. Return to the terminal and execute the following commands:
++
+[source,bash,subs="attributes+"]
+----
+oc project user2
+cd /projects/FleurDeLune/support/projects/module-3/step-2-inventory
+oc create configmap sender-config  --from-file=kafka.properties
+kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java --dev
+----
+
+. After the Camel-K command has finished deploying, it should run via the terminal without errors.
++
+image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
+
+. We can verify that orders are inserted into the database tables (premium and standard), by returning to the OpenShift Developer Console, selecting postgresql and clicking the running pod.
++
+image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-responsive"]
+
+. Click on the *Terminal* tab and enter the following:
++
+[source,bash,subs="attributes+"]
+----
+psql -d sampledb -U user
+select * from standard;
+----
+
+. If the Inventory simulator worked correctly, you should see new rows inserted into the **standard** table.
+
+[type=verification]
+Were you able to successfully view records in the **standard** database table?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
 [time=5]
 [id="summary"]
 == Summary
