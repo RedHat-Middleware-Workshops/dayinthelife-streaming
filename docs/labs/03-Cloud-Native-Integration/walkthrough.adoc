@@ -1,6 +1,4 @@
 :walkthrough: Cloud-Native Integration with EIPs
-:terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
-:amqonline-url: https://console-workshop-operators.{openshift-app-host}/
 :che-url: http://che-che.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
 :user-password: openshift
@@ -28,7 +26,9 @@ To respond to business demands quickly and efficiently, you need a way to integr
 
 AMQ streams component makes Apache Kafka “OpenShift native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
 
-*Skipping The Lab*
+*Prerequisites*
+
+This lab assumes you have successfully completed Lab 1 & 2.
 
 *Credentials*
 
@@ -41,57 +41,41 @@ Your password is: `{user-password}`
 * link:{che-url}/[Open Eclipse Che, window="_blank"]
 ****
 
-[type=walkthroughResource]
-.AMQ
-****
-* link:{amqonline-url}/[Open AMQ Online, window="_blank"]
-****
-
 [type=walkthroughResource,serviceName=openshift]
 .Openshift
 ****
 * link:{openshift-host}/[Open Console, window="_blank"]
 ****
 
-[type=walkthroughResource]
-.Terminal
-****
-* link:{terminal-url}/[Open Terminal, window="_blank"]
-****
-
 [time=5]
 [id="provision-amq-topic"]
-== Provision AMQ Topic.
+== Provision AMQ Topic
 
-. Navigate to the AMQ console: {amqonline-url}[AMQ Online, window="_blank", id="{context}-3"].  Click *Log in with OpenShift*.
+In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+
+. Navigate to the {openshift-host}[OpenShift Admin Console, window="_blank", id="{context}-3"]
+
+. Login to OpenShift Admin Console using your credentials (`{user-username}` and `{user-password}`).
+
+. Select the *Administrator* drop-down, then select *Workloads*, *Config Maps* and click on the `amq-config` link.
++
+image::images/1.1.3-select-configmap.png[1.1.3-select-configmap, role="integr8ly-img-responsive"]
+
+. Scroll down towards the bottom of the page.  Copy/paste the `external.host`, `service.host` and `service.port.amqp` values to a text editor.  These are the messaging credentials created in Lab 1.  You will need these shortly.
++
+image::images/1.1.4-configmap.png[1.1.4-configmap, role="integr8ly-img-responsive"]
+
+. In your text editor, copy the `external.host` value and replace the word `messaging` with `https://console`.  This will becoming your *AMQ Online Console URL*.
++
+image::images/1.1.5-consoleurl.png[1.1.5-consoleurl, role="integr8ly-img-responsive"]
+
+. Copy the *AMQ Online Console URL* from the previous step to a new tab.  Click *Log in with OpenShift*.
 +
 image::images/1.1.1-login.png[1.1.1-login, role="integr8ly-img-responsive"]
 
 . Login to AMQ Online using your credentials (`{user-username}` and `{user-password}`). Click *Log In*.
 +
 image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
-
-. Click the *Create* button.
-+
-image::images/1.1.3-topic.png[1.1.3-topic, role="integr8ly-img-responsive"]
-
-. Create an Address Space using the following details, then click *Next* and finally *Finish*:
-
-** Namespace: *`{user-username}`*
-** Name: *`{user-username}`*
-** Type: *`Standard`*
-** Address space plan: *`standard-small`*
-** Authentication Service: *`standard-authservice`*
-+
-image::images/1.1.4-address-space.png[1.1.4-address-space, role="integr8ly-img-responsive"]
-
-. Wait a few minutes for the Address Space to provision in your OpenShift namespace. Once the *Status* turns to `Active`, click on the *{user-username}* link.
-+
-image::images/1.1.5-create-topic.png[1.1.5-create-topic, role="integr8ly-img-responsive"]
-
-. If you receive a certificate warning, click *Hide advanced* then *Proceed...*
-+
-image::images/1.1.6-cert-warning.png[1.1.6-cert-warning, role="integr8ly-img-responsive"]
 
 . Click the *+ Create* button to create the topic.
 +
@@ -122,23 +106,246 @@ Verify that you followed each step in the procedure above. If you are still havi
 == Provision Eclipse Che Workspace
 
 . Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
-. Login to Che, see workspace.
-. Get the AMQ Online address for userX. Update the config Map Create the config map.
+
+. Login to Che using your credentials (`{user-username}` and `{user-password}`).
++
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+
+. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
++
+image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
+
+. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/module-3/step1-simulator` folder.
++
+image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
+
+. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
++
+image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
+
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
++
+image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
+
+. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
++
+image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
+
+. Once you've logged into OpenShift via the CLI, run the following commands to update `edge-config` configmap.
 +
 [source,bash,subs="attributes+"]
 ----
+oc project user2
+cd /projects/FleurDeLune/support/projects/module-3/step-1-simulator
 oc create configmap edge-config  --from-file=edge.properties
-camel.component.amqp.configuration.connection-factory.remoteURI=amqp://messaging-yez4fz7xkj.workshop-operators.svc:5672?amqp.saslMechanisms=PLAIN
 ----
 
-. Start the simulator
+. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  Notice that this simple simulator fires every 5 seconds, creates a JSON object and sends it via AMQP to your AMQ Online **mytopic**.
++
+image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
+
+. Try deploying and running the *EdgeSimulator* Camel-K route by executing the following command
 +
 [source,bash,subs="attributes+"]
 ----
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
 
+. Give the deployment 2-5 minutes to run.  Navigate back to the *OpenShift Administrator Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
++
+image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
 
+[type=verification]
+Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="setup-order-inventory"]
+== Setup Order Inventory with AMQ Streams
+
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"]
+
+. Login to OpenShift Developer Console using your credentials (`{user-username}` and `{user-password}`).
+
+. Select the *Developer* drop-down, then select *Project: user2*, *+Add* and click on the `From Catalog` link.
++
+image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
+
+. In the *Filter by keyword...* box, enter `Postgresql`, then select the **PostgreSQL (Ephemeral)** template.  Click the **Instantiate Template** button.
++
+image::images/3.1.5-postgres-template.png[3.1.5-postgres-template, role="integr8ly-img-responsive"]
+
+. Update the following template details leaving the remaining default values untouched, then click **Create**:
+** PostgreSQL Connection Username: *`user`*
+** PostgreSQL Connection Password: *`password`*
++
+image::images/3.1.6-postgres-details.png[3.1.6-postgres-details, role="integr8ly-img-responsive"]
+
+. Wait for the pod to deploy (30 seconds - 1 minute).  Click on *Topology* then click the `postgresql` pod.
++
+image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-responsive"]
+
+. Click on the *Terminal* tab and enter the following:
++
+[source,bash,subs="attributes+"]
+----
+psql -d sampledb -U user
+
+CREATE TABLE premium (
+	mmid bigint NOT NULL,
+	diameter integer NOT NULL,
+    weight decimal NOT NULL,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE standard (
+	weight decimal NOT NULL,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
+----
+
+. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `step-2-inventory` project.  Examine the `Inventory.java` file and notice that we have 3 kafka topics that we need to setup.  Update those kafka endpoints with your correct username:
++
+** `{user-username}-premium`
+** `{user-username}-standard`
+** `{user-username}-utility`
++
+image::images/3.1.8-update-inventory-java.png[3.1.8-update-inventory-java, role="integr8ly-img-responsive"]
+
+. Return to the OpenShift Developer console, click **+Add** then click **From Catalog** link.
++
+image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
+
+. In the filter box type `topic` then select **Kafka topic**.  Click **Create**.  Replace the name `my-topic` with our topic name `{user-username}-premium`, and update the cluster name to `moon`.  Click **Create**.
++
+image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integr8ly-img-responsive"]
+
+. Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
+
+. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **step-2-inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
++
+image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
+
+. Return to the terminal and execute the following commands:
++
+[source,bash,subs="attributes+"]
+----
+oc project user2
+cd /projects/FleurDeLune/support/projects/module-3/step-2-inventory
+oc create configmap sender-config  --from-file=kafka.properties
+kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java --dev
+----
+
+. After the Camel-K command has finished deploying, it should run via the terminal without errors.
++
+image::images/3.1.11-camel-k-inventory.png[3.1.11-camel-k-inventory, role="integr8ly-img-responsive"]
+
+. We can verify that orders are inserted into the database tables (premium and standard), by returning to the OpenShift Developer Console, selecting postgresql and clicking the running pod.
++
+image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-responsive"]
+
+. Click on the *Terminal* tab and enter the following:
++
+[source,bash,subs="attributes+"]
+----
+psql -d sampledb -U user
+----
++
+[source,bash,subs="attributes+"]
+----
+select * from standard;
+----
+
+. If the Inventory simulator worked correctly, you should see new rows inserted into the **standard** table.
+
+[type=verification]
+Were you able to successfully view records in the **standard** database table?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="setup-data-lake"]
+== Setup Data Lake with caching
+
+. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/support/projects/module-3/step-3-shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
++
+image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img-responsive"]
+
+. Lets go ahead and install both the secret and Infinispan cluster (the operator is already running for us).  Via the terminal console, execute the following commands:
++
+[source,bash,subs="attributes+"]
+----
+cd /projects/FleurDeLune/support/projects/module-3/step-3-shipping
+oc project user2
+oc create -f connect-secret.yaml
+oc create -f jdg-cluster.yaml
+----
+
+. Navigate back to the OpenShift Developer console, select **Topology*, then click on the `example-infinispan` container.  Verify the pod has started and is running.
++
+image::images/4.1.2-check-infinispan.png[4.1.2-check-infinispan, role="integr8ly-img-responsive"]
+
+. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `kafka.brokers` and `infinispan-configuration.hosts` URL to match your environment.  The kafka broker URL you can reuse from `kafka-properties` in the `step-2-inventory` folder.  For the infinispan URL, just update the `user1` value to `{user-username}`.
++
+image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img-responsive"]
+
+. Via the terminal, execute the following command to deploy the config map:
++
+[source,bash,subs="attributes+"]
+----
+oc apply -f premiumshipping-config.yaml
+----
+
+. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Update the kafka topic name to `{user-username}-premium`.
++
+image::images/4.1.6-update-kafka-topic.png[4.1.6-update-kafka-topic, role="integr8ly-img-responsive"]
+
+. We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `kafka.brokers` and `infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
++
+image::images/4.1.7-update-standard-config.png[4.1.7-update-standard-config, role="integr8ly-img-responsive"]
+
+. Via the terminal, execute the following command to deploy the config map:
++
+[source,bash,subs="attributes+"]
+----
+oc apply -f standardshipping-config.yaml
+----
+
+. Now that we have the config map deployed, let's take a look at `StandardShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with standard shipments. Update the kafka topic name to `{user-username}-standard`.
++
+image::images/4.1.8-standard-java-update.png[4.1.8-standard-java-update, role="integr8ly-img-responsive"]
+
+. Now that we have updated all the config files and code, we need to test our Camel-K routes.  Return to the terminal and execute the following command:
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap premiumshipping-config PremiumShipping.java --dev
+----
+
+. Ensure that the Camel-K command ran without error and connections to Infinispan and Kafka were successful.  You can use *Ctrl-C* to terminate the Camel-K process.  Repeat the same for the StandardShipping flow:
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap standardshipping-config StandardShipping.java --dev
+----
+
+[type=verification]
+Were you able to successfully execute both the Standard and Premium shipping Camel-K routes without error?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=5]
 [id="summary"]
