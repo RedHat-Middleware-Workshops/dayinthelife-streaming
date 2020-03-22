@@ -582,7 +582,7 @@ Your order should be back again!
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topic 
 
-TODO
+*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 
 === Create an Address Space
 
@@ -657,12 +657,20 @@ image::images/addressspace-active.png[active, role="integr8ly-img-responsive"]
 +
 image::images/addressspace-console.png[console, role="integr8ly-img-responsive"]
 
-. Open a new browser tab and use the hostname like this format *https://{{ externalHost }}* to open the AMQ web console. You will need to login with your username and password. 
+. Open a new browser tab and use the hostname like this format *https://{{externalHost}}* to open the AMQ web console. You will need to login with your username and password. 
 +
+--
+[IMPORTANT]
+====
+Do you notice the auto generated identifier for your _address space_? Take note of that value and *write it down* as we will need to use it later to access the service from our clients.
+====
 [NOTE]
 ====
-Note the use of _HTTPS_. You will need to enter your OpenShift console credentials again.
+Observe the use of _HTTPS_ as the protocol for the URL.
+
+You will need to enter your OpenShift console credentials again.
 ====
+--
 
 . In the main AMQ web console screen, click on the *+ Create* button to start adding the required topics.
 +
@@ -694,6 +702,12 @@ A green check mark will show that the resources were successfully deployed.
 ====
 
 *Well done!* You now have a running AMQ with two topics called `incomingorders` and `notifications`.
+
+[type=verification]
+Did you remember to write down the address space identifier?
+
+[type=verificationFail]
+{standard-fail-text}
 
 [time=30]
 [id="Fuse Online Services"]
