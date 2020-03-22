@@ -53,6 +53,8 @@ Your password is: `{user-password}`
 
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
+=== Access OpenShift Console
+
 . Navigate to the {openshift-host}[OpenShift Admin Console, window="_blank", id="{context}-3"]
 
 . Login to OpenShift Admin Console using your credentials (`{user-username}` and `{user-password}`).
@@ -343,6 +345,80 @@ kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.
 
 [type=verification]
 Were you able to successfully execute both the Standard and Premium shipping Camel-K routes without error?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="setup-supply-console"]
+=== Create a Shipping Console
+
+== Deploy RESTful Interface
+
+. Now that we have our backend services running, we can focus on creating a Shipping Console UI.  First step is to update the `shippingconsole-config.yaml` config map with the correct InfiniSpan hostname.  Find  **camel.component.infinispan.configuration.hosts** and update the service to: example-infinispan.{user-username}.svc:11222.
++
+image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-responsive"]
+
+. Add the config map to OpenShift using the following command (via the terminal):
++
+[source,bash,subs="attributes+"]
+----
+cd /projects/FleurDeLune/support/projects/module-3/step-4-display/
+oc project user2
+oc apply -f shippingconsole-config.yaml
+----
+
+. Now that we have the configmap updated, take a look at **ConsoleService.java**.  Notice that we use Camel RESTDsl to expose a bunch of RESTFul queries around our infinispan cache.  Let's try running this interface using the following command:
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow  --configmap shippingconsole-config ConsoleService.java --dev
+----
+
+. Now that we have the Camel-K interface running, we can view the content in our Data Lake.  First, navigate here to see the Standard shipments: `http://console-service-{user-username}.{openshift-app-host}/standard` and here for our Premium shipments: `http://console-service-{user-username}.{openshift-app-host}/premium`.
+
+== Setup Grafana Dashboard
+
+. First of all, we need to deploy the Grafana template to our namespace.  Execute the following command via the CLI terminal:
++
+[source,bash,subs="attributes+"]
+----
+oc apply -f grafana.yaml
+oc expose svc grafana
+----
+
+. Now that we have Grafana running, navigate back to the OpenShift Administrator console and select **Networking > Routes**.  Select the *Grafana* route.
++
+image::images/6.1.1-grafana-route.png[6.1.1-grafana-route, role="integr8ly-img-responsive"]
+
+. Login to Grafana using the credentials `admin/admin`.  If prompted to change your password, set it back to `admin` again.
+
+. Now that you are logged into Grafana, we need to create a datasource. Click the `Create your first data source link`, then select **PostgreSQL**.
++
+image::images/6.1.3-select-datasource.png[6.1.3-select-datasource, role="integr8ly-img-responsive"]
+
+. In the DataSource entry screen, enter the following:
+** Name: *`SampleDB`*
+** Host: *`postgresql:5432`*
+** Database: *`sampledb`*
+** User: *`user`*
+** Password: *`password`*
+** SSL Mode: *`disable`*
+
+. Click **Save & Test**
++
+image::images/6.1.4-postgres-save.png[6.1.4-postgres-save, role="integr8ly-img-responsive"]
+
+. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to Eclipse Che and copy the content from `step-4-display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Load**.
++
+image::images/6.1.5-load-json.png[6.1.5-load-json, role="integr8ly-img-responsive"]
+
+. If everything has been running correctly, you should see some Marshmallow distribution and weight metrics displayed on your graph.
++
+image::images/6.1.6-graph-metrics.png[6.1.6-graph-metrics, role="integr8ly-img-responsive"]
+
+[type=verification]
+Were you able to successfully view the FleurDeLune metrics?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
