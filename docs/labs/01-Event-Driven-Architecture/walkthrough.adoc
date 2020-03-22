@@ -67,23 +67,27 @@ image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-resp
 
 . Once you have logged in and authorize access to your user account, you will land in your personal CodeReady dashboard. A new workspace should be ready to use. Click on the workspace with the _green_ circle on the left menu bar under *RECENT WORKSPACES*.
 +
+--
 image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
-+
+
 [NOTE]
 ====
 You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
 ====
+--
 
 . The workspace will start loading and, the first time, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the welcome screen and click on the Explorer button on the left side bar.
 +
+--
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
-+
+
 [NOTE]
 ====
 This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it. 
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
+--
 
 . The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we clone from the git repository.
 +
@@ -101,13 +105,14 @@ image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-res
 
 . Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login issue the following command:
 +
+--
 [source,bash,subs="attributes+"]
 ----
 oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
 ----
-+
+
 You should see something like the following (the project names may be different):
-+
+
 [source,bash,subs="attributes+"]
 ----
 Login successful.
@@ -124,6 +129,7 @@ You have access to the following projects and can switch between them with 'oc p
 Using project "shared-db-earth".
 Welcome! See 'oc help' to get started.
 ----
+--
 
 Now you are ready to start working on the application services.
 
@@ -164,6 +170,7 @@ mvn clean compile quarkus:dev -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/invento
 
 . Look at the output, it is just maven downloading dependencies that should end like the following:
 +
+--
 [source,bash,subs="attributes+"]
 ----
 ...
@@ -173,14 +180,17 @@ Listening for transport dt_socket at address: 5005
 2020-03-18 17:33:14,294 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy, resteasy-jackson]
 ----
 
+[NOTE]
+====
+Don't close the dialog that appears while running the server!
+
+If you did so, stop the process with `ctrl+c` or `cmd + c` and re-run the command again.
+====
+--
+
 . CodeReady should detect you are running your Quarkus application and is opening the `8080` port. Click on the *Open Link* button to open the CodeReady embedded browser.
 +
 image::images/inventory-mvn-local.png[Maven Command Local, role="integr8ly-img-responsive"]
-+
-[NOTE]
-====
-Dismiss other dialogs that might showup by clicking in the _close_ button on the top right.
-====
 
 . Take a look at the _Inventory_ page on the left side. 
 +
@@ -611,12 +621,19 @@ spec:
 +
 image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
 
-. The AMQ operator will check the new resource and will begin to prepare all required components. Wait for the *Address Space* to deploy the infrastructure until the status change _Active_. 
+. The AMQ operator will check the new resource and will begin to prepare all required components. 
 +
+--
+[IMPORTANT]
+====
+Wait for the *Address Space* to deploy the infrastructure until the status change to _Active_ and shows the *green* checkmark. 
+====
+
 [NOTE]
 ====
 This could take a few minutes to finish, if looks like taking longer refresh the page.
 ====
+--
 
 . Click in the *amq* link to show the Overview Page.
 +
@@ -696,7 +713,7 @@ image::images/fuse-amqp-broker.png[AMQP Message Broker Connector, role="integr8l
 +
 [source,none,subs="attributes+"]
 ----
-amqp://{your-host.svc}
+amqp://{your-host.svc}?requestTimeout=1000
 ----
 +
 image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
@@ -1082,6 +1099,7 @@ This will be the base we will use to build our service.
 
 . Now we need to add the `/consume` Path to receive the SSE requests. Add the following code below the `/* TODO add consume Path */` marker:
 +
+--
 [source,java,subs="attributes+"]
 ----
     @GET
@@ -1095,11 +1113,12 @@ This will be the base we will use to build our service.
         });
     }
 ----
-+
+
 [NOTE]
 ====
 Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable an estable connection from the browser.
 ====
+--
 
 . Most of the configuration is located in a properties file where we can add the MicroProfile connection settings for the message broker. Open `application.properties` file in 'src/main/resources/' and add the following configuration:
 +
