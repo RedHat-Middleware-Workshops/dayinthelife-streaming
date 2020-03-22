@@ -1,15 +1,20 @@
+// Attributes
 :walkthrough: Event Driven Architecture
+:title: Lab 1 - {walkthrough}
+:user-password: openshift
+:standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+
+// URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-citizen-integrator-track-lab01/
 :codeready-url: http://che-che.{openshift-app-host}/
 :fuse-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
-:user-password: openshift
 
 ifdef::env-github[]
 :next-lab-url: ../lab02/walkthrough.adoc
 endif::[]
 
 [id='event-driven-architecture']
-= Lab 1 - Event Driven Architecture
+= {title}
 
 Since the acquisition, the International Inc.’s Development team has been pressured to make the transition smooth quickly. They have decided to start with a small notification project where it notifies both internal departments and external partners when an order has been placed. In this lab you will learn how to use Camel K to establish a simple Event Driven call. The old application uses traditional API calls to trigger system modification, your job is to use Camel K to re-write the notification application rather then using pure REST implementation convert it to event driven architecture.
 
@@ -499,6 +504,12 @@ image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"
 . Review the succesful deployment by clicking on the *Open URL* icon on the deployment. You should access the online store!
 +
 image::images/www-store.png[Store Web Page, role="integr8ly-img-responsive"]
+
+[type=verification]
+Can you see those tasty desserts?
+
+[type=verificationFail]
+{standard-fail-text}
 
 [time=10]
 [id="Test Webapp"]
