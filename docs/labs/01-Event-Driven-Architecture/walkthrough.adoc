@@ -932,9 +932,9 @@ image::images/fuse-map-response.png[Map Response, role="integr8ly-img-responsive
 
 . Click the *Publish* button.
 +
-image::images/fuse-publish-api.png[Publis API Integration, role="integr8ly-img-responsive"]
+image::images/fuse-publish-api.png[Publish API Integration, role="integr8ly-img-responsive"]
 
-. Type `order` in the *Name* and `Order API to Event` in the *Description* fields. Then click the *Save and Publish* button to deploy your integration.
+. Type `events` in the *Name* and `Order API to Event` in the *Description* fields. Then click the *Save and Publish* button to deploy your integration.
 +
 image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-responsive"]
 
@@ -947,7 +947,7 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 [source,bash,subs="attributes+"]
 ----
 curl -v -X POST \
-  http://i-order.fuse-{user-username}.svc:8080/place \
+  http://i-events.fuse-{user-username}.svc:8080/place \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d  \
@@ -975,7 +975,7 @@ curl -v -X POST \
 < Date: Fri, 20 Mar 2020 15:17:28 GMT
 < 
 * Curl_http_done: called premature == 0
-* Connection #0 to host i-order.fuse left intact
+* Connection #0 to host i-events.fuse-{user-username} left intact
 ----
 
 *Excelent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
@@ -1361,7 +1361,7 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 [id="Update Frontend"]
 == Update Frontend UI for Event-driven
 
-Adding text //TODO
+The current _store frontend application_ is currently handling only the *REST API* flavors. We will need to add the call to our new *EDA* options. Follow the next tasks to _add the HTML_ for the new flavors, _receive and display_ the async notifications and to correctly post the orders in the _eventing flow_.
 
 ==== Add the new Async flavors to the UI
 
@@ -1412,12 +1412,13 @@ image::images/store-product.png[Store UI Product File, role="integr8ly-img-respo
               }
 ----
 
-. Next, open the *events.handlebars* under `views/partials`.
+. Next, open the *events.handlebars* under `views/partials` folder.
 +
 image::images/store-events.png[Store UI Events File, role="integr8ly-img-responsive"]
 
 . Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
 +
+--
 [source,json,subs="attributes+"]
 ----
         constructor() {
@@ -1443,11 +1444,19 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
         }
 ----
 
+[NOTE]
+====
+The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSource] interface is web content's interface to server-sent events. An EventSource instance opens a persistent connection to an HTTP server, which sends events in text/event-stream format. 
+
+Unlike link:https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API[WebSockets], server-sent events are unidirectional; that is, data messages are delivered in one direction, from the server to the clients browser.
+====
+--
+
 . Now, open the *index.js* file at the top level.
 +
-image::images/store-index.png[Store UI Index File, role="integr8ly-img-responsive"]
+image::images/codeready-store-index.png[Store UI Index File, role="integr8ly-img-responsive"]
 
-. Paste the following code between the `/* TODO add POST/EVENT method handling */ ` markers:
+. Navigte to Line *88* and paste the following code between the `/* TODO add POST/EVENT method handling */` markers:
 +
 [source,javascript,subs="attributes+"]
 ----
@@ -1484,9 +1493,37 @@ npm run openshift
 
 [NOTE]
 ====
-Be sure to switch to your _working_ project and the correct _store-ui_ folder.
+Be sure to switch to your _working_ `user1` project and the correct _store-ui_ folder.
 ====
 --
+
+. Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo: 
++
+image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
+
+*Excelent!* You are ready to test your new architecture.
+
+[time=5]
+[id="test-eda"]
+== Testing the new architecture
+
+Remeber what happens when a service is down in our _traditional_ REST architecture? We get an error telling us that we were not able to process the order. Let's check what happens when we introduce microservices decoupling using events.
+
+=== Test new flavors
+
+Let's check how the stores looks like now with the new flavors. 
+
+. In the link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
++
+image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
+
+. With the open application, click on *PLACE ORDER!*
++
+image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
+
+. Can you see the new flavors we added? This time order a sweet _event-driven_ strawberry one.
++
+image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
 [time=5]
 [id="summary"]
