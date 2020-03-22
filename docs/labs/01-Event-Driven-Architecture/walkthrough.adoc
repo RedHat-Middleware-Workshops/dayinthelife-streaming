@@ -324,6 +324,7 @@ image::images/codeready-invoice.png[Invoice Service, role="integr8ly-img-respons
 +
 image::images/invoice-resource.png[InvoiceResource.java, role="integr8ly-img-responsive"]
 
+
 The REST service defines a simple _POST_ endpoint `/notify/order` as we did with _Inventory_ to receive the `Order` notifications as JSON.  This service calls the `processOrder` method after a `30` seconds delay. As we mentioned before, it just creates a JSON Object with a random `InvoiceId` and adds the current _timestamp_.
 
 === Deploy to OpenShift
