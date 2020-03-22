@@ -384,6 +384,10 @@ kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jacks
 [source,bash,subs="attributes+"]
 ----
 oc apply -f grafana.yaml
+----
++
+[source,bash,subs="attributes+"]
+----
 oc expose svc grafana
 ----
 
@@ -427,11 +431,11 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you used Debezium CDC connectors to react to change events from SQL Server and send them to Apache Kafka running on OpenShift through Red Hat AMQ streams.
+In this lab you exposed inventory data via RestDSL, cached data from a Data Lake using InfiniSpan, then graphed the results using live data metrics in Grafana.
 
-Open source connectors enable integrations with your local systems landscape. Explore Kafka, Camel, and Debezium connectors to connect APIs and services for event-driven application architectures (EDA). Red Hat offers supported versions of these connectors via AMQ Streams and Fuse.
+Open source connectors enable integrations with your local systems landscape. Explore InfiniSpan, Camel-K, and Grafana to connect APIs and services for event-driven application architectures (EDA). Red Hat offers supported versions of these connectors via Fuse and DataGrid.
 
-You can now proceed to link:{next-lab-url}[Lab 3].
+You can now proceed to link:{next-lab-url}[Lab 4].
 
 [time=4]
 [id="further-reading"]
