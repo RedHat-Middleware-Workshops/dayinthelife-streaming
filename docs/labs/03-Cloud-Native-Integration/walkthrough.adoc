@@ -310,7 +310,7 @@ oc apply -f premiumshipping-config.yaml
 
 . Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Update the kafka topic name to `{user-username}-premium`.
 +
-image::images/4.1.6-kafka-topic.png[4.1.6-kafka-topic, role="integr8ly-img-responsive"]
+image::images/4.1.6-update-kafka-topic.png[4.1.6-update-kafka-topic, role="integr8ly-img-responsive"]
 
 . We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `kafka.brokers` and `infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
 +
