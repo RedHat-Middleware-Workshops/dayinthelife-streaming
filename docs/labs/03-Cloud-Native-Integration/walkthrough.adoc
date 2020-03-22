@@ -28,7 +28,7 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 *Prerequisites*
 
-This lab assumes you have successfully completed Lab 1.
+This lab assumes you have successfully completed Lab 1 & 2.
 
 *Credentials*
 
@@ -260,6 +260,9 @@ image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-respo
 [source,bash,subs="attributes+"]
 ----
 psql -d sampledb -U user
+----
++
+[source,bash,subs="attributes+"]
 select * from standard;
 ----
 
@@ -267,6 +270,78 @@ select * from standard;
 
 [type=verification]
 Were you able to successfully view records in the **standard** database table?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="setup-data-lake"]
+== Setup Data Lake with caching
+
+. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/support/projects/module-3/step-3-shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
++
+image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img-responsive"]
+
+. Lets go ahead and install both the secret and Infinispan cluster (the operator is already running for us).  Via the terminal console, execute the following commands:
++
+[source,bash,subs="attributes+"]
+----
+cd /projects/FleurDeLune/support/projects/module-3/step-3-shipping
+oc project user2
+oc create -f connect-secret.yaml
+oc create -f jdg-cluster.yaml
+----
+
+. Navigate back to the OpenShift Developer console, select **Topology*, then click on the `example-infinispan` container.  Verify the pod has started and is running.
++
+image::images/4.1.2-check-infinispan.png[4.1.2-check-infinispan, role="integr8ly-img-responsive"]
+
+. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `kafka.brokers` and `infinispan-configuration.hosts` URL to match your environment.  The kafka broker URL you can reuse from `kafka-properties` in the `step-2-inventory` folder.  For the infinispan URL, just update the `user1` value to `{user-username}`.
++
+image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img-responsive"]
+
+. Via the terminal, execute the following command to deploy the config map:
++
+[source,bash,subs="attributes+"]
+----
+oc apply -f premiumshipping-config.yaml
+----
+
+. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Update the kafka topic name to `{user-username}-premium`.
++
+image::images/4.1.6-kafka-topic.png[4.1.6-kafka-topic, role="integr8ly-img-responsive"]
+
+. We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `kafka.brokers` and `infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
++
+image::images/4.1.7-update-standard-config.png[4.1.7-update-standard-config, role="integr8ly-img-responsive"]
+
+. Via the terminal, execute the following command to deploy the config map:
++
+[source,bash,subs="attributes+"]
+----
+oc apply -f standardshipping-config.yaml
+----
+
+. Now that we have the config map deployed, let's take a look at `StandardShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with standard shipments. Update the kafka topic name to `{user-username}-standard`.
++
+image::images/4.1.8-standard-java-update.png[4.1.8-standard-java-update, role="integr8ly-img-responsive"]
+
+. Now that we have updated all the config files and code, we need to test our Camel-K routes.  Return to the terminal and execute the following command:
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap premiumshipping-config PremiumShipping.java --dev
+----
+
+. Ensure that the Camel-K command ran without error and connections to Infinispan and Kafka were successful.  You can use *Ctrl-C* to terminate the Camel-K process.  Repeat the same for the StandardShipping flow:
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap standardshipping-config StandardShipping.java --dev
+----
+
+[type=verification]
+Were you able to successfully execute both the Standard and Premium shipping Camel-K routes without error?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
