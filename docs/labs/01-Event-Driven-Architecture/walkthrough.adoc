@@ -715,6 +715,12 @@ Did you remember to write down the address space identifier?
 
 *Red Hat Fuse Online* (part of _Red Hat Fuse_) is an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully cloud-hosted toolchain and runtime, available right from your browser.
 
+[type=taskResource]
+.Fuse Online
+****
+* link:{fuse-url}[Fuse Online Console]
+****
+
 === Access Fuse Online
 
 . Access the link:{fuse-url}[Fuse Online Console] and login using your credentials.
