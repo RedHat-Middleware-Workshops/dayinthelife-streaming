@@ -257,15 +257,17 @@ Now using project "{user-username}" on server "https://172.30.0.1:443".
 
 . Create a _Build Configuration_ for your application using the OpenJDK base container image:
 +
+--
 [source,bash,subs="attributes+"]
 ----
 oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=inventory -l app=inventory -n {user-username}
 ----
-+
+
 [NOTE]
 ====
 This build uses the new link:https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift/index[Red Hat OpenJDK Container Image], providing foundational software needed to run Java applications, while staying at a reasonable size.
 ====
+--
 
 . Start and watch the build, which will take about minutes to complete:
 +
@@ -1272,18 +1274,50 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
         }
 ----
 
+. Now, open the *index.js* file at the top level.
++
+image::images/store-index.png[Store UI Index File, role="integr8ly-img-responsive"]
+
+. Paste the following code between the `/* TODO add POST/EVENT method handling */ ` markers:
++
+[source,javascript,subs="attributes+"]
+----
+app.post('/order/event', json(), async (req, res, next) => {
+  log.info('placing order with body: %j', req.body)
+  try {
+    const response = await http.post(new URL('/place', ORDERS_EVENT_BASE_URL ? ORDERS_EVENT_BASE_URL : "http://i-events.fuse-{user-username}.svc:8080"), {
+      json: true,
+      body: req.body
+    })
+
+    if (!req.session.orders) {
+      req.session.orders = []
+    }
+
+    // Store the order result in the user session
+    // Can be used to render order history or similar
+    req.session.orders.push(response.body)
+
+    res.json(response.body)
+  } catch (e) {
+    next(boom.internal('error placing order', e))
+  }
+})
+----
+
 . Finally, get back to the terminal window and start a new build with this changes.
 +
+--
 [source,bash,subs="attributes+"]
 ----
 npm run openshift
 ----
-+
+
 [NOTE]
 ====
 Be sure to switch to your _working_ project and the correct _store-ui_ folder.
 ====
-
+--
 
 [time=5]
 [id="summary"]
