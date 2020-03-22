@@ -263,6 +263,7 @@ psql -d sampledb -U user
 ----
 +
 [source,bash,subs="attributes+"]
+----
 select * from standard;
 ----
 
