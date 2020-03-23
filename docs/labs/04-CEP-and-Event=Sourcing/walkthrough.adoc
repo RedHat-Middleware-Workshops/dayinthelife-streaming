@@ -462,7 +462,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common appoarch as one of event streaming technique-- Event sourcing. You have been introduced to implemented with ease with Camel-K and Red Hat Streams. 
+In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common appoarch as one of event streaming technique-- Event sourcing. You have been introduced to implement with ease using Camel-K and Red Hat Streams. 
 
 Event driven is also the fundation for real time behaviour detection. You used Kafka Streams in conjuction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data. 
 
