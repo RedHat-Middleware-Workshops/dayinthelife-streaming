@@ -153,6 +153,15 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 EOF
 ----
 
+
+If the last command was successful you should get the following output as return:
+
+[source,json,subs="attributes+"]
+----
+{"name":"orders-connector","config":{"connector.class":"io.debezium.connector.sqlserver.SqlServerConnector","database.hostname":"mssql-server-linux.shared-db-earth.svc","database.port":"1433","database.user":"sa","database.password":"Password!","database.dbname":"InternationalDB","database.server.name":"{user-username}.earth","table.whitelist":"dbo.Orders","database.history.kafka.bootstrap.servers":"earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092","database.history.kafka.topic":"{user-username}.earth.dbhistory","name":"orders-connector"},"tasks":[],"type":"source"}
+----
+
+
 [time=5]
 [id="deploying-apache-kafka"]
 == Deploying Apache Kafka on OpenShift
