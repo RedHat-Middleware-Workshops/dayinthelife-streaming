@@ -992,7 +992,7 @@ image::images/fuse-extensions.png[Extension Customizations, role="integr8ly-img-
 +
 image::images/fuse-import-extension.png[Import Extension, role="integr8ly-img-responsive"]
 
-. Download the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-custom-1.0.0.jar[Syndesis Custom Extension] from the company's github repository. Save it to your local system.
+. Download the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-custom-1.0.0.jar[Syndesis Custom Extension]  and the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-delay-1.0.0.jar[Syndesis Delay Extension] from the company's github repository. Save them to your local system.
 
 . Click in the _dotted border_ rectangle and select the `syndesis-extension-custom-1.0.0.jar` file from your *Downloads* folder.
 +
@@ -1002,7 +1002,9 @@ image::images/fuse-import-jar.png[Import Extension Jar, role="integr8ly-img-resp
 +
 image::images/fuse-extension-import.png[Import Extension Review, role="integr8ly-img-responsive"]
 
-Your extension should now be listed in the *Extensions* page.
+. Repeat again the last tasks and this time select the `syndesis-extension-delay-1.0.0.jar` file from your *Downloads* folder.
+
+Your extensions should now be listed in the *Extensions* page.
 
 image::images/fuse-extensions-list.png[Extension Page, role="integr8ly-img-responsive"]
 
@@ -1197,9 +1199,21 @@ image::images/fuse-connection-assignuuid.png[Invoice Add AssignUUID, role="integ
 
 . Click *Next* to get back to the flow.
 
+. Click the *+* button to add a delay step in the service between the _Subscribe for messages_ and the _AssignUUID_.
++
+image::images/fuse-add-step.png[Invoice Add Step, role="integr8ly-img-responsive"]
+
+. Scroll down and select *Delay* from the connection options.
++
+image::images/fuse-connection-delay.png[Invoice Add Delay, role="integr8ly-img-responsive"]
+
+. Type in `30000` in the delay time to mimic the payment processing time for the service. Then click *Next* to return to the service flow.
++
+image::images/fuse-delay-time.png[Invoice Delay Time, role="integr8ly-img-responsive"]
+
 . Time to add a mapper to assign the values of the output message. Click the *+* button between *AssignUUID* and *Publish messages*.
 +
-image::images/fuse-inventory-mapper.png[Invoice Add Mapper, role="integr8ly-img-responsive"]
+image::images/fuse-invoice-mapper.png[Invoice Add Mapper, role="integr8ly-img-responsive"]
 
 . Click on *Data Mapper*.
 +
@@ -1227,7 +1241,7 @@ image::images/fuse-invoice-mapping.png[Invoice Mapping, role="integr8ly-img-resp
 
 . Click on the *Publish* button.
 +
-image::images/fuse-inventory-publish.png[Invoice Publish, role="integr8ly-img-responsive"]
+image::images/fuse-invoice-publish.png[Invoice Publish, role="integr8ly-img-responsive"]
 
 . Fill in the information for saving this integration. Type `invoice` in the *Name* and `Invoice status` for *Description*. Finally click *Save and publish* button.
 +
