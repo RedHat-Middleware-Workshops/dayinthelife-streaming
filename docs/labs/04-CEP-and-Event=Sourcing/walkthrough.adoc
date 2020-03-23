@@ -9,7 +9,7 @@ ifdef::env-github[]
 :next-lab-url: ../lab05/walkthrough.adoc
 endif::[]
 
-[id='cloud-native-integration']
+[id='cep-event-sourcing']
 = Lab 4 - Complex Event Processing and Event Sourcing
 
 In this lab you will be processing the streamed events. There are two common secnarios, Event Sourcing and Complex Event Processing. You will be receiving harvest event from topics on Kafka, and replay the event. Using Kafka Streams to real-time events and extracting information from event streams as they arrive.
@@ -217,6 +217,8 @@ COST_FACTOR.put(555, 10.0);
 COST_FACTOR.put(460, 10.0);
 COST_FACTOR.put(892, 10.0);
 ----
++
+image::images/3.1.6-change-cost.png[3.1.6-change-cost, role="integr8ly-img-responsive"]
 
 . Try deploying and running the *CostAdvice* Camel-K route again by executing the following command
 +
@@ -409,7 +411,7 @@ kamel delete edge-simulator
 [source,bash,subs="attributes+"]
 ----
 
-public static final int MIN = 150;
+public static final int MIN = 1;
 ----
 +
 image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-responsive"]
@@ -433,7 +435,7 @@ image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integ
 
 . Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)  
 +
-image::images/3.1.5-terminal.png.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
+image::images/3.1.5-terminal.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
 . Click on the Terminal tab.  
 +
@@ -456,7 +458,7 @@ Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=5]
+[time=3]
 [id="summary"]
 == Summary
 
@@ -466,7 +468,7 @@ Event driven is also the fundation for real time behaviour detection. You used K
 
 You can now proceed to link:{next-lab-url}[Lab 5].
 
-[time=4]
+[time=2]
 [id="further-reading"]
 == Notes and Further Reading
 
