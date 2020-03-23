@@ -106,7 +106,6 @@ image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="
 
 . Go back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
 +
---
 [source,bash,subs="attributes+"]
 ----
 oc expose service debezium-connect-api --name kafka-connect -n {user-username}
