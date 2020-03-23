@@ -1525,6 +1525,83 @@ image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"
 +
 image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
+. A notification will show you that your order was received and a almost inmediately another notificaction will pop up telling us that our order was already proceseed. This is the *inventory* service feedback. 
++
+image::images/www-inventory.png[Order Processed, role="integr8ly-img-responsive"]
+
+. Now, wait a few more seconds and the *invoice* notification should pop up telling us that our payment has been processed.
++
+image::images/www-invoice.png[Payment received, role="integr8ly-img-responsive"]
+
+*Excelent!* Our services are working.
+
+=== Take down that service
+
+Remember that we need to test what happens when a service is down? Get back to _Fuse Online_ so we can take down the inventory service.
+
+. Get back to the link:{fuse-url}[Fuse Online Console]
+
+. Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*. 
++
+image::images/fuse-stop.png[Inventory Deployment, role="integr8ly-img-responsive"]
+
+. Click on *Stop* in the pop up dialog. 
++
+--
+image::images/fuse-stop-accept.png[Scale Down Inventory, role="integr8ly-img-responsive"]
+
+[TIP]
+====
+This will simulate the _shortage_ of the inventory service. Wait a few seconds for the service to be stopped.
+====
+
+image::images/fuse-stopped.png[Scaled To Zero, role="integr8ly-img-responsive"]
+--
+
+. Get back to the web application page and try again to order some async *Strawberry* flavor. What happened? 
++
+--
+image::images/www-order-received.png[Order Received, role="integr8ly-img-responsive"]
+
+[NOTE]
+====
+The order was still received by the system, but this time the inventory service has not been processed yet.
+====
+--
+
+. Wait again a few seconds. What happened now?
++
+--
+image::images/www-just-invoice.png[Payment Notification, role="integr8ly-img-responsive"]
+
+[IMPORTANT]
+====
+This time the Invoice service is decoupled of the Inventory call, so it can still work at its own pace. That's why we still receive the _payment_ notification.
+====
+--
+
+. Let's get the *inventory* service back online. Get back to the link:{fuse-url}[Fuse Online Console]
+
+. Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
++
+image::images/fuse-inventory-start.png[Scale Inventory Up, role="integr8ly-img-responsive"]
+
+. Click the *start* button on the next dialog.
++
+image::images/fuse-inventory-restart.png[Confirm Start, role="integr8ly-img-responsive"]
+
+. Wait a few seconds for the service to get back online.
++
+image::images/fuse-inventory-restarting.png[Invetory Starting, role="integr8ly-img-responsive"]
+
+. Get back to the web application page and try now to order some *blueberry*.
++
+image::images/www-order-back.png[Invetory Starting, role="integr8ly-img-responsive"]
+
+
+Your order should be back again!
+
+
 [time=5]
 [id="summary"]
 == Summary
