@@ -1289,13 +1289,13 @@ This will be the base we will use to build our service.
 ----
     @GET
     @Path("/consume")
+    @NoCache
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public Publisher<String> sendEvents() {
         // Stream notifications as Server-Side Events
-        return notifications.map(x -> { 
-            log.info(x); 
-            return x; 
-        });
+        return Flowable.<String>merge(
+            notifications.map(event -> { log.info("ev= " + event); return event; }),
+            Flowable.interval(1, TimeUnit.SECONDS).map(x -> "{}"));
     }
 ----
 
