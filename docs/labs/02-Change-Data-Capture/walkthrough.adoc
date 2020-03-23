@@ -489,11 +489,28 @@ Apache Kafka uses a custom protocol on top of TCP/IP for communication between a
 
 However, there are scenarios where it is not possible to use the clients, or indeed the native protocol. Communicating with an Apache Kafka cluster using a standard protocol like HTTP/1.1 eases development these scenarios.
 
-. Create the http `KafkaBridge` Custom Resource.
+=== Deploy the HTTP Bridge Proxy
+
+. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
-[source,bash,subs="attributes+"]
+image:images/openshift-mirrormaker-add.png[Add From Topology]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+
+. Type in `kafka` in the search text field and then click on *KafkaConnect*.
++
+image::images/openshift-bridge-catalog.png[OpenShift HTTP Bridge, role="integr8ly-img-responsive"]
+
+. Click on *Create* button.
++
+image::images/openshift-bridge-create.png[OpenShift HTTP Bridge, role="integr8ly-img-responsive"]
+
+. Create a `KafkaBridge` Kubernetes Resource to define your HTTP Bridge proxy. Replace the _YAML_ editor with the following code:
++
+[source,yaml,subs="attributes+"]
 ----
-cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1alpha1
 kind: KafkaBridge
 metadata:
@@ -503,19 +520,30 @@ spec:
   http:
     port: 8080
   replicas: 1
-EOF
 ----
 
-. Expose the bridge HTTP REST API service as a route for external access.
+. Click on *Create* button.
++
+image::images/openshift-bridge-details.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
+
+. Get back to the topology view by clicking *Topology* in the left side menu
++
+image:images/openshift-bridge-list.png[Back To Topology]
+
+. Wait for the bridge to start.
++
+image:images/openshift-bridge-topology.png[Mirror Maker Topology]
+
+. From the CodeReady terminal, expose the bridge HTTP REST API service as a route for external access.
 +
 [source,bash,subs="attributes+"]
 ----
 oc expose service http-bridge-service --name kafka-bridge -n {user-username}
 ----
 
-. Wait for the bridge to be deployed.
+=== Test the HTTP Bridge
 
-. Create consumer to test the connection to your topic.
+. Create a consumer to test the connection to your topic. Issue the following command from the terminal:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -524,14 +552,20 @@ cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-hos
     "name": "{user-username}",
     "format": "json",
     "auto.offset.reset": "earliest",
-    "enable.auto.commit": "false",
+    "enable.auto.commit": false,
     "fetch.min.bytes": "1024",
     "consumer.request.timeout.ms": "30000"
 }
 EOF
 ----
 
-. Notice the `base_uri`, it represents the REST resource for your customer.
+. Notice the return json `base_uri`, it represents the REST resource for your customer.
++
+[source,bash,subs="attributes+"]
+----
+{"instance_id":"user1","base_uri":"http://kafka-bridge-{user-username}.apps.cluster-eventing-6fbb.eventing-6fbb.example.
+opentlc.com:80/consumers/{user-username}-http-group/instances/{user-username}"}
+----
 
 . Use the previuos `base_uri` to request subscription to the topics.
 +
@@ -542,12 +576,26 @@ curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/
 
 . Now you can start to consume some records. Notice that you need to send `json` as the accept type.
 +
+--
 [source,bash,subs="attributes+"]
 ----
 curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/records -H 'accept: application/vnd.kafka.json.v2+json'
 ----
 
-. Do it again until there is no more records to read.
+[NOTE]
+====
+The first call to the service will return an empty string as it just created the consumer and subscribed to the topic.
+====
+--
+
+. Call the comand again, it will start to retrieve batchs of records. Keep repeating until there is no more records to read.
++
+[TIP]
+====
+You can take notice of the `offset` returned in the records to know how many messages have been read.
+====
+
+*Congratulations!* You just finishied capturing data from a MSSQL database into Kafka to then, replicate that information to a different Kafka cluster. Finally you were able to retrieve the information using HTTP commands.
 
 [time=5]
 [id="summary"]
