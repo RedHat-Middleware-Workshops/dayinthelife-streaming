@@ -31,6 +31,7 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 Use the following credentials to login into the web consoles:
 
 **Username:** {user-username}
++
 **Password:** {user-password}
 
 [type=walkthroughResource,serviceName=codeready]
