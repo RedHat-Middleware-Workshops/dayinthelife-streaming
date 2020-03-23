@@ -117,3 +117,5 @@ public/patternfly-addons.css
 
 # Ignore nodeshift temp
 /tmp
+
+!lib/

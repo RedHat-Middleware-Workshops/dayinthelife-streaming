@@ -85,27 +85,9 @@ app.post('/order/rest', json(), async (req, res, next) => {
   }
 })
 
-app.post('/order/event', json(), async (req, res, next) => {
-  log.info('placing order with body: %j', req.body)
-  try {
-    const response = await http.post(new URL('/place', ORDERS_EVENT_BASE_URL ? ORDERS_EVENT_BASE_URL : "http://events:8080"), {
-      json: true,
-      body: req.body
-    })
+// /* TODO add POST/EVENT method handling */ 
 
-    if (!req.session.orders) {
-      req.session.orders = []
-    }
-
-    // Store the order result in the user session
-    // Can be used to render order history or similar
-    req.session.orders.push(response.body)
-
-    res.json(response.body)
-  } catch (e) {
-    next(boom.internal('error placing order', e))
-  }
-})
+// /* TODO add POST/EVENT method handling */ 
 
 // Provide a friendly 404 page for all unknown routes
 app.use((req, res, next) => {
