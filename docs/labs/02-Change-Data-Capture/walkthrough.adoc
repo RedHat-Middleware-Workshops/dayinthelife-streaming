@@ -30,8 +30,8 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 Use the following credentials to login into the web consoles:
 
-**Username:* {user-username}
-**Password:* {user-password}
+**Username:** {user-username}
+**Password:** {user-password}
 
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
@@ -244,7 +244,7 @@ image::images/openshift-sqlcommand.png[Query]
 
 We checked that the database had the _orders_ data. Is now time to check that the Change Data Capture connector was able to query the transaction log and generate the Apache Kafka events to the cluster.
 
-. Get back to the topology view of the OpenShift Developer console. Change the project to the `shared-kafka-earth`.
+. Go back to the topology view of the OpenShift Developer console. Change the project to the `shared-kafka-earth`.
 +
 image:images/openshift-project-sharedkafka.png[Change Project]
 
@@ -280,7 +280,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 Time to check what information is flowing into Apache Kafka.
 
-. Get back to the topology view. We will access one of the Kafka brokers.
+. Go back to the topology view. We will access one of the Kafka brokers.
 
 . Click on the `earth-cluster kafka` _stateful set_.
 
@@ -446,7 +446,7 @@ spec:
 +
 image::images/openshift-mirromaker-detail.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Get back to the topology view by clicking *Topology* in the left side menu
+. Go back to the topology view by clicking *Topology* in the left side menu
 +
 image:images/openshift-mirrormakers-list.png[Back To Topology]
 
@@ -466,22 +466,18 @@ image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
 . Click on the _Resource Type_ field and type 'topic'.
 
 . Finally select *KafkaTopic*.
-
-image::images/openshift-moon-kafkatopics.png[Search KafkaTopics]
 --
++
+image::images/openshift-moon-kafkatopics.png[Search KafkaTopics]
 
 . This will display the topics on the *Moon* _Kafka cluster_. You should be able to locate your `{user-username}.earth.dbo.orders--*` _KafkaTopic_.
 +
---
 image::images/openshift-moon-topics.png[CDC KafkaTopics]
-
++
 [NOTE]
 ====
 This time there is no need to filter the topics, as this _moon_ cluster is only yours.
 ====
---
-
-*Good!* This means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
 
 [type=verification]
 Were you able to verify the Kafka Topic?  Good, this means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
