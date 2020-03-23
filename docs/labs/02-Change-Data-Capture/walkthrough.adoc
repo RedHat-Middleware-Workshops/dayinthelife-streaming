@@ -30,37 +30,53 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 *Credentials*
 
-[type=walkthroughResource,serviceName=openshift]
-.Openshift
+Use the following credentials to login into the web consoles:
+
+* Username: {user-username}
+* Password: {user-password}
+
+.Red Hat CodeReady Workspaces
 ****
-* link:{openshift-host}/[Open Console, window="_blank"]
+* link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
+****
+[type=walkthroughResource]
+.Red Hat OpenShift Developer Console
+****
+* link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 ****
 
-[type=walkthroughResource]
-.Terminal
-****
-* link:{terminal-url}/[Open Terminal, window="_blank"]
-****
+:sectnums:
 
 [time=10]
 [id="configure-cdc-connectors"]
 == Configure CDC connectors for Kafka Connect
 
-. Open a new browser tab and navigate to the link:{terminal-url}/[terminal window, window="_blank"].
-. Change to your user namespace.
-+
-[source,bash,subs="attributes+"]
+There is already a legacy kafka deployment running. We will then deplopy a KafkaConnect CDC connector to connect to that cluster while we extract the data from the SQL Server Database.
 
-----
-oc project {user-username}
-----
+=== Deploy KafkaConnect CDC Connectr
 
-. Create a `KafkaConnect` Kubernetes Custom Resource to define your connector.
+. Get back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. 
+
+. Click *+Add* on the left menu.
 +
-[source,bash,subs="attributes+"]
-Note: dont forget to change ALL occurences of {user-username} to say user1
+image::images/topology-add.png[Topology Add, role="integr8ly-img-responsive"]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+
+. Type in `kakfa` in the search text field and then click on *KafkaConnect*.
++
+image::images/openshift-kafkaconnect.png[OpenShift KafkaConnect, role="integr8ly-img-responsive"]
+
+. Click on *Create* button.
++
+image::images/openshift-create-kafkaconnect.png[OpenShift KafkaConnect, role="integr8ly-img-responsive"]
+
+. Create a `KafkaConnect` Kubernetes Custom Resource to define your connector. Replace the _YAML_ editor with the following code:
++
+[source,yaml,subs="attributes+"]
 ----
-cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaConnect
 metadata:
@@ -76,7 +92,6 @@ spec:
     offset.storage.topic: {user-username}-connect-cluster-offsets
     config.storage.topic: {user-username}-connect-cluster-configs
     status.storage.topic: {user-username}-connect-cluster-status
-EOF
 ----
 
 . Wait for the default deployment to finish and deploy the first pod.
