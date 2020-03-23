@@ -1467,7 +1467,6 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
 
 . Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
 +
---
 [source,json,subs="attributes+"]
 ----
         constructor() {
@@ -1499,7 +1498,6 @@ The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSourc
 
 Unlike link:https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API[WebSockets], server-sent events are unidirectional; that is, data messages are delivered in one direction, from the server to the clients browser.
 ====
---
 
 . Now, open the *index.js* file at the top level.
 +
@@ -1532,7 +1530,7 @@ app.post('/order/event', json(), async (req, res, next) => {
 })
 ----
 
-. Finally, get back to the terminal window and start a new build with this changes.
+. Finally, go back to the terminal window and start a new build with this changes.
 +
 [source,bash,subs="attributes+"]
 ----
@@ -1543,7 +1541,6 @@ npm run openshift
 ====
 Be sure to switch to your _working_ `user1` project and the correct _store-ui_ folder.
 ====
---
 
 . Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo:
 +
