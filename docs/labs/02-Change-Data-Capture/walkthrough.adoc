@@ -159,7 +159,6 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 EOF
 ----
 
-
 If the last command was successful you should get the following output as return:
 
 [source,json,subs="attributes+"]
@@ -167,6 +166,122 @@ If the last command was successful you should get the following output as return
 {"name":"orders-connector","config":{"connector.class":"io.debezium.connector.sqlserver.SqlServerConnector","database.hostname":"mssql-server-linux.shared-db-earth.svc","database.port":"1433","database.user":"sa","database.password":"Password!","database.dbname":"InternationalDB","database.server.name":"{user-username}.earth","table.whitelist":"dbo.Orders","database.history.kafka.bootstrap.servers":"earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092","database.history.kafka.topic":"{user-username}.earth.dbhistory","name":"orders-connector"},"tasks":[],"type":"source"}
 ----
 
+[time=10]
+[id="loading-earth-orders"]
+== Loading Earth Orders
+
+It's now time to test the Change Data Capture integration.
+
+- We will first load the csv data into MSSQL using a PHP app
+- Debezium will populate data from MSSQL into the Earth Kafka topic
+
+Let's get started!
+
+=== Loading Orders File
+
+. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
+
+. Navigate to the legacy PHP link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[Enterprise System, window="_blank"] in a new browser tab.
++
+--
+[IMPORTANT]
+====
+Make sure that /#{user-username} is added at the end of the URL. You won't be able to load the file if your are missing this part.
+====
+
+image:images/www-main.png[PHP System]
+--
+
+. Click on the *Choose File* button to load the _orders_ file.
++
+image:images/www-choose-file.png[Choose File]
+
+. Load the _CSV_ file you just downloaded. Click on *Open* button.
++
+image:images/www-orders-file.png[Orders File]
+
+. Now, click the *Load File* button. This will load the file orders and insert them in the database.
++
+image:images/www-load-file.png[Load File]
+
+.  Wait a few seconds for the information to load. If this is successfully completed, you will see the csv data on the *Imported Orders* page.
++
+image::images/www-imported-orders.png[Imported Orders]
+
+=== Check Database Records
+
+After loading the file in the system. The orders data will should be store in the MSSQL Server database. Let's check it is so.
+
+. Get back to the topology view of the OpenShift Developer console. Change the project to the `shared-db-earth`.
++
+image:images/openshift-change-project.png[Change Project]
+
+. Click on the database deployment to open the overview page. Then click on the *Resources* tab and next the _Pod_ name.
++
+image:images/openshift-db-overview.png[Access Pod]
+
+. Now, click on the *Terminal* tab to access the pod's shell.
++
+--
+image:images/openshift-db-terminal.png[Pod Terminal]
+
+[TIP]
+====
+If you feel comfortable, you can also use the OpenShift CLI command `oc rsh` to access the database pod as well.
+====
+--
+
+. Run the following command to access the database:
++
+[source,bash,subs="attributes+"]
+----
+/opt/mssql-tools/bin/sqlcmd -S mssql-server-linux -U sa -P Password! -d InternationalDB
+----
+
+. Query the table to check the information is there:
++
+[source,bash,subs="attributes+"]
+----
+1> select top 5 * from dbo.Orders where OrderUser='{user-username}'
+2> go
+----
+
+. Check the results, should look like this:
++
+image::images/openshift-sqlcommand.png[Query]
+
+=== Check Apache Kafka Records
+
+We checked that the database had the _orders_ data. Is now time to check that the Change Data Capture connector was able to query the transaction log and generate the Apache Kafka events to the cluster.
+
+. Get back to the topology view of the OpenShift Developer console. Change the project to the `shared-kafka-earth`.
++
+image:images/openshift-project-sharedkafka.png[Change Project]
+
+. Validate that the *KafkaTopics* were created. 
++
+--
+. Expand the *Advanced* menu on the left menu bar.
+
+. Click on *Search* to load the _resources_ search page.
+
+. Click on the _Resource Type_ field and type 'topic'.
+
+. Finally select *KafkaTopic*.
+
+image::images/openshift-search-kafkatopics.png[Search KafkaTopics]
+--
+
+. This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-connect-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
++
+--
+image::images/openshift-cdc-topics.png[CDC KafkaTopics]
+
+[TIP]
+====
+You can narrow the results by adding `{user-username}` to the search filter.
+====
+--
 
 [time=5]
 [id="deploying-apache-kafka"]
@@ -223,7 +338,13 @@ spec:
 +
 image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
+. Get back to the topology view by clicking *Topology* in the left side menu
++
+image:images/openshift-kafkas-list.png[Back To Topology]
+
 . Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
++
+image:images/openshift-kafka-topology.png[Kakfa Topology]
 
 
 [time=10]
@@ -235,10 +356,27 @@ We refer to the process of replicating data between Kafka clusters "mirroring" t
 The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
 
 . Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kakfa cluster)
+
+. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
-[source,bash,subs="attributes+"]
+image:images/openshift-mirrormaker-add.png[Add From Topology]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+
+. Type in `mirror` in the search text field and then click on *KafkaConnect*.
++
+image::images/openshift-mirrormaker-catalog.png[OpenShift Mirror Maker, role="integr8ly-img-responsive"]
+
+. Click on *Create* button.
++
+image::images/openshift-mirrormaker-create.png[OpenShift Mirror Maker, role="integr8ly-img-responsive"]
+
+. Create a `KafkaMirrorMaker` Kubernetes Resource to define your Mirror Maker Cluster. Replace the _YAML_ editor with the following code:
++
+[source,yaml,subs="attributes+"]
 ----
-cat << EOF | oc apply -n {user-username} -f -
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaMirrorMaker
 metadata:
@@ -253,54 +391,19 @@ spec:
   producer:
     bootstrapServers: 'moon-kafka-bootstrap.{user-username}.svc:9092'
   whitelist: {user-username}.earth.*
-EOF
 ----
 
-[time=10]
-[id="loading-earth-orders"]
+. Click on *Create* button.
++
+image::images/openshift-mirromaker-detail.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-== Testing that mirror maker works
+. Get back to the topology view by clicking *Topology* in the left side menu
++
+image:images/openshift-mirrormakers-list.png[Back To Topology]
 
-
-== Loading Earth Orders
-
-
-
-It's now time to test the full integration between the Earth and Moon Orders system.
-. We will first load the csv data into MSSQL using a PHP app
-. ebezium will populate data from MSSQL into the Earth Kafka topic
-. Mirror Maker will then mirror the data in the Earth cluster to the Moon cluster.
-
-. Launch a new tab on your web browser.
-. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
-. Navigate to the link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[PHP app, window="_blank"] in a new browser tab.
-It can be found from your Openshift console-> project: www->routes.
-Note: Make sure to add /#user1 to the route.
-
-. Load the file in the PHP app.
-The Php app looks like this on launch.
-
-image::images/dil-lab2-phpapp.png[]
-If this is successfully completed, you will see the csv data  on the PHP page.
-
-image::images/dil-lab2-importeddataintophp.png[]
-
-The data will thus be imported into MSSQL.
-
-Test: This step is optional but helpful to avoid troubleshooting. Here is how to check that the data is loaded from the file into MS SQLserver.
-. Open the Terminal on the Openshift console into the MSSQL Server pod and run the following commands.
-You can oc rsh into the sqlserver pod as well.
-
-.  cd /opt/mssql-tools/bin
-. ./sqlcmd -S mssql-server-linux.shared-db-earth.svc -U sa -P Password! -d InternationalDB
-
-image::images/sqlcommands.png[]
-
-
-
-// check earth topic created
-
-// check moon topic created
+. Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
++
+image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
 
 [time=10]
 [id="enabling-http-access"]
