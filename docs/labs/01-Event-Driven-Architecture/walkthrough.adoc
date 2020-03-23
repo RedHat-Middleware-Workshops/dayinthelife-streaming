@@ -1534,12 +1534,11 @@ app.post('/order/event', json(), async (req, res, next) => {
 
 . Finally, get back to the terminal window and start a new build with this changes.
 +
---
 [source,bash,subs="attributes+"]
 ----
 npm run openshift
 ----
-
++
 [NOTE]
 ====
 Be sure to switch to your _working_ `user1` project and the correct _store-ui_ folder.
