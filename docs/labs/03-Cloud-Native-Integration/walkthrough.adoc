@@ -231,7 +231,7 @@ INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 ----
 
-. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `FleurDeLune/projects/harvest/inventory project`.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.  A route to:
+. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `FleurDeLune/projects/harvest/inventory` project.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.  A route to:
 +
 ** Consume harvest JSON messages from AMQ Online, and using Content-based routing determine whether they are standard, premium or utility marshmallows.
 ** Insert premium marshmallow dimensions into the PREMIUM database table
@@ -338,7 +338,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="setup-data-lake"]
 == Setup Data Lake with caching
 
-. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/support/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
+. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
 +
 image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img-responsive"]
 
@@ -346,7 +346,7 @@ image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img
 +
 [source,bash,subs="attributes+"]
 ----
-cd /projects/FleurDeLune/support/projects/harvest/shipping
+cd /projects/FleurDeLune/projects/harvest/shipping
 oc project user2
 oc create -f connect-secret.yaml
 oc create -f jdg-cluster.yaml
@@ -367,7 +367,33 @@ image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img
 oc apply -f premiumshipping-config.yaml
 ----
 
-. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Update the kafka topic name to `{user-username}-premium`.
+. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Let's insert our Camel routes into this class:
++
+[source,java,subs="attributes+"]
+----
+from("timer:cleanup?repeatCount=1")
+.setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.CLEAR)
+.setHeader(InfinispanConstants.KEY).constant("premium")
+.to("infinispan:default")
+;
+
+
+from("kafka:user1-premium?groupId=premium-shipping")
+.streamCaching()
+    .unmarshal(new JacksonDataFormat(Map.class))
+    .log("Input --> ${body}")
+    .setHeader("marshmallow").simple("${body}")
+    .setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.GET)
+    .setHeader(InfinispanConstants.KEY).constant("premium")
+    .to("infinispan:default")
+    .setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.PUT)
+    .setHeader(InfinispanConstants.KEY).constant("premium")
+    .setHeader(InfinispanConstants.VALUE).method(this, "assignShipment(${body}, ${header.marshmallow})")
+    .log("${body}")
+    .to("infinispan:default")
+
+;
+----
 +
 image::images/4.1.6-update-kafka-topic.png[4.1.6-update-kafka-topic, role="integr8ly-img-responsive"]
 
@@ -408,11 +434,13 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 [time=15]
 [id="setup-supply-console"]
-=== Create a Shipping Console
+== Create a Shipping Console
 
-== Deploy RESTful Interface
+Now that we have our backend services running, we can focus on creating a Shipping Console UI.
 
-. Now that we have our backend services running, we can focus on creating a Shipping Console UI.  First step is to update the `shippingconsole-config.yaml` config map with the correct InfiniSpan hostname.  Find  **camel.component.infinispan.configuration.hosts** and update the service to: example-infinispan.{user-username}.svc:11222.
+=== Deploy RESTful Interface
+
+.  First step is to update the `/projects/harvest/display/shippingconsole-config.yaml` config map with the correct InfiniSpan hostname.  Find  **camel.component.infinispan.configuration.hosts** and update the service to: `example-infinispan.{user-username}.svc:11222`.
 +
 image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-responsive"]
 
@@ -420,7 +448,7 @@ image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
-cd /projects/FleurDeLune/support/projects/harvest/display/
+cd /projects/FleurDeLune/projects/harvest/display/
 oc project user2
 oc apply -f shippingconsole-config.yaml
 ----
@@ -470,7 +498,7 @@ image::images/6.1.3-select-datasource.png[6.1.3-select-datasource, role="integr8
 +
 image::images/6.1.4-postgres-save.png[6.1.4-postgres-save, role="integr8ly-img-responsive"]
 
-. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to Eclipse Che and copy the content from `step-4-display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Load**.
+. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to Eclipse Che and copy the content from `/projects/harvest/display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Load**.
 +
 image::images/6.1.5-load-json.png[6.1.5-load-json, role="integr8ly-img-responsive"]
 
