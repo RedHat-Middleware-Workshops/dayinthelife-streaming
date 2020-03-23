@@ -99,6 +99,12 @@ spec:
     status.storage.topic: {user-username}-connect-cluster-status
 ----
 
+. Click on *Create* button.
++
+image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
+
+=== Configure KafkaConnect CDC Connector
+
 . Get back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
 +
 --
@@ -170,12 +176,52 @@ AMQ streams component uses powerful operators that simplify the deployment, conf
 
 In this section you will learn how to start a local Kafka cluster that will represent the startup _Moon_ deployment.
 
-. Deploy the startup _Moon_ AMQ streams Kafka cluster.
+. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
-[source,bash,subs="attributes+"]
+image:images/openshift-kafka-add.png[Add From Topology]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+
+. Type in `kakfa` in the search text field and then click on *KafkaConnect*.
++
+image::images/openshift-catalog-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
+
+. Click on *Create* button.
++
+image::images/openshift-create-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
+
+. Create a `Kafka` Kubernetes Resource to define your Apache Kafka Cluster. Replace the _YAML_ editor with the following code:
++
+[source,yaml,subs="attributes+"]
 ----
-oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n {user-username}
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: moon
+spec:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+  kafka:
+    listeners:
+      external:
+        type: route
+      plain: {}
+      tls: {}
+    replicas: 3
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral
 ----
+
+. Click on *Create* button.
++
+image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
 . Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 
