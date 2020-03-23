@@ -1,0 +1,17 @@
+package com.redhat.workshop.dil
+unit DisasterUnit
+
+import com.redhat.workshop.dil.HarvestinFive;
+
+rule "Beautiful Day" when
+    $p : /eventStream[totalCnt >= 150]
+then
+    System.out.println("Beautiful day for marshmallow picking! Total harvest amount: "+ $p.totalCnt);
+end
+
+rule "Disaster Strikes " when
+    $p : /eventStream[totalCnt <= 150]
+then
+    System.out.println( "Disaster Strikes " + $p.totalCnt);
+    $p.setDisaster(true);
+end
