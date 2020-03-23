@@ -1,6 +1,6 @@
 :walkthrough: Stream change events from your database
 :terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
 :user-password: openshift
 
 ifdef::env-github[]
@@ -54,7 +54,7 @@ There is already a legacy Kafka deployment running. We will then deploy a KafkaC
 
 === Deploy KafkaConnect CDC Connector
 
-. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"].+
+. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"].
 +
 [IMPORTANT]
 ====
@@ -174,7 +174,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 It's now time to test the Change Data Capture integration.
 
-- We will first load the csv data into MSSQL using a PHP app
+- We will first load the CSV data into MSSQL using a PHP app
 - Debezium will populate data from MSSQL into the Earth Kafka topic
 
 Let's get started!
@@ -185,14 +185,12 @@ Let's get started!
 
 . Navigate to the legacy PHP link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[Enterprise System, window="_blank"] in a new browser tab.
 +
---
 [IMPORTANT]
 ====
 Make sure that /#{user-username} is added at the end of the URL. You won't be able to load the file if your are missing this part.
 ====
-
++
 image:images/www-main.png[PHP System]
---
 
 . Click on the *Choose File* button to load the _orders_ file.
 +
@@ -206,15 +204,15 @@ image:images/www-orders-file.png[Orders File]
 +
 image:images/www-load-file.png[Load File]
 
-.  Wait a few seconds for the information to load. If this is successfully completed, you will see the csv data on the *Imported Orders* page.
+.  Wait a few seconds for the information to load. If this is successfully completed, you will see the CSV data on the *Imported Orders* page.
 +
 image::images/www-imported-orders.png[Imported Orders]
 
 === Check Database Records
 
-After loading the file in the system. The orders data will should be store in the MSSQL Server database. Let's check it is so.
+After loading the file into the system, the orders data  should be storee in the MSSQL Server database. Let's check to make sure that's the case.
 
-. Get back to the topology view of the OpenShift Developer console. Change the project to the `shared-db-earth`.
+. Go back to the topology view of the OpenShift Developer console. Change the project to the `shared-db-earth`.
 +
 image:images/openshift-change-project.png[Change Project]
 
@@ -224,14 +222,12 @@ image:images/openshift-db-overview.png[Access Pod]
 
 . Now, click on the *Terminal* tab to access the pod's shell.
 +
---
 image:images/openshift-db-terminal.png[Pod Terminal]
-
++
 [TIP]
 ====
 If you feel comfortable, you can also use the OpenShift CLI command `oc rsh` to access the database pod as well.
 ====
---
 
 . Run the following command to access the database:
 +
@@ -262,49 +258,46 @@ image:images/openshift-project-sharedkafka.png[Change Project]
 . Click on the _Resource Type_ field and type 'topic'.
 
 . Finally select *KafkaTopic*.
-
++
 image::images/openshift-search-kafkatopics.png[Search KafkaTopics]
---
 
 . This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-connect-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
 +
---
 image::images/openshift-cdc-topics.png[CDC KafkaTopics]
-
++
 [TIP]
 ====
 You can narrow the results by adding `{user-username}` to the search filter.
 ====
---
 
-*Good!* This means that Change Data Capture connector has access to Kafka.
+[type=verification]
+Were you able to see that your Change Data Capture connector has access to Kafka?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 === Inspect Kafka records
 
-Time to check what information is flowing to Apache Kafka.
+Time to check what information is flowing into Apache Kafka.
 
 . Get back to the topology view. We will access one of the Kafka brokers.
-+
---
+
 . Click on the `earth-cluster kafka` _stateful set_.
 
 . Click on the *Resources* tab.
 
 . Click on the `earth-cluster-kafka-0` pod to access the details.
-
++
 image::images/openshift-kafka-deployment.png[Kafka Pods]
---
 
 . Click on the *Terminal* tab to access this pod's shell.
 +
---
 image::images/openshift-kafka-terminal.png[Kafka Pods]
-
++
 [IMPORTANT]
 ====
 Red Hat provides its own complete Apache Kakfa distribution container images. We will use the `kafka-console-consumer.sh` script to query the topics.
 ====
---
 
 . Issue the following command to read *all* the events in the `orders` topic:
 +
@@ -321,7 +314,11 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic {user-us
 {"type":"string","optional":true,"field":"change_lsn"},{"type":"string","optional":true,"field":"commit_lsn"}],"optional":false,"name":"io.debezium.connector.sqlserver.Source","field":"source"},{"type":"string","optional":false,"field":"op"},{"type":"int64","optional":true,"field":"ts_ms"}],"optional":false,"name":"user1.earth.dbo.Orders.Envelope"},"payload":{"before":null,"after":{"OrderId":1000,"OrderType":"E","OrderItemName":"Mocha Irish Cream","Quantity":168,"Price":"4.30","ShipmentAddress":"P.O. Box 511, 4483 Ornare Rd.","ZipCode":"C5X 6L8","OrderUser":"user1"},"source":{"version":"0.10.0.Beta2-redhat-00001","connector":"sqlserver","name":"user1.earth","ts_ms":1584993092410,"snapshot":"false","db":"InternationalDB","schema":"dbo","table":"Orders","change_lsn":"00000027:00000038:0002","commit_lsn":"00000027:00000038:0003"},"op":"c","ts_ms":1584993096494}}
 ----
 
-*Excelent!* This means you were able to capture the changes in the MSSQL server database and generate Apache Kafka events using Change Data Capture.
+[type=verification]
+Were you able to capture the changes in the MSSQL server database and generate Apache Kafka events using Change Data Capture?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=5]
 [id="deploying-apache-kafka"]
@@ -331,22 +328,20 @@ AMQ streams component uses powerful operators that simplify the deployment, conf
 
 In this section you will learn how to start a local Kafka cluster that will represent the startup _Moon_ deployment.
 
-. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
+. Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
---
 image:images/openshift-kafka-add.png[Add From Topology]
-
++
 [IMPORTANT]
 ====
 Be sure to switch back to your working `{user-username}` project
 ====
---
 
 . Click on the *From Catalog* option.
 +
 image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
 
-. Type in `kakfa` in the search text field and then click on *KafkaConnect*.
+. Type in `kakfa` in the search text field and then click on *Kafka*.
 +
 image::images/openshift-catalog-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
 
@@ -385,7 +380,7 @@ spec:
 +
 image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Get back to the topology view by clicking *Topology* in the left side menu
+. Go back to the topology view by clicking *Topology* in the left side menu
 +
 image:images/openshift-kafkas-list.png[Back To Topology]
 
@@ -393,6 +388,11 @@ image:images/openshift-kafkas-list.png[Back To Topology]
 +
 image:images/openshift-kafka-topology.png[Kakfa Topology]
 
+[type=verification]
+Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="replicating-to-other-kafka-clusters"]
@@ -406,7 +406,7 @@ The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicat
 
 . Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kakfa cluster)
 
-. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
+. Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
 image:images/openshift-mirrormaker-add.png[Add From Topology]
 
@@ -450,7 +450,7 @@ image::images/openshift-mirromaker-detail.png[OpenShift Kafka Resource, role="in
 +
 image:images/openshift-mirrormakers-list.png[Back To Topology]
 
-. Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
+. Wait for cluster to start.  It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
 image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
 
@@ -483,17 +483,23 @@ This time there is no need to filter the topics, as this _moon_ cluster is only 
 
 *Good!* This means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
 
+[type=verification]
+Were you able to verify the Kafka Topic?  Good, this means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
 [time=10]
 [id="enabling-http-access"]
 == Enabling HTTP access to Kafka
 
 Apache Kafka uses a custom protocol on top of TCP/IP for communication between applications and the cluster. There are many client implementations for different programming languages, from Java to Golang, from Python to C# and many more.
 
-However, there are scenarios where it is not possible to use the clients, or indeed the native protocol. Communicating with an Apache Kafka cluster using a standard protocol like HTTP/1.1 eases development these scenarios.
+However, there are scenarios where it is not possible to use the clients, or indeed the native protocol. Communicating with an Apache Kafka cluster using a standard protocol like HTTP/1.1 eases development in these scenarios.
 
 === Deploy the HTTP Bridge Proxy
 
-. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
+. Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
 image:images/openshift-mirrormaker-add.png[Add From Topology]
 
@@ -528,7 +534,7 @@ spec:
 +
 image::images/openshift-bridge-details.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Get back to the topology view by clicking *Topology* in the left side menu
+. Go back to the topology view by clicking *Topology* in the left side menu
 +
 image:images/openshift-bridge-list.png[Back To Topology]
 
@@ -555,8 +561,8 @@ cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-hos
     "format": "json",
     "auto.offset.reset": "earliest",
     "enable.auto.commit": false,
-    "fetch.min.bytes": "1024",
-    "consumer.request.timeout.ms": "30000"
+    "fetch.min.bytes": 1024,
+    "consumer.request.timeout.ms": 30000
 }
 EOF
 ----
@@ -569,7 +575,7 @@ EOF
 opentlc.com:80/consumers/{user-username}-http-group/instances/{user-username}"}
 ----
 
-. Use the previuos `base_uri` to request subscription to the topics.
+. Use the previous **base_uri** to request subscription to the topics.
 +
 [source,bash,subs="attributes+"]
 ----
@@ -578,17 +584,15 @@ curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/
 
 . Now you can start to consume some records. Notice that you need to send `json` as the accept type.
 +
---
 [source,bash,subs="attributes+"]
 ----
 curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/records -H 'accept: application/vnd.kafka.json.v2+json'
 ----
-
++
 [NOTE]
 ====
 The first call to the service will return an empty string as it just created the consumer and subscribed to the topic.
 ====
---
 
 . Call the comand again, it will start to retrieve batchs of records. Keep repeating until there is no more records to read.
 +
@@ -597,7 +601,11 @@ The first call to the service will return an empty string as it just created the
 You can take notice of the `offset` returned in the records to know how many messages have been read.
 ====
 
-*Congratulations!* You just finishied capturing data from a MSSQL database into Kafka to then, replicate that information to a different Kafka cluster. Finally you were able to retrieve the information using HTTP commands.
+[type=verification]
+Were you able to successfully retrieve CDC data over HTTP?  *Congratulations!* You just finished capturing data from a MSSQL database into Kafka, then replicate that information to a different Kafka cluster. Finally you were able to retrieve the information using an HTTP interface.
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=5]
 [id="summary"]
