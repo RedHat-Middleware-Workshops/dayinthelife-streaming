@@ -7,7 +7,7 @@
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-citizen-integrator-track-lab01/
 :codeready-url: http://che-che.{openshift-app-host}/
-:fuse-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
+:fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab02/walkthrough.adoc
@@ -16,30 +16,28 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-Since the acquisition, the International Inc.’s Development team has been pressured to make the transition smooth quickly. They have decided to start with a small notification project where it notifies both internal departments and external partners when an order has been placed. In this lab you will learn how to use Camel K to establish a simple Event Driven call. The old application uses traditional API calls to trigger system modification, your job is to use Camel K to re-write the notification application rather then using pure REST implementation convert it to event driven architecture.
+Since the acquisition, the International Inc.’s Development team have been pressured to make the transition smooth and quickly. They have decided to start with a small notification project where both internal departments and external partners are notified when an order has been placed. In this lab you will learn how to use Camel K to establish a simple Event Driven call. The old application uses traditional API calls to trigger system modification.  Your job is to use Camel K to re-write the notification application rather then using a pure REST implementation to convert the application into an event-driven architecture.
 
-Audience: Enterprise Integrators, System Architects, Developers, Data Integrators
+*Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
 
 Camel K is a lightweight cloud integration platform based on the Apache Camel framework. It runs natively on Kubernetes and Openshift and it’s specifically designed for serverless and microservice architectures.
 
-AMQ online enable developers to provision messaging when and where they need it through a browser console. The AMQ online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+AMQ Online enable Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 *Why Red Hat?*
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
-AMQ streams component makes Apache Kafka “OpenShift native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
-
-*Skipping The Lab*
+The AMQ streams component makes Apache Kafka “OpenShift-native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
 
 *Credentials*
 
 Use the following credentials to login into the web consoles:
 
-* Username: {user-username}
-* Password: {user-password}
+* *Username:* `{user-username}`
+* *Password:* `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
@@ -70,45 +68,43 @@ image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-resp
 
 === Start CodeReady workspace
 
-. Once you have logged in and authorize access to your user account, you will land in your personal CodeReady dashboard. A new workspace should be ready to use. Click on the workspace with the _green_ circle on the left menu bar under *RECENT WORKSPACES*.
+. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard. A new workspace should be ready to use. Click on the workspace with the _green_ circle on the left menu bar under *RECENT WORKSPACES*.
 +
---
 image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
-
++
 [NOTE]
 ====
 You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
 ====
 --
 
-. The workspace will start loading and, the first time, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the welcome screen and click on the Explorer button on the left side bar.
+. The workspace will start loading.  The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the welcome screen and click on the Explorer button on the left side bar.
 +
---
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
-
++
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it. 
+This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
 --
 
-. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we clone from the git repository.
+. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
-. During the workshop we will need to introduce some commands in the OpenShift and the Camel K Command Line Interfaces (CLI). For that we will need to start a terminal window _inside_ one of the containares from the developer workspace. To open the terminal window click on the _My Workspace_ button on the right side panel and expand the `User Runtimes/tools` folder. Click on *>_ New terminal*.
+. During the workshop we will need to introduce commands for both the OpenShift and Camel-K Command Line Interfaces (CLI). For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
 +
 image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
 
-. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and so, running on OpenShift. This is the place where you will issue most of the commands from this workshop.
+. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
 +
 image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-responsive"]
 
 === Login into the OpenShift cluster
 
-. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login issue the following command:
+. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
 +
 --
 [source,bash,subs="attributes+"]
@@ -138,11 +134,17 @@ Welcome! See 'oc help' to get started.
 
 Now you are ready to start working on the application services.
 
-[time=5]
-[id="Deploy Inventory Service"]
-== Deploy Inventory Service
+[type=verification]
+Were you able to successfully login to Openshift CLI?
 
-The _Inventory Service_ handles the order and provides information about the availability. In this case, we will just generate an inventory idenfitier and process the result back. Take a look on how the implementation is using *Quarkus* as a Java runtime. 
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=5]
+[id="Deploy the Inventory Service"]
+== Deploy the Inventory Service
+
+The _Inventory Service_ handles the order and provides information about the availability. In this case, we will generate an inventory idenfitier and process the result back. Take a look on how the implementation is using *Quarkus* as a Java runtime.
 
 === Review the code
 
@@ -150,15 +152,15 @@ The _Inventory Service_ handles the order and provides information about the ava
 +
 image::images/codeready-inventory.png[Inventory Service, role="integr8ly-img-responsive"]
 +
-Inventory service implements a simple _RESTful API_ using *Quarkus*. 
+The Inventory service implements a simple _RESTful API_ using *Quarkus*.
 
-. Open the `InventoryResource.java` file under 'src/main/java/com/redhat/cloudnative' and check the provided code.
+. Open the `InventoryResource.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
 +
 image::images/inventory-resource.png[InventoryResource.java, role="integr8ly-img-responsive"]
 +
 The REST service defines a simple _POST_ endpoint `/notify/order` to receive the `Order` notifications as JSON. This service calls the `InventoryNotification` service.
 
-. Open the `InventoryNotification.java` file under 'src/main/java/com/redhat/cloudnative' and check the provided code.
+. Open the `InventoryNotification.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
 +
 image::images/inventory-notification.png[InventoryNotification.java, role="integr8ly-img-responsive"]
 +
@@ -166,7 +168,7 @@ As we mentioned before, it just creates an InventoryNotification with a random `
 
 === Deploy locally to CodeReady
 
-. Run the inventory application locally using the `maven plugin command` via CodeReady Workspaces Terminal:
+. Run the inventory application locally using the _Maven plugin command_ via CodeReady Workspaces Terminal:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -197,7 +199,7 @@ If you did so, stop the process with `ctrl+c` or `cmd + c` and re-run the comman
 +
 image::images/inventory-mvn-local.png[Maven Command Local, role="integr8ly-img-responsive"]
 
-. Take a look at the _Inventory_ page on the left side. 
+. Take a look at the _Inventory_ page on the right side.
 +
 image::images/inventory-web.png[Inventory Web, role="integr8ly-img-responsive"]
 +
@@ -252,7 +254,7 @@ mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects
 ----
 oc project {user-username}
 ----
-+ 
++
 You should get the following output:
 +
 [source,bash,subs="attributes+"]
@@ -281,7 +283,7 @@ This build uses the new link:https://access.redhat.com/documentation/en-us/red_h
 oc start-build inventory --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/inventory/target/*-runner.jar --follow -n {user-username}
 ----
 +
-You should get a `Push succesful` line at the end
+You should get a _Push succesful_ line at the end
 +
 [source,bash,subs="attributes+"]
 ----
@@ -301,7 +303,7 @@ oc new-app inventory; oc expose svc/inventory
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-inventory.png[Topology Inventory, role="integr8ly-img-responsive"]
 
@@ -313,11 +315,17 @@ This time the inventory page has its own URL that is publicy accessible outside 
 
 . So now Inventory service is deployed to OpenShift. You can see it in the Project Status in the OpenShift Console that it is a single replica running in 1 pod.
 
+[type=verification]
+Were you able to successfully deploy th Inventory service to OpenShift?. You can see it in the Project Status via the OpenShift Console.  Verify that a single replica is running as 1 pod.
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
 [time=25]
 [id="Deploy Invoice Service"]
 == Deploy Invoice Service
 
-The second element of the architecture is the _Invoice Service_ that handles the payments. In this case, the service is also implemented using *Quarkus* Java framework, the only difference with _Inventory Service_ is that we add a few seconds delay to _mimic_ the time a real payment will have to wait for processing a card payment. Take a look on how the implementation is using *Quarkus* as a Java runtime. 
+The second element of the architecture is the _Invoice Service_ that handles payments. In this case, the service is implemented using the *Quarkus* Java framework. The only difference with _Inventory Service_ is that we have added a few seconds delay to _mimic_ the time a real payment will have to wait for processing a card payment. Take a look at how the implementation is done using *Quarkus* as a Java runtime.
 
 === Review the code
 
@@ -325,7 +333,7 @@ The second element of the architecture is the _Invoice Service_ that handles the
 +
 image::images/codeready-invoice.png[Invoice Service, role="integr8ly-img-responsive"]
 
-. Open the `InvoiceResource.java` file under 'src/main/java/com/redhat/cloudnative' and check the provided code.
+. Open the `InvoiceResource.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
 +
 image::images/invoice-resource.png[InvoiceResource.java, role="integr8ly-img-responsive"]
 
@@ -369,17 +377,23 @@ oc new-app invoice; oc expose svc/invoice
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-invoice.png[Topology Invoice, role="integr8ly-img-responsive"]
 
-. Review the succesful deployment by clicking on the *Open URL* icon on the deployment.
+. Review the successful deployment by clicking on the *Open URL* icon on the deployment.
+
+[type=verification]
+Were you able to successfully open the corresponding default webpage?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=25]
 [id="Deploy Order Service"]
 == Deploy Order Service
 
-The thrid element of the architecture is the _Order Service_ that works as the first point of access from the frontend and redirects the order to the rest of the backend services. In this case, the service is implemented using *Spring Boot* Java framework. In this theorical implementation we are showing of common microservices pattern that is the service chaining.  
+The third element of the architecture is the _Order Service_ that works as the first point of access from the frontend and redirects the order to the rest of the backend services. In this case, the service is implemented using the *Spring Boot* Java framework. In this theorical implementation we are demonstrating a common microservices pattern that is called _Service Chaining_.
 
 === Review the code
 
@@ -387,13 +401,13 @@ The thrid element of the architecture is the _Order Service_ that works as the f
 +
 image::images/codeready-order.png[Order Service, role="integr8ly-img-responsive"]
 
-. Open the `OrderServiceController.java` file under 'src/main/java/com/legacy/ordersservice' and check the provided code.
+. Open the `OrderServiceController.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
 +
 image::images/order-controller.png[OrderServiceController.java, role="integr8ly-img-responsive"]
 +
 You can see a traditional Spring Boot REST Controller with one endpoint receiveing JSON _POST_ calls to the `/place` path.
 
-. Open the `OrdersRepository.java` file under 'src/main/java/com/legacy/ordersservice' and check the provided code.
+. Open the `OrdersRepository.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
 +
 image::images/order-repository.png[OrderRepository.java, role="integr8ly-img-responsive"]
 +
@@ -439,7 +453,7 @@ oc new-app order; oc expose svc/order
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"]
 
@@ -451,18 +465,24 @@ image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"
 ----
 {"openapi":"3.0.1","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"http://order-user1.apps.cluster-eventing-6fbb.eventing-6fbb.example.opentlc.com","description":"Generated server url"}],"paths":{"/place":{"post":{"tags":["orders-service-controller"],"operationId":"place","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}}},"responses":{"200":{"description":"default response","content":{"application/json":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"Order":{"type":"object","properties":{"orderId":{"type":"integer","format":"int32"},"itemId":{"type":"integer","format":"int32"},"orderItemName":{"type":"string"},"quantity":{"type":"integer","format":"int32"},"price":{"type":"integer","format":"int32"},"address":{"type":"string"},"zipCode":{"type":"integer","format":"int32"},"datetime":{"type":"string"},"department":{"type":"string"}}}}}}
 ----
++
+The backend services are now ready, so time to deploy the frontend store UI.
 
-The backend services are ready, now time to deploy the frontend store UI.
+[type=verification]
+Were you able to successfully deploy the Orders service and view the OpenAPI spec?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="Deploy Webapp"]
 == Deploy Frontend Application
 
-The last element of the architecture is the _Store App_ this is a normal *NodeJS* runtime application. Is a frontend store page to take the orders from regular customers. It post all the orders to the backend `Order Service` and while showing a _loading_ dialog until it receives the order outcome.
+The last element of the architecture is the _Store App_, which is a regular *NodeJS* runtime application. It is a frontend store page to take the orders from regular customers. It posts all the orders to the backend _Order Service`_ and while showing a _loading_ dialog until it receives the order outcome.
 
 === Deploy to OpenShift
 
-. Change to the project folder:
+. Via the Eclipse Che terminal, change to the project folder:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -471,10 +491,10 @@ cd $CHE_PROJECTS_ROOT/FleurDeLune/projects/store-ui/
 +
 [NOTE]
 ====
-For the following commands remember to be sure to switch to your _working_ project.
+For the following commands, remember to be sure to switch to your _working_ project.
 ====
-
-. Package and deploy the application using link:https://github.com/nodeshift/nodeshift#nodeshift-[nodeshift]:
++
+. Package and deploy the application using link:https://github.com/nodeshift/nodeshift#nodeshift-[nodeshift].  This command can take 2-5 minutes to run, so please be patient:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -488,7 +508,7 @@ npm install --save-dev nodeshift; npm run openshift
 oc expose svc/www-store
 ----
 
-. Configure the route time out and tell the gateway this is a long running transaction:
+. Configure the route timeout and let the gateway know that this is a long running transaction:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -497,7 +517,7 @@ oc annotate route www-store --overwrite haproxy.router.openshift.io/timeout=3m
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
@@ -515,7 +535,7 @@ Can you see those tasty desserts?
 [id="Test Webapp"]
 == Test the application
 
-We are ready to test our application. We will order some REST flavors and check how the application behaves in case of failure.
+We are ready to test our application. We will order some different flavors by calling our RESTful backend services, plus check how the application behaves in case of failure.
 
 === Order Mango
 
@@ -523,7 +543,7 @@ We are ready to test our application. We will order some REST flavors and check 
 +
 image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
 
-. This are our ol' time REST Classic flavors. Click on *Order Mango*,
+. This are our ol' time classic flavors. Click on *Order Mango*,
 +
 image::images/order-mango.png[Order Mango, role="integr8ly-img-responsive"]
 
@@ -535,60 +555,66 @@ image::images/processing-order.png[Processing Order, role="integr8ly-img-respons
 +
 image::images/order-success.png[Order Success, role="integr8ly-img-responsive"]
 
-Congratulations! Your _Mango_ order was sucessful! Everything is fine and sunshise is everywhere. 
+Congratulations! Your _Mango_ order was successful! Everything is fine and the sunshine is bright!
 
 === Take down that service
 
-The application is working correctly, but what happens when a service _fails_? 
+The application is working correctly, but what happens when a service _fails_?
 
-. Get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
-. Click on the *inventory* service deployment. 
+. Click on the *inventory* service deployment.
 +
 image::images/topology-inventory-deployment.png[Inventory Deployment, role="integr8ly-img-responsive"]
 +
 A side bar will open with an overview of your service resources.
 
-. Click on the *Overview* tab to check the deployment generals. Then click in the _down_ arrow to scale down the deployment replicas to zero. 
+. Click on the *Overview* tab to check the deployment generals. Then click in the _down_ arrow to scale down the deployment replicas to zero.
 +
 image::images/scale-down-inventory.png[Scale Down Inventory, role="integr8ly-img-responsive"]
 +
-This will simulate the _shortage_ of the inventory service. Wait a few seconds for the pod to be deleted.
+This will simulate the _outage_ of the inventory service. Wait a few seconds for the pod to be deleted.
 
 . Check that the deployment ring is *white* instead of the normal _dark blue_
 +
 image::images/scaled-zero.png[Scaled To Zero, role="integr8ly-img-responsive"]
 
-. Get back to the web application page and try again to order some *Mango* flavor. What happened? 
+. Go back to the web application page and try again to order the *Mango* flavor. What happens?
 +
 image::images/couldnot-process.png[Could Not Process Error, role="integr8ly-img-responsive"]
 +
 [NOTE]
 ====
-The service was not able to fulfill the order was the inventory service was out, we even had to wait some time to get the response back because of timeouts.
+The service was not able to fulfill the order because the inventory service was offline.  Instead, we  had to wait a little time to get the response back because of the set timeout.
 ====
 
-. Dismiss the error dialog and get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +
 image::images/scale-up-inventory.png[Scale Inventory Up, role="integr8ly-img-responsive"]
 
-. Get back to the web application page and try *again*.
-
+. Go back to the web application page and try *again*.
++
 Your order should be back again!
+
+[type=verification]
+Were you able to successfully scale-down and scale-up your application?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="Create AMQ Topics"]
-== Create your AMQ Online Topic 
+== Create your AMQ Online Topic
 
 *Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 
 === Create an Address Space
 
-Let's create an **Address Space** using the AMQ Online Operator. 
+Let's create an **Address Space** using the AMQ Online Operator.
 
-. Get back to your OpenShift Developer Console.
+. Go back to your OpenShift Developer Console.
 
 . Click *+Add* on the left menu.
 +
@@ -635,17 +661,17 @@ spec:
 +
 image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
 
-. The AMQ operator will check the new resource and will begin to prepare all required components. 
+. The AMQ operator will check the new resource and will begin to prepare all required components.
 +
 --
 [IMPORTANT]
 ====
-Wait for the *Address Space* to deploy the infrastructure until the status change to _Active_ and shows the *green* checkmark. 
+Wait for the *Address Space* to deploy the infrastructure until the status change to _Active_ and shows the *green* checkmark.
 ====
 
 [NOTE]
 ====
-This could take a few minutes to finish, if looks like taking longer refresh the page.
+This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
 ====
 --
 
@@ -657,7 +683,7 @@ image::images/addressspace-active.png[active, role="integr8ly-img-responsive"]
 +
 image::images/addressspace-console.png[console, role="integr8ly-img-responsive"]
 
-. Open a new browser tab and use the hostname like this format *https://{{externalHost}}* to open the AMQ web console. You will need to login with your username and password. 
+. Open a new browser tab and use the hostname like this format *https://{{externalHost}}* to open the AMQ web console. You will need to login with your username and password.
 +
 --
 [IMPORTANT]
@@ -680,7 +706,7 @@ image::images/topic-create.png[newtopic, role="integr8ly-img-responsive"]
 +
 image::images/topic-name.png[topicname, role="integr8ly-img-responsive"]
 
-. Keep the *Small Topic* plan selected and click *Next >*. 
+. Keep the *Small Topic* plan selected and click *Next >*.
 +
 image::images/topic-plan.png[topicplan, role="integr8ly-img-responsive"]
 
@@ -688,11 +714,11 @@ image::images/topic-plan.png[topicplan, role="integr8ly-img-responsive"]
 +
 image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
 
-. AMQ will start the deployment of the required messaging infrastructure to privision your topic.
+. AMQ will start the deployment of the required messaging infrastructure to provision your topic.
 +
 image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive"]
 
-. Next, repeat the last couple steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic. 
+. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic.
 +
 image::images/topics.png[topics, role="integr8ly-img-responsive"]
 +
@@ -718,12 +744,12 @@ Did you remember to write down the address space identifier?
 [type=taskResource]
 .Fuse Online
 ****
-* link:{fuse-url}[Fuse Online Console]
+* link:{fuse-user-url}[Fuse Online Console]
 ****
 
 === Access Fuse Online
 
-. Access the link:{fuse-url}[Fuse Online Console] and login using your credentials.
+. Access the link:{fuse-user-url}[Fuse Online Console] and login using your credentials.
 
 . Click *Allow selected permissions* to _Authorize Access_ to your account information.
 +
@@ -754,7 +780,7 @@ amqp://messaging-{your-identifier}.workshop-operators.svc?requestTimeout=1000
 image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
 --
 
-. Scroll down the same page and click on the *Validate* button to check the connections was been established. 
+. Scroll down the same page and click on the *Validate* button to check the connections was been established.
 +
 image::images/fuse-validate.png[Connection Validation, role="integr8ly-img-responsive"]
 
@@ -800,7 +826,7 @@ image::images/fuse-place-path.png[API /place Path, role="integr8ly-img-responsiv
 +
 image::images/fuse-data-type.png[API Data Type, role="integr8ly-img-responsive"]
 
-. Fill in `order` in the *Name* field. Fuse can use a JSON example to _bootstrap_ the schema properties. Paste the following code in the *JSON Example* field. 
+. Fill in `order` in the *Name* field. Fuse can use a JSON example to _bootstrap_ the schema properties. Paste the following code in the *JSON Example* field.
 +
 [source,json,subs="attributes+"]
 ----
@@ -973,7 +999,7 @@ curl -v -X POST \
 < Content-Length: 0
 < X-Application-Context: application
 < Date: Fri, 20 Mar 2020 15:17:28 GMT
-< 
+<
 * Curl_http_done: called premature == 0
 * Connection #0 to host i-events.fuse-{user-username} left intact
 ----
@@ -1265,7 +1291,7 @@ For the new Event-driven store application, we will need to receive the updates 
 +
 image::images/codeready-events.png[Events Service, role="integr8ly-img-responsive"]
 +
-Inventory service implements _Server-Side Events_ (SSE) using *Quarkus* and link:https://smallrye.io/smallrye-reactive-messaging/[SmallRye Reactive Messaging]. 
+Inventory service implements _Server-Side Events_ (SSE) using *Quarkus* and link:https://smallrye.io/smallrye-reactive-messaging/[SmallRye Reactive Messaging].
 
 . Open the `EventsResource.java` file under 'src/main/java/com/redhat/eventdriven' and check the provided code.
 +
@@ -1358,12 +1384,12 @@ oc new-app events; oc expose svc/events
 +
 [source,sh,role="copypaste"]
 ----
-oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }' 
+oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
 ----
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo: 
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-events.png[Topology Events, role="integr8ly-img-responsive"]
 
@@ -1460,7 +1486,7 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
 
 [NOTE]
 ====
-The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSource] interface is web content's interface to server-sent events. An EventSource instance opens a persistent connection to an HTTP server, which sends events in text/event-stream format. 
+The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSource] interface is web content's interface to server-sent events. An EventSource instance opens a persistent connection to an HTTP server, which sends events in text/event-stream format.
 
 Unlike link:https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API[WebSockets], server-sent events are unidirectional; that is, data messages are delivered in one direction, from the server to the clients browser.
 ====
@@ -1511,7 +1537,7 @@ Be sure to switch to your _working_ `user1` project and the correct _store-ui_ f
 ====
 --
 
-. Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo: 
+. Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo:
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
@@ -1525,7 +1551,7 @@ Remeber what happens when a service is down in our _traditional_ REST architectu
 
 === Test new flavors
 
-Let's check how the stores looks like now with the new flavors. 
+Let's check how the stores looks like now with the new flavors.
 
 . In the link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
 +
@@ -1539,7 +1565,7 @@ image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"
 +
 image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
-. A notification will show you that your order was received and a almost inmediately another notificaction will pop up telling us that our order was already proceseed. This is the *inventory* service feedback. 
+. A notification will show you that your order was received and a almost inmediately another notificaction will pop up telling us that our order was already proceseed. This is the *inventory* service feedback.
 +
 image::images/www-inventory.png[Order Processed, role="integr8ly-img-responsive"]
 
@@ -1553,13 +1579,13 @@ image::images/www-invoice.png[Payment received, role="integr8ly-img-responsive"]
 
 Remember that we need to test what happens when a service is down? Get back to _Fuse Online_ so we can take down the inventory service.
 
-. Get back to the link:{fuse-url}[Fuse Online Console]
+. Get back to the link:{fuse-user-url}[Fuse Online Console]
 
-. Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*. 
+. Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*.
 +
 image::images/fuse-stop.png[Inventory Deployment, role="integr8ly-img-responsive"]
 
-. Click on *Stop* in the pop up dialog. 
+. Click on *Stop* in the pop up dialog.
 +
 --
 image::images/fuse-stop-accept.png[Scale Down Inventory, role="integr8ly-img-responsive"]
@@ -1572,7 +1598,7 @@ This will simulate the _shortage_ of the inventory service. Wait a few seconds f
 image::images/fuse-stopped.png[Scaled To Zero, role="integr8ly-img-responsive"]
 --
 
-. Get back to the web application page and try again to order some async *Strawberry* flavor. What happened? 
+. Get back to the web application page and try again to order some async *Strawberry* flavor. What happened?
 +
 --
 image::images/www-order-received.png[Order Received, role="integr8ly-img-responsive"]
@@ -1594,7 +1620,7 @@ This time the Invoice service is decoupled of the Inventory call, so it can stil
 ====
 --
 
-. Let's get the *inventory* service back online. Get back to the link:{fuse-url}[Fuse Online Console]
+. Let's get the *inventory* service back online. Get back to the link:{fuse-user-url}[Fuse Online Console]
 
 . Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
 +
@@ -1619,7 +1645,7 @@ Your order should be back again!
 [time=5]
 [id="summary"]
 == Summary
-In this lab you have created cloud native integration services that listen to events using Camel K. And has setup topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible, and reactive. 
+In this lab you have created cloud native integration services that listen to events using Camel K. And has setup topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible, and reactive.
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 

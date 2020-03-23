@@ -53,9 +53,14 @@ Use the following credentials to login into the web consoles:
 
 There is already a legacy kafka deployment running. We will then deplopy a KafkaConnect CDC connector to connect to that cluster while we extract the data from the SQL Server Database.
 
-=== Deploy KafkaConnect CDC Connectr
+=== Deploy KafkaConnect CDC Connector
 
 . Get back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. 
++ 
+[IMPORTANT]
+====
+Be sure to be in your _{user-username}_ project
+====
 
 . Click *+Add* on the left menu.
 +
@@ -94,19 +99,46 @@ spec:
     status.storage.topic: {user-username}-connect-cluster-status
 ----
 
-. Wait for the default deployment to finish and deploy the first pod.
-
-. Expose the Kafka Connect REST API.
+. Click on *Create* button.
 +
+image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
+
+=== Configure KafkaConnect CDC Connector
+
+. Get back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
++
+--
 [source,bash,subs="attributes+"]
 ----
 oc expose service debezium-connect-api --name kafka-connect -n {user-username}
 ----
 
-. Create a new connector config to react to changes in the `Orders` table called `orders-connector`.
+[IMPORTANT]
+====
+Remeber to be logged into OpenShift and be in the correct _working_ project.
+====
+--
+
+. Get back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu
++
+image:images/openshift-kafkaconnect-resource.png[Back To Topology]
+
+. Wait for the default deployment to finish and deploy the required pod. Remember to wait for the dark blue circles.
++
+image:images/topology-kafkaconnect.png[KakfaConnect Topology]
+
+. Check that everything deployed correctly by clicking the *Open URL* icon.
+
+. You should be able to see the information of the Kafka cluster version like the following:
++
+[source,json,subs="attributes+"]
+----
+{"version":"2.2.1.redhat-00002","commit":"c330425647372ca2","kafka_cluster_id":"g0lUt2NARWSPxFn1Aq3uTw"}
+----
+
+. Now that we know that the Kafka Connect cluster is running let's create a new connector config to react to changes in the `Orders` table. Issue the following command in the CodeReady Terminal window:
 +
 [source,bash,subs="attributes+"]
-Note: dont forget to change ALL occurences of {user-username} to say user1
 ----
 cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
 {
@@ -126,12 +158,15 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 }
 EOF
 ----
-Test: You can check that the connector is correctly deployed by doing a GET at the connector endpoint on a browser
-http://kafka-connect-{user-username}.{openshift-app-host}/connectors
 
-You should be able to see something like this..(screenshot below)
 
-image::images/orderconnector.png[]
+If the last command was successful you should get the following output as return:
+
+[source,json,subs="attributes+"]
+----
+{"name":"orders-connector","config":{"connector.class":"io.debezium.connector.sqlserver.SqlServerConnector","database.hostname":"mssql-server-linux.shared-db-earth.svc","database.port":"1433","database.user":"sa","database.password":"Password!","database.dbname":"InternationalDB","database.server.name":"{user-username}.earth","table.whitelist":"dbo.Orders","database.history.kafka.bootstrap.servers":"earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092","database.history.kafka.topic":"{user-username}.earth.dbhistory","name":"orders-connector"},"tasks":[],"type":"source"}
+----
+
 
 [time=5]
 [id="deploying-apache-kafka"]
@@ -141,12 +176,52 @@ AMQ streams component uses powerful operators that simplify the deployment, conf
 
 In this section you will learn how to start a local Kafka cluster that will represent the startup _Moon_ deployment.
 
-. Deploy the startup _Moon_ AMQ streams Kafka cluster.
+. Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
-[source,bash,subs="attributes+"]
+image:images/openshift-kafka-add.png[Add From Topology]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+
+. Type in `kakfa` in the search text field and then click on *KafkaConnect*.
++
+image::images/openshift-catalog-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
+
+. Click on *Create* button.
++
+image::images/openshift-create-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
+
+. Create a `Kafka` Kubernetes Resource to define your Apache Kafka Cluster. Replace the _YAML_ editor with the following code:
++
+[source,yaml,subs="attributes+"]
 ----
-oc apply -f https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/kafka-moon.yaml -n {user-username}
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: moon
+spec:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+  kafka:
+    listeners:
+      external:
+        type: route
+      plain: {}
+      tls: {}
+    replicas: 3
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral
 ----
+
+. Click on *Create* button.
++
+image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
 . Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 
