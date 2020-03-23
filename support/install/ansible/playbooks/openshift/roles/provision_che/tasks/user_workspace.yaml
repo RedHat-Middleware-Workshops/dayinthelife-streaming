@@ -74,7 +74,7 @@
       Content-Type: 'text/yaml'
       Authorization: 'Bearer {{ access_token }}'
     body: '{{ lookup("template", "./templates/che-devfile.yaml.j2") }}'
-    status_code: '201'
+    status_code: '500'
   register: workspace_devfile
   ignore_errors: yes
 
