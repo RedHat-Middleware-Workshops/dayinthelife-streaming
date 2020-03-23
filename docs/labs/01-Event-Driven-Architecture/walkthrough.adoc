@@ -5,7 +5,7 @@
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
 
 // URLs
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
 :codeready-url: http://che-che.{openshift-app-host}/
 :fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
@@ -1412,7 +1412,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 The current _store frontend application_ is currently handling only the *REST API* flavors. We will need to add the call to our new *EDA* options. Follow the next tasks to _add the HTML_ for the new flavors, _receive and display_ the async notifications and to correctly post the orders in the _eventing flow_.
 
-==== Add the new Async flavors to the UI
+=== Add the new Async flavors to the UI
 
 . Navigate to the `store-ui` project and open the *product.handlebars* file under `views/`.
 +
@@ -1491,7 +1491,7 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
             }
         }
 ----
-
++
 [NOTE]
 ====
 The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSource] interface is web content's interface to server-sent events. An EventSource instance opens a persistent connection to an HTTP server, which sends events in text/event-stream format.

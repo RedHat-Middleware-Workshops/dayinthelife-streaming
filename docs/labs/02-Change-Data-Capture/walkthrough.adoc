@@ -331,7 +331,14 @@ In this section you will learn how to start a local Kafka cluster that will repr
 
 . Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
+--
 image:images/openshift-kafka-add.png[Add From Topology]
+
+[IMPORTANT]
+====
+Be sure to switch back to your working `{user-username}` project
+====
+--
 
 . Click on the *From Catalog* option.
 +
@@ -393,6 +400,8 @@ We refer to the process of replicating data between Kafka clusters "mirroring" t
 
 The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
 
+=== Deploy Mirror Maker
+
 . Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kakfa cluster)
 
 . Get back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
@@ -442,6 +451,35 @@ image:images/openshift-mirrormakers-list.png[Back To Topology]
 . Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
 image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
+
+=== Review Mirrored Records
+
+. Validate that the *KafkaTopics* were created. 
++
+--
+. Expand the *Advanced* menu on the left menu bar.
+
+. Click on *Search* to load the _resources_ search page.
+
+. Click on the _Resource Type_ field and type 'topic'.
+
+. Finally select *KafkaTopic*.
+
+image::images/openshift-moon-kafkatopics.png[Search KafkaTopics]
+--
+
+. This will display the topics on the *Moon* _Kafka cluster_. You should be able to locate your `{user-username}.earth.dbo.orders--*` _KafkaTopic_.
++
+--
+image::images/openshift-moon-topics.png[CDC KafkaTopics]
+
+[NOTE]
+====
+This time there is no need to filter the topics, as this _moon_ cluster is only yours.
+====
+--
+
+*Good!* This means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
 
 [time=10]
 [id="enabling-http-access"]
