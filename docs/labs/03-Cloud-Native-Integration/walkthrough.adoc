@@ -117,7 +117,7 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 +
 image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
 
-. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/module-3/step1-simulator` folder.
+. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/module-3-simulator` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
@@ -142,7 +142,21 @@ cd /projects/FleurDeLune/support/projects/module-3/step-1-simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
 
-. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  Notice that this simple simulator fires every 5 seconds, creates a JSON object and sends it via AMQP to your AMQ Online **mytopic**.
+. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  We want to a Camel Route that fires a timer every 5 seconds, retrieves some rand data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
++
+[source,java,subs="attributes+"]
+----
+from("timer:tick?fixedRate=true&period=5000")
+.choice()
+    .when(simple("{{simulator.run}}"))
+        .setBody(method(this, "genRandomIoTData()"))
+        .marshal().json()
+        .log("${body}")
+        .to("amqp:topic:mytopic?subscriptionDurable=false&exchangePattern=InOnly")
+    .otherwise()
+        .log("Nothing send ")
+;
+----
 +
 image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 
