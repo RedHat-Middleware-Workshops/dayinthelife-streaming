@@ -98,8 +98,11 @@ kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-center** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
+
+
 +
 image::images/1.1.8-developer.png[1.1.8-developer.png, role="integr8ly-img-responsive"]
+
 
 +
 image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integr8ly-img-responsive"]
@@ -327,9 +330,9 @@ windowedharvestcnt.map(
         
 ----
 
-. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `tools` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `tools`.  Click it and a terminal window should open.
 +
-image::images/1.1.3-terminal.png[1.1.3-terminal, role="integr8ly-img-responsive"]
+image::images/4.1.2-tools-terminal.png[4.1.2-tools-terminal, role="integr8ly-img-responsive"]
 
 . Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
 +
@@ -388,7 +391,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 +
 [source,bash,subs="attributes+"]
 ----
-cd `{lab-4-pth}`/cost-center/
+cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
 kamel delete cost-advice
 
 kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
@@ -416,6 +419,8 @@ image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
+cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
 
@@ -455,15 +460,16 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you exposed inventory data via RestDSL, cached data from a Data Lake using InfiniSpan, then graphed the results using live data metrics in Grafana.
+In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common appoarch as one of event streaming technique-- Event sourcing. You have been introduced to implemented with ease with Camel-K and Red Hat Streams. 
 
-Open source connectors enable integrations with your local systems landscape. Explore InfiniSpan, Camel-K, and Grafana to connect APIs and services for event-driven application architectures (EDA). Red Hat offers supported versions of these connectors via Fuse and DataGrid.
+Event driven is also the fundation for real time behaviour detection. You used Kafka Streams in conjuction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data. 
 
-You can now proceed to link:{next-lab-url}[Lab 4].
+You can now proceed to link:{next-lab-url}[Lab 5].
 
 [time=4]
 [id="further-reading"]
 == Notes and Further Reading
 
 * https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
-* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
+* https://camel.apache.org/camel-k/latest/index.html[Camel K]
+* https://kogito.kie.org/[Kogito]
