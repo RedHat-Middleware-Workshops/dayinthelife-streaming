@@ -7,7 +7,7 @@
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-citizen-integrator-track-lab01/
 :codeready-url: http://che-che.{openshift-app-host}/
-:fuse-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
+:fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab02/walkthrough.adoc
@@ -744,12 +744,12 @@ Did you remember to write down the address space identifier?
 [type=taskResource]
 .Fuse Online
 ****
-* link:{fuse-url}[Fuse Online Console]
+* link:{fuse-user-url}[Fuse Online Console]
 ****
 
 === Access Fuse Online
 
-. Access the link:{fuse-url}[Fuse Online Console] and login using your credentials.
+. Access the link:{fuse-user-url}[Fuse Online Console] and login using your credentials.
 
 . Click *Allow selected permissions* to _Authorize Access_ to your account information.
 +
@@ -1579,7 +1579,7 @@ image::images/www-invoice.png[Payment received, role="integr8ly-img-responsive"]
 
 Remember that we need to test what happens when a service is down? Get back to _Fuse Online_ so we can take down the inventory service.
 
-. Get back to the link:{fuse-url}[Fuse Online Console]
+. Get back to the link:{fuse-user-url}[Fuse Online Console]
 
 . Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*.
 +
@@ -1620,7 +1620,7 @@ This time the Invoice service is decoupled of the Inventory call, so it can stil
 ====
 --
 
-. Let's get the *inventory* service back online. Get back to the link:{fuse-url}[Fuse Online Console]
+. Let's get the *inventory* service back online. Get back to the link:{fuse-user-url}[Fuse Online Console]
 
 . Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
 +
