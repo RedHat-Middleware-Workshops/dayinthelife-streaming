@@ -283,6 +283,52 @@ You can narrow the results by adding `{user-username}` to the search filter.
 ====
 --
 
+*Good!* This means that Change Data Capture connector has access to Kafka.
+
+=== Inspect Kafka records
+
+Time to check what information is flowing to Apache Kafka. 
+
+. Get back to the topology view. We will access one of the Kafka brokers.
++
+--
+. Click on the `earth-cluster kafka` _stateful set_.
+
+. Click on the *Resources* tab.
+
+. Click on the `earth-cluster-kafka-0` pod to access the details.
+
+image::images/openshift-kafka-deployment.png[Kafka Pods]
+--
+
+. Click on the *Terminal* tab to access this pod's shell.
++
+--
+image::images/openshift-kafka-terminal.png[Kafka Pods]
+
+[IMPORTANT]
+====
+Red Hat provides its own complete Apache Kakfa distribution container images. We will use the `kafka-console-consumer.sh` script to query the topics.
+====
+--
+
+. Issue the following command to read *all* the events in the `orders` topic:
++
+[source,bash,subs="attributes+"]
+----
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic {user-username}.earth.dbo.Orders --from-beginning
+----
+
+. You should see the json output of the messages. Something like this:
++
+[source,bash,subs="attributes+"]
+----
+...
+{"type":"string","optional":true,"field":"change_lsn"},{"type":"string","optional":true,"field":"commit_lsn"}],"optional":false,"name":"io.debezium.connector.sqlserver.Source","field":"source"},{"type":"string","optional":false,"field":"op"},{"type":"int64","optional":true,"field":"ts_ms"}],"optional":false,"name":"user1.earth.dbo.Orders.Envelope"},"payload":{"before":null,"after":{"OrderId":1000,"OrderType":"E","OrderItemName":"Mocha Irish Cream","Quantity":168,"Price":"4.30","ShipmentAddress":"P.O. Box 511, 4483 Ornare Rd.","ZipCode":"C5X 6L8","OrderUser":"user1"},"source":{"version":"0.10.0.Beta2-redhat-00001","connector":"sqlserver","name":"user1.earth","ts_ms":1584993092410,"snapshot":"false","db":"InternationalDB","schema":"dbo","table":"Orders","change_lsn":"00000027:00000038:0002","commit_lsn":"00000027:00000038:0003"},"op":"c","ts_ms":1584993096494}}
+----
+
+*Excelent!* This means you were able to capture the changes in the MSSQL server database and generate Apache Kafka events using Change Data Capture.
+
 [time=5]
 [id="deploying-apache-kafka"]
 == Deploying Apache Kafka on OpenShift
