@@ -117,7 +117,7 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 +
 image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
 
-. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/module-3-simulator` folder.
+. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
@@ -138,7 +138,7 @@ image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
 [source,bash,subs="attributes+"]
 ----
 oc project user2
-cd /projects/FleurDeLune/support/projects/module-3/step-1-simulator
+cd /projects/FleurDeLune/projects/harvest/simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
 
@@ -231,8 +231,13 @@ INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 ----
 
-. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `FleurDeLune/projects/module-3-inventory project`.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.
+. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `FleurDeLune/projects/harvest/inventory project`.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.  A route to:
 +
+** Consume harvest JSON messages from AMQ Online, and using Content-based routing determine whether they are standard, premium or utility marshmallows.
+** Insert premium marshmallow dimensions into the PREMIUM database table
+** Insert standard marshmallow dimensions into the STANDARD database table
+
+. Copy & paste the following Camel routes to the `Inventory.java` file:
 +
 [source,java,subs="attributes+"]
 ----
@@ -296,7 +301,7 @@ image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties,
 [source,bash,subs="attributes+"]
 ----
 oc project user2
-cd /projects/FleurDeLune/support/projects/module-3/step-2-inventory
+cd /projects/FleurDeLune/projects/harvest/inventory
 oc create configmap sender-config  --from-file=kafka.properties
 kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java --dev
 ----
@@ -333,7 +338,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="setup-data-lake"]
 == Setup Data Lake with caching
 
-. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/support/projects/module-3/step-3-shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
+. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/support/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
 +
 image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img-responsive"]
 
@@ -341,7 +346,7 @@ image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img
 +
 [source,bash,subs="attributes+"]
 ----
-cd /projects/FleurDeLune/support/projects/module-3/step-3-shipping
+cd /projects/FleurDeLune/support/projects/harvest/shipping
 oc project user2
 oc create -f connect-secret.yaml
 oc create -f jdg-cluster.yaml
@@ -415,7 +420,7 @@ image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
-cd /projects/FleurDeLune/support/projects/module-3/step-4-display/
+cd /projects/FleurDeLune/support/projects/harvest/display/
 oc project user2
 oc apply -f shippingconsole-config.yaml
 ----
