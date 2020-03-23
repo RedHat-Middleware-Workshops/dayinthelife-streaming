@@ -1,0 +1,257 @@
+:walkthrough: Complex Event Processing
+:che-url: http://che-che.{openshift-app-host}/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-05/
+:user-password: openshift
+
+ifdef::env-github[]
+:next-lab-url: ../lab05/walkthrough.adoc
+endif::[]
+
+[id='cloud-native-integration']
+= Lab 4 - Complex Event Processing and Event Sourcing
+
+In this lab you will be processing the streamed events. There are two common secnarios, Event Sourcing and Complex Event Processing. You will be receiving harvest event from topics on Kafka, and replay the event. Using Kafka Streams to real-time events and extracting information from event streams as they arrive.
+
+Audience: System Architects, Developers, Data Integrators
+
+*Overview*
+
+The Event Sourcing is use to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and presist sequentially, each represents change of the state. This allows applications can now replay history and play what-if scenarios.  
+
+Complex Event Processing, or CEP, is primarily an event processing concept that deals with the task of processing events with the goal of identifying the meaningful events within the event cloud.
+
+*Why Red Hat?*
+
+To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
+
+Red Hat Kafka Streams is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It combines the simplicity of writing and deploying standard Java and Scala applications on the client side with the benefits of Kafka's server-side cluster technology.
+
+Kogito is the open source Quarkus extension that allows developers to implement core logic in a more business-driven way. It brings concepts and maturity from 15+ years of experience of production-tested projects like jBPM and Drools.
+
+
+
+*Prerequisites*
+
+This lab assumes you have successfully completed Lab 1 to 3.
+
+*Credentials*
+
+Your username is: `{user-username}` +
+Your password is: `{user-password}`
+
+[type=walkthroughResource]
+.Che
+****
+* link:{che-url}/[Open Eclipse Che, window="_blank"]
+****
+
+[type=walkthroughResource,serviceName=openshift]
+.Openshift
+****
+* link:{openshift-host}/[Open Console, window="_blank"]
+****
+
+[time=10]
+[id="harvest-from-amq-topic"]
+== Collect Harvest data to Kafka Topic
+
+. Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+
+. Login to Che using your credentials (`{user-username}` and `{user-password}`).
++
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+
+. Find the `FleurDeLune/projects/module-4-cep-es/task1-costcenter` folder.
++
+image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
+
+. Open the `costcenter.yaml` file.  This is the *Configureation Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
++
+image::images/1.1.2-cost-config-update.png[1.1.2-cost-config-update, role="integr8ly-img-responsive"]
+
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
++
+image::images/1.1.3-terminal.png[1.1.3-terminal, role="integr8ly-img-responsive"]
+
+. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
++
+image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
+
+. Once you've logged into OpenShift via the CLI, run the following commands to creat `costcenter-config` configmap.
++
+[source,bash,subs="attributes+"]
+----
+oc project `{user-username}`
+cd /projects/FleurDeLune/projects/module-4-cep-es/task1-costcenter/
+oc apply -f costcenter.yaml
+----
+
+. Open the ` CostCenter.java` file located in the *task1-costcenter* folder.  This simple application collects harvest data from the edge device from each farm in AMQ Online **mytopic**. And simply re-route the evenst to an Kafka Topic. 
+
+. Try deploying and running the *CostCenter* Camel-K route by executing the following command
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
+----
+
+. Navigate back to the *OpenShift Developer Console* and verify the **cost-center** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
++
+image::images/1.1.8-developer.png[1.1.8-developer.png, role="integr8ly-img-responsive"]
++
+image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integr8ly-img-responsive"]
+
+
+[type=verification]
+Were you able to successfully deploy the Camel-K **Cost Center** to OpenShift?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=10]
+[id="cost-advise"]
+== Calculate real time cost per farm
+
+. Open the `costadvice-config.yaml` file.  This is the *Configureation Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **Kafka** endpoint. Update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
++
+image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="integr8ly-img-responsive"]
+
+. In the terminal from the previous task, run the following commands to creat `costadvice-config` configmap.
++
+[source,bash,subs="attributes+"]
+----
+oc project `{user-username}`
+cd /projects/FleurDeLune/projects/module-4-cep-es/task1-costcenter/
+oc apply -f costadvice-config.yaml
+----
+
+. Open the `CostAdvice.java` file located in the *task1-costcenter* folder.  This cost advisory solution, provides a simple cost estimation of each farm. 
+
+. Try deploying and running the *CostAdvice* Camel-K route by executing the following command
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
+----
+
+. Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.  
++
+image::images/2.1.6-cost-advice.png[2.1.6-cost-advice, role="integr8ly-img-responsive"]
+
+. In the *OpenShift Developer Console* find the route to access the cost advice result  
++
+image::images/2.1.7-cost-advice-route.png[2.1.7-cost-advice-route, role="integr8ly-img-responsive"]
+
+. In the browser, paste the URL with path `/costadvice`, you should be able to see the result in JSON format.
++
+image::images/2.1.8-cost-advice-result.png[2.1.8-cost-advice-route, role="integr8ly-img-responsive"]
+http://cost-advice-user2.apps.cluster-mydemo-eda0.mydemo-eda0.example.opentlc.com/costadvice
+
+[type=verification]
+Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+
+[time=15]
+[id="event-sourcing"]
+== Event Souring, what if cost is higher then expected!
+
+. In the Terminal, list all the Camel-K application, run the following commands. You should see at least two, `cost-center` and `cost-advice`
++
+[source,bash,subs="attributes+"]
+----
+kamel get
+----
++
+image::images/3.1.2-kamel-get.png[3.1.2-kamel-get, role="integr8ly-img-responsive"]
+
+
+. In the Terminal, stop the previous applications
++
+[source,bash,subs="attributes+"]
+----
+kamel delete cost-advice 
+kamel delete cost-center 
+----
+
+. Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)  
++
+image::images/3.1.5-terminal.png.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
+
+. Click on the Terminal tab.  
++
+image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
+
+. Run following command to list the topics `costadvisor` groups subscribe to. you should see it's subscribe to `{user-username}-costcenter`
++
+[source,bash,subs="attributes+"]
+----
+./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --group costadvisor --describe
+----
+
+. Reset the consumer offset to `costadvisor` groups. You shout see NEW-OFFSET is now back to **0**       
++
+[source,bash,subs="attributes+"]
+----
+./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --group costadvisor --topic `{user-username}-costcenter` --reset-offsets --to-earliest --execute
+----
+
+
+. Open the `CostAdvice.java` file located in the *task1-costcenter* folder.  Change the cost for each farm. 
++
+[source,bash,subs="attributes+"]
+----
+COST_FACTOR.put(101, 10.0);
+COST_FACTOR.put(302, 20.0);
+COST_FACTOR.put(787, 10.0);
+COST_FACTOR.put(645, 15.0);
+COST_FACTOR.put(555, 10.0);
+COST_FACTOR.put(460, 10.0);
+COST_FACTOR.put(892, 10.0);
+----
+
+. Try deploying and running the *CostAdvice* Camel-K route again by executing the following command
++
+[source,bash,subs="attributes+"]
+----
+kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
+----
+
+. Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.  
++
+image::images/2.1.6-cost-advice.png[2.1.6-cost-advice, role="integr8ly-img-responsive"]
+
+. In the *OpenShift Developer Console* find the route to access the cost advice result  
++
+image::images/2.1.7-cost-advice-route.png[2.1.7-cost-advice-route, role="integr8ly-img-responsive"]
+
+. In the browser, paste the URL with path `/costadvice`, you should be able to see the new updated result in JSON format.
++
+image::images/3.1.8-cost-advice-result.png[3.1.8-cost-advice-route, role="integr8ly-img-responsive"]
+http://cost-advice-user2.apps.cluster-mydemo-eda0.mydemo-eda0.example.opentlc.com/costadvice
+
+[type=verification]
+Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift? Did you get the what if result? try play with couple of different cost!
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+
+[time=5]
+[id="summary"]
+== Summary
+
+In this lab you exposed inventory data via RestDSL, cached data from a Data Lake using InfiniSpan, then graphed the results using live data metrics in Grafana.
+
+Open source connectors enable integrations with your local systems landscape. Explore InfiniSpan, Camel-K, and Grafana to connect APIs and services for event-driven application architectures (EDA). Red Hat offers supported versions of these connectors via Fuse and DataGrid.
+
+You can now proceed to link:{next-lab-url}[Lab 4].
+
+[time=4]
+[id="further-reading"]
+== Notes and Further Reading
+
+* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
+* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
