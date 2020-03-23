@@ -2,6 +2,7 @@
 :che-url: http://che-che.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-05/
 :user-password: openshift
+:lab-four-path: openshift
 
 ifdef::env-github[]
 :next-lab-url: ../lab05/walkthrough.adoc
@@ -339,17 +340,17 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 ----
 oc project `{user-username}`
 
-cd /projects/FleurDeLune/projects/module-4-cep-es/task2-compleeventprocessing/
 
-mvn clean package quarkus:dev
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/module-4-cep-es/task2-compleeventprocessing
 
 oc new-build --binary --name=cep-kogito -l app=cep-kogito
 
 oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
 
-oc start-build cep-kogito --from-dir=. --follow
+oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/module-4-cep-es/task2-cep/target/*-runner.jar --follow 
 ----
-
++
+image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-responsive"]
 
 . Once you've logged into OpenShift via the CLI, run the following commands to start the application.
 +
@@ -358,18 +359,26 @@ oc new-app --image-stream=cep-kogito \
  -e quarkus.kafka-streams.bootstrap-servers=`moon-kafka-bootstrap.{user-username}.svc:9092` \
  -e quarkus.kafka-streams.application-server=`moon-kafka-bootstrap.{user-username}.svc:9092`
 ----
++
+image::images/4.1.9-new-app.png[4.1.9-new-app, role="integr8ly-img-responsive"]
+
  
- 
+. Navigate back to the *OpenShift Developer Console* and verify the **cep-kogito** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
++
+image::images/4.2.1-developer-kogito.png[4.2.1-developer-kogito, role="integr8ly-img-responsive"]
+
++
+image::images/4.2.2-log-kogito.png[4.2.2-log-kogito, role="integr8ly-img-responsive"]
 
 [type=verification]
-Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift? Did you get the what if result? try play with couple of different cost!
+Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift? 
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="cep-result"]
-== CEP RESULT
+== See Disaster Alert
 . Switch to the `dilwsXXX` terminal
 
 . Deploying and run the *CostCenter* Camel-K route by executing the following command again to send harvest data again!
@@ -382,15 +391,55 @@ kamel delete cost-advice
 kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
 ----
 
-. Navigate back to the *OpenShift Developer Console* and verify the **cost-center** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
+. Stop the the *simlulator* Camel-K route by executing the following command again to send harvest data again!
 +
-image::images/1.1.8-developer.png[1.1.8-developer.png, role="integr8ly-img-responsive"]
+[source,bash,subs="attributes+"]
+----
+kamel delete edge-simulator 
+----
+
+. Go to harvest/simulator, find *EdgeSimulator.java* and update the  MIN from 150 to 1;
++
+[source,bash,subs="attributes+"]
+----
+
+public static final int MIN = 150;
+----
++
+image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-responsive"]
+
+
+. Run the *Updates Simulator* executing the following command again to send harvest data again!
++
+[source,bash,subs="attributes+"]
+----
+kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+----
+
+. Navigate back to the *OpenShift Developer Console* view the new processed result
++
+image::images/4.2.4-log-kogito.png[4.2.4-log-kogito, role="integr8ly-img-responsive"]
 
 +
 image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integr8ly-img-responsive"]
 
+. Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)  
++
+image::images/3.1.5-terminal.png.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
+. Click on the Terminal tab.  
++
+image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
 
+. Run following command see the incoming alert for  `disaster` topic.
++
+[source,bash,subs="attributes+"]
+----
+
+./bin/kafka-console-consumer.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --topic disaster
+----
++
+image::images/4.2.5-cep-result.png[4.2.5-cep-result, role="integr8ly-img-responsive"]
 
 
 [type=verification]
