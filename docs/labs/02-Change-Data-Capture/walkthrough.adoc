@@ -235,15 +235,7 @@ If you feel comfortable, you can also use the OpenShift CLI command `oc rsh` to 
 +
 [source,bash,subs="attributes+"]
 ----
-/opt/mssql-tools/bin/sqlcmd -S mssql-server-linux -U sa -P Password! -d InternationalDB
-----
-
-. Query the table to check the information is there:
-+
-[source,bash,subs="attributes+"]
-----
-1> select top 5 * from dbo.Orders where OrderUser='{user-username}'
-2> go
+/opt/mssql-tools/bin/sqlcmd -S mssql-server-linux -U sa -P Password! -d InternationalDB -Q "select top 5 * from dbo.Orders where OrderUser='{user-username}'"
 ----
 
 . Check the results, should look like this:
