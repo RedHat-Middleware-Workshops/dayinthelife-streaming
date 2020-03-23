@@ -142,7 +142,7 @@ cd /projects/FleurDeLune/support/projects/module-3/step-1-simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
 
-. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  We want to a Camel Route that fires a timer every 5 seconds, retrieves some rand data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
+. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  We want to create a Camel Route that fires a timer every 5 seconds, retrieves some random data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
 +
 [source,java,subs="attributes+"]
 ----
@@ -213,13 +213,13 @@ CREATE TABLE premium (
 	mmid bigint NOT NULL,
 	diameter integer NOT NULL,
     weight decimal NOT NULL,
-	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 
 CREATE TABLE standard (
 	weight decimal NOT NULL,
-	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
@@ -231,11 +231,49 @@ INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 ----
 
-. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `step-2-inventory` project.  Examine the `Inventory.java` file and notice that we have 3 kafka topics that we need to setup.  Update those kafka endpoints with your correct username:
+. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `FleurDeLune/projects/module-3-inventory project`.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.
 +
-** `{user-username}-premium`
-** `{user-username}-standard`
-** `{user-username}-utility`
++
+[source,java,subs="attributes+"]
+----
+from("amqp:topic:mytopic?subscriptionDurable=false")
+.split().jsonpath("$.harvest[*]")
+    .choice()
+        .when().jsonpath("$[?(@.diameter > 4 )]" )
+            .log("Premium ${body}")
+            .wireTap("direct:premiumDB")
+                .newExchangeHeader("quality", constant("Premium"))
+                .newExchangeHeader("diameter",jsonpath("$.diameter"))
+                .newExchangeHeader("weight",jsonpath("$.weight"))
+                .newExchangeHeader("mmid",jsonpath("$.mmid"))
+            .end()
+            .marshal().json()
+            .to("kafka:{user-username}-premium?groupId=sender")
+        .when().jsonpath("$[?(@.diameter > 1 )]")
+            .log("Standard ${body}")
+            .wireTap("direct:standardDB")
+                .newExchangeHeader("quality", constant("Standard"))
+                .newExchangeHeader("weight",jsonpath("$.weight"))
+            .end()
+            .marshal().json()
+            .to("kafka:{user-username}-standard?groupId=sender")
+        .otherwise()
+            .log("Utility ${body}")
+            .marshal().json()
+            .to("kafka:{user-username}-utility?groupId=sender")
+        .end()
+;
+
+from("direct:premiumDB")
+    .log("inventoryDa stored ${headers.quality} diameter ${headers.diameter}")
+    .setBody(simple("insert into premium (mmid,diameter,weight) VALUES (${headers.mmid},${headers.diameter},${headers.weight} )"))
+    .to("jdbc:dataSource");
+
+from("direct:standardDB")
+    .log("inventoryDa stored ${headers.quality}")
+    .setBody(simple("insert into standard (weight) VALUES (${headers.weight})"))
+    .to("jdbc:dataSource");
+----
 +
 image::images/3.1.8-update-inventory-java.png[3.1.8-update-inventory-java, role="integr8ly-img-responsive"]
 

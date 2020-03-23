@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config --dev
-//oc create configmap edge-config  --from-file=edge.properties
 public class EdgeSimulator extends RouteBuilder{
 
   @Override
