@@ -5,7 +5,7 @@
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
 
 // URLs
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-citizen-integrator-track-lab01/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
 :codeready-url: http://che-che.{openshift-app-host}/
 :fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
@@ -744,12 +744,12 @@ Did you remember to write down the address space identifier?
 [type=taskResource]
 .Fuse Online
 ****
-* link:{fuse-user-url}[Fuse Online Console]
+* link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
 ****
 
 === Access Fuse Online
 
-. Access the link:{fuse-user-url}[Fuse Online Console] and login using your credentials.
+. Access the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"] and login using your credentials.
 
 . Click *Allow selected permissions* to _Authorize Access_ to your account information.
 +
@@ -769,7 +769,7 @@ image::images/fuse-create-connection.png[Fuse Create Connection, role="integr8ly
 +
 image::images/fuse-amqp-broker.png[AMQP Message Broker Connector, role="integr8ly-img-responsive"]
 
-. In the followin page, add the *Connection URI* for connecting to the AMQ Online _AddressSpace_. You will need to replace the `{your-identifier}` with the value you save from the previous task.
+. On the following page, add the *Connection URI* for connecting to the AMQ Online _AddressSpace_. You will need to replace the `{your-identifier}` with the value you save from the previous task.
 +
 --
 [source,none,subs="attributes+"]
@@ -952,7 +952,7 @@ image::images/fuse-return-mapper.png[Return Mapper, role="integr8ly-img-responsi
 +
 image::images/fuse-connection-mapper.png[Connection Mapper, role="integr8ly-img-responsive"]
 
-. Expand the *Constants* section and add a _string_ with the _value_ `Order Received!`. Drag and drop it to the righ side under `body`. Then click the *Done* button.
+. Expand the *Constants* section and add a _string_ with the _value_ `Order Received!`. Drag and drop it to the right side under `body`. Then click the *Done* button.
 +
 image::images/fuse-map-response.png[Map Response, role="integr8ly-img-responsive"]
 
@@ -964,11 +964,11 @@ image::images/fuse-publish-api.png[Publish API Integration, role="integr8ly-img-
 +
 image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-responsive"]
 
-. It will take a moment for Fuse to deploy your integration. It will compile and package an Apache Camel route into a _container_ image to be deployed in OpenShift. Fuse does all this steps automatically, so you don't need to learn how to build and deploy a container on Kubernetes. Wait a few minutes for the process to complete.
+. It will take a moment for Fuse to deploy your integration. It will compile and package an Apache Camel route into a _container_ image that is deployed to OpenShift. Fuse completes these steps automatically, so you don't need to learn how to build and deploy a container on Kubernetes. Wait a few minutes for the process to complete.
 +
 image::images/fuse-building-integration.png[Building Integration, role="integr8ly-img-responsive"]
 
-. Test your integration. Get back to the CodeReady Workspaces IDE and issue the following command in the terminal window:
+. Test your integration. Go back to the CodeReady Workspaces IDE and issue the following command via the terminal window:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -987,7 +987,8 @@ curl -v -X POST \
     "zipCode": "15555"
   }'
 ----
-+ You should receive a message back similar to the following one:
++
+You should receive a message back similar to the following one:
 +
 [source,none,subs="attributes+"]
 ----
@@ -1003,8 +1004,8 @@ curl -v -X POST \
 * Curl_http_done: called premature == 0
 * Connection #0 to host i-events.fuse-{user-username} left intact
 ----
-
-*Excelent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
++
+*Excellent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
 
 === Add Extensions
 
@@ -1277,13 +1278,17 @@ image::images/fuse-invoice-save.png[Invoice Save, role="integr8ly-img-responsive
 +
 image::images/fuse-invoice-deploy.png[Invoice Deploy, role="integr8ly-img-responsive"]
 
-*Congratulations!* Your services are out and running.
+[type=verification]
+Were you able to successfully start all 3 integration services?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="Develop Events Service"]
 == Develop the Events Service
 
-For the new Event-driven store application, we will need to receive the updates on the notifications in near-realtime. For this, we will need to connect to a link:https://en.wikipedia.org/wiki/Server-sent_events[Server-Sent Events] service.
+For the new event-driven store application, we will need to receive the updates on the notifications in near-realtime. For this, we will need to connect to a link:https://en.wikipedia.org/wiki/Server-sent_events[Server-Sent Events] service.
 
 === Review the code
 
@@ -1291,7 +1296,7 @@ For the new Event-driven store application, we will need to receive the updates 
 +
 image::images/codeready-events.png[Events Service, role="integr8ly-img-responsive"]
 +
-Inventory service implements _Server-Side Events_ (SSE) using *Quarkus* and link:https://smallrye.io/smallrye-reactive-messaging/[SmallRye Reactive Messaging].
+The Inventory service implements _Server-Side Events_ (SSE) using *Quarkus* and link:https://smallrye.io/smallrye-reactive-messaging/[SmallRye Reactive Messaging].
 
 . Open the `EventsResource.java` file under 'src/main/java/com/redhat/eventdriven' and check the provided code.
 +
@@ -1393,9 +1398,13 @@ oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "na
 +
 image::images/topology-events.png[Topology Events, role="integr8ly-img-responsive"]
 
-. Review the succesful deployment by clicking on the *Open URL* icon on the deployment.
+. Review the successful deployment by clicking on the *Open URL* icon on the deployment.
 
-*Very good!* Now is time to update the Frontend.
+[type=verification]
+Were you able to successfully view the events default webpage?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="Update Frontend"]
@@ -1403,7 +1412,7 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 
 The current _store frontend application_ is currently handling only the *REST API* flavors. We will need to add the call to our new *EDA* options. Follow the next tasks to _add the HTML_ for the new flavors, _receive and display_ the async notifications and to correctly post the orders in the _eventing flow_.
 
-==== Add the new Async flavors to the UI
+=== Add the new Async flavors to the UI
 
 . Navigate to the `store-ui` project and open the *product.handlebars* file under `views/`.
 +
@@ -1458,7 +1467,6 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
 
 . Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
 +
---
 [source,json,subs="attributes+"]
 ----
         constructor() {
@@ -1483,14 +1491,13 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
             }
         }
 ----
-
++
 [NOTE]
 ====
 The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSource] interface is web content's interface to server-sent events. An EventSource instance opens a persistent connection to an HTTP server, which sends events in text/event-stream format.
 
 Unlike link:https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API[WebSockets], server-sent events are unidirectional; that is, data messages are delivered in one direction, from the server to the clients browser.
 ====
---
 
 . Now, open the *index.js* file at the top level.
 +
@@ -1523,31 +1530,33 @@ app.post('/order/event', json(), async (req, res, next) => {
 })
 ----
 
-. Finally, get back to the terminal window and start a new build with this changes.
+. Finally, go back to the terminal window and start a new build with this changes.
 +
---
 [source,bash,subs="attributes+"]
 ----
 npm run openshift
 ----
-
++
 [NOTE]
 ====
 Be sure to switch to your _working_ `user1` project and the correct _store-ui_ folder.
 ====
---
 
 . Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo:
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
-*Excelent!* You are ready to test your new architecture.
+[type=verification]
+Were you able to successfully see the www-store pods running?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=5]
 [id="test-eda"]
 == Testing the new architecture
 
-Remeber what happens when a service is down in our _traditional_ REST architecture? We get an error telling us that we were not able to process the order. Let's check what happens when we introduce microservices decoupling using events.
+Remember what happens when a service is down in our _traditional_ REST architecture? We get an error telling us that we were not able to process the order. Let's check what happens when we introduce microservices to decouple events.
 
 === Test new flavors
 
@@ -1565,7 +1574,7 @@ image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"
 +
 image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
-. A notification will show you that your order was received and a almost inmediately another notificaction will pop up telling us that our order was already proceseed. This is the *inventory* service feedback.
+. A notification will show you that your order was received and a almost immediately another notificaction will pop up telling us that our order was already proceseed. This is the *inventory* service feedback.
 +
 image::images/www-inventory.png[Order Processed, role="integr8ly-img-responsive"]
 
@@ -1573,13 +1582,17 @@ image::images/www-inventory.png[Order Processed, role="integr8ly-img-responsive"
 +
 image::images/www-invoice.png[Payment received, role="integr8ly-img-responsive"]
 
-*Excelent!* Our services are working.
+[type=verification]
+Were you able to successfully see all 3 notification messages?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 === Take down that service
 
 Remember that we need to test what happens when a service is down? Get back to _Fuse Online_ so we can take down the inventory service.
 
-. Get back to the link:{fuse-user-url}[Fuse Online Console]
+. Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
 
 . Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*.
 +
@@ -1592,13 +1605,13 @@ image::images/fuse-stop-accept.png[Scale Down Inventory, role="integr8ly-img-res
 
 [TIP]
 ====
-This will simulate the _shortage_ of the inventory service. Wait a few seconds for the service to be stopped.
+This will simulate the _outage_ of the inventory service. Wait a few seconds for the service to stop.
 ====
 
 image::images/fuse-stopped.png[Scaled To Zero, role="integr8ly-img-responsive"]
 --
 
-. Get back to the web application page and try again to order some async *Strawberry* flavor. What happened?
+. Go back to the web application page and try again to order the async *Strawberry* flavor. What happens?
 +
 --
 image::images/www-order-received.png[Order Received, role="integr8ly-img-responsive"]
@@ -1620,7 +1633,7 @@ This time the Invoice service is decoupled of the Inventory call, so it can stil
 ====
 --
 
-. Let's get the *inventory* service back online. Get back to the link:{fuse-user-url}[Fuse Online Console]
+. Let's get the *inventory* service back online. Get back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
 
 . Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
 +
@@ -1639,13 +1652,17 @@ image::images/fuse-inventory-restarting.png[Invetory Starting, role="integr8ly-i
 image::images/www-order-back.png[Invetory Starting, role="integr8ly-img-responsive"]
 
 
-Your order should be back again!
+[type=verification]
+Did your order reappear and received?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 
 [time=5]
 [id="summary"]
 == Summary
-In this lab you have created cloud native integration services that listen to events using Camel K. And has setup topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible, and reactive.
+In this lab you  created cloud native integration services which listen to events using Camel K. You also setup topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible and reactive.
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 
