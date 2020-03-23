@@ -393,7 +393,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="Deploy Order Service"]
 == Deploy Order Service
 
-The third element of the architecture is the _Order Service_ that works as the first point of access from the frontend and redirects the order to the rest of the backend services. In this case, the service is implemented using *Spring Boot* Java framework. In this theorical implementation we are showing of common microservices pattern that is the service chaining.
+The third element of the architecture is the _Order Service_ that works as the first point of access from the frontend and redirects the order to the rest of the backend services. In this case, the service is implemented using the *Spring Boot* Java framework. In this theorical implementation we are demonstrating a common microservices pattern that is called _Service Chaining_.
 
 === Review the code
 
@@ -401,13 +401,13 @@ The third element of the architecture is the _Order Service_ that works as the f
 +
 image::images/codeready-order.png[Order Service, role="integr8ly-img-responsive"]
 
-. Open the `OrderServiceController.java` file under 'src/main/java/com/legacy/ordersservice' and check the provided code.
+. Open the `OrderServiceController.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
 +
 image::images/order-controller.png[OrderServiceController.java, role="integr8ly-img-responsive"]
 +
 You can see a traditional Spring Boot REST Controller with one endpoint receiveing JSON _POST_ calls to the `/place` path.
 
-. Open the `OrdersRepository.java` file under 'src/main/java/com/legacy/ordersservice' and check the provided code.
+. Open the `OrdersRepository.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
 +
 image::images/order-repository.png[OrderRepository.java, role="integr8ly-img-responsive"]
 +
@@ -465,18 +465,24 @@ image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"
 ----
 {"openapi":"3.0.1","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"http://order-user1.apps.cluster-eventing-6fbb.eventing-6fbb.example.opentlc.com","description":"Generated server url"}],"paths":{"/place":{"post":{"tags":["orders-service-controller"],"operationId":"place","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}}},"responses":{"200":{"description":"default response","content":{"application/json":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"Order":{"type":"object","properties":{"orderId":{"type":"integer","format":"int32"},"itemId":{"type":"integer","format":"int32"},"orderItemName":{"type":"string"},"quantity":{"type":"integer","format":"int32"},"price":{"type":"integer","format":"int32"},"address":{"type":"string"},"zipCode":{"type":"integer","format":"int32"},"datetime":{"type":"string"},"department":{"type":"string"}}}}}}
 ----
++
+The backend services are now ready, so time to deploy the frontend store UI.
 
-The backend services are ready, now time to deploy the frontend store UI.
+[type=verification]
+Were you able to successfully deploy the Orders service and view the OpenAPI spec?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="Deploy Webapp"]
 == Deploy Frontend Application
 
-The last element of the architecture is the _Store App_ this is a normal *NodeJS* runtime application. Is a frontend store page to take the orders from regular customers. It post all the orders to the backend `Order Service` and while showing a _loading_ dialog until it receives the order outcome.
+The last element of the architecture is the _Store App_, which is a regular *NodeJS* runtime application. It is a frontend store page to take the orders from regular customers. It posts all the orders to the backend _Order Service`_ and while showing a _loading_ dialog until it receives the order outcome.
 
 === Deploy to OpenShift
 
-. Change to the project folder:
+. Via the Eclipse Che terminal, change to the project folder:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -485,10 +491,10 @@ cd $CHE_PROJECTS_ROOT/FleurDeLune/projects/store-ui/
 +
 [NOTE]
 ====
-For the following commands remember to be sure to switch to your _working_ project.
+For the following commands, remember to be sure to switch to your _working_ project.
 ====
-
-. Package and deploy the application using link:https://github.com/nodeshift/nodeshift#nodeshift-[nodeshift]:
++
+. Package and deploy the application using link:https://github.com/nodeshift/nodeshift#nodeshift-[nodeshift].  This command can take 2-5 minutes to run, so please be patient:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -502,7 +508,7 @@ npm install --save-dev nodeshift; npm run openshift
 oc expose svc/www-store
 ----
 
-. Configure the route time out and tell the gateway this is a long running transaction:
+. Configure the route timeout and let the gateway know that this is a long running transaction:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -529,7 +535,7 @@ Can you see those tasty desserts?
 [id="Test Webapp"]
 == Test the application
 
-We are ready to test our application. We will order some REST flavors and check how the application behaves in case of failure.
+We are ready to test our application. We will order some different flavors by calling our RESTful backend services, plus check how the application behaves in case of failure.
 
 === Order Mango
 
@@ -537,7 +543,7 @@ We are ready to test our application. We will order some REST flavors and check 
 +
 image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
 
-. This are our ol' time REST Classic flavors. Click on *Order Mango*,
+. This are our ol' time classic flavors. Click on *Order Mango*,
 +
 image::images/order-mango.png[Order Mango, role="integr8ly-img-responsive"]
 
@@ -549,13 +555,13 @@ image::images/processing-order.png[Processing Order, role="integr8ly-img-respons
 +
 image::images/order-success.png[Order Success, role="integr8ly-img-responsive"]
 
-Congratulations! Your _Mango_ order was sucessful! Everything is fine and sunshise is everywhere.
+Congratulations! Your _Mango_ order was successful! Everything is fine and the sunshine is bright!
 
 === Take down that service
 
 The application is working correctly, but what happens when a service _fails_?
 
-. Get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
 . Click on the *inventory* service deployment.
 +
@@ -567,30 +573,36 @@ A side bar will open with an overview of your service resources.
 +
 image::images/scale-down-inventory.png[Scale Down Inventory, role="integr8ly-img-responsive"]
 +
-This will simulate the _shortage_ of the inventory service. Wait a few seconds for the pod to be deleted.
+This will simulate the _outage_ of the inventory service. Wait a few seconds for the pod to be deleted.
 
 . Check that the deployment ring is *white* instead of the normal _dark blue_
 +
 image::images/scaled-zero.png[Scaled To Zero, role="integr8ly-img-responsive"]
 
-. Get back to the web application page and try again to order some *Mango* flavor. What happened?
+. Go back to the web application page and try again to order the *Mango* flavor. What happens?
 +
 image::images/couldnot-process.png[Could Not Process Error, role="integr8ly-img-responsive"]
 +
 [NOTE]
 ====
-The service was not able to fulfill the order was the inventory service was out, we even had to wait some time to get the response back because of timeouts.
+The service was not able to fulfill the order because the inventory service was offline.  Instead, we  had to wait a little time to get the response back because of the set timeout.
 ====
 
-. Dismiss the error dialog and get back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +
 image::images/scale-up-inventory.png[Scale Inventory Up, role="integr8ly-img-responsive"]
 
-. Get back to the web application page and try *again*.
-
+. Go back to the web application page and try *again*.
++
 Your order should be back again!
+
+[type=verification]
+Were you able to successfully scale-down and scale-up your application?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="Create AMQ Topics"]
@@ -602,7 +614,7 @@ Your order should be back again!
 
 Let's create an **Address Space** using the AMQ Online Operator.
 
-. Get back to your OpenShift Developer Console.
+. Go back to your OpenShift Developer Console.
 
 . Click *+Add* on the left menu.
 +
