@@ -671,7 +671,7 @@ Wait for the *Address Space* to deploy the infrastructure until the status chang
 
 [NOTE]
 ====
-This could take a few minutes to finish, if looks like taking longer refresh the page.
+This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
 ====
 --
 
@@ -714,11 +714,11 @@ image::images/topic-plan.png[topicplan, role="integr8ly-img-responsive"]
 +
 image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
 
-. AMQ will start the deployment of the required messaging infrastructure to privision your topic.
+. AMQ will start the deployment of the required messaging infrastructure to provision your topic.
 +
 image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive"]
 
-. Next, repeat the last couple steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic.
+. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic.
 +
 image::images/topics.png[topics, role="integr8ly-img-responsive"]
 +
