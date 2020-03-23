@@ -1,16 +1,30 @@
-package module4;
+package module3;
 import org.apache.camel.builder.RouteBuilder;
 import java.util.Map;
 import java.util.HashMap;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.Body;
-import org.apache.camel.model.rest.RestBindingMode;
 
-
+//oc delete cm costadvice-config  
+//oc apply -f costadvice-config.yaml
+// 
+//kamel run -d camel-bean -d camel-jackson --configmap costadvice-config CostAdvice.java --dev
+//--trait debug.enabled=true --property logging.level.org.apache.camel=DEBUG
 
 public class CostAdvice extends RouteBuilder{
 
-    
+    static final int MAX_PER_CARGO=10;
+    /** Not Possible in Current Supported Java Version
+    static final Map COST_FACTOR = Map.ofEntries(
+        entry(101, 8.0),
+        entry(302, 5.4),
+        entry(787, 7.9),
+        entry(645, 8.7),
+        entry(555, 8.7),
+        entry(460, 7.6),
+        entry(892, 7.5)
+    );*/ 
+
     static Map<Integer, Double> COST_FACTOR = new HashMap<Integer, Double>();
     static{
         COST_FACTOR.put(101, 8.0);
@@ -27,39 +41,13 @@ public class CostAdvice extends RouteBuilder{
     @Override
     public void configure() throws Exception{
 
-
-        restConfiguration()
-            .component("undertow")
-            .apiContextPath("/api-doc")
-            .apiProperty("cors", "true")
-            .apiProperty("api.title", "Order API")
-            .apiProperty("api.version", "1.0")
-            .enableCORS(true)
-            .port("8080")
-            .bindingMode(RestBindingMode.json);
-
-        rest()
-            .get("/costadvice")
-                .to("direct:costadvice")
-        ;
-
-        from("direct:costadvice")
-            .bean(this, "getCostAdvice")
-            .log("--> ${body}")
-        ;
-
         from("kafka:user1-costcenter?groupId=costadvisor")
             .unmarshal(new JacksonDataFormat(Map.class))
+            .log("Input --> ${body}")
             .bean(this, "calculate")
         ;
 
     }
-
-
-    public Map<Integer, Double> getCostAdvice(){
-        return farmCost;
-    }
-       
 
 
     public void calculate(@Body Map<Integer, Integer> input){
@@ -70,8 +58,6 @@ public class CostAdvice extends RouteBuilder{
             farmCost.put(farmid, farmCost.get(farmid)+batchcost);
         else 
             farmCost.put(farmid, batchcost);
-
-        
     }
         
 

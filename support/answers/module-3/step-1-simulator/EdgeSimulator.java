@@ -8,25 +8,36 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config --dev 
+//oc create configmap edge-config  --from-file=edge.properties
 public class EdgeSimulator extends RouteBuilder{
+    
+    @Override
+    public void configure() throws Exception{
 
-  public static final int MIN = 150;
-  @Override
-  public void configure() throws Exception{
+        
 
-  /*
-   * Add your Camel Route Here
-   */
+        from("timer:tick?fixedRate=true&period=5000")
+        .choice()
+            .when(simple("{{simulator.run}}"))
+                .setBody(method(this, "genRandomIoTData()"))
+                .marshal().json()
+                .log("${body}")
+                .to("amqp:topic:mytopic?subscriptionDurable=false&exchangePattern=InOnly")
+            .otherwise()
+                .log("Nothing send ")
+        ; 
+    }
 
-  }
 
     public Map genRandomIoTData(){
-        Random generator = new Random();
+        Random generator = new Random(); 
         Map iotData = new HashMap<String,Object>();
-
+        
         Integer[] farms = {101, 302, 787, 645, 555, 460, 892};
         int randomIndex = generator.nextInt(farms.length);
-        int batchcnt =  generator.nextInt(87) + MIN;
+        int batchcnt =  generator.nextInt(87) + 1;
         long batchtime = System.currentTimeMillis();
 
         List<Map> harvest = new ArrayList<Map>();
@@ -50,7 +61,7 @@ public class EdgeSimulator extends RouteBuilder{
         harvestEvent.put("diameter", (generator.nextInt(5) + 1));
         harvestEvent.put("weight", ((generator.nextInt(5) + 1.0) + (((int)generator.nextInt(8)+1)*0.1)));
         harvestEvent.put("mmid", eventid);
-
+        
         return harvestEvent;
     }
 

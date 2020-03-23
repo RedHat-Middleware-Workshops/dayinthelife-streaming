@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (C) 2016 Red Hat, Inc.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.syndesis.extensions</groupId>
+  <artifactId>syndesis-extension-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.0</version>
+
+  <name>Syndesis Extensions Parent</name>
+  <description>A Collection of Extensions for Syndesis</description>
+
+  <properties>
+    <syndesis.version>1.3.10</syndesis.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <java.version>1.8</java.version>
+    <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+
+    <syndesisServerUrl.disableSSLvalidation>false</syndesisServerUrl.disableSSLvalidation>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>jboss-fuse</id>
+      <url>https://origin-repository.jboss.org/nexus/content/groups/ea</url>
+    </repository>
+    <repository>
+      <id>mrrc-redhat</id>
+      <url>https://maven.repository.redhat.com/ga</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <releases />
+      <snapshots />
+      <id>jboss_origin</id>
+      <name>jboss_origin</name>
+      <url>https://origin-repository.jboss.org/nexus/content/groups/ea</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>redhat.ga</id>
+      <name>Red Hat General Availability Repository</name>
+      <url>https://maven.repository.redhat.com/ga</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <modules>
+    <!--connectors-->
+    <module>syndesis-connector-irc</module>
+    <module>syndesis-connector-log</module>
+    <module>syndesis-connector-telegram</module>
+    <module>syndesis-connector-timer</module>
+    <module>syndesis-connector-webhook</module>
+    <module>syndesis-connector-openshift</module>
+
+    <!--step extensions-->
+    <module>syndesis-extension-body</module>
+    <module>syndesis-extension-convert-body</module>
+    <module>syndesis-extension-cache</module>
+    <module>syndesis-extension-delay</module>
+    <module>syndesis-extension-json-dataformat</module>
+    <module>syndesis-extension-log</module>
+    <module>syndesis-extension-log-body</module>
+    <module>syndesis-extension-loop</module>
+    <module>syndesis-extension-manage-headers</module>
+    <module>syndesis-extension-rng-error</module>
+    <module>syndesis-extension-script</module>
+    <module>syndesis-extension-split</module>
+    <module>syndesis-extension-telegrambot</module>
+    <module>syndesis-extension-text-converter</module>
+    <module>syndesis-extension-threads</module>
+    <module>syndesis-extension-throttle</module>
+    <module>syndesis-extension-yaml-dataformat</module>
+    <module>syndesis-extension-twitter-media</module>
+    <!--library extensions-->
+    <module>syndesis-library-jdbc-driver</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>get-syndesis-version</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scripts>
+            <script><![CDATA[
+                  //XXX: usefull to disableSSLcertValidation()
+                  import javax.net.ssl.HostnameVerifier
+                  import javax.net.ssl.HttpsURLConnection
+                  import javax.net.ssl.SSLContext
+                  import javax.net.ssl.TrustManager
+                  import javax.net.ssl.X509TrustManager
+                  log.debug "START getting syndesis version from a running Syndesis server."
+                  
+                  def syndesisServerUrl = getPropertyValue('syndesisServerUrl')
+                  log.debug "syndesisServerUrl value = $syndesisServerUrl"
+
+                  if( syndesisServerUrl != null ) {
+                    boolean disableSSLvalidation = false                    
+                    if(getPropertyValue('syndesisServerUrl.disableSSLvalidation') != null && getPropertyValue('syndesisServerUrl.disableSSLvalidation').toBoolean()) {
+                      disableSSLvalidation = true
+                    }
+                    log.info "disableSSLvalidation: $disableSSLvalidation"
+                    if( disableSSLvalidation ) {
+                      disableSSLcertValidation()
+                      log.debug "SSL validation disabled to call /api/v1/version"
+                    }
+                    
+                    String syndesisVersionUrl = syndesisServerUrl+"/api/v1/version"
+                    log.info "About to call GET on $syndesisVersionUrl" 
+                    def version = null
+                    try {
+                      version = new URL(syndesisVersionUrl).getText(requestProperties: [Accept: 'text/plain'])
+                      String syndesisVersion = new String(version)
+                      project.properties.setProperty('syndesis.version', syndesisVersion)
+                      log.info "syndesis.version set to: $syndesisVersion"
+                    } catch(Exception ex) {
+                      log.error "Error during syndesis version GET from $syndesisVersionUrl"
+                      ex.printStackTrace()
+                      throw ex
+                    } finally {
+                      log.info "Called GET on $syndesisVersionUrl with result $version"
+                    }
+                  } else {
+                    log.info "syndesisServerUrl property not set, the syndesis.version from pom.xml will be used."
+                  }
+
+                  void disableSSLcertValidation() {
+                    def nullTrustManager = [
+                        checkClientTrusted: { chain, authType ->  },
+                        checkServerTrusted: { chain, authType ->  },
+                        getAcceptedIssuers: { null }
+                    ]
+
+                    def nullHostnameVerifier = [
+                        verify: { hostname, session -> true }
+                    ]
+
+                    SSLContext sc = SSLContext.getInstance("SSL")
+                    sc.init(null, [nullTrustManager as X509TrustManager] as TrustManager[], null)
+                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory())
+                    HttpsURLConnection.setDefaultHostnameVerifier(nullHostnameVerifier as HostnameVerifier) 
+                  }
+
+                  String getPropertyValue(String name) {
+                      def value = session.userProperties[name]
+                      if (value != null) return value //property was defined from command line e.g.: -DpropertyName=value
+                      return project.properties[name]
+                  }
+
+                  log.debug "END getting syndesis version from a running Syndesis server."
+            ]]></script>
+          </scripts>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <!-- any version of Groovy \>= 1.5.0 should work here -->
+            <version>2.4.12</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0-M2</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[3.5,3.6)</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>

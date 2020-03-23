@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: costcenter-config
+data:
+  app.properties: |2+
+    camel.component.amqp.configuration.connection-factory=#class:org.apache.qpid.jms.JmsConnectionFactory
+    camel.component.amqp.configuration.connection-factory.remoteURI=amqp://messaging-1ta7akdhvm.workshop-operators.svc:5672?amqp.saslMechanisms=PLAIN
+    camel.component.amqp.username=user
+    camel.component.amqp.password=enmasse
+    camel.component.kafka.brokers=my-cluster-kafka-bootstrap.workshop-operators.svc:9092

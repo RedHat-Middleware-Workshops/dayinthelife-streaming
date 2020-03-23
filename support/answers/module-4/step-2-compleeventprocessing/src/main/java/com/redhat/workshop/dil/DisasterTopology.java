@@ -75,11 +75,48 @@ public class DisasterTopology{
         RuleUnitInstance<DisasterUnit> alertsvcInstance = alertRuleUnit.createInstance(disasterUnit);
 
 
-        //Build Topology to get harvest Info//
-        
+        //Build Topology to get harvest Info
+        StreamsBuilder builder = new StreamsBuilder();
 
-        //Pass data into Rules//
+        KStream<Windowed<Long>, Integer> windowedharvestcnt = builder.stream(
+            HARVEST_EVENT_TOPIC, /* input topic */
+            Consumed.with(
+                Serdes.String(), /* key serde */
+                harvestEventSerde   /* value serde */
+            )
+        )
+        .peek((key, value) -> System.out.println("Before key=" + key + ", value=" + value))
+        .map((key, value) -> KeyValue.pair(value.getBatchtime(), value.getBatchcnt()))
+        .groupByKey(
+            Grouped.with( 
+                Serdes.Long(), /* key */
+                Serdes.Integer() /* value */
+            )     
+        )
+        .windowedBy(TimeWindows.of(Duration.ofSeconds(DISASTER_HARVEST_INTERVAL)))
+        .aggregate(
+            () -> 0, /* initializer */
+            (aggKey, newValue, aggValue) -> aggValue + newValue,
+            Materialized.with(Serdes.Long(), Serdes.Integer())
+        )
+        .toStream()
+        .peek((key, value) -> System.out.println("After key=" + key + ", value=" + value))
+        ;
+
+        //Pass data into Rules
+        windowedharvestcnt.map(
+                (key, value) -> {
+                    HarvestinFive hin5 = new HarvestinFive();
+                    hin5.setTotalCnt(value);
+                    disasterUnit.getEventStream().append(hin5);
+                    alertsvcInstance.fire();
+                    return new KeyValue<>(key.key(),hin5);
+                }
+        )
+        .peek((key, value) -> System.out.println("Result key=" + key + ", value=" + value))
+        .to(DISASTER_EVENT_TOPIC, Produced.with(Serdes.Long(), harvestinFiveSerde));
         
+       
         
        
         //harvestEventStreams.foreach((key, value) -> System.out.println(key + " => " + value));
