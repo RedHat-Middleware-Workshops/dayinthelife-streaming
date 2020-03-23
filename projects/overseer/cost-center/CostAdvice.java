@@ -6,11 +6,7 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.Body;
 import org.apache.camel.model.rest.RestBindingMode;
 
-//oc delete cm costadvice-config  
-//oc apply -f costadvice-config.yaml
-// 
-//kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java --dev
-//--trait debug.enabled=true --property logging.level.org.apache.camel=DEBUG
+
 
 public class CostAdvice extends RouteBuilder{
 

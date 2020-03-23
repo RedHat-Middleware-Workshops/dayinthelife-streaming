@@ -10,6 +10,7 @@ import java.util.List;
 
 public class EdgeSimulator extends RouteBuilder{
 
+  public static final int MIN = 150;
   @Override
   public void configure() throws Exception{
 
@@ -25,7 +26,7 @@ public class EdgeSimulator extends RouteBuilder{
 
         Integer[] farms = {101, 302, 787, 645, 555, 460, 892};
         int randomIndex = generator.nextInt(farms.length);
-        int batchcnt =  generator.nextInt(87) + 1;
+        int batchcnt =  generator.nextInt(87) + MIN;
         long batchtime = System.currentTimeMillis();
 
         List<Map> harvest = new ArrayList<Map>();

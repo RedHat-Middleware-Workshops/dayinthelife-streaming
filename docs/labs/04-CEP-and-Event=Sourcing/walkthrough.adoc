@@ -2,7 +2,8 @@
 :che-url: http://che-che.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-05/
 :user-password: openshift
-:lab-four-path: openshift
+:lab-path: FleurDeLune/projects
+:lab-4-path: overseer
 
 ifdef::env-github[]
 :next-lab-url: ../lab05/walkthrough.adoc
@@ -62,7 +63,7 @@ Your password is: `{user-password}`
 +
 image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 
-. Find the `FleurDeLune/projects/module-4-cep-es/task1-costcenter` folder.
+. Find the `{lab-path}/{lab-4-path}/cost-center` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
@@ -83,11 +84,11 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 [source,bash,subs="attributes+"]
 ----
 oc project `{user-username}`
-cd /projects/FleurDeLune/projects/module-4-cep-es/task1-costcenter/
+cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
 oc apply -f costcenter.yaml
 ----
 
-. Open the ` CostCenter.java` file located in the *task1-costcenter* folder.  This simple application collects harvest data from the edge device from each farm in AMQ Online **mytopic**. And simply re-route the evenst to an Kafka Topic. 
+. Open the ` CostCenter.java` file located in the *cost-center* folder.  This simple application collects harvest data from the edge device from each farm in AMQ Online **mytopic**. And simply re-route the evenst to an Kafka Topic. 
 
 . Try deploying and running the *CostCenter* Camel-K route by executing the following command
 +
@@ -123,11 +124,11 @@ image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="i
 [source,bash,subs="attributes+"]
 ----
 oc project `{user-username}`
-cd /projects/FleurDeLune/projects/module-4-cep-es/task1-costcenter/
+cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
 oc apply -f costadvice-config.yaml
 ----
 
-. Open the `CostAdvice.java` file located in the *task1-costcenter* folder.  This cost advisory solution, provides a simple cost estimation of each farm. 
+. Open the `CostAdvice.java` file located in the *cost-center* folder.  This cost advisory solution, provides a simple cost estimation of each farm. 
 
 . Try deploying and running the *CostAdvice* Camel-K route by executing the following command
 +
@@ -180,7 +181,7 @@ kamel delete cost-center
 
 . Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)  
 +
-image::images/3.1.5-terminal.png.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
+image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
 . Click on the Terminal tab.  
 +
@@ -201,7 +202,7 @@ image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"
 ----
 
 
-. Open the `CostAdvice.java` file located in the *task1-costcenter* folder.  Change the cost for each farm. 
+. Open the `CostAdvice.java` file located in the *cost-center* folder.  Change the cost for each farm. 
 +
 [source,bash,subs="attributes+"]
 ----
@@ -246,7 +247,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 . Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
-. Find the `FleurDeLune/projects/module-4-cep-es/task2-compleeventprocessing/src/main/java/com/redhat/workshop/dil` folder.
+. Find the `{lab-path}/{lab-4-path}/disaster-control/src/main/java/com/redhat/workshop/dil` folder.
 
 . Open the `DisasterTopology.java` file.  This is the the file that will take care of how stream of events are aggregated. Place the following code under **//Build Topology to get harvest Info//**
 
@@ -283,9 +284,9 @@ StreamsBuilder builder = new StreamsBuilder();
 ----
 
 +
-image::images/4.1.4-topology.png.png[4.1.4-topology, role="integr8ly-img-responsive"]
+image::images/4.1.4-topology.png[4.1.4-topology, role="integr8ly-img-responsive"]
 
-. Open the `harvestevent.drl` file.  under FleurDeLune/projects/module-4-cep-es/task2-compleeventprocessing/src/main/resources/META-INF/resources/com/redhat/workshop/dil. Add the RULES to determine if it's disaster or good harvest day!
+. Open the `harvestevent.drl` file.  under {lab-path}/module-4-cep-es/disaster-control/src/main/resources/META-INF/resources/com/redhat/workshop/dil. Add the RULES to determine if it's disaster or good harvest day!
 +
 [source,bash,subs="attributes+"]
 ----
@@ -341,13 +342,13 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 oc project `{user-username}`
 
 
-mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/module-4-cep-es/task2-compleeventprocessing
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{{lab-4-path}}/disaster-control
 
 oc new-build --binary --name=cep-kogito -l app=cep-kogito
 
 oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
 
-oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/module-4-cep-es/task2-cep/target/*-runner.jar --follow 
+oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/`{lab-path}`/`{lab-4-path}`/disaster-control/target/*-runner.jar --follow 
 ----
 +
 image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-responsive"]
@@ -364,8 +365,10 @@ image::images/4.1.9-new-app.png[4.1.9-new-app, role="integr8ly-img-responsive"]
 
  
 . Navigate back to the *OpenShift Developer Console* and verify the **cep-kogito** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
+
 +
 image::images/4.2.1-developer-kogito.png[4.2.1-developer-kogito, role="integr8ly-img-responsive"]
+
 
 +
 image::images/4.2.2-log-kogito.png[4.2.2-log-kogito, role="integr8ly-img-responsive"]
@@ -385,7 +388,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 +
 [source,bash,subs="attributes+"]
 ----
-cd module-4-cep-es/task1-costcenter/
+cd `{lab-4-pth}`/cost-center/
 kamel delete cost-advice
 
 kamel run -d camel-jackson --configmap costcenter-config CostCenter.java

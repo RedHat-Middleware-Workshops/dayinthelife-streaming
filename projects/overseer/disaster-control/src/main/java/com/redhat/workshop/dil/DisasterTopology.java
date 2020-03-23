@@ -36,7 +36,7 @@ import java.time.Duration;
 @ApplicationScoped
 public class DisasterTopology{ 
 
-    private static final String HARVEST_EVENT_TOPIC = "alert";
+    private static final String HARVEST_EVENT_TOPIC = "costcenter";
     private static final String DISASTER_EVENT_TOPIC = "disaster";
     private static final int DISASTER_HARVEST_INTERVAL=10;
 
