@@ -12,13 +12,13 @@ endif::[]
 
 In this lab you will enable Change Data Capture (CDC) for a legacy application that loads the customer orders from a comman separated value (CSV) file. This old PHP application can't be modified so there is no way to modernize it without risks. You will enable CDC on the SQL server database where the orders are stored and create a Kafka Connect deployment using AMQ streams to emit data change events to the Earth Apache Kafka cluster.
 
-Audience: Enterprise Integrators, System Architects, Developers, Data Integrators
+*Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
 
 Apache Kafka is the de facto standard for asynchronous event propagation between microservices. Things get challenging, though, when adding a service’s database to the picture: how can you avoid inconsistencies between Kafka and the database?
 
-Enter change data capture (CDC) and Debezium. By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
+Enter Change Data Capture (CDC) and Debezium. By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
 
 *Why Red Hat?*
 
@@ -26,15 +26,14 @@ To respond to business demands quickly and efficiently, you need a way to integr
 
 AMQ streams component makes Apache Kafka “OpenShift native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
 
-*Skipping The Lab*
-
 *Credentials*
 
 Use the following credentials to login into the web consoles:
 
-* Username: {user-username}
-* Password: {user-password}
+**Username:* {user-username}
+**Password:* {user-password}
 
+[type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
 ****
 * link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
@@ -51,12 +50,12 @@ Use the following credentials to login into the web consoles:
 [id="configure-cdc-connectors"]
 == Configure CDC connectors for Kafka Connect
 
-There is already a legacy kafka deployment running. We will then deplopy a KafkaConnect CDC connector to connect to that cluster while we extract the data from the SQL Server Database.
+There is already a legacy Kafka deployment running. We will then deploy a KafkaConnect CDC connector to connect to that cluster while we extract the data from the SQL Server Database.
 
 === Deploy KafkaConnect CDC Connector
 
-. Get back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. 
-+ 
+. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"].+
++
 [IMPORTANT]
 ====
 Be sure to be in your _{user-username}_ project
@@ -105,21 +104,20 @@ image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="
 
 === Configure KafkaConnect CDC Connector
 
-. Get back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
+. Go back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
 +
 --
 [source,bash,subs="attributes+"]
 ----
 oc expose service debezium-connect-api --name kafka-connect -n {user-username}
 ----
-
++
 [IMPORTANT]
 ====
-Remeber to be logged into OpenShift and be in the correct _working_ project.
+Remember to be logged into OpenShift and be in the correct _working_ project.
 ====
---
 
-. Get back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu
+. Go back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu
 +
 image:images/openshift-kafkaconnect-resource.png[Back To Topology]
 
@@ -136,7 +134,7 @@ image:images/topology-kafkaconnect.png[KakfaConnect Topology]
 {"version":"2.2.1.redhat-00002","commit":"c330425647372ca2","kafka_cluster_id":"g0lUt2NARWSPxFn1Aq3uTw"}
 ----
 
-. Now that we know that the Kafka Connect cluster is running let's create a new connector config to react to changes in the `Orders` table. Issue the following command in the CodeReady Terminal window:
+. Now that we know that the Kafka Connect cluster is running, let's create a new connector config to react to changes in the `Orders` table. Issue the following command in the CodeReady Terminal window:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -159,12 +157,17 @@ cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:applicat
 EOF
 ----
 
-If the last command was successful you should get the following output as return:
-
+. If the last command was successful. you should get the following output as return:
++
 [source,json,subs="attributes+"]
 ----
 {"name":"orders-connector","config":{"connector.class":"io.debezium.connector.sqlserver.SqlServerConnector","database.hostname":"mssql-server-linux.shared-db-earth.svc","database.port":"1433","database.user":"sa","database.password":"Password!","database.dbname":"InternationalDB","database.server.name":"{user-username}.earth","table.whitelist":"dbo.Orders","database.history.kafka.bootstrap.servers":"earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092","database.history.kafka.topic":"{user-username}.earth.dbhistory","name":"orders-connector"},"tasks":[],"type":"source"}
 ----
+
+[type=verification]
+Did you receive the orders-connector response from the SqlServerConnector?
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 [time=10]
 [id="loading-earth-orders"]
@@ -250,7 +253,7 @@ We checked that the database had the _orders_ data. Is now time to check that th
 +
 image:images/openshift-project-sharedkafka.png[Change Project]
 
-. Validate that the *KafkaTopics* were created. 
+. Validate that the *KafkaTopics* were created.
 +
 --
 . Expand the *Advanced* menu on the left menu bar.
@@ -279,7 +282,7 @@ You can narrow the results by adding `{user-username}` to the search filter.
 
 === Inspect Kafka records
 
-Time to check what information is flowing to Apache Kafka. 
+Time to check what information is flowing to Apache Kafka.
 
 . Get back to the topology view. We will access one of the Kafka brokers.
 +
@@ -454,7 +457,7 @@ image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
 
 === Review Mirrored Records
 
-. Validate that the *KafkaTopics* were created. 
+. Validate that the *KafkaTopics* were created.
 +
 --
 . Expand the *Advanced* menu on the left menu bar.
