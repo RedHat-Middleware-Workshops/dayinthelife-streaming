@@ -5,7 +5,7 @@
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
 
 // URLs
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
 :codeready-url: http://che-che.{openshift-app-host}/
 :fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
