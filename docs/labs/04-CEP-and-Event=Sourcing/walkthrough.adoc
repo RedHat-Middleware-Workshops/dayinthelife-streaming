@@ -378,7 +378,9 @@ cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}
 
 mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control
 
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=cep-kogito -l app=cep-kogito
+oc new-build --binary --name=cep-kogito -l app=cep-kogito
+
+oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
 
 oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/target/*-runner.jar --follow 
 ----
