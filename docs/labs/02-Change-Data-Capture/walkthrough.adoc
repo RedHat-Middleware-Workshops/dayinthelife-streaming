@@ -1,4 +1,5 @@
 :walkthrough: Stream change events from your database
+:che-url: http://che-che.{openshift-app-host}/
 :terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
 :user-password: openshift
@@ -36,7 +37,7 @@ Your password is: `{user-password}`
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
 ****
-* link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
+* link:{che-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
