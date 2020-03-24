@@ -9,11 +9,3 @@ localhost ansible_connection=local
 
 [workshop:vars]
 usersno=3
-che_version="7.9.0"
-streams_version="1.4.0"
-online_version="1.4.0"
-webapp_version='2.19.4'
-webapp_operator_release_tag='0.0.45'
-fuse_version='7.5.0'
-camelk_version='1.0.0-rc2'
-infinispan_version="1.1.1"
