@@ -9,3 +9,4 @@ localhost ansible_connection=local
 
 [workshop:vars]
 usersno=3
+webapp_operator_release_tag='0.0.45'
