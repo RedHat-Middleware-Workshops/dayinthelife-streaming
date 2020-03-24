@@ -92,8 +92,8 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project `{user-username}`
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+oc project {user-username}
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costcenter.yaml
 ----
 
@@ -140,8 +140,8 @@ image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="i
 +
 [source,bash,subs="attributes+"]
 ----
-oc project `{user-username}`
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+oc project {user-username}
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costadvice-config.yaml
 ----
 
@@ -209,18 +209,18 @@ image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsiv
 +
 image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
 
-. Run following command to list the topics `costadvisor` groups subscribe to. you should see it's subscribe to `{user-username}-costcenter`
+. Run following command to list the topics `costadvisor` groups subscribe to. you should see it's subscribe to `costcenter`
 +
 [source,bash,subs="attributes+"]
 ----
-./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --group costadvisor --describe
+./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --group costadvisor --describe
 ----
 
 . Reset the consumer offset to `costadvisor` groups. You shout see NEW-OFFSET is now back to **0**       
 +
 [source,bash,subs="attributes+"]
 ----
-./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --group costadvisor --topic `{user-username}-costcenter` --reset-offsets --to-earliest --execute
+./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --group costadvisor --topic costcenter --reset-offsets --to-earliest --execute
 ----
 
 
@@ -372,16 +372,15 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project `{user-username}`
+oc project {user-username}
 
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}
 
-mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{{lab-4-path}}/disaster-control
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control
 
-oc new-build --binary --name=cep-kogito -l app=cep-kogito
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=cep-kogito -l app=cep-kogito
 
-oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
-
-oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/`{lab-path}`/`{lab-4-path}`/disaster-control/target/*-runner.jar --follow 
+oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/target/*-runner.jar --follow 
 ----
 +
 image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-responsive"]
@@ -390,8 +389,8 @@ image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-respo
 +
 ----
 oc new-app --image-stream=cep-kogito \
- -e quarkus.kafka-streams.bootstrap-servers=`moon-kafka-bootstrap.{user-username}.svc:9092` \
- -e quarkus.kafka-streams.application-server=`moon-kafka-bootstrap.{user-username}.svc:9092`
+ -e quarkus.kafka-streams.bootstrap-servers=moon-kafka-bootstrap.{user-username}.svc:9092 \
+ -e quarkus.kafka-streams.application-server=moon-kafka-bootstrap.{user-username}.svc:9092
 ----
 +
 image::images/4.1.9-new-app.png[4.1.9-new-app, role="integr8ly-img-responsive"]
@@ -428,7 +427,7 @@ image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"
 +
 [source,bash,subs="attributes+"]
 ----
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 kamel delete cost-advice
 
 kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
@@ -456,7 +455,7 @@ image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
@@ -481,7 +480,7 @@ image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"
 [source,bash,subs="attributes+"]
 ----
 
-./bin/kafka-console-consumer.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --topic disaster
+./bin/kafka-console-consumer.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --topic disaster
 ----
 +
 image::images/4.2.5-cep-result.png[4.2.5-cep-result, role="integr8ly-img-responsive"]
