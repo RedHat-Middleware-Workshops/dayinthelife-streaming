@@ -57,10 +57,10 @@ Your password is: `{user-password}`
 [id="harvest-from-amq-topic"]
 == Collect Harvest data to Kafka Topic
 
+. Collect data from the Broker Topic, extract the batch count, avoid unnecessary large data transfer, and send to cost center topic in AMQ Streams.
+
 +
 image::images/1.0.0-photo.png[1.0.0-photo, role="integr8ly-img-responsive"]
-
-Collect data from the Broker Topic, extract the batch count, avoid unnecessary large data transfer, and send to cost center topic in AMQ Streams.
 
 +
 image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
@@ -74,6 +74,7 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 . Find the `{lab-path}/{lab-4-path}/cost-center` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
+
 
 . Open the `costcenter.yaml` file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
@@ -126,7 +127,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="cost-advise"]
 == Calculate real time cost per farm
 
-Calculate cost for each farm using the real-time input. 
+. Calculate cost for each farm using the real-time input. 
 
 +
 image::images/2.0.0-overview.png[2.0.0-overview, role="integr8ly-img-responsive"]
@@ -177,7 +178,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="event-sourcing"]
 == Event Souring, what if cost is higher then expected!
 
-Increase the cost of each farm and replay the real-time cost. 
+. Increase the cost of each farm and replay the real-time cost. 
 
 +
 image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
@@ -268,10 +269,10 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="cep-drools-quarkus-app"]
 == Create complex event processing application
 
+
+. Creates application collects and sort events base on 10 sec time window and determine if disaster strikes
 +
 image::images/4.0.0-photo.png[4.0.0-photo, role="integr8ly-img-responsive"]
-
-Creates application collects and sort events base on 10 sec time window and determine if disaster strikes
 
 +
 image::images/4.0.0-overview.png[4.0.0-overview, role="integr8ly-img-responsive"]
@@ -415,7 +416,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="cep-result"]
 == See Disaster Alert
 
-Restart the simulator with problem harvest and see if disaster alerts kicked off.
+. Restart the simulator with problem harvest and see if disaster alerts kicked off.
 
 +
 image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"]
