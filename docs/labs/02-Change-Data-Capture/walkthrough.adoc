@@ -30,9 +30,8 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 Use the following credentials to login into the web consoles:
 
-**Username:** {user-username}
-+
-**Password:** {user-password}
+Your username is: `{user-username}` +
+Your password is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
@@ -251,14 +250,10 @@ image:images/openshift-project-sharedkafka.png[Change Project]
 
 . Validate that the *KafkaTopics* were created.
 +
---
-. Expand the *Advanced* menu on the left menu bar.
-
-. Click on *Search* to load the _resources_ search page.
-
-. Click on the _Resource Type_ field and type 'topic'.
-
-. Finally select *KafkaTopic*.
+- Expand the *Advanced* menu on the left menu bar.
+- Click on *Search* to load the _resources_ search page.
+- Click on the _Resource Type_ field and type 'topic'.
+- Finally select *KafkaTopic*.
 +
 image::images/openshift-search-kafkatopics.png[Search KafkaTopics]
 
