@@ -19,7 +19,13 @@
       kind: Namespace
       name: 'fuse-user{{ item }}'
       state: present
-  
+
+- name: Create Role to access Terminal
+  k8s:
+    state: present
+    resource_definition: "{{ lookup('template', 'pod-exec-role.yaml.j2') }}"  
+  when: item == "1"
+
 - name: Give user{{ item }} access to projects
   k8s:
     state: present
@@ -29,7 +35,9 @@
     - { user: 'user{{ item }}', namespace: 'user{{ item }}-che', role: 'admin' }
     - { user: 'user{{ item }}', namespace: 'fuse-user{{ item }}', role: 'admin' }
     - { user: 'user{{ item }}', namespace: '{{ kafka_earth_namespace }}', role: 'view' }
+    - { user: 'user{{ item }}', namespace: '{{ kafka_earth_namespace }}', role: 'pod-exec' }
     - { user: 'user{{ item }}', namespace: '{{ db_earth_namespace }}', role: 'view' }
+    - { user: 'user{{ item }}', namespace: '{{ db_earth_namespace }}', role: 'pod-exec' }
   loop_control:
     loop_var: item_project
 

@@ -12,13 +12,13 @@ endif::[]
 [id='cep-event-sourcing']
 = Lab 4 - Complex Event Processing and Event Sourcing
 
-In this lab you will be processing the streamed events. There are two common secnarios, Event Sourcing and Complex Event Processing. You will be receiving harvest event from topics on Kafka, and replay the event. Using Kafka Streams to real-time events and extracting information from event streams as they arrive.
+In this lab you will be processing the streamed events. There are two common scenarios, Event Sourcing and Complex Event Processing. You will be receiving harvest event from topics on Kafka, and replay the event. Using Kafka Streams to real-time events and extracting information from event streams as they arrive.
 
 Audience: System Architects, Developers, Data Integrators
 
 *Overview*
 
-The Event Sourcing is use to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and presist sequentially, each represents change of the state. This allows applications can now replay history and play what-if scenarios.  
+The Event Sourcing is use to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persist sequentially, each represents change of the state. This allows applications can now replay history and play what-if scenarios.  
 
 Complex Event Processing, or CEP, is primarily an event processing concept that deals with the task of processing events with the goal of identifying the meaningful events within the event cloud.
 
@@ -57,6 +57,14 @@ Your password is: `{user-password}`
 [id="harvest-from-amq-topic"]
 == Collect Harvest data to Kafka Topic
 
+. Collect data from the Broker Topic, extract the batch count, avoid unnecessary large data transfer, and send to cost center topic in AMQ Streams.
+
++
+image::images/1.0.0-photo.png[1.0.0-photo, role="integr8ly-img-responsive"]
+
++
+image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
+
 . Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
@@ -67,7 +75,8 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
-. Open the `costcenter.yaml` file.  This is the *Configureation Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
+
+. Open the `costcenter.yaml` file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
 image::images/1.1.2-cost-config-update.png[1.1.2-cost-config-update, role="integr8ly-img-responsive"]
 
@@ -83,8 +92,8 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project `{user-username}`
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+oc project {user-username}
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costcenter.yaml
 ----
 
@@ -118,16 +127,21 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="cost-advise"]
 == Calculate real time cost per farm
 
-. Open the `costadvice-config.yaml` file.  This is the *Configureation Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **Kafka** endpoint. Update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
+. Calculate cost for each farm using the real-time input. 
+
++
+image::images/2.0.0-overview.png[2.0.0-overview, role="integr8ly-img-responsive"]
+
+. Open the `costadvice-config.yaml` file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **Kafka** endpoint. Update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
 image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="integr8ly-img-responsive"]
 
-. In the terminal from the previous task, run the following commands to creat `costadvice-config` configmap.
+. In the terminal from the previous task, run the following commands to create `costadvice-config` configmap.
 +
 [source,bash,subs="attributes+"]
 ----
-oc project `{user-username}`
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+oc project {user-username}
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costadvice-config.yaml
 ----
 
@@ -164,6 +178,11 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="event-sourcing"]
 == Event Souring, what if cost is higher then expected!
 
+. Increase the cost of each farm and replay the real-time cost. 
+
++
+image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
+
 . In the Terminal, list all the Camel-K application, run the following commands. You should see at least two, `cost-center` and `cost-advice`
 +
 [source,bash,subs="attributes+"]
@@ -190,18 +209,18 @@ image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsiv
 +
 image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
 
-. Run following command to list the topics `costadvisor` groups subscribe to. you should see it's subscribe to `{user-username}-costcenter`
+. Run following command to list the topics `costadvisor` groups subscribe to. you should see it's subscribe to `costcenter`
 +
 [source,bash,subs="attributes+"]
 ----
-./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --group costadvisor --describe
+./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --group costadvisor --describe
 ----
 
 . Reset the consumer offset to `costadvisor` groups. You shout see NEW-OFFSET is now back to **0**       
 +
 [source,bash,subs="attributes+"]
 ----
-./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --group costadvisor --topic `{user-username}-costcenter` --reset-offsets --to-earliest --execute
+./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --group costadvisor --topic costcenter --reset-offsets --to-earliest --execute
 ----
 
 
@@ -241,7 +260,7 @@ image::images/3.1.8-cost-advice-result.png[3.1.8-cost-advice-route, role="integr
 http://cost-advice-user2.apps.cluster-mydemo-eda0.mydemo-eda0.example.opentlc.com/costadvice
 
 [type=verification]
-Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift? Did you get the what if result? try play with couple of different cost!
+Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift? Did you get the what if result? try replay with couple of different costs!
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -249,6 +268,15 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="cep-drools-quarkus-app"]
 == Create complex event processing application
+
+
+. Creates application collects and sort events base on 10 sec time window and determine if disaster strikes
++
+image::images/4.0.0-photo.png[4.0.0-photo, role="integr8ly-img-responsive"]
+
++
+image::images/4.0.0-overview.png[4.0.0-overview, role="integr8ly-img-responsive"]
+
 
 . Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
@@ -344,16 +372,17 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project `{user-username}`
+oc project {user-username}
 
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}
 
-mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{{lab-4-path}}/disaster-control
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control
 
 oc new-build --binary --name=cep-kogito -l app=cep-kogito
 
 oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
 
-oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/`{lab-path}`/`{lab-4-path}`/disaster-control/target/*-runner.jar --follow 
+oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/target/*-runner.jar --follow 
 ----
 +
 image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-responsive"]
@@ -362,8 +391,8 @@ image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-respo
 +
 ----
 oc new-app --image-stream=cep-kogito \
- -e quarkus.kafka-streams.bootstrap-servers=`moon-kafka-bootstrap.{user-username}.svc:9092` \
- -e quarkus.kafka-streams.application-server=`moon-kafka-bootstrap.{user-username}.svc:9092`
+ -e quarkus.kafka-streams.bootstrap-servers=moon-kafka-bootstrap.{user-username}.svc:9092 \
+ -e quarkus.kafka-streams.application-server=moon-kafka-bootstrap.{user-username}.svc:9092
 ----
 +
 image::images/4.1.9-new-app.png[4.1.9-new-app, role="integr8ly-img-responsive"]
@@ -387,13 +416,20 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=10]
 [id="cep-result"]
 == See Disaster Alert
+
+. Restart the simulator with problem harvest and see if disaster alerts kicked off.
+
++
+image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"]
+
+
 . Switch to the `dilwsXXX` terminal
 
 . Deploying and run the *CostCenter* Camel-K route by executing the following command again to send harvest data again!
 +
 [source,bash,subs="attributes+"]
 ----
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 kamel delete cost-advice
 
 kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
@@ -421,7 +457,7 @@ image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
-cd `$CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/`
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
@@ -446,7 +482,7 @@ image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"
 [source,bash,subs="attributes+"]
 ----
 
-./bin/kafka-console-consumer.sh --bootstrap-server moon-kafka-bootstrap.`{user-username}`.svc:9092 --topic disaster
+./bin/kafka-console-consumer.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --topic disaster
 ----
 +
 image::images/4.2.5-cep-result.png[4.2.5-cep-result, role="integr8ly-img-responsive"]
@@ -462,9 +498,9 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common appoarch as one of event streaming technique-- Event sourcing. You have been introduced to implement with ease using Camel-K and Red Hat Streams. 
+In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common approach as one of event streaming technique-- Event sourcing. You have been introduced to implement with ease using Camel-K and Red Hat Streams. 
 
-Event driven is also the fundation for real time behaviour detection. You used Kafka Streams in conjuction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data. 
+Event driven is also the foundation for real time behaviour detection. You used Kafka Streams in conjunction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data. 
 
 You can now proceed to link:{next-lab-url}[Lab 5].
 
