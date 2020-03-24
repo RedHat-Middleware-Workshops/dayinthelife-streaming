@@ -1,4 +1,5 @@
 :walkthrough: Stream change events from your database
+:che-url: http://che-che.{openshift-app-host}/
 :terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
 :user-password: openshift
@@ -36,7 +37,7 @@ Your password is: `{user-password}`
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
 ****
-* link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
+* link:{che-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
@@ -320,7 +321,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="deploying-apache-kafka"]
 == Deploying Apache Kafka on OpenShift
 
-AMQ streams component uses powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on Red Hat OpenShift® Container Platform.
+The AMQ Streams component uses powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on Red Hat OpenShift® Container Platform.
 
 In this section you will learn how to start a local Kafka cluster that will represent the startup _Moon_ deployment.
 
@@ -410,7 +411,7 @@ image:images/openshift-mirrormaker-add.png[Add From Topology]
 +
 image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
 
-. Type in `mirror` in the search text field and then click on *KafkaConnect*.
+. Type in `mirror` in the search text field and then click on *Kafka MirrorMaker*.
 +
 image::images/openshift-mirrormaker-catalog.png[OpenShift Mirror Maker, role="integr8ly-img-responsive"]
 
@@ -499,7 +500,7 @@ image:images/openshift-mirrormaker-add.png[Add From Topology]
 +
 image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
 
-. Type in `kafka` in the search text field and then click on *KafkaConnect*.
+. Type in `kafka` in the search text field and then click on *Kafka Bridge*.
 +
 image::images/openshift-bridge-catalog.png[OpenShift HTTP Bridge, role="integr8ly-img-responsive"]
 
