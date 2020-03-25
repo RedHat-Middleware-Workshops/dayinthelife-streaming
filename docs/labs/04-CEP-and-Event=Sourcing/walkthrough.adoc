@@ -14,11 +14,11 @@ endif::[]
 
 In this lab you will be processing the streamed events. There are two common scenarios, Event Sourcing and Complex Event Processing. You will be receiving harvest event from topics on Kafka, and replay the event. Using Kafka Streams to real-time events and extracting information from event streams as they arrive.
 
-Audience: System Architects, Developers, Data Integrators
+*Audience:* System Architects, Developers, Data Integrators
 
 *Overview*
 
-The Event Sourcing is use to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persist sequentially, each represents change of the state. This allows applications can now replay history and play what-if scenarios.  
+The Event Sourcing is use to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persist sequentially, each represents change of the state. This allows applications can now replay history and play what-if scenarios.
 
 Complex Event Processing, or CEP, is primarily an event processing concept that deals with the task of processing events with the goal of identifying the meaningful events within the event cloud.
 
@@ -97,7 +97,7 @@ cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costcenter.yaml
 ----
 
-. Open the ` CostCenter.java` file located in the *cost-center* folder.  This simple application collects harvest data from the edge device from each farm in AMQ Online **mytopic**. And simply re-route the evenst to an Kafka Topic. 
+. Open the ` CostCenter.java` file located in the *cost-center* folder.  This simple application collects harvest data from the edge device from each farm in AMQ Online **mytopic**. And simply re-route the evenst to an Kafka Topic.
 
 . Try deploying and running the *CostCenter* Camel-K route by executing the following command
 +
@@ -127,7 +127,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="cost-advise"]
 == Calculate real time cost per farm
 
-. Calculate cost for each farm using the real-time input. 
+. Calculate cost for each farm using the real-time input.
 
 +
 image::images/2.0.0-overview.png[2.0.0-overview, role="integr8ly-img-responsive"]
@@ -145,7 +145,7 @@ cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costadvice-config.yaml
 ----
 
-. Open the `CostAdvice.java` file located in the *cost-center* folder.  This cost advisory solution, provides a simple cost estimation of each farm. 
+. Open the `CostAdvice.java` file located in the *cost-center* folder.  This cost advisory solution, provides a simple cost estimation of each farm.
 
 . Try deploying and running the *CostAdvice* Camel-K route by executing the following command
 +
@@ -154,11 +154,11 @@ oc apply -f costadvice-config.yaml
 kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
 ----
 
-. Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.  
+. Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.
 +
 image::images/2.1.6-cost-advice.png[2.1.6-cost-advice, role="integr8ly-img-responsive"]
 
-. In the *OpenShift Developer Console* find the route to access the cost advice result  
+. In the *OpenShift Developer Console* find the route to access the cost advice result
 +
 image::images/2.1.7-cost-advice-route.png[2.1.7-cost-advice-route, role="integr8ly-img-responsive"]
 
@@ -178,7 +178,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="event-sourcing"]
 == Event Souring, what if cost is higher then expected!
 
-. Increase the cost of each farm and replay the real-time cost. 
+. Increase the cost of each farm and replay the real-time cost.
 
 +
 image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
@@ -197,15 +197,15 @@ image::images/3.1.2-kamel-get.png[3.1.2-kamel-get, role="integr8ly-img-responsiv
 +
 [source,bash,subs="attributes+"]
 ----
-kamel delete cost-advice 
-kamel delete cost-center 
+kamel delete cost-advice
+kamel delete cost-center
 ----
 
-. Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)  
+. Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)
 +
 image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
-. Click on the Terminal tab.  
+. Click on the Terminal tab.
 +
 image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
 
@@ -216,7 +216,7 @@ image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"
 ./bin/kafka-consumer-groups.sh --bootstrap-server moon-kafka-bootstrap.{user-username}.svc:9092 --group costadvisor --describe
 ----
 
-. Reset the consumer offset to `costadvisor` groups. You shout see NEW-OFFSET is now back to **0**       
+. Reset the consumer offset to `costadvisor` groups. You shout see NEW-OFFSET is now back to **0**
 +
 [source,bash,subs="attributes+"]
 ----
@@ -224,7 +224,7 @@ image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"
 ----
 
 
-. Open the `CostAdvice.java` file located in the *cost-center* folder.  Change the cost for each farm. 
+. Open the `CostAdvice.java` file located in the *cost-center* folder.  Change the cost for each farm.
 +
 [source,bash,subs="attributes+"]
 ----
@@ -246,11 +246,11 @@ image::images/3.1.6-change-cost.png[3.1.6-change-cost, role="integr8ly-img-respo
 kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
 ----
 
-. Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.  
+. Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.
 +
 image::images/2.1.6-cost-advice.png[2.1.6-cost-advice, role="integr8ly-img-responsive"]
 
-. In the *OpenShift Developer Console* find the route to access the cost advice result  
+. In the *OpenShift Developer Console* find the route to access the cost advice result
 +
 image::images/2.1.7-cost-advice-route.png[2.1.7-cost-advice-route, role="integr8ly-img-responsive"]
 
@@ -299,10 +299,10 @@ StreamsBuilder builder = new StreamsBuilder();
         .peek((key, value) -> System.out.println("Before key=" + key + ", value=" + value))
         .map((key, value) -> KeyValue.pair(value.getBatchtime(), value.getBatchcnt()))
         .groupByKey(
-            Grouped.with( 
+            Grouped.with(
                 Serdes.Long(), /* key */
                 Serdes.Integer() /* value */
-            )     
+            )
         )
         .windowedBy(TimeWindows.of(Duration.ofSeconds(DISASTER_HARVEST_INTERVAL)))
         .aggregate(
@@ -357,7 +357,7 @@ windowedharvestcnt.map(
         )
         .peek((key, value) -> System.out.println("Result key=" + key + ", value=" + value))
         .to(DISASTER_EVENT_TOPIC, Produced.with(Serdes.Long(), harvestinFiveSerde));
-        
+
 ----
 
 . Select **Terminal > Open Terminal** in specific container** and select the container that begins with `tools`.  Click it and a terminal window should open.
@@ -382,7 +382,7 @@ oc new-build --binary --name=cep-kogito -l app=cep-kogito
 
 oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
 
-oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/target/*-runner.jar --follow 
+oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/target/*-runner.jar --follow
 ----
 +
 image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-responsive"]
@@ -397,7 +397,7 @@ oc new-app --image-stream=cep-kogito \
 +
 image::images/4.1.9-new-app.png[4.1.9-new-app, role="integr8ly-img-responsive"]
 
- 
+
 . Navigate back to the *OpenShift Developer Console* and verify the **cep-kogito** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
 
 +
@@ -408,7 +408,7 @@ image::images/4.2.1-developer-kogito.png[4.2.1-developer-kogito, role="integr8ly
 image::images/4.2.2-log-kogito.png[4.2.2-log-kogito, role="integr8ly-img-responsive"]
 
 [type=verification]
-Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift? 
+Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -439,7 +439,7 @@ kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
 +
 [source,bash,subs="attributes+"]
 ----
-kamel delete edge-simulator 
+kamel delete edge-simulator
 ----
 
 . Go to harvest/simulator, find *EdgeSimulator.java* and update the  MIN from 150 to 1;
@@ -469,11 +469,11 @@ image::images/4.2.4-log-kogito.png[4.2.4-log-kogito, role="integr8ly-img-respons
 +
 image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integr8ly-img-responsive"]
 
-. Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)  
+. Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)
 +
 image::images/3.1.5-terminal.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
-. Click on the Terminal tab.  
+. Click on the Terminal tab.
 +
 image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
 
@@ -498,9 +498,9 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common approach as one of event streaming technique-- Event sourcing. You have been introduced to implement with ease using Camel-K and Red Hat Streams. 
+In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common approach as one of event streaming technique-- Event sourcing. You have been introduced to implement with ease using Camel-K and Red Hat Streams.
 
-Event driven is also the foundation for real time behaviour detection. You used Kafka Streams in conjunction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data. 
+Event driven is also the foundation for real time behaviour detection. You used Kafka Streams in conjunction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data.
 
 You can now proceed to link:{next-lab-url}[Lab 5].
 
