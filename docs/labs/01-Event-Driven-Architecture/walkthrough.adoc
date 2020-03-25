@@ -110,7 +110,7 @@ image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-res
 oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
 ----
 
-You should see something like the following (the project names may be different):
+. You should see something like the following (the project names may be different):
 
 [source,bash,subs="attributes+"]
 ----
@@ -128,9 +128,8 @@ You have access to the following projects and can switch between them with 'oc p
 Using project "shared-db-earth".
 Welcome! See 'oc help' to get started.
 ----
---
 
-Now you are ready to start working on the application services.
+. Now you are ready to start working on the application services.
 
 [type=verification]
 Were you able to successfully login to Openshift CLI?
