@@ -1,5 +1,6 @@
 :walkthrough: Cloud-Native Integration with EIPs
 :che-url: http://che-che.{openshift-app-host}/
+:amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
 :user-password: openshift
 
@@ -41,6 +42,12 @@ Your password is: `{user-password}`
 * link:{che-url}/[Open Eclipse Che, window="_blank"]
 ****
 
+[type=walkthroughResource]
+.AmqOnline
+****
+* link:{amqoneline-url}/[Open AMQ Online Console, window="_blank"]
+****
+
 [type=walkthroughResource,serviceName=openshift]
 .Openshift
 ****
@@ -55,7 +62,7 @@ In this task, you'll provision a messaging topic using Red Hat's Messaging as a 
 
 === Access OpenShift Console
 
-. Navigate to the {openshift-host}[AMQ Online Console, window="_blank", id="{context}-3"]
+. Navigate to the {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"]
 
 . Login to using your credentials (`{user-username}` and `{user-password}`).
 
