@@ -1434,7 +1434,7 @@ image::images/store-product.png[Store UI Product File, role="integr8ly-img-respo
 
 . Look for line *12* and paste the following code between the `/* TODO: INSERT HERE NEW FLAVORS */` markers:
 +
-[source,bash,subs="attributes+"]
+[source,html,subs="attributes+"]
 ----
     <ul>
       <li>
@@ -1464,13 +1464,13 @@ image::images/store-product.png[Store UI Product File, role="integr8ly-img-respo
 
 . Scroll all the way down to line *310* and paste the next lines between `/* TODO: PROCESSS EVENT RESPONSE */`:
 +
-[source,json,subs="attributes+"]
+[source,javascript,subs="attributes+"]
 ----
               else {
                 new Noty({
                   layout: 'center',
                   type: 'info',
-                  text: json.message
+                  text: "Your order for " + order.orderItemName + " was posted!"
                 }).show();
               }
 ----
@@ -1481,7 +1481,7 @@ image::images/store-events.png[Store UI Events File, role="integr8ly-img-respons
 
 . Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
 +
-[source,json,subs="attributes+"]
+[source,javascript,subs="attributes+"]
 ----
         constructor() {
             this.source = new EventSource("//events-{user-username}.{openshift-app-host}/consume");
