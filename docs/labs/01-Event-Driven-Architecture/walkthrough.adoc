@@ -675,42 +675,31 @@ This could take a few minutes to finish.  If it looks like taking longer, then r
 ====
 --
 
-. Click in the *amq* link to show the Overview Page.
+. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there.
 +
-image::images/addressspace-active.png[active, role="integr8ly-img-responsive"]
+image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
 
-. Click in the _YAML_ tab to enable the editor and scroll all the way down to the _Status_ sections to retrieve the console *externalHost* hostname value. This is the access to the webconsole to admin your events infrastructure.
+. Click on the *Log in with OpenShift* button.
 +
-image::images/addressspace-console.png[console, role="integr8ly-img-responsive"]
+image::images/openshift-messaging-login.png[Messaging Login, role="integr8ly-img-responsive"]
 
-. Open a new browser tab and use the hostname like this format *https://{{externalHost}}* to open the AMQ web console. You will need to login with your username and password.
+. Login using your user credentials.
 +
---
-[IMPORTANT]
-====
-Do you notice the auto generated identifier for your _address space_? Take note of that value and *write it down* as we will need to use it later to access the service from our clients.
-====
-[NOTE]
-====
-Observe the use of _HTTPS_ as the protocol for the URL.
+image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsive"]
 
-You will need to enter your OpenShift console credentials again.
-====
---
+. Click in the *amq* link to show the Messaging console Overview Page.
++
+image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
 
-. In the main AMQ web console screen, click on the *+ Create* button to start adding the required topics.
+. In the main _address space_ console screen, click on the *+ Create* button to start adding the required topics.
 +
 image::images/topic-create.png[newtopic, role="integr8ly-img-responsive"]
 
-. Fill in the name with *incomingorders* and select the _topic_ type. Click *Next >* to move to the next screen.
+. Fill in the _Address_ with *incomingorders* and select the *Topic* from the _Type_ combobox and *standard-small-topic* from the _Plan_ menu. Click *Next* to move to the next screen.
 +
 image::images/topic-name.png[topicname, role="integr8ly-img-responsive"]
 
-. Keep the *Small Topic* plan selected and click *Next >*.
-+
-image::images/topic-plan.png[topicplan, role="integr8ly-img-responsive"]
-
-. Finally click *Create* to submit the topic creation.
+. Finally click *Finish* to submit the topic creation.
 +
 image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
 
@@ -720,17 +709,45 @@ image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive
 
 . Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic.
 +
+--
 image::images/topics.png[topics, role="integr8ly-img-responsive"]
-+
+
 [NOTE]
 ====
 A green check mark will show that the resources were successfully deployed.
 ====
+--
+
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Get back to the OpenShift console with the _AddressSpaces_ lists and click in the *amq* link.
++
+image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
+
+. Then, click the *Resources* tab. In that tab, click the *amq-config* link. 
++
+--
+image::images/addressspace-configmap.png[topics, role="integr8ly-img-responsive"]
+
+[NOTE]
+====
+When we created the Address Space, we configure it to _export_ the connection configuration using a *ConfigMap*. This configuration is available for our microservices to inject the connecting details so we don't need to hardcode them in the code.
+====
+--
+
+. Scroll down the page to reveal the _configmap_ details.  For this workshop, as we will run all our services withing the OpenShift cluster, copy and write down only the `service.host` information.
++
+--
+image::images/addressspace-service-host.png[topics, role="integr8ly-img-responsive"]
+
+[TIP]
+====
+You will also be able to see the _certificate_ information for connecting using the TLS endpoint under `external.host`. This is required for connections from _outside_ the OpenShift cluster.
+====
+--
 
 *Well done!* You now have a running AMQ with two topics called `incomingorders` and `notifications`.
 
 [type=verification]
-Did you remember to write down the address space identifier?
+Did you remember to write down the address space `service.host`?
 
 [type=verificationFail]
 {standard-fail-text}
