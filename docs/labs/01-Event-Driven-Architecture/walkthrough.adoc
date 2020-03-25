@@ -104,14 +104,13 @@ image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-res
 
 . Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
 +
---
 [source,bash,subs="attributes+"]
 ----
 oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
 ----
 
 . You should see something like the following (the project names may be different):
-
++
 [source,bash,subs="attributes+"]
 ----
 Login successful.
