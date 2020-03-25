@@ -1,13 +1,12 @@
-# Day in the Streaming Life 
+# Day in the Streaming Life
 
-## Event-Driven Workshop 
+## Event-Driven Workshop
 
+### Audience
 
-### Audience:
+#### Developers, Architects, Data Integrators
 
-**Developers, Architects, Data Integrators**
-
-### Prereqisites:
+### Prereqisites
 
 * Debezium
 * AMQ Streams
@@ -16,11 +15,15 @@
 * Fuse Online
 * OpenShift 4.x
 
-### Background: 
+### Installation
+
+Follow the [Installation Procedure](docs/install.md#installation) to setup a working environment.
+
+### Background
 
 The premise for our “Day in the Life” workshops is centered around a fictitious global conglomerate called International Inc.  Initially, International Inc. focused on forming a Digital Transformation strategy.  They began with an API-first approach to help facilitate their merger & acquisition activities.  The outcome of this approach was very successful, and helped them keep up with their competitors, deliver new business functionality faster, and make the merger & acquisition process seamless.  International Inc. is now interested in exploring new business opportunities in the field of space exploration.
 
-International Inc. has identified an eco-friendly startup company who recently created a buzz among the younger population.  The startup, called “Fleur de lune”, focuses their core business on space agriculture.  Pollution has affected the earth's crops so much that fresh food has lost its taste.  In a brilliant movement from “International Inc” in their path to expansion, they acquired “Fleur de lune” to become a major player in the space agriculture business. 
+International Inc. has identified an eco-friendly startup company who recently created a buzz among the younger population.  The startup, called “Fleur de lune”, focuses their core business on space agriculture.  Pollution has affected the earth's crops so much that fresh food has lost its taste.  In a brilliant movement from “International Inc” in their path to expansion, they acquired “Fleur de lune” to become a major player in the space agriculture business.
 
 As part of the acquisition, International Inc.’s CTO met with the Fleur de lune DevOps team to discuss how they develop software.  The CTO was so amazed by their culture and practices that he wants to scale this out to the rest of International Inc.  He is particularly interested in Fleur de lune’s use of cloud-native integration technologies, including high-performant data streaming, event-driven architectures, and change data capture (CDC).  
 
@@ -28,51 +31,47 @@ As you’re part of International Inc.’s Development team, you have been taske
 
 ## Workshop Modules
 
+### Module One
 
-### Module One:
-Taste of event driven and why. 
+Taste of event driven and why.
 (Move http call to async msg calls)
 
-Since the acquisition, the International Inc.’s Development team has been pressured to make the transition smooth quickly. They have decided to start with a small project “Shopify” where it notifies both internal departments and external partners when an order has been placed, through pure REST implementation to event driven architecture. 
+Since the acquisition, the International Inc.’s Development team has been pressured to make the transition smooth quickly. They have decided to start with a small project “Shopify” where it notifies both internal departments and external partners when an order has been placed, through pure REST implementation to event driven architecture.
 
 * Create a new Topic on AMQ Online
 * Migrate the REST integration to a messaging broker
-* Difference between API calls and event driven 
-* Fault tolerance 
+* Difference between API calls and event driven
+* Fault tolerance
 
-### Module Two:
+### Module Two
+
 Sharing real time data/event from earth to the moon
 (Legacy to Cloud Data sharing between cluster in a hybrid environment)
 
 To expand Sales channels,  “Fleur de lune” no longer limit their market to the existing youngster customer base. “International Inc” has helped them expand their sales channel by taking orders from Major retailers, shopping malls and even local pharmacies. Orders are coming in from earth, they need to be also synced up to the ones received by the moon’s local e-commerce.
-
 
 * Install Kafka (on Legacy)
 * Deploy Kafka Connect with Debezium (on Legacy)
 * Config Debezium (on Legacy)
 * Config Kafka Connect (with everything pre-installed in the cloud)
 
+### Module Three
 
-### Module Three:
+Edge to Data Lake - Orchestrating and composing events
 
-Edge to Data Lake - Orchestrating and composing events 
-
-Utilizing the existing inter-planet transportation already established from “International Inc”, most of the operation cost for  “Fleur de lune” was the shipping cost between earth and moon.  Now, thanks to “International Inc”, they can minimize the cost of shipment by using their service. To provide better customer experience. Closely monitoring the harvest and harvest batch shipping schedule, make Fleur De Lune more proactive. And faster respond to any emergency that may impact their business. 
-
+Utilizing the existing inter-planet transportation already established from “International Inc”, most of the operation cost for  “Fleur de lune” was the shipping cost between earth and moon.  Now, thanks to “International Inc”, they can minimize the cost of shipment by using their service. To provide better customer experience. Closely monitoring the harvest and harvest batch shipping schedule, make Fleur De Lune more proactive. And faster respond to any emergency that may impact their business.
 
 * Connect IoT data (simulator) to AMQ Online  (Task 1)
 * Bridge AMQ online events from IoT to Kafka using Camel-K and write to DB (for module four). Couple of EIP is introduced in this section. Splitter, WireTap. (Task 2)
 * Introducing online caching for shipping. Connect to Data Grid to access shipping data.  (Task 3)
 
+### Module Four
 
- 
-### Module Four:
 A meteor shower has just hit a couple of the devices on some marshmallow farms, resulting in the incorrect cost estimation. This needs to be corrected so we can request asking the right amount from the cargo ship!
 
 * Disaster STRIKES!! Data recovery and replaying events (IoT Breakdown)
 * Start Up simulator (Needs to check if we can write back to the same offset)
 * Replay CEP
-
 
 ### TODO
 
