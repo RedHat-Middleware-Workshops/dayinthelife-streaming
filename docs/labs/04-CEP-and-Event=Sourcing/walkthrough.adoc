@@ -18,9 +18,9 @@ In this lab you will be processing the streamed events. There are two common sce
 
 *Overview*
 
-The Event Sourcing is use to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persist sequentially, each represents change of the state. This allows applications can now replay history and play what-if scenarios.
+The Event Sourcing is used to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
 
-Complex Event Processing, or CEP, is primarily an event processing concept that deals with the task of processing events with the goal of identifying the meaningful events within the event cloud.
+Complex Event Processing (CEP) is primarily an event processing concept that deals with the task of processing events, with the goal of identifying the meaningful events within the event cloud.
 
 *Why Red Hat?*
 
