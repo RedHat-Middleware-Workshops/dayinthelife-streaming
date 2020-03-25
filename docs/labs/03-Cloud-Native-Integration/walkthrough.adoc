@@ -10,21 +10,21 @@ endif::[]
 [id='cloud-native-integration']
 = Lab 3 - Cloud-Native Integration with EIPs
 
-In this lab you will stream events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake, in addition to streaming the messages to a Standard and Premium Shipping topic on Kafka.
+In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
 
-Audience: Enterprise Integrators, System Architects, Developers, Data Integrators
+*Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
 
-Apache Kafka is the de facto standard for asynchronous event propagation between microservices. Things get challenging, though, when adding a service’s database to the picture: how can you avoid inconsistencies between Kafka and the database?
+Enterprise Integration Patterns (EIPs) have been used in technology for 40+ years.  But are they still relevant when we attempt Cloud-Native integration?
 
-Enter change data capture (CDC) and Debezium. By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
+Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still very useful when it comes to managing and integrating our data in the cloud.  Using Camel-K, we are able to enhance existing streaming technologies like Kafka to help route and mediate our data through various channels.
 
 *Why Red Hat?*
 
-To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
+To solve complex cloud-native integration challenges, we need to apply EIPs to manage our data and messaging needs.  Camel-K gives us a Kubernetes native EIP solution for tackling EIPs in the cloud.
 
-AMQ streams component makes Apache Kafka “OpenShift native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
+By using Camel-K, we can enhance data streaming and apply traditional EIPs to solve cloud-native integration.
 
 *Prerequisites*
 
