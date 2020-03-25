@@ -58,7 +58,7 @@ Use the following credentials to login into the web consoles:
 
 You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
-. To get started go to the link:{codeready-url}[codeready console, window="_blank"] and log in using your username and password credentials.
+. To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
 +
 image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
 
@@ -76,7 +76,6 @@ image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-r
 ====
 You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
 ====
---
 
 . The workspace will start loading.  The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the welcome screen and click on the Explorer button on the left side bar.
 +
@@ -88,7 +87,6 @@ This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Co
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
---
 
 . The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
 +
@@ -722,7 +720,7 @@ A green check mark will show that the resources were successfully deployed.
 +
 image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
 
-. Then, click the *Resources* tab. In that tab, click the *amq-config* link. 
+. Then, click the *Resources* tab. In that tab, click the *amq-config* link.
 +
 --
 image::images/addressspace-configmap.png[topics, role="integr8ly-img-responsive"]
