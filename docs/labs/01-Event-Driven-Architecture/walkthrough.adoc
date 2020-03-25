@@ -714,7 +714,7 @@ A green check mark will show that the resources were successfully deployed.
 ====
 --
 
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Get back to the OpenShift console with the _AddressSpaces_ lists and click in the *amq* link.
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click in the *amq* link.
 +
 image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
 
@@ -1070,7 +1070,7 @@ image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-i
 +
 image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
 
-. In the next step select `JSON Instance` from the *Select Type* combobox and paste the follwing code in the *Defintion*:
+. In the next step select `JSON Instance` from the *Select Type* combobox, enter `order` at the _Data Type Name_ and paste the following code in the *Definition*:
 +
 [source,json,subs="attributes+"]
 ----
@@ -1181,7 +1181,7 @@ image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-i
 +
 image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
 
-. In the next step select `JSON Instance` from the *Select Type* combobox and paste the follwing code in the *Defintion*. Then type `order` in the *Data Type Name* field.
+. In the next step select `JSON Instance` from the *Select Type* combobox and paste the following code in the *Definition*. Then type `order` in the *Data Type Name* field.
 +
 --
 [source,json,subs="attributes+"]
@@ -1543,10 +1543,11 @@ app.post('/order/event', json(), async (req, res, next) => {
 })
 ----
 
-. Finally, go back to the terminal window and start a new build with this changes.
+. Finally, go back to the terminal window and start a new build with these changes.
 +
 [source,bash,subs="attributes+"]
 ----
+cd /projects/FleurDeLune/projects/store-ui/
 npm run openshift
 ----
 +
@@ -1603,7 +1604,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 === Take down that service
 
-Remember that we need to test what happens when a service is down? Get back to _Fuse Online_ so we can take down the inventory service.
+Remember that we need to test what happens when a service is down? Go back to _Fuse Online_ so we can take down the inventory service.
 
 . Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
 
@@ -1646,7 +1647,7 @@ This time the Invoice service is decoupled of the Inventory call, so it can stil
 ====
 --
 
-. Let's get the *inventory* service back online. Get back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
+. Let's get the *inventory* service back online. Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
 
 . Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
 +
@@ -1660,7 +1661,7 @@ image::images/fuse-inventory-restart.png[Confirm Start, role="integr8ly-img-resp
 +
 image::images/fuse-inventory-restarting.png[Invetory Starting, role="integr8ly-img-responsive"]
 
-. Get back to the web application page and try now to order some *blueberry*.
+. Go back to the web application page and try now to order some *blueberry*.
 +
 image::images/www-order-back.png[Invetory Starting, role="integr8ly-img-responsive"]
 
