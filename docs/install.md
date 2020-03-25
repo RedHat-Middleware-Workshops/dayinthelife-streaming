@@ -20,7 +20,7 @@ If you want to install locally, please make sure to update your Ansible version 
 
 The recommended way to install the workshop is running the ansible playbook from the OpenShift4.3 workshop cluster bastion machine. This is the fastest way to run the installer as it's already running in the cluster closest to the master node.
 
-1. Provision the *OpenShift 4.3 Workshop* service from Red Hat Product Demo System (RHPDS).  Remember to take note of the *GUID* with your cluster environment variable.
+1. Provision the *OpenShift 4.3 Workshop* service from Red Hat Product Demo System (RHPDS).
 
 1. Via the CLI, verify you are logged in as cluster admin to your newly provisioned OCP cluster using the `oc` command.
 
