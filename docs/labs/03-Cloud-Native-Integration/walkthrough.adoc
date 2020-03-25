@@ -55,41 +55,26 @@ In this task, you'll provision a messaging topic using Red Hat's Messaging as a 
 
 === Access OpenShift Console
 
-. Navigate to the {openshift-host}[OpenShift Admin Console, window="_blank", id="{context}-3"]
+. Navigate to the {openshift-host}[AMQ Online Console, window="_blank", id="{context}-3"]
 
-. Login to OpenShift Admin Console using your credentials (`{user-username}` and `{user-password}`).
+. Login to using your credentials (`{user-username}` and `{user-password}`).
 
-. Select the *Administrator* drop-down, then select *Workloads*, *Config Maps* and click on the `amq-config` link.
+. Click *amq* listed on the page this will take you to the 
 +
-image::images/1.1.3-select-configmap.png[1.1.3-select-configmap, role="integr8ly-img-responsive"]
+image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
 
-. Scroll down towards the bottom of the page.  Copy/paste the `external.host`, `service.host` and `service.port.amqp` values to a text editor.  These are the messaging credentials created in Lab 1.  You will need these shortly.
-+
-image::images/1.1.4-configmap.png[1.1.4-configmap, role="integr8ly-img-responsive"]
-
-. In your text editor, copy the `external.host` value and replace the word `messaging` with `https://console`.  This will becoming your *AMQ Online Console URL*.
-+
-image::images/1.1.5-consoleurl.png[1.1.5-consoleurl, role="integr8ly-img-responsive"]
-
-. Copy the *AMQ Online Console URL* from the previous step to a new tab.  Click *Log in with OpenShift*.
-+
-image::images/1.1.1-login.png[1.1.1-login, role="integr8ly-img-responsive"]
-
-. Login to AMQ Online using your credentials (`{user-username}` and `{user-password}`). Click *Log In*.
-+
-image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
-
-. Click the *+ Create* button to create the topic.
+. Click the *Create Address* button to create the topic.
 +
 image::images/1.1.7-create-topic.png[1.1.7-create-topic, role="integr8ly-img-responsive"]
 
 . Enter the following details, then click *Next*:
 ** Name: *`mytopic`*
 ** Type: *topic*
+** Plan: Small Topic
 +
 image::images/1.1.8-topic-details.png[1.1.8-topic-details, role="integr8ly-img-responsive"]
 
-. Choose `Small Topic` then click *Next* and finally *Create*.
+. Review your configuration and click on Finish
 +
 image::images/1.1.9-topic-details.png[1.1.9-topic-details, role="integr8ly-img-responsive"]
 
