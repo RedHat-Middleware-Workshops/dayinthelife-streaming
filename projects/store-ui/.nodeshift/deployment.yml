@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/connects-to: 'order'
+  labels:
+    app.openshift.io/runtime: nodejs
