@@ -1,5 +1,6 @@
 :walkthrough: Cloud-Native Integration with EIPs
 :che-url: http://che-che.{openshift-app-host}/
+:amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
 :user-password: openshift
 
@@ -41,6 +42,12 @@ Your password is: `{user-password}`
 * link:{che-url}/[Open Eclipse Che, window="_blank"]
 ****
 
+[type=walkthroughResource]
+.AmqOnline
+****
+* link:{amqoneline-url}/[Open AMQ Online Console, window="_blank"]
+****
+
 [type=walkthroughResource,serviceName=openshift]
 .Openshift
 ****
@@ -55,41 +62,26 @@ In this task, you'll provision a messaging topic using Red Hat's Messaging as a 
 
 === Access OpenShift Console
 
-. Navigate to the {openshift-host}[OpenShift Admin Console, window="_blank", id="{context}-3"]
+. Navigate to the {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"]
 
-. Login to OpenShift Admin Console using your credentials (`{user-username}` and `{user-password}`).
+. Login to using your credentials (`{user-username}` and `{user-password}`).
 
-. Select the *Administrator* drop-down, then select *Workloads*, *Config Maps* and click on the `amq-config` link.
+. Click *amq* listed on the page this will take you to the
 +
-image::images/1.1.3-select-configmap.png[1.1.3-select-configmap, role="integr8ly-img-responsive"]
+image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
 
-. Scroll down towards the bottom of the page.  Copy/paste the `external.host`, `service.host` and `service.port.amqp` values to a text editor.  These are the messaging credentials created in Lab 1.  You will need these shortly.
-+
-image::images/1.1.4-configmap.png[1.1.4-configmap, role="integr8ly-img-responsive"]
-
-. In your text editor, copy the `external.host` value and replace the word `messaging` with `https://console`.  This will becoming your *AMQ Online Console URL*.
-+
-image::images/1.1.5-consoleurl.png[1.1.5-consoleurl, role="integr8ly-img-responsive"]
-
-. Copy the *AMQ Online Console URL* from the previous step to a new tab.  Click *Log in with OpenShift*.
-+
-image::images/1.1.1-login.png[1.1.1-login, role="integr8ly-img-responsive"]
-
-. Login to AMQ Online using your credentials (`{user-username}` and `{user-password}`). Click *Log In*.
-+
-image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
-
-. Click the *+ Create* button to create the topic.
+. Click the *Create Address* button to create the topic.
 +
 image::images/1.1.7-create-topic.png[1.1.7-create-topic, role="integr8ly-img-responsive"]
 
 . Enter the following details, then click *Next*:
 ** Name: *`mytopic`*
 ** Type: *topic*
+** Plan: Small Topic
 +
 image::images/1.1.8-topic-details.png[1.1.8-topic-details, role="integr8ly-img-responsive"]
 
-. Choose `Small Topic` then click *Next* and finally *Create*.
+. Review your configuration and click on Finish
 +
 image::images/1.1.9-topic-details.png[1.1.9-topic-details, role="integr8ly-img-responsive"]
 
@@ -137,7 +129,7 @@ image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project user2
+oc project {user-username}
 cd /projects/FleurDeLune/projects/harvest/simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
@@ -185,7 +177,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 . Login to OpenShift Developer Console using your credentials (`{user-username}` and `{user-password}`).
 
-. Select the *Developer* drop-down, then select *Project: user2*, *+Add* and click on the `From Catalog` link.
+. Select the *Developer* drop-down, then select *Project: {user-username}*, *+Add* and click on the `From Catalog` link.
 +
 image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
 
@@ -300,7 +292,7 @@ image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties,
 +
 [source,bash,subs="attributes+"]
 ----
-oc project user2
+oc project {user-username}
 cd /projects/FleurDeLune/projects/harvest/inventory
 oc create configmap sender-config  --from-file=kafka.properties
 kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java --dev
@@ -347,7 +339,7 @@ image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img
 [source,bash,subs="attributes+"]
 ----
 cd /projects/FleurDeLune/projects/harvest/shipping
-oc project user2
+oc project {user-username}
 oc create -f connect-secret.yaml
 oc create -f jdg-cluster.yaml
 ----
@@ -449,7 +441,7 @@ image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-respons
 [source,bash,subs="attributes+"]
 ----
 cd /projects/FleurDeLune/projects/harvest/display/
-oc project user2
+oc project {user-username}
 oc apply -f shippingconsole-config.yaml
 ----
 
@@ -457,7 +449,7 @@ oc apply -f shippingconsole-config.yaml
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow  --configmap shippingconsole-config ConsoleService.java --dev
+kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final  --configmap shippingconsole-config ConsoleService.java --dev
 ----
 
 . Now that we have the Camel-K interface running, we can view the content in our Data Lake.  First, navigate here to see the Standard shipments: `http://console-service-{user-username}.{openshift-app-host}/standard` and here for our Premium shipments: `http://console-service-{user-username}.{openshift-app-host}/premium`.
