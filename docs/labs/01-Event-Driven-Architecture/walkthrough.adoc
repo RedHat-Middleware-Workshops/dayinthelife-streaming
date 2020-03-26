@@ -138,6 +138,13 @@ Using project "shared-db-earth".
 Welcome! See 'oc help' to get started.
 ----
 
+. Most of the work will be deploy to your own `{user-username}` project namespace, so be sure to have it as a _working_ project by executing the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc project {user-username}
+----
+
 . Now you are ready to start working on the application services.
 
 [type=verification]
@@ -304,7 +311,7 @@ Push successful
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app inventory; oc expose svc/inventory
+oc new-app inventory -l app.openshift.io/runtime=quarkus -l app.kubernetes.io/part-of=rest; oc expose svc/inventory
 ----
 
 === Check the OpenShift Developer Console
@@ -315,9 +322,11 @@ image::images/topology-inventory.png[Topology Inventory, role="integr8ly-img-res
 
 . Click on *Open URL* icon in the top right side of the `inventory` deployment to open access the service webpage.
 +
+--
 image::images/inventory-webpage.png[Inventory Web Page, role="integr8ly-img-responsive"]
-+
+
 This time the inventory page has its own URL that is publicy accessible outside OpenShift.
+--
 
 . So now Inventory service is deployed to OpenShift. You can see it in the Project Status in the OpenShift Console that it is a single replica running in 1 pod.
 
