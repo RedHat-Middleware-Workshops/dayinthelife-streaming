@@ -5,9 +5,9 @@ import java.util.HashMap;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.Body;
 
-//oc delete cm costadvice-config  
+//oc delete cm costadvice-config
 //oc apply -f costadvice-config.yaml
-// 
+//
 //kamel run -d camel-bean -d camel-jackson --configmap costadvice-config CostAdvice.java --dev
 //--trait debug.enabled=true --property logging.level.org.apache.camel=DEBUG
 
@@ -23,7 +23,7 @@ public class CostAdvice extends RouteBuilder{
         entry(555, 8.7),
         entry(460, 7.6),
         entry(892, 7.5)
-    );*/ 
+    );*/
 
     static Map<Integer, Double> COST_FACTOR = new HashMap<Integer, Double>();
     static{
@@ -35,13 +35,13 @@ public class CostAdvice extends RouteBuilder{
         COST_FACTOR.put(460, 7.6);
         COST_FACTOR.put(892, 7.5);
     }
-    
+
     Map<Integer, Double> farmCost = new HashMap<Integer, Double>();
-  
+
     @Override
     public void configure() throws Exception{
 
-        from("kafka:user1-costcenter?groupId=costsender")
+        from("kafka:costcenter?groupId=costsender")
             .unmarshal(new JacksonDataFormat(Map.class))
             .log("Input --> ${body}")
             .bean(this, "calculate")
@@ -56,10 +56,10 @@ public class CostAdvice extends RouteBuilder{
 
         if(farmCost.get(farmid) != null && farmCost.get(farmid) >0)
             farmCost.put(farmid, farmCost.get(farmid)+batchcost);
-        else 
+        else
             farmCost.put(farmid, batchcost);
     }
-        
 
-        
+
+
 }
