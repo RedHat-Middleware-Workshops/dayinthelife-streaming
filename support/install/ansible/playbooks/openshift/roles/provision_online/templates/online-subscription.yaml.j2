@@ -9,3 +9,7 @@ spec:
   name: amq-online
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+  config:
+    env:
+    - name: ENMASSE_OPENSHIFT
+      value: "true"
