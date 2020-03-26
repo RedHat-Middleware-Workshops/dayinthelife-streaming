@@ -1,7 +1,7 @@
 :walkthrough: Cloud-Native Integration with EIPs
 :che-url: http://che-che.{openshift-app-host}/
 :amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04/
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04-CEP-and-Event-Sourcing/
 :user-password: openshift
 
 ifdef::env-github[]
@@ -77,7 +77,7 @@ image::images/1.1.7-create-topic.png[1.1.7-create-topic, role="integr8ly-img-res
 . Enter the following details, then click *Next*:
 ** Name: *`mytopic`*
 ** Type: *topic*
-** Plan: Small Topic
+** Plan: *Small Topic*
 +
 image::images/1.1.8-topic-details.png[1.1.8-topic-details, role="integr8ly-img-responsive"]
 
@@ -295,10 +295,10 @@ image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties,
 oc project {user-username}
 cd /projects/FleurDeLune/projects/harvest/inventory
 oc create configmap sender-config  --from-file=kafka.properties
-kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java --dev
+kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java
 ----
 
-. After the Camel-K command has finished deploying, it should run via the terminal without errors.
+. After the Camel-K command has finished deploying, it should run via the terminal without errors.  You should see **Integration Created**.
 +
 image::images/3.1.11-camel-k-inventory.png[3.1.11-camel-k-inventory, role="integr8ly-img-responsive"]
 
@@ -408,18 +408,18 @@ image::images/4.1.8-standard-java-update.png[4.1.8-standard-java-update, role="i
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap premiumshipping-config PremiumShipping.java --dev
+kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap premiumshipping-config PremiumShipping.java
 ----
 
-. Ensure that the Camel-K command ran without error and connections to Infinispan and Kafka were successful.  You can use *Ctrl-C* to terminate the Camel-K process.  Repeat the same for the StandardShipping flow:
+. Ensure that the Camel-K command ran without error and connections to Infinispan and Kafka were successful.  You can verify the deployment via the OpenShift Developer topology screen.  Repeat the same for the StandardShipping flow:
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap standardshipping-config StandardShipping.java --dev
+kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap standardshipping-config StandardShipping.java
 ----
 
 [type=verification]
-Were you able to successfully execute both the Standard and Premium shipping Camel-K routes without error?
+Were you able to successfully execute and deploy both the Standard and Premium shipping Camel-K routes without error?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -452,7 +452,19 @@ oc apply -f shippingconsole-config.yaml
 kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final  --configmap shippingconsole-config ConsoleService.java --dev
 ----
 
-. Now that we have the Camel-K interface running, we can view the content in our Data Lake.  First, navigate here to see the Standard shipments: `http://console-service-{user-username}.{openshift-app-host}/standard` and here for our Premium shipments: `http://console-service-{user-username}.{openshift-app-host}/premium`.
+. Now that we have the Camel-K interface running, we can view the content in our Data Lake.  First, navigate here (in a new tab) to see the Standard shipments: `http://console-service-{user-username}.{openshift-app-host}/standard`. If successful, you should see output similar to the following:
++
+image::images/standard-shipping-cache-web-output.png[standard-shipping-cache-web-output, role="integr8ly-img-responsive"]
+
+and here (in another tab) for our Premium shipments: `http://console-service-{user-username}.{openshift-app-host}/premium`.  You should see the following output:
++
+image::images/premium-cache-web-output.png[premium-cache-web-output, role="integr8ly-img-responsive"]
+
+[type=verification]
+Were you able to successfully see output from both Standard and Premium datacache?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
 == Setup Grafana Dashboard
 
