@@ -321,7 +321,7 @@ StreamsBuilder builder = new StreamsBuilder();
 +
 image::images/4.1.4-topology.png[4.1.4-topology, role="integr8ly-img-responsive"]
 
-. Open the `harvestevent.drl` file.  under `{lab-path}/projects/overseer/disaster-control/src/main/resources/META-INF/resources/com/redhat/workshop/dil. Add the RULES to determine if it's disaster or good harvest day!
+. Open the `harvestevent.drl` file.  under `{lab-path}/projects/overseer/disaster-control/src/main/resources/META-INF/resources/com/redhat/workshop/dil`. Add the RULES to determine if it's disaster or a good harvest day!
 +
 [source,bash,subs="attributes+"]
 ----
