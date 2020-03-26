@@ -3,7 +3,7 @@ FROM centos:8
 
 RUN dnf update -y && \
 dnf install -y wget && \
-dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
+dnf install -y java-11-openjdk java-11-openjdk-devel && \
 dnf install -y nodejs && \
 dnf install -y maven && \
 dnf clean all
