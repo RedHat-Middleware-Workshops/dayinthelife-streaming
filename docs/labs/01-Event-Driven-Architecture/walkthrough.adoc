@@ -803,12 +803,12 @@ image::images/fuse-create-connection.png[Fuse Create Connection, role="integr8ly
 +
 image::images/fuse-amqp-broker.png[AMQP Message Broker Connector, role="integr8ly-img-responsive"]
 
-. On the following page, add the *Connection URI* for connecting to the AMQ Online _AddressSpace_. You will need to replace the `{your-identifier}` with the value you save from the previous task.
+. On the following page, add the *Connection URI* for connecting to the AMQ Online _AddressSpace_. You will need to replace the `{your-service.host}` placeholder with the value you save from the previous task.
 +
 --
 [source,none,subs="attributes+"]
 ----
-amqp://messaging-{your-identifier}.workshop-operators.svc?requestTimeout=1000
+amqp://{your-service.host}?requestTimeout=1000
 ----
 
 image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
@@ -909,7 +909,7 @@ image::images/fuse-request-body.png[API Operation Body, role="integr8ly-img-resp
 Did you notice that the warning icon disapeared?
 ====
 
-. Now click on *Add a response* under the _RESPONSES_ section. Select `201 Created` from the dropdown menu. Finally click on the *Save* button.
+. Now click on *Add a response* under the _RESPONSES_ section. Select `201 Created` from the dropdown menu. Finally click on the *Add* button.
 +
 image::images/fuse-response-code.png[API Operation Response, role="integr8ly-img-responsive"]
 
@@ -952,6 +952,7 @@ image::images/fuse-destination-name.png[Destination Name, role="integr8ly-img-re
 
 . In this screen, select `JSON Instance` from the *Select Type* menu. Type `order` in the *Data Type Name* field and paste the following code in the *Definition* field:
 +
+--
 [source,json,subs="attributes+"]
 ----
 {
@@ -965,8 +966,9 @@ image::images/fuse-destination-name.png[Destination Name, role="integr8ly-img-re
    "zipCode":"2222"
 }
 ----
-+
+
 image::images/fuse-message-type.png[Destination Type, role="integr8ly-img-responsive"]
+--
 
 . Scroll down and click the *Next* button.
 
@@ -1416,7 +1418,7 @@ oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app events; oc expose svc/events
+oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
@@ -1564,18 +1566,33 @@ app.post('/order/event', json(), async (req, res, next) => {
 })
 ----
 
-. Finally, go back to the terminal window and start a new build with these changes.
+. Finally, go back to the terminal window and start a new build with these changes. First be sure you are in the correct directory with this command:
 +
 [source,bash,subs="attributes+"]
 ----
-cd /projects/FleurDeLune/projects/store-ui/
+cd $CHE_PROJECTS_ROOT/FleurDeLune/projects/store-ui/
+----
+
+. If you haven't done it yet, login into the openshift cli:
++
+[source,bash,subs="attributes+"]
+----
+oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
+----
+
+. Be sure to the in the correct _working_ `{user-username}` directory:
++
+[source,bash,subs="attributes+"]
+----
+oc project {user-username}
+----
+
+. Then, start a new application deployment:
++
+[source,bash,subs="attributes+"]
+----
 npm run openshift
 ----
-+
-[NOTE]
-====
-Be sure to switch to your _working_ `user1` project and the correct _store-ui_ folder.
-====
 
 . Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo:
 +
