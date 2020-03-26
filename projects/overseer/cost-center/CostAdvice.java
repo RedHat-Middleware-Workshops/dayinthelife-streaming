@@ -48,7 +48,7 @@ public class CostAdvice extends RouteBuilder{
             .log("--> ${body}")
         ;
 
-        from("kafka:user1-costcenter?groupId=costadvisor")
+        from("kafka:costcenter?groupId=costadvisor")
             .unmarshal(new JacksonDataFormat(Map.class))
             .bean(this, "calculate")
         ;
