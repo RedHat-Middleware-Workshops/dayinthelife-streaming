@@ -73,4 +73,7 @@ public class CostAdvice extends RouteBuilder{
 
 
     }
+
+
+
 }
