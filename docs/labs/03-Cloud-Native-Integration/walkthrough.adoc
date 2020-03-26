@@ -456,7 +456,7 @@ kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jacks
 +
 image::images/standard-shipping-cache-web-output.png[standard-shipping-cache-web-output, role="integr8ly-img-responsive"]
 
-and here (in another tab) for our Premium shipments: `http://console-service-{user-username}.{openshift-app-host}/premium`.  You should see the following output:
+. Click here (in another tab) to verify our Premium shipments cache: `http://console-service-{user-username}.{openshift-app-host}/premium`.  You should see the following output:
 +
 image::images/premium-cache-web-output.png[premium-cache-web-output, role="integr8ly-img-responsive"]
 
