@@ -68,16 +68,26 @@ image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-resp
 
 === Start CodeReady workspace
 
-. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard. A new workspace should be ready to use. Click on the workspace with the _green_ circle on the left menu bar under *RECENT WORKSPACES*.
+. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard. 
 +
+--
+A new workspace has been configured with the required tools, plugins and project to start working on this workshop. 
+
+Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
+
 image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
-+
+
 [NOTE]
 ====
 You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
 ====
+--
 
-. The workspace will start loading.  The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the welcome screen and click on the Explorer button on the left side bar.
+. This will start an instance of the workspace. Please wait a few moments while it downloads the required container images and configuration setup.
++
+image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
+
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the the inicial welcome and Readme tabs then click on the Explorer button on the left side bar.
 +
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
 +
