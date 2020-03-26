@@ -12,13 +12,13 @@ endif::[]
 [id='cep-event-sourcing']
 = Lab 4 - Complex Event Processing and Event Sourcing
 
-In this lab you will be processing the streamed events. There are two common scenarios, Event Sourcing and Complex Event Processing. You will be receiving harvest event from topics on Kafka, and replay the event. Using Kafka Streams to real-time events and extracting information from event streams as they arrive.
+In this lab you will be processing the streamed events. There are two common scenarios, Event Sourcing and Complex Event Processing. You will be receiving harvest events from topics on Kafka, then replay the events. You will use Kafka Streams for real-time events and extracting information from event streams as they arrive.
 
 *Audience:* System Architects, Developers, Data Integrators
 
 *Overview*
 
-The Event Sourcing is used to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
+Event Sourcing is used to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
 
 Complex Event Processing (CEP) is primarily an event processing concept that deals with the task of processing events, with the goal of identifying the meaningful events within the event cloud.
 
@@ -29,8 +29,6 @@ To respond to business demands quickly and efficiently, you need a way to integr
 Red Hat Kafka Streams is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It combines the simplicity of writing and deploying standard Java and Scala applications on the client side with the benefits of Kafka's server-side cluster technology.
 
 Kogito is the open source Quarkus extension that allows developers to implement core logic in a more business-driven way. It brings concepts and maturity from 15+ years of experience of production-tested projects like jBPM and Drools.
-
-
 
 *Prerequisites*
 
@@ -55,15 +53,18 @@ Your password is: `{user-password}`
 
 [time=10]
 [id="harvest-from-amq-topic"]
-== Collect Harvest data to Kafka Topic
+== Stream Harvest data to a Kafka Topic
 
-. Collect data from the Broker Topic, extract the batch count, avoid unnecessary large data transfer, and send to cost center topic in AMQ Streams.
+In this lab, you'll collect data from a Broker Topic and extract the batch count.  This will avoid an unnecessary large data transfer.  Lastly, you'll stream the data to a cost center topic in AMQ Streams.
 
 +
 image::images/1.0.0-photo.png[1.0.0-photo, role="integr8ly-img-responsive"]
 
 +
 image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
+
+Steps
+===
 
 . Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
