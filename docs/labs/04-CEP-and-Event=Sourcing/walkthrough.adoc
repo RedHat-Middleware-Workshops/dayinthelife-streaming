@@ -56,15 +56,13 @@ Your password is: `{user-password}`
 == Stream Harvest data to a Kafka Topic
 
 In this lab, you'll collect data from a Broker Topic and extract the batch count.  This will avoid an unnecessary large data transfer.  Lastly, you'll stream the data to a cost center topic in AMQ Streams.
-
 +
 image::images/1.0.0-photo.png[1.0.0-photo, role="integr8ly-img-responsive"]
 
 +
 image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
 
-Steps
-===
+=== Steps
 
 . Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
