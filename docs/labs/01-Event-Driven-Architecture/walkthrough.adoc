@@ -311,7 +311,7 @@ Push successful
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app inventory -l app.openshift.io/runtime=quarkus -l app.kubernetes.io/part-of=rest; oc expose svc/inventory
+oc new-app inventory -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=rest'; oc expose svc/inventory
 ----
 
 === Check the OpenShift Developer Console
@@ -387,7 +387,7 @@ oc start-build invoice --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/invoi
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app invoice; oc expose svc/invoice
+oc new-app invoice -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=rest'; oc expose svc/invoice
 ----
 
 === Check the OpenShift Developer Console
@@ -463,7 +463,14 @@ oc start-build order --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/order/t
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app order; oc expose svc/order
+oc new-app order -l 'app.openshift.io/runtime=spring,app.kubernetes.io/part-of=rest'; oc expose svc/order
+----
+
+. Add the `connects-to` annotation to get a better _topology view_:
++
+[source,bash,subs="attributes+"]
+----
+oc annotate dc/order app.openshift.io/connects-to=invoice,inventory
 ----
 
 === Check the OpenShift Developer Console
@@ -514,13 +521,6 @@ For the following commands, remember to be sure to switch to your _working_ proj
 [source,bash,subs="attributes+"]
 ----
 npm install --save-dev nodeshift; npm run openshift
-----
-
-. Expose the Service as an external route:
-+
-[source,bash,subs="attributes+"]
-----
-oc expose svc/www-store
 ----
 
 . Configure the route timeout and let the gateway know that this is a long running transaction:
@@ -596,12 +596,14 @@ image::images/scaled-zero.png[Scaled To Zero, role="integr8ly-img-responsive"]
 
 . Go back to the web application page and try again to order the *Mango* flavor. What happens?
 +
+--
 image::images/couldnot-process.png[Could Not Process Error, role="integr8ly-img-responsive"]
-+
+
 [NOTE]
 ====
 The service was not able to fulfill the order because the inventory service was offline.  Instead, we  had to wait a little time to get the response back because of the set timeout.
 ====
+--
 
 . Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
