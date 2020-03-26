@@ -325,7 +325,9 @@ The AMQ Streams component uses powerful operators that simplify the deployment, 
 
 In this section you will learn how to start a local Kafka cluster that will represent the startup _Moon_ deployment.
 
-. Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
+. Go back to the OpenShift Developer console.
+
+. Change back to the `{user-username}` project and click on *+Add* menu on the left side bar.
 +
 image:images/openshift-kafka-add.png[Add From Topology]
 +
