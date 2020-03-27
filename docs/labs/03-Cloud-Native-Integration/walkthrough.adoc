@@ -89,6 +89,31 @@ image::images/1.1.9-topic-details.png[1.1.9-topic-details, role="integr8ly-img-r
 +
 image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integr8ly-img-responsive"]
 
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
+
+Your username is: `{user-username}` +
+Your password is: `{user-password}`
+
+. Locate *Search* under *Advance*
+
++
+image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
+
+. Locate *Search* under *Advance*
+
+. On the top search bar, select *service* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
++
+image::images/1.1.12-search-addressspace.png[1.1.12-search-addressspace, role="integr8ly-img-responsive"]
+
+. Click on *amq*
++
+image::images/1.1.13-addressspace-amq.png[1.1.13-addressspace-amq, role="integr8ly-img-responsive"]
+
+. Click on tab *YAML*, and copy the *serviceHost* for later use.
++
+image::images/1.1.14-serive-host-port.png[1.1.14-serive-host-port, role="integr8ly-img-responsive"]
+
+
 [type=verification]
 Were you able to successfully provision the topic in AMQ Online?
 
@@ -113,7 +138,7 @@ image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
-. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
+. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `serviceHost` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
 +
 image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
 
