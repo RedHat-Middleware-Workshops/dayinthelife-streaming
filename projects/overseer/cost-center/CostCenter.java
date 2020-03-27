@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.Body;
-//oc delete cm costcenter-config
-//oc apply -f costcenter.yaml
-//kamel run -d camel-jackson --configmap costcenter-config CostCenter.java --dev
 //FILTER EIP
 
 

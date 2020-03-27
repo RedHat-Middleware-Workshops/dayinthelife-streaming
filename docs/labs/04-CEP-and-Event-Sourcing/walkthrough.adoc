@@ -101,7 +101,9 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 [source,bash,subs="attributes+"]
 ----
 oc project {user-username}
+
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
+
 oc apply -f costcenter.yaml
 ----
 
@@ -149,7 +151,9 @@ image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="i
 [source,bash,subs="attributes+"]
 ----
 oc project {user-username}
+
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
+
 oc apply -f costadvice-config.yaml
 ----
 
@@ -220,7 +224,7 @@ image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsiv
 +
 image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"]
 
-. Run following command to list the topic that the `costadvisor` groups subscribe to. You should see it is subscribed to `costcenter`.
+. Run following command to list the topic that the *costadvisor* groups subscribe to. You should see it is subscribed to *costcenter*.
 +
 [source,bash,subs="attributes+"]
 ----
@@ -235,10 +239,11 @@ image::images/3.1.5-terminal.png[3.1.5-terminal, role="integr8ly-img-responsive"
 ----
 
 
-. Open the `CostAdvice.java` file located in the *cost-center* folder.  Change the cost for each farm.
+. Open the *CostAdvice.java* file located in the *cost-center* folder.  Change the cost for each farm.
 +
 [source,bash,subs="attributes+"]
 ----
+
 COST_FACTOR.put(101, 10.0);
 COST_FACTOR.put(302, 20.0);
 COST_FACTOR.put(787, 10.0);
@@ -246,6 +251,7 @@ COST_FACTOR.put(645, 15.0);
 COST_FACTOR.put(555, 10.0);
 COST_FACTOR.put(460, 10.0);
 COST_FACTOR.put(892, 10.0);
+
 ----
 +
 image::images/3.1.6-change-cost.png[3.1.6-change-cost, role="integr8ly-img-responsive"]
