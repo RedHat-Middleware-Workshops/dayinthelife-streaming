@@ -184,7 +184,7 @@ kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-be
 ----
 
 . Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
-
++
 [source,bash,subs="attributes+"]
 ----
 kamel log edge-simulator
