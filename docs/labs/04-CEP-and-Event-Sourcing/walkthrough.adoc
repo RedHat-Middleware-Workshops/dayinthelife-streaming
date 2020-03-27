@@ -12,21 +12,20 @@ endif::[]
 [id='cep-event-sourcing']
 = Lab 4 - Complex Event Processing and Event Sourcing
 
-In this lab you will be processing the streamed events. There are two common scenarios, Event Sourcing and Complex Event Processing. You will be receiving harvest events from topics on Kafka, then replay the events. You will use Kafka Streams for real-time events and extracting information from event streams as they arrive.
-
+In this lab you will be applying two common scenarios to processing events. Event Sourcing and Complex Event Processing. First replaying the harvest data to estimate possible costs to operate farms on the moon. . You will use Kafka Streams API for real-time events processing and extracting information from event streams as they arrive.
 *Audience:* System Architects, Developers, Data Integrators
 
 *Overview*
 
-Event Sourcing is used to handle operations which are driven by a sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
+Event Sourcing is used to handle sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
 
-Complex Event Processing (CEP) is primarily an event processing concept that deals with the task of processing events, with the goal of identifying the meaningful events within the event cloud.
+Complex Event Processing (CEP) is an event processing concept, with the goal of identifying the meaningful events within the event cloud.
 
 *Why Red Hat?*
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
-Red Hat Kafka Streams is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It combines the simplicity of writing and deploying standard Java and Scala applications on the client side with the benefits of Kafka's server-side cluster technology.
+Red Hat Kafka Streams API is a client library for building applications and microservices, where the input and output data are stored in Kafka clusters. It combines the simplicity of writing and deploying standard Java and Scala applications on the client side with the benefits of Kafka's server-side cluster technology.
 
 Kogito is the open source Quarkus extension that allows developers to implement core logic in a more business-driven way. It brings concepts and maturity from 15+ years of experience of production-tested projects like jBPM and Drools.
 
@@ -62,6 +61,17 @@ image::images/1.0.0-photo.png[1.0.0-photo, role="integr8ly-img-responsive"]
 image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
 
 === Steps
+. In {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"], click **+Add** then click **From Catalog** link.
++
+image::images/1.1.0-add-from-catalog.png[1.1.0-add-from-catalog, role="integr8ly-img-responsive"]
+
+. In the filter box type `topic` then select **Kafka topic**.  Click **Create**.
++
+image::images/1.1.1-create-kafka-topic.png[1.1.1-create-kafka-topic, role="integr8ly-img-responsive"]
+
+. Replace the name `my-topic` with our topic name `costcenter`, and update the cluster name to `moon`.  Click **Create**.
++
+image::images/1.1.2-create-kafka-costcenter.png[1.1.2-create-kafka-costcenter, role="integr8ly-img-responsive"]
 
 . Navigate back to the Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
@@ -74,7 +84,7 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
 
-. Open the `costcenter.yaml` file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
+. Open the *costcenter.yaml* file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
 image::images/1.1.2-cost-config-update.png[1.1.2-cost-config-update, role="integr8ly-img-responsive"]
 
@@ -95,7 +105,7 @@ cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costcenter.yaml
 ----
 
-. Open the ` CostCenter.java` file located in the *cost-center* folder.  This simple application collects harvest data from the edge device from each farm in AMQ Online **mytopic**. This will simply re-route events to an Kafka Topic.
+. Open the *CostCenter.java* file located in the *cost-center* folder.  This simple application simply re-route harvest event(from AMQ Online **mytopic**) to an AMQ Streams Topic .
 
 . Try deploying and running the *CostCenter* Camel-K route by executing the following command
 +
@@ -163,7 +173,7 @@ image::images/2.1.7-cost-advice-route.png[2.1.7-cost-advice-route, role="integr8
 . In the browser, paste the URL with path `/costadvice`, you should be able to see the result in JSON format.
 +
 image::images/2.1.8-cost-advice-result.png[2.1.8-cost-advice-route, role="integr8ly-img-responsive"]
-http://cost-advice-{user-username}.{openshift-app-host}/costadvice
+
 
 [type=verification]
 Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift?
@@ -384,7 +394,7 @@ oc new-build --binary --name=cep-kogito -l app=cep-kogito
 
 oc patch bc/cep-kogito -p "{\"spec\":{\"strategy\":{\"dockerStrategy\":{\"dockerfilePath\":\"src/main/docker/Dockerfile.jvm\"}}}}"
 
-oc start-build cep-kogito  --from-file $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/target/*-runner.jar --follow
+oc start-build cep-kogito --from-dir=. --follow
 ----
 +
 image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-responsive"]
