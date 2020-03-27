@@ -77,7 +77,7 @@ image::images/1.1.7-create-topic.png[1.1.7-create-topic, role="integr8ly-img-res
 . Enter the following details, then click *Next*:
 ** Name: *`mytopic`*
 ** Type: *topic*
-** Plan: *Small Topic*
+** Plan: *Stnadard Small Topic*
 +
 image::images/1.1.8-topic-details.png[1.1.8-topic-details, role="integr8ly-img-responsive"]
 
@@ -91,15 +91,14 @@ image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integ
 
 . Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
 
-Your username is: `{user-username}` +
-Your password is: `{user-password}`
+  Your username is: `{user-username}` +
+  Your password is: `{user-password}`
 
 . Locate *Search* under *Advance*
 
 +
 image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
 
-. Locate *Search* under *Advance*
 
 . On the top search bar, select *service* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
 +
@@ -184,9 +183,18 @@ image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
 ----
 
-. Give the deployment 2-5 minutes to run.  Navigate back to the *OpenShift Administrator Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
+. Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
+[source,bash,subs="attributes+"]
+----
+kamel log edge-simulator
+----
++
+image::images/2.1.10-kamel-log.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
+
+.Or you can also navigate back to the *OpenShift Developer Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
 +
 image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
+image::images/2.1.12-verify-edge-simulator-log.png[2.1.11-verify-edge-simulator-log, role="integr8ly-img-responsive"]
 
 [type=verification]
 Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift?
