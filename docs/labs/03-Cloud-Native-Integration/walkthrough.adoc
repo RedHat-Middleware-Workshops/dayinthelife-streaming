@@ -184,16 +184,21 @@ kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-be
 ----
 
 . Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
+
 [source,bash,subs="attributes+"]
 ----
 kamel log edge-simulator
 ----
+
 +
 image::images/2.1.10-kamel-log.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
 
-.Or you can also navigate back to the *OpenShift Developer Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
+. Or you can also navigate back to the *OpenShift Developer Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
+
 +
 image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
+
++
 image::images/2.1.12-verify-edge-simulator-log.png[2.1.11-verify-edge-simulator-log, role="integr8ly-img-responsive"]
 
 [type=verification]
