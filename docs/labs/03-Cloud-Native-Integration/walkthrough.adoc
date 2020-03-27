@@ -326,7 +326,7 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 +
 image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
 
-. Return to the terminal and execute the following commands:
+. Return to the *dil-* terminal and execute the following commands:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -442,7 +442,7 @@ oc apply -f standardshipping-config.yaml
 +
 image::images/4.1.8-standard-java-update.png[4.1.8-standard-java-update, role="integr8ly-img-responsive"]
 
-. Now that we have updated all the config files and code, we need to test our Camel-K routes.  Return to the terminal and execute the following command:
+. Now that we have updated all the config files and code, we need to test our Camel-K routes.  Return to the *dil-* terminal and execute the following command:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -506,10 +506,12 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 == Setup Grafana Dashboard
 
-. First of all, we need to deploy the Grafana template to our namespace.  Execute the following command via the CLI terminal:
+. First of all, we need to deploy the Grafana template to our namespace.  Execute the following command via the CLI *dil-* terminal:
 +
 [source,bash,subs="attributes+"]
 ----
+cd /projects/FleurDeLune/projects/harvest/display
+
 oc apply -f grafana.yaml
 ----
 +
@@ -518,7 +520,7 @@ oc apply -f grafana.yaml
 oc expose svc grafana
 ----
 
-. Now that we have Grafana running, navigate back to the OpenShift Administrator console and select **Networking > Routes**.  Select the *Grafana* route.
+. Now that we have Grafana running, navigate back to the OpenShift Developer console and Click on grafana in the topology.  Find *Grafana* route.
 +
 image::images/6.1.1-grafana-route.png[6.1.1-grafana-route, role="integr8ly-img-responsive"]
 
