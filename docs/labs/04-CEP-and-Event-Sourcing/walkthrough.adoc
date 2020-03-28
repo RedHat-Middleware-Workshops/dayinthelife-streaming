@@ -178,6 +178,8 @@ image::images/2.1.7-cost-advice-route.png[2.1.7-cost-advice-route, role="integr8
 +
 image::images/2.1.8-cost-advice-result.png[2.1.8-cost-advice-route, role="integr8ly-img-responsive"]
 
+. Your URL should look like the following: `http://cost-advice-{user-username}.{openshift-app-host}/costadvice`.
+
 
 [type=verification]
 Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift?
@@ -392,9 +394,9 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 ----
 oc project {user-username}
 
-cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}
+cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/
 
-mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control
+mvn clean compile package -DskipTests
 
 oc new-build --binary --name=cep-kogito -l app=cep-kogito
 
@@ -507,7 +509,7 @@ image::images/4.2.5-cep-result.png[4.2.5-cep-result, role="integr8ly-img-respons
 
 
 [type=verification]
-Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift? Did you get the what if result? try play with couple of different cost!
+Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -516,11 +518,10 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you replay streams of event to see the possible analytical result of farm costs in order to better predict revenue. This is a common approach as one of event streaming technique-- Event sourcing. You have been introduced to implement with ease using Camel-K and Red Hat Streams.
+In this lab you replay stream of events to see the possible analytical result of farm costs in order to better predict revenue. This is a common event streaming technique-- Event sourcing. You have been introduced how to implement with ease using Camel-K and Red Hat Streams.
 
-Event driven is also the foundation for real time behaviour detection. You used Kafka Streams in conjunction with Kogito to build real time complex event processing to detect if disaster strikes base on the harvest data.
+Event driven is also the foundation for real time behavior detection. You used Kafka Streams in conjunction with Kogito to build real time complex event processing app to detect if disaster strikes base on the harvest data.
 
-You can now proceed to link:{next-lab-url}[Lab 5].
 
 [time=2]
 [id="further-reading"]
