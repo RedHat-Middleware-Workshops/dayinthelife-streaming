@@ -54,7 +54,7 @@ Your password is: `{user-password}`
 * link:{openshift-host}/[Open Console, window="_blank"]
 ****
 
-[time=5]
+[time=10]
 [id="provision-amq-topic"]
 == Provision AMQ Topic
 
@@ -364,7 +364,7 @@ Were you able to successfully view records in the **standard** database table?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=15]
+[time=10]
 [id="setup-data-lake"]
 == Setup Data Lake with caching
 
@@ -462,7 +462,7 @@ Were you able to successfully execute and deploy both the Standard and Premium s
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=15]
+[time=5]
 [id="setup-supply-console"]
 == Create a Shipping Console
 
@@ -504,6 +504,8 @@ Were you able to successfully see output from both Standard and Premium datacach
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
+[time=10]
+[id="grafana"]
 == Setup Grafana Dashboard
 
 . First of all, we need to deploy the Grafana template to our namespace.  Execute the following command via the CLI *dil-* terminal:
