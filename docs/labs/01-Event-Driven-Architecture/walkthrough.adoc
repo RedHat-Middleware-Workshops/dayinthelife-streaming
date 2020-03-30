@@ -153,7 +153,7 @@ Were you able to successfully login to Openshift CLI?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=5]
+[time=15]
 [id="Deploy the Inventory Service"]
 == Deploy the Inventory Service
 
@@ -336,7 +336,7 @@ Were you able to successfully deploy th Inventory service to OpenShift?. You can
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=25]
+[time=5]
 [id="Deploy Invoice Service"]
 == Deploy Invoice Service
 
@@ -404,7 +404,7 @@ Were you able to successfully open the corresponding default webpage?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=25]
+[time=10]
 [id="Deploy Order Service"]
 == Deploy Order Service
 
@@ -496,7 +496,7 @@ Were you able to successfully deploy the Orders service and view the OpenAPI spe
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=10]
+[time=5]
 [id="Deploy Webapp"]
 == Deploy Frontend Application
 
@@ -546,7 +546,7 @@ Can you see those tasty desserts?
 [type=verificationFail]
 {standard-fail-text}
 
-[time=10]
+[time=5]
 [id="Test Webapp"]
 == Test the application
 
@@ -621,7 +621,7 @@ Were you able to successfully scale-down and scale-up your application?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=10]
+[time=15]
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topic
 
@@ -1320,7 +1320,7 @@ Were you able to successfully start all 3 integration services?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=10]
+[time=15]
 [id="Develop Events Service"]
 == Develop the Events Service
 
@@ -1604,7 +1604,7 @@ Were you able to successfully see the www-store pods running?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=5]
+[time=10]
 [id="test-eda"]
 == Testing the new architecture
 
