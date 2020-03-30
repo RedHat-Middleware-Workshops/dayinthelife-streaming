@@ -44,7 +44,7 @@
       tags: provision_webapp
     - include_role:
         name: user_projects
-      with_sequence: start=1 end={{ usersno }} format=%d
+      with_sequence: start=1 end={{ num_users }} format=%d
       vars:
         db_earth_namespace: "shared-db-earth"
         kafka_earth_namespace: "shared-kafka-earth"
@@ -52,7 +52,7 @@
       tags: user_projects
     - include_role:
         name: provision_infinispan
-      with_sequence: start=1 end={{ usersno }} format=%d
+      with_sequence: start=1 end={{ num_users }} format=%d
       tags: provision_infinispan
     - include_role:
         name: provision_fuse
@@ -64,4 +64,21 @@
       vars:
         che_project: "che"
       tags: provision_che
+    - name: extract route_subdomain
+      k8s_facts:
+        kind: Ingress
+      register: route_subdomain_r
+    - name: output workshop info
+      debug:
+        msg:
+        - "user.info: "
+        - "user.info: Day In the Streaming Life Workshop - Installed for {{ num_users }} user(s)"
+        - "user.info: "
+        - "user.info: Solution Explorer: "
+        - "user.info: https://tutorial-web-app-webapp.{{ route_subdomain_r.resources[0].spec.domain | trim }}"
+        - "user.info: You should share this URL (or a shortlink for it) -- It is all they will need to get started!"
+        - "user.info: "
+        - "user.info: OpenShift Console: https://console-openshift-console.{{ route_subdomain_r.resources[0].spec.domain | trim }}"
+        - "user.info: Cluster admin login with '{{ ocp_username }}' / 'r3dh4t1!'"
+      when: not silent|bool
     

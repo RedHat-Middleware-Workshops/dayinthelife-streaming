@@ -15,9 +15,9 @@
     
 - name: Subscribe Operator first, because it takes too long 
   include_tasks: single_user.yaml
-  with_sequence: start=1 end={{ usersno }} 
+  with_sequence: start=1 end={{ num_users }} 
   when:
-    - usersno|int > 0
+    - num_users|int > 0
 
 - name:  pause for 2 minutes, because operator takes sometime to run, it may fail, just re-run  
   pause:
@@ -25,13 +25,13 @@
     
 - name: Create Fuse Online Cluster
   include_tasks: single_cluster.yaml
-  with_sequence: start=1 end={{ usersno }} 
+  with_sequence: start=1 end={{ num_users }} 
   when:
-    - usersno|int > 0
+    - num_users|int > 0
 
 # Turn off this, it takes too long to start 
 #- name: Check status of Fuse Online Servers
 #  include_tasks: server_run_check.yaml
-#  with_sequence: start=1 end={{ usersno }} 
+#  with_sequence: start=1 end={{ num_users }} 
 #  when:
-#    - usersno|int > 0
+#    - num_users|int > 0

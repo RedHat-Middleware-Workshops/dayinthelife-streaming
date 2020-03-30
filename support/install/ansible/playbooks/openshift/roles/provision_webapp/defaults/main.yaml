@@ -1,3 +1,4 @@
+webapp_operator_release_tag: '0.0.45'
 webapp_client_id: tutorial-web-app
 webapp_operator_template_path: /home/tutorial-web-app-operator/deploy/template/tutorial-web-app.yml
 webapp_operator_resources: 'https://github.com/integr8ly/tutorial-web-app-operator/archive/v{{webapp_operator_release_tag}}.zip'
