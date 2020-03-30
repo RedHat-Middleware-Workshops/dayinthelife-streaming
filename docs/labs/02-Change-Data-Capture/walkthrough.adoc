@@ -47,7 +47,7 @@ Your password is: `{user-password}`
 
 :sectnums:
 
-[time=10]
+[time=5]
 [id="configure-cdc-connectors"]
 == Configure CDC connectors for Kafka Connect
 
@@ -169,7 +169,7 @@ Did you receive the orders-connector response from the SqlServerConnector?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=10]
+[time=15]
 [id="loading-earth-orders"]
 == Loading Earth Orders
 
@@ -393,7 +393,7 @@ Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=10]
+[time=15]
 [id="replicating-to-other-kafka-clusters"]
 == Replicating to other Kafka clusters
 
@@ -484,7 +484,7 @@ Were you able to verify the Kafka Topic?  Good, this means that Mirror Maker was
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=10]
+[time=15]
 [id="enabling-http-access"]
 == Enabling HTTP access to Kafka
 
