@@ -130,18 +130,18 @@ if($conn == false)
 
 $tsql_callSP = "{call SpInsertOrder( ?, ?, ?, ?, ?, ?, ? )}";
 
-// foreach ($csv as $item) 
-// {
-//   array_push( $item, $user );
-//   $stmt = sqlsrv_query( $conn, $tsql_callSP, $item);
-//   if ( $stmt == false )
-//   {
-//     echo "Error in statement execution: <br />";
-//     die( print_r( sqlsrv_errors(), true));
-//   }  
-//   /* Free statement resources. */
-//   sqlsrv_free_stmt( $stmt );
-// }
+foreach ($csv as $item) 
+{
+  array_push( $item, $user );
+  $stmt = sqlsrv_query( $conn, $tsql_callSP, $item);
+  if ( $stmt == false )
+  {
+    echo "Error in statement execution: <br />";
+    die( print_r( sqlsrv_errors(), true));
+  }  
+  /* Free statement resources. */
+  sqlsrv_free_stmt( $stmt );
+}
 
 /* Retrieve rows */
 $query = "SELECT [OrderId],[OrderType],[OrderItemName],[Quantity],[Price],[ShipmentAddress],[ZipCode],[OrderUser] FROM [InternationalDB].[dbo].[Orders] WHERE [OrderUser] = (?)";
