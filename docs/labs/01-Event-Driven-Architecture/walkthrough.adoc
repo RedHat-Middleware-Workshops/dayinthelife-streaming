@@ -87,7 +87,7 @@ You can also click on the name of the workspace in the center, and then click on
 +
 image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
 
-. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the the inicial welcome and Readme tabs then click on the Explorer button on the left side bar.
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
 +
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
 +
@@ -289,7 +289,7 @@ This build uses the new link:https://access.redhat.com/documentation/en-us/red_h
 ====
 --
 
-. Start and watch the build, which will take about minutes to complete:
+. Start and watch the build, which will take about a minute to complete:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -331,7 +331,7 @@ This time the inventory page has its own URL that is publicy accessible outside 
 . So now Inventory service is deployed to OpenShift. You can see it in the Project Status in the OpenShift Console that it is a single replica running in 1 pod.
 
 [type=verification]
-Were you able to successfully deploy th Inventory service to OpenShift?. You can see it in the Project Status via the OpenShift Console.  Verify that a single replica is running as 1 pod.
+Were you able to successfully deploy the Inventory service to OpenShift?. You can see it in the Project Status via the OpenShift Console.  Verify that a single replica is running as 1 pod.
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -844,7 +844,7 @@ image::images/fuse-create-integration.png[Fuse Create Integration, role="integr8
 +
 image::images/fuse-api-provider.png[Fuse API Provider, role="integr8ly-img-responsive"]
 
-. We will create a _RESTful API_ from scratch. Select the *Create* option and click on *Next* button.
+. We will create a _RESTful API_ from scratch. Select the *Create a new OpenAPI 2.x document* option and click on *Next* button.
 +
 image::images/fuse-create-api.png[Fuse Create API, role="integr8ly-img-responsive"]
 
