@@ -70,7 +70,7 @@ image::images/topology-add.png[Topology Add, role="integr8ly-img-responsive"]
 +
 image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
 
-. Type in `kakfa` in the search text field and then click on *KafkaConnect*.
+. Type in `kafka` in the search text field and then click on *KafkaConnect*.
 +
 image::images/openshift-kafkaconnect.png[OpenShift KafkaConnect, role="integr8ly-img-responsive"]
 
@@ -123,7 +123,7 @@ image:images/openshift-kafkaconnect-resource.png[Back To Topology]
 
 . Wait for the default deployment to finish and deploy the required pod. Remember to wait for the dark blue circles.
 +
-image:images/topology-kafkaconnect.png[KakfaConnect Topology]
+image:images/topology-kafkaconnect.png[KafkaConnect Topology]
 
 . Check that everything deployed correctly by clicking the *Open URL* icon.
 
@@ -293,7 +293,7 @@ image::images/openshift-kafka-terminal.png[Kafka Pods]
 +
 [IMPORTANT]
 ====
-Red Hat provides its own complete Apache Kakfa distribution container images. We will use the `kafka-console-consumer.sh` script to query the topics.
+Red Hat provides its own complete Apache Kafka distribution container images. We will use the `kafka-console-consumer.sh` script to query the topics.
 ====
 
 . Issue the following command to read *all* the events in the `orders` topic:
@@ -340,7 +340,7 @@ Be sure to switch back to your working `{user-username}` project
 +
 image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
 
-. Type in `kakfa` in the search text field and then click on *Kafka*.
+. Type in `kafka` in the search text field and then click on *Kafka*.
 +
 image::images/openshift-catalog-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
 
@@ -385,7 +385,7 @@ image:images/openshift-kafkas-list.png[Back To Topology]
 
 . Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
-image:images/openshift-kafka-topology.png[Kakfa Topology]
+image:images/openshift-kafka-topology.png[Kafka Topology]
 
 [type=verification]
 Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
@@ -403,7 +403,7 @@ The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicat
 
 === Deploy Mirror Maker
 
-. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kakfa cluster)
+. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kafka cluster)
 
 . Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
@@ -562,7 +562,7 @@ cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-hos
 EOF
 ----
 
-. Notice the return json `base_uri`, it represents the REST resource for your customer.
+. Notice the return json `base_uri`, it represents the REST resource for your consumer.
 +
 [source,bash,subs="attributes+"]
 ----
