@@ -844,7 +844,7 @@ image::images/fuse-create-integration.png[Fuse Create Integration, role="integr8
 +
 image::images/fuse-api-provider.png[Fuse API Provider, role="integr8ly-img-responsive"]
 
-. We will create a _RESTful API_ from scratch. Select the *Create* option and click on *Next* button.
+. We will create a _RESTful API_ from scratch. Select the *Create a new OpenAPI 2.x document* option and click on *Next* button.
 +
 image::images/fuse-create-api.png[Fuse Create API, role="integr8ly-img-responsive"]
 
