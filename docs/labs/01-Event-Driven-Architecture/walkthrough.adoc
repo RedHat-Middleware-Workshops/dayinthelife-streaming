@@ -946,7 +946,7 @@ image::images/fuse-connect-amq.png[Add AMQ Online, role="integr8ly-img-responsiv
 +
 image::images/fuse-select-publish.png[Publish Messages, role="integr8ly-img-responsive"]
 
-. Fill in the _topic_ name `incomingorders` in the *Destination name* textbox and select `Topic` from the *Destination type* combobox. Then, click the *Next* button.
+. Fill in the _topic_ name `incomingorders?exchangePattern=InOnly&disableReplyTo=true` in the *Destination name* textbox and select `Topic` from the *Destination type* combobox. Then, click the *Next* button.
 +
 image::images/fuse-destination-name.png[Destination Name, role="integr8ly-img-responsive"]
 
