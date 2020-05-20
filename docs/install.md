@@ -28,7 +28,7 @@ The recommended way to install the workshop is running the ansible playbook from
     sudo -i
     ```
 
-1. Via the CLI, verify you are logged in as `system:admin` to your newly provisioned OCP cluster using the `oc` command.
+1. Via the CLI, verify with `oc whoami` if you are logged in as `system:admin` to your newly provisioned OCP cluster.
 
 1. Git Clone the *dayinthelife streaming* Workshop installation repository.
 
@@ -45,7 +45,7 @@ The recommended way to install the workshop is running the ansible playbook from
 1. Check the `/root/dayinthelife-streaming/support/install/ansible/inventory/inventory.example` file and adjust the `num_users` variable with 
 the number of people attending to the workshop.
 
-![Num Users](./images/inventory-example.png)
+    ![Num Users](./images/inventory-example.png)
 
 1. Run the Ansible playbook. The fool-proof way is to run it from the bastion server.  Otherwise, if you are confident your local Ansible / Python libraries are the latest and greatest, you can try running the playbook from your own machine (at your own risk).
 
