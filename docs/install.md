@@ -22,7 +22,7 @@ The recommended way to install the workshop is running the ansible playbook from
 
 1. Provision the *OpenShift 4.3 Workshop* service from [Red Hat Product Demo System (RHPDS)](https://rhpds.redhat.com).
 
-1. Connect via ssh into the bastion server and change for the root user
+1. Connect via ssh into the bastion server
     ```bash
     ssh youruser-redhat.com@bastion.GUID.example.opentlc.com
     ```
@@ -41,20 +41,18 @@ The recommended way to install the workshop is running the ansible playbook from
     cd dayinthelife-streaming/support/install/ansible/
     ```
 
-1. Check the `/root/dayinthelife-streaming/support/install/ansible/inventory/inventory.example` file and adjust the `num_users` variable with the number of people attending to the workshop.
-
-    ![Num Users](./images/inventory-example.png)
-
-1. Run the Ansible playbook. The fool-proof way is to run it from the bastion server.  Otherwise, if you are confident your local Ansible / Python libraries are the latest and greatest, you can try running the playbook from your own machine (at your own risk).
+1. Run the Ansible playbook informing the number of users as a parameter. 
 
     ```bash
-    bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml"
+    bash -c "ansible-playbook -i inventory/inventory.example playbooks/openshift/install.yaml -e num_users=15"
     ```
 
-Note: IGNORE the error if the installer has an error at this step:
+    Note 1: The fool-proof way is to run it from the bastion server.  Otherwise, if you are confident your local Ansible / Python libraries are the latest and greatest, you can try running the playbook from your own machine (at your own risk).
+    
+    Note 2: IGNORE the error if the installer has an error at this step:
 
-```
-TASK [provision_che : Create workspace for user3 from devfile] ***************************************************************
-fatal: [localhost]: FAILED! => {"changed": false, "connection": "close", "content": "{}", "content_type": "application/json", "date": "Mon, 23 Mar 2020 20:51:55 GMT", "elapsed": 0, "json": {}, "msg": "Status code was 500 and not [201]: HTTP Error 500: ", "redirected": false, "set_cookie": "0f443a2a27de429b7964dbc8f3c18ef4=e54147ad4656ff99341649b8ea63e50b; path=/; HttpOnly", "status": 500, "transfer_encoding": "chunked", "url": "  <some url", "vary": "accept-encoding"}
-...ignoring
-```
+    ```
+    TASK [provision_che : Create workspace for user3 from devfile] ***************************************************************
+    fatal: [localhost]: FAILED! => {"changed": false, "connection": "close", "content": "{}", "content_type": "application/json", "date": "Mon, 23 Mar 2020 20:51:55 GMT", "elapsed": 0, "json": {}, "msg": "Status code was 500 and not [201]: HTTP Error 500: ", "redirected": false, "set_cookie": "0f443a2a27de429b7964dbc8f3c18ef4=e54147ad4656ff99341649b8ea63e50b; path=/; HttpOnly", "status": 500, "transfer_encoding": "chunked", "url": "  <some url", "vary": "accept-encoding"}
+    ...ignoring
+    ```
