@@ -25,7 +25,6 @@ The recommended way to install the workshop is running the ansible playbook from
 1. Connect via ssh into the bastion server and change for the root user
     ```bash
     ssh youruser-redhat.com@bastion.GUID.example.opentlc.com
-    sudo -i
     ```
 
 1. Via the CLI, verify with `oc whoami` if you are logged in as `system:admin` to your newly provisioned OCP cluster.
@@ -42,8 +41,7 @@ The recommended way to install the workshop is running the ansible playbook from
     cd dayinthelife-streaming/support/install/ansible/
     ```
 
-1. Check the `/root/dayinthelife-streaming/support/install/ansible/inventory/inventory.example` file and adjust the `num_users` variable with 
-the number of people attending to the workshop.
+1. Check the `/root/dayinthelife-streaming/support/install/ansible/inventory/inventory.example` file and adjust the `num_users` variable with the number of people attending to the workshop.
 
     ![Num Users](./images/inventory-example.png)
 
