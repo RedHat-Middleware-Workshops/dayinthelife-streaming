@@ -16,17 +16,19 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-Since the acquisition, the International Inc.’s Development team have been pressured to make the transition smooth and quickly. They have decided to start with a small notification project where both internal departments and external partners are notified when an order has been placed. In this lab you will learn how to use Camel K to establish a simple Event Driven call. The old application uses traditional API calls to trigger system modification.  Your job is to use Camel K to re-write the notification application rather then using a pure REST implementation to convert the application into an event-driven architecture.
+As part of the acquisition, your team at International Inc's is not working with Fleur de Lune IT department to learn more about Even-Driven Architecture or EDA. One of the projects they have is to migrate their current ecommerce orders website from the legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. They have been dealing with a high rate of errors because of one of the components is being crashing frequently. Moving to EDA will help to avoid classic problems derived from chaining services and avoid the need to implement aditional infrastructure components. To archive this, you will need to create a new event bus using self-service messaging and implment the new services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
 
-Camel K is a lightweight cloud integration platform based on the Apache Camel framework. It runs natively on Kubernetes and Openshift and it’s specifically designed for serverless and microservice architectures.
+Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser.
 
-AMQ Online enable Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+AMQ self-service messaging enable Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 *Why Red Hat?*
+
+The Red Hat portfolio of middleware products helps you create a unified environment for application development, delivery, integration, and automation. It is comprised of comprehensive frameworks, integration solutions, process automation, runtimes, and programming languages.
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
