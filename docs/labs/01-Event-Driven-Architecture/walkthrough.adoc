@@ -16,7 +16,9 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-As part of the acquisition, your team at International Inc's is not working with Fleur de Lune IT department to learn more about Even-Driven Architecture or EDA. One of the projects they have is to migrate their current ecommerce orders website from the legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. They have been dealing with a high rate of errors because of one of the components is being crashing frequently. Moving to EDA will help to avoid classic problems derived from chaining services and avoid the need to implement aditional infrastructure components. To archive this, you will need to create a new event bus using self-service messaging and implment the new services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Even-Driven Architecture or EDA. By applying even-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement aditional infrastructure components. 
+
+One of the projects they have is to migrate their current ecommerce orders website from the legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. They have been dealing with a high rate of errors because of one of the components is being crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implment the new services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
