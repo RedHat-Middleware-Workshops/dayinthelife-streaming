@@ -3,6 +3,81 @@
 All notable changes are documented in this file. Release numbers follow [Semantic Versioning](http://semver.org)
 
 
+## 1.1.2.Final
+June 2nd, 2020 [Detailed release notes](https://issues.redhat.com/secure/ReleaseNote.jspa?projectId=12317320&version=12345564)
+
+### New features since 1.1.1.Final
+
+None
+
+### Breaking changes since 1.1.1.Final
+
+* Change table.whitelist/table.blacklist format [DBZ-1312](https://issues.jboss.org/browse/DBZ-1312)
+* Db2: Replace `initial_schema_only` with `schema_only` [DBZ-2051](https://issues.jboss.org/browse/DBZ-2051)
+
+
+### Fixes since 1.1.1.Final
+
+* Outbox Quarkus Extension throws NPE in quarkus:dev mode [DBZ-1966](https://issues.jboss.org/browse/DBZ-1966)
+* [Doc] Debezium User Guide should provide example of DB connector yaml and deployment instructions [DBZ-2011](https://issues.jboss.org/browse/DBZ-2011)
+* MySQL alias `FLUSH TABLE` not handled [DBZ-2047](https://issues.jboss.org/browse/DBZ-2047)
+* DDL statement throws error if compression keyword contains backticks (``) [DBZ-2062](https://issues.jboss.org/browse/DBZ-2062)
+* Error and connector stops when DDL contains algorithm=instant [DBZ-2067](https://issues.jboss.org/browse/DBZ-2067)
+* Unable to parse MySQL ALTER statement with named primary key [DBZ-2080](https://issues.jboss.org/browse/DBZ-2080)
+
+
+### Other changes since 1.1.1.Final
+
+* Adding tests and doc updates around column masking and truncating [DBZ-775](https://issues.jboss.org/browse/DBZ-775)
+* Align snapshot/streaming semantics in MongoDB documentation [DBZ-1901](https://issues.jboss.org/browse/DBZ-1901)
+* Only top-level menu items shown for MySQL connector 1.1 docs [DBZ-1980](https://issues.jboss.org/browse/DBZ-1980)
+* Upgrade to Apache Kafka 2.5.0 and Confluent Platform 5.5.0 [DBZ-1981](https://issues.jboss.org/browse/DBZ-1981)
+* Fix broken link [DBZ-1983](https://issues.jboss.org/browse/DBZ-1983)
+* Avoid broken cross-book references in downstream docs [DBZ-1999](https://issues.jboss.org/browse/DBZ-1999)
+* Fix wrong attribute name in MongoDB connector [DBZ-2006](https://issues.jboss.org/browse/DBZ-2006)
+* Remove additional Jackson dependencies as of AK 2.5 [DBZ-2076](https://issues.jboss.org/browse/DBZ-2076)
+* Tar packages must use posix format [DBZ-2088](https://issues.jboss.org/browse/DBZ-2088)
+* Upgrade to Quarkus 1.5.0.Final [DBZ-2119](https://issues.jboss.org/browse/DBZ-2119)
+
+
+
+## 1.1.1.Final
+April 17th, 2020 [Detailed release notes](https://issues.redhat.com/secure/ReleaseNote.jspa?projectId=12317320&version=12345315)
+
+### New features since 1.1.0.Final
+
+* Improve documentation on WAL disk space usage for Postgres connector [DBZ-1732](https://issues.jboss.org/browse/DBZ-1732)
+* Add docs for mask column and truncate column features [DBZ-1954](https://issues.jboss.org/browse/DBZ-1954)
+* Snapshot metrics shows TotalNumberOfEventsSeen as zero [DBZ-1932](https://issues.jboss.org/browse/DBZ-1932)
+
+
+### Breaking changes since 1.1.0.Final
+
+None
+
+
+### Fixes since 1.1.0.Final
+
+* Snapshot lock timeout setting is not documented [DBZ-1914](https://issues.jboss.org/browse/DBZ-1914)
+* AvroRuntimeException when publishing transaction metadata [DBZ-1915](https://issues.jboss.org/browse/DBZ-1915)
+* Connector restart logic throttles for the first 2 seconds [DBZ-1918](https://issues.jboss.org/browse/DBZ-1918)
+* Wal2json empty change event could cause NPE above version 1.0.3.final [DBZ-1922](https://issues.jboss.org/browse/DBZ-1922)
+* Broken internal links and anchors in documentation [DBZ-1935](https://issues.jboss.org/browse/DBZ-1935)
+* Dokumentation files in modules create separate pages, should be partials instead [DBZ-1944](https://issues.jboss.org/browse/DBZ-1944)
+* Validation of binlog_row_image is not compatible with MySQL 5.5 [DBZ-1950](https://issues.jboss.org/browse/DBZ-1950)
+* High CPU usage when idle [DBZ-1960](https://issues.jboss.org/browse/DBZ-1960)
+
+
+### Other changes since 1.1.0.Final
+
+* Fix typo in Quarkus Outbox extension documentation [DBZ-1902](https://issues.jboss.org/browse/DBZ-1902)
+* Documentation should link to Apache Kafka upstream docs [DBZ-1906](https://issues.jboss.org/browse/DBZ-1906)
+* Restore documentation of MySQL event structures [DBZ-1919](https://issues.jboss.org/browse/DBZ-1919)
+* Update snapshot.mode options in SQL Server documentation [DBZ-1924](https://issues.jboss.org/browse/DBZ-1924)
+* Remove obsolete metrics from downstream docs [DBZ-1947](https://issues.jboss.org/browse/DBZ-1947)
+
+
+
 ## 1.1.0.Final
 March 23rd, 2020 [Detailed release notes](https://issues.redhat.com/secure/ReleaseNote.jspa?projectId=12317320&version=12344981)
 

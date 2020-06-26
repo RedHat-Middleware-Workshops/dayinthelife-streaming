@@ -5,9 +5,11 @@ Adrian Kreuziger
 Akshath Patkar
 Alex Mansell
 Alex Soto
+Alexander Iskuskov
 Alexander Kovryga
 Alexander Schwartz
 Amit Sela
+Anders Engström
 Andrea Cosentino
 Andreas Bergmeier
 Andras Istvan Nagy
@@ -52,9 +54,13 @@ Eero Koplimets
 Emrul Islam
 Eric S. Kreiseir
 Ewen Cheslack-Postava
+Fabian Aussems
 Fabio Cantarini
+Fatih Güçlü Akkaya
+Fándly Gergő 
 Felix Eckhardt
 Fintan Bolton
+Frank Mormino
 Gagan Agrawal
 Grant Cooksey
 Guillaume Rosauro
@@ -62,7 +68,6 @@ Gunnar Morling
 Gurnaaz Randhawa
 Grzegorz Kołakowski
 Hans-Peter Grahsl
-hatmarch
 Henryk Konsek
 Horia Chiorean
 Ian Axelrod
@@ -110,6 +115,7 @@ Mariusz Strzelecki
 Matteo Capitanio
 Mathieu Rozieres
 Matthias Wessendorf
+Max Kaplan
 Melissa Winstanley
 Mike Graham
 Mincong Huang
@@ -137,15 +143,14 @@ Raúl Tovar
 Renato Mefi
 Roman Kuchar
 Sagar Rao
+Sahan Dilshan
 René Kerner
 Rich O'Connell
 Robert Coup
-Rui Carlos Leal
 Ruslan Gibaiev
 Sairam Polavarapu
 Sanjay Kr Singh
 Sanne Grinovero
-Sarthak Killedar
 Satyajit Vegesna
 Saulius Valatka
 Sayed Mohammad Hossein Torabi
@@ -165,6 +170,7 @@ Thomas Deblock
 Tom Bentley
 Tomaz Lemos Fernandes
 Tony Rizko
+Tova Cohen
 Vasily Ulianko
 Vedit Firat Arig
 Wang-Yu-Chao

@@ -5,9 +5,11 @@ Adrian Kreuziger
 Akshath Patkar
 Alex Mansell
 Alex Soto
+Alexander Iskuskov
 Alexander Kovryga
 Alexander Schwartz
 Amit Sela
+Anders Engström
 Andrea Cosentino
 Andreas Bergmeier
 Andras Istvan Nagy
@@ -54,6 +56,8 @@ Eric S. Kreiseir
 Ewen Cheslack-Postava
 Fabian Aussems
 Fabio Cantarini
+Fatih Güçlü Akkaya
+Fándly Gergő 
 Felix Eckhardt
 Fintan Bolton
 Frank Mormino
@@ -111,6 +115,7 @@ Mariusz Strzelecki
 Matteo Capitanio
 Mathieu Rozieres
 Matthias Wessendorf
+Max Kaplan
 Melissa Winstanley
 Mike Graham
 Mincong Huang
@@ -165,6 +170,7 @@ Thomas Deblock
 Tom Bentley
 Tomaz Lemos Fernandes
 Tony Rizko
+Tova Cohen
 Vasily Ulianko
 Vedit Firat Arig
 Wang-Yu-Chao
