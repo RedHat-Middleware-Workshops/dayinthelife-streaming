@@ -16,17 +16,21 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-Since the acquisition, the International Inc.’s Development team have been pressured to make the transition smooth and quickly. They have decided to start with a small notification project where both internal departments and external partners are notified when an order has been placed. In this lab you will learn how to use Camel K to establish a simple Event Driven call. The old application uses traditional API calls to trigger system modification.  Your job is to use Camel K to re-write the notification application rather then using a pure REST implementation to convert the application into an event-driven architecture.
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying even-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
+
+One of the projects they have is to migrate their current ecommerce orders website from the legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. They have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement the new services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
 
-Camel K is a lightweight cloud integration platform based on the Apache Camel framework. It runs natively on Kubernetes and Openshift and it’s specifically designed for serverless and microservice architectures.
+Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser.
 
-AMQ Online enable Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 *Why Red Hat?*
+
+The Red Hat portfolio of middleware products helps you create a unified environment for application development, delivery, integration, and automation. It is comprised of comprehensive frameworks, integration solutions, process automation, runtimes, and programming languages.
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
@@ -87,7 +91,7 @@ You can also click on the name of the workspace in the center, and then click on
 +
 image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
 
-. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
 +
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
 +
@@ -420,7 +424,7 @@ image::images/codeready-order.png[Order Service, role="integr8ly-img-responsive"
 +
 image::images/order-controller.png[OrderServiceController.java, role="integr8ly-img-responsive"]
 +
-You can see a traditional Spring Boot REST Controller with one endpoint receiveing JSON _POST_ calls to the `/place` path.
+You can see a traditional Spring Boot REST Controller with one endpoint receiving JSON _POST_ calls to the `/place` path.
 
 . Open the `OrdersRepository.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
 +
@@ -479,7 +483,7 @@ oc annotate dc/order app.openshift.io/connects-to=invoice,inventory
 +
 image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"]
 
-. Review the succesful deployment by clicking on the *Open URL* icon on the deployment.
+. Review the successful deployment by clicking on the *Open URL* icon on the deployment.
 
 . You should get the OpenAPI description from the service:
 +
@@ -683,7 +687,7 @@ image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-i
 --
 [IMPORTANT]
 ====
-Wait for the *Address Space* to deploy the infrastructure until the status change to _Active_ and shows the *green* checkmark.
+Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
 ====
 
 [NOTE]
@@ -750,7 +754,7 @@ When we created the Address Space, we configure it to _export_ the connection co
 ====
 --
 
-. Scroll down the page to reveal the _configmap_ details.  For this workshop, as we will run all our services withing the OpenShift cluster, copy and write down only the `service.host` information.
+. Scroll down the page to reveal the _configmap_ details.  For this workshop, we will run all our services within the OpenShift cluster, so copy and write down only the `service.host` information.
 +
 --
 image::images/addressspace-service-host.png[topics, role="integr8ly-img-responsive"]
@@ -906,7 +910,7 @@ image::images/fuse-request-body.png[API Operation Body, role="integr8ly-img-resp
 +
 [NOTE]
 ====
-Did you notice that the warning icon disapeared?
+Did you notice that the warning icon disappeared?
 ====
 
 . Now click on *Add a response* under the _RESPONSES_ section. Select `201 Created` from the dropdown menu. Finally click on the *Add* button.
@@ -917,7 +921,7 @@ image::images/fuse-response-code.png[API Operation Response, role="integr8ly-img
 +
 [NOTE]
 ====
-You can add an example if you are planning to mock this API defintion.
+You can add an example if you are planning to mock this API definition.
 ====
 
 . Remember to name your API `Place Orders`. Finally hit the *Save* button to store your API definition.
@@ -946,7 +950,7 @@ image::images/fuse-connect-amq.png[Add AMQ Online, role="integr8ly-img-responsiv
 +
 image::images/fuse-select-publish.png[Publish Messages, role="integr8ly-img-responsive"]
 
-. Fill in the _topic_ name `incomingorders` in the *Destination name* textbox and select `Topic` from the *Destination type* combobox. Then, click the *Next* button.
+. Fill in the _topic_ name `incomingorders?exchangePattern=InOnly&disableReplyTo=true` in the *Destination name* textbox and select `Topic` from the *Destination type* combobox. Then, click the *Next* button.
 +
 image::images/fuse-destination-name.png[Destination Name, role="integr8ly-img-responsive"]
 
@@ -1125,7 +1129,7 @@ image::images/fuse-finish-publish.png[Publish Message, role="integr8ly-img-respo
 +
 image::images/fuse-topic-notifications.png[Publish Destination, role="integr8ly-img-responsive"]
 
-. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following code on the *Definiton*. Then `inventorystatus` in the *Data Type Name*.
+. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following code on the *Definition*. Then `inventorystatus` in the *Data Type Name*.
 +
 [source,json,subs="attributes+"]
 ----
@@ -1612,7 +1616,7 @@ Remember what happens when a service is down in our _traditional_ REST architect
 
 === Test new flavors
 
-Let's check how the stores looks like now with the new flavors.
+Let's check how the stores looks with the new flavors.
 
 . In the link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
 +
@@ -1626,7 +1630,7 @@ image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"
 +
 image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
-. A notification will show you that your order was received and a almost immediately another notificaction will pop up telling us that our order was already proceseed. This is the *inventory* service feedback.
+. A notification will show you that your order was received and almost immediately another notification will pop up telling us that our order was already processed. This is the *inventory* service feedback.
 +
 image::images/www-inventory.png[Order Processed, role="integr8ly-img-responsive"]
 
@@ -1681,7 +1685,7 @@ image::images/www-just-invoice.png[Payment Notification, role="integr8ly-img-res
 
 [IMPORTANT]
 ====
-This time the Invoice service is decoupled of the Inventory call, so it can still work at its own pace. That's why we still receive the _payment_ notification.
+This time the Invoice service is decoupled from the Inventory call, so it can still work at its own pace. That's why we still receive the _payment_ notification.
 ====
 --
 
@@ -1714,7 +1718,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=5]
 [id="summary"]
 == Summary
-In this lab you  created cloud native integration services which listen to events using Camel K. You also setup topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible and reactive.
+In this lab you  created cloud native integration services which listen to events using Camel K. You also set up topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible and reactive.
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 
