@@ -2,11 +2,22 @@
 
 ## Event-Driven Workshop
 
+This workshop is a series of hands-on modules which are designed to familiarize participants with event-driven concepts and give them a taste of using the new Red Hat Integration stack for building event-driven architectures.
+
+The workshop will cover the following topics:
+
+- How to connect enterprise on-premise software and container-native applications using Red Hat Integration
+- Technologies to implement different event and messaging connectivity patterns
+- What is Red Hat AMQ Streams (Apache Kafka) and the basics of its components
+- How to run Red Hat AMQ Streams (Apache Kafka) on OpenShift, the enterprise Kubernetes
+- Event-driven microservices benefits and patterns
+- How to implement an event management bus using Red Hat Middleware
+
 ### Audience
 
 #### Developers, Architects, Data Integrators
 
-### Prereqisites
+### Prerequisites
 
 * Debezium
 * AMQ Streams
@@ -15,11 +26,26 @@
 * Fuse Online
 * OpenShift 4.x
 
+### Duration
+
+Each module should be able to be completed in between 60-90 minutes plus 20 mins of slides introducing the content.
+
 ### Installation
 
 Follow the [Installation Procedure](docs/install.md#installation) to setup a working environment.
 
-### Background
+## Workshop Modules
+
+This workshop is broken into 4 time-boxed modules:
+
+Module 1: Introduction to Event Driven Architecture<br/>
+Module 2: Change Data Capture & Apache Kafka<br/>
+Module 3: Cloud-Native Enterprise Integration Patterns using Camel K<br/>
+Module 4: Event Sourcing and Complex Event Processing<br/>
+
+This workshop could also be split up. All modules could be delivered on their own as standalone workshops, but we **strongly** recommend to deliver them in the suggested order.
+
+### Background Story
 
 The premise for our “Day in the Life” workshops is centered around a fictitious global conglomerate called International Inc.  Initially, International Inc. focused on forming a Digital Transformation strategy.  They began with an API-first approach to help facilitate their merger & acquisition activities.  The outcome of this approach was very successful, and helped them keep up with their competitors, deliver new business functionality faster, and make the merger & acquisition process seamless.  International Inc. is now interested in exploring new business opportunities in the field of space exploration.
 
@@ -28,8 +54,6 @@ International Inc. has identified an eco-friendly startup company who recently c
 As part of the acquisition, International Inc.’s CTO met with the Fleur de lune DevOps team to discuss how they develop software.  The CTO was so amazed by their culture and practices that he wants to scale this out to the rest of International Inc.  He is particularly interested in Fleur de lune’s use of cloud-native integration technologies, including high-performant data streaming, event-driven architectures, and change data capture (CDC).  
 
 As you’re part of International Inc.’s Development team, you have been tasked by the CTO to learn more about these cloud-native event-driven technologies and come up with solutions found in the following modules.
-
-## Workshop Modules
 
 ### Module One
 
