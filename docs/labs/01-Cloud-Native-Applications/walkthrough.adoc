@@ -1,5 +1,5 @@
 // Attributes
-:walkthrough: Event Driven Architecture
+:walkthrough: Cloud Native Applications
 :title: Lab 1 - {walkthrough}
 :user-password: openshift
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
@@ -18,7 +18,7 @@ endif::[]
 
 As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying even-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
 
-The first step was to migrate their ecommerce orders website from legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
+One of the projects they have is to migrate their current ecommerce orders website from the legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. They have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement the new services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
@@ -32,7 +32,7 @@ AMQ self-service messaging enables Developers to provision messaging when and wh
 
 The Red Hat portfolio of middleware products helps you create a unified environment for application development, delivery, integration, and automation. It is comprised of comprehensive frameworks, integration solutions, process automation, runtimes, and programming languages.
 
-To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat AMQ —based on open source communities like Apache ActiveMQ and Apache Kafka— is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
+To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat® AMQ—based on open source communities like Apache ActiveMQ and Apache Kafka—is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
 The AMQ streams component makes Apache Kafka “OpenShift-native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
 
@@ -66,14 +66,9 @@ You will be using Red Hat CodeReady Workspaces, an online integrated development
 +
 image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
 
-. *If this is your first lab of the day*, you will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
+. You will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
 +
 image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-responsive"]
-
-[IMPORTANT]
-====
-If you have already configured your CodeReady Workspaces environment in the previous lab, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
-====
 
 === Start CodeReady workspace
 
@@ -162,41 +157,408 @@ Were you able to successfully login to Openshift CLI?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[time=5]
-[id="Test Webapp"]
-== Review the problematic application
+[time=15]
+[id="Deploy the Inventory Service"]
+== Deploy the Inventory Service
 
-You need to review the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and process the payment. The web application is build on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
+The _Inventory Service_ handles the order and provides information about the availability. In this case, we will generate an inventory idenfitier and process the result back. Take a look on how the implementation is using *Quarkus* as a Java runtime.
 
-image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
+=== Review the code
 
-As we mentioned earlier, the current application has a flaw that is commonly find in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing and order: 
+. Go to _Explorer:/projects_ in CodeReady Workspaces web IDE and expand the *inventory* folder.
++
+image::images/codeready-inventory.png[Inventory Service, role="integr8ly-img-responsive"]
++
+The Inventory service implements a simple _RESTful API_ using *Quarkus*.
 
-* First we will need to wait for both services to complete even though they are not related. As they payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get the feedback of the inventory too.
-* Second, in case of one of the services fail, because there is no correct error handling logic, what we see in the frontend application is that the whole transaction failed and we need to retry again.
+. Open the `InventoryResource.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
++
+image::images/inventory-resource.png[InventoryResource.java, role="integr8ly-img-responsive"]
++
+The REST service defines a simple _POST_ endpoint `/notify/order` to receive the `Order` notifications as JSON. This service calls the `InventoryNotification` service.
 
-image::images/lab1-architecture-fail.png[App Architecture, role="integr8ly-img-responsive"]
+. Open the `InventoryNotification.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
++
+image::images/inventory-notification.png[InventoryNotification.java, role="integr8ly-img-responsive"]
++
+As we mentioned before, it just creates an InventoryNotification with a random `InventoryId` and adds the current _timestamp_.
 
+=== Deploy locally to CodeReady
 
-We are ready to go over the application to validate the previous statements. We will order some different flavors by calling our RESTful backend services, plus check how the application behaves in case of failure.
+. Run the inventory application locally using the _Maven plugin command_ via CodeReady Workspaces Terminal:
++
+[source,bash,subs="attributes+"]
+----
+mvn clean compile quarkus:dev -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/inventory/
+----
+
+. Look at the output, it is just maven downloading dependencies that should end like the following:
++
+--
+[source,bash,subs="attributes+"]
+----
+...
+Listening for transport dt_socket at address: 5005
+2020-03-18 17:33:14,290 INFO  [io.quarkus] (main) inventory 1.0.0-SNAPSHOT (running on Quarkus 1.2.1.Final) started in 1.981s. Listening on: http://0.0.0.0:8080
+2020-03-18 17:33:14,294 INFO  [io.quarkus] (main) Profile dev activated. Live Coding activated.
+2020-03-18 17:33:14,294 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy, resteasy-jackson]
+----
+
+[NOTE]
+====
+Don't close the dialog that appears while running the server!
+
+If you did so, stop the process with `ctrl+c` or `cmd + c` and re-run the command again.
+====
+--
+
+. CodeReady should detect you are running your Quarkus application and is opening the `8080` port. Click on the *Open Link* button to open the CodeReady embedded browser.
++
+image::images/inventory-mvn-local.png[Maven Command Local, role="integr8ly-img-responsive"]
+
+. Take a look at the _Inventory_ page on the right side.
++
+image::images/inventory-web.png[Inventory Web, role="integr8ly-img-responsive"]
++
+This is a default provisioned page from Quarkus. You don't need to worry about this since we will only use the REST API.
+
+. As we are running our service in the current CodeReady Terminal, open a new terminal window from the commands menu on the right side
++
+image::images/codeready-new-terminal.png[New Terminal, role="integr8ly-img-responsive"]
+
+. Test the local deployment issuing the following command in the new CodeReady Terminal:
++
+[source,bash,subs="attributes+"]
+----
+curl -s -X POST \
+  http://localhost:8080/notify/order \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d  \
+  '{
+    "orderId": 978,
+    "itemId": 135790,
+    "orderItemName": "Mango",
+    "quantity": 1,
+    "price": 2.50,
+    "address": "hello",
+    "zipCode": "15555"
+  }'
+----
+
+. Check the result, you should get someething similar to the following output:
++
+[source,bash,subs="attributes+"]
+----
+{"orderId":978,"itemId":135790,"quantity":1,"department":"inventory","datetime":1584
+554071289,"flavor":"Mango","inventoryId":"939699"}
+----
+
+. Be sure to terminate the running Quarkus development via kbd:[CTRL+C] (or kbd:[Command+C] on Mac OS).
+
+=== Deploy to OpenShift
+
+. Now that we have seen that the service works, let's deploy the application to OpenShift. Package the application by running the following maven plugin in the CodeReady Workspaces terminal:
++
+[source,bash,subs="attributes+"]
+----
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/inventory/
+----
+
+. Be sure to switch to your working OpenShift project by issuing the following command using the OpenShift CLI:
++
+[source,bash,subs="attributes+"]
+----
+oc project {user-username}
+----
++
+You should get the following output:
++
+[source,bash,subs="attributes+"]
+----
+Now using project "{user-username}" on server "https://172.30.0.1:443".
+----
+
+. Create a _Build Configuration_ for your application using the OpenJDK base container image:
++
+--
+[source,bash,subs="attributes+"]
+----
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=inventory -l app=inventory -n {user-username}
+----
+
+[NOTE]
+====
+This build uses the new link:https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift/index[Red Hat OpenJDK Container Image], providing foundational software needed to run Java applications, while staying at a reasonable size.
+====
+--
+
+. Start and watch the build, which will take about a minute to complete:
++
+[source,bash,subs="attributes+"]
+----
+oc start-build inventory --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/inventory/target/*-runner.jar --follow -n {user-username}
+----
++
+You should get a _Push succesful_ line at the end
++
+[source,bash,subs="attributes+"]
+----
+...
+Writing manifest to image destination
+Storing signatures
+Successfully pushed image-registry.openshift-image-registry.svc:5000/user1/inventory@sha256:a42968c6de63853c87331626f4df02842fddca3c1282aa3a04426b668e348280
+Push successful
+----
+
+. Once the build is done, deploy the service as an OpenShift application with the CLI:
++
+[source,bash,subs="attributes+"]
+----
+oc new-app inventory -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=rest'; oc expose svc/inventory
+----
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{user-username}-eda` from the combobox in the top left:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
-image::images/topology-eda.png[Topology EDA, role="integr8ly-img-responsive"]
+image::images/topology-inventory.png[Topology Inventory, role="integr8ly-img-responsive"]
 
-. Now that you are in the correct project, click on the *Open URL* icon on the `www-store` deployment.
+. Click on *Open URL* icon in the top right side of the `inventory` deployment to open access the service webpage.
++
+--
+image::images/inventory-webpage.png[Inventory Web Page, role="integr8ly-img-responsive"]
+
+This time the inventory page has its own URL that is publicy accessible outside OpenShift.
+--
+
+. So now Inventory service is deployed to OpenShift. You can see it in the Project Status in the OpenShift Console that it is a single replica running in 1 pod.
+
+[type=verification]
+Were you able to successfully deploy the Inventory service to OpenShift?. You can see it in the Project Status via the OpenShift Console.  Verify that a single replica is running as 1 pod.
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=5]
+[id="Deploy Invoice Service"]
+== Deploy Invoice Service
+
+The second element of the architecture is the _Invoice Service_ that handles payments. In this case, the service is implemented using the *Quarkus* Java framework. The only difference with _Inventory Service_ is that we have added a few seconds delay to _mimic_ the time a real payment will have to wait for processing a card payment. Take a look at how the implementation is done using *Quarkus* as a Java runtime.
+
+=== Review the code
+
+. Go to _Explorer:/projects_ in CodeReady Workspaces web IDE and expand the *invoice* folder.
++
+image::images/codeready-invoice.png[Invoice Service, role="integr8ly-img-responsive"]
+
+. Open the `InvoiceResource.java` file under `src/main/java/com/redhat/cloudnative` and check the provided code.
++
+image::images/invoice-resource.png[InvoiceResource.java, role="integr8ly-img-responsive"]
+
+
+The REST service defines a simple _POST_ endpoint `/notify/order` as we did with _Inventory_ to receive the `Order` notifications as JSON.  This service calls the `processOrder` method after a `30` seconds delay. As we mentioned before, it just creates a JSON Object with a random `InvoiceId` and adds the current _timestamp_.
+
+=== Deploy to OpenShift
+
+. Package the application by running the following maven plugin in the CodeReady Workspaces terminal:
++
+[source,bash,subs="attributes+"]
+----
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/invoice/
+----
++
+[NOTE]
+====
+For the following commands remember to be sure to switch to your _working_ project.
+====
+
+. Create a _Build Configuration_ for your application using the OpenJDK base container image:
++
+[source,bash,subs="attributes+"]
+----
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=invoice -l app=invoice -n {user-username}
+----
+
+. Start and watch the build, which will take about minutes to complete:
++
+[source,bash,subs="attributes+"]
+----
+oc start-build invoice --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/invoice/target/*-runner.jar --follow -n {user-username}
+----
+
+. Deploy the service as an OpenShift application with the CLI:
++
+[source,bash,subs="attributes+"]
+----
+oc new-app invoice -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=rest'; oc expose svc/invoice
+----
+
+=== Check the OpenShift Developer Console
+
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
++
+image::images/topology-invoice.png[Topology Invoice, role="integr8ly-img-responsive"]
+
+. Review the successful deployment by clicking on the *Open URL* icon on the deployment.
+
+[type=verification]
+Were you able to successfully open the corresponding default webpage?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=10]
+[id="Deploy Order Service"]
+== Deploy Order Service
+
+The third element of the architecture is the _Order Service_ that works as the first point of access from the frontend and redirects the order to the rest of the backend services. In this case, the service is implemented using the *Spring Boot* Java framework. In this theorical implementation we are demonstrating a common microservices pattern that is called _Service Chaining_.
+
+=== Review the code
+
+. Go to _Explorer:/projects_ in CodeReady Workspaces web IDE and expand the *order* folder.
++
+image::images/codeready-order.png[Order Service, role="integr8ly-img-responsive"]
+
+. Open the `OrderServiceController.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
++
+image::images/order-controller.png[OrderServiceController.java, role="integr8ly-img-responsive"]
++
+You can see a traditional Spring Boot REST Controller with one endpoint receiving JSON _POST_ calls to the `/place` path.
+
+. Open the `OrdersRepository.java` file under `src/main/java/com/legacy/ordersservice` and check the provided code.
++
+image::images/order-repository.png[OrderRepository.java, role="integr8ly-img-responsive"]
++
+[NOTE]
+====
+As we mentioned before, this service is calling the _Inventory_ and the _Invoice_ service using a `RestTemplate` *one after another*. We will see what this means for the user later in this lab.
+====
+
+=== Deploy to OpenShift
+
+. Package the application by running the following maven plugin in the CodeReady Workspaces terminal:
++
+[source,bash,subs="attributes+"]
+----
+mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/order/
+----
++
+[NOTE]
+====
+For the following commands remember to be sure to switch to your _working_ project.
+====
+
+. Create a _Build Configuration_ for your application using the OpenJDK base container image:
++
+[source,bash,subs="attributes+"]
+----
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=order -l app=order -n {user-username}
+----
+
+. Start and watch the build, which will take about minutes to complete:
++
+[source,bash,subs="attributes+"]
+----
+oc start-build order --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/order/target/*.jar --follow -n {user-username}
+----
+
+. Deploy the service as an OpenShift application with the CLI:
++
+[source,bash,subs="attributes+"]
+----
+oc new-app order -l 'app.openshift.io/runtime=spring,app.kubernetes.io/part-of=rest'; oc expose svc/order
+----
+
+. Add the `connects-to` annotation to get a better _topology view_:
++
+[source,bash,subs="attributes+"]
+----
+oc annotate dc/order app.openshift.io/connects-to=invoice,inventory
+----
+
+=== Check the OpenShift Developer Console
+
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
++
+image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"]
+
+. Review the successful deployment by clicking on the *Open URL* icon on the deployment.
+
+. You should get the OpenAPI description from the service:
++
+[source,bash,subs="attributes+"]
+----
+{"openapi":"3.0.1","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"http://order-user1.apps.cluster-eventing-6fbb.eventing-6fbb.example.opentlc.com","description":"Generated server url"}],"paths":{"/place":{"post":{"tags":["orders-service-controller"],"operationId":"place","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}}},"responses":{"200":{"description":"default response","content":{"application/json":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"Order":{"type":"object","properties":{"orderId":{"type":"integer","format":"int32"},"itemId":{"type":"integer","format":"int32"},"orderItemName":{"type":"string"},"quantity":{"type":"integer","format":"int32"},"price":{"type":"integer","format":"int32"},"address":{"type":"string"},"zipCode":{"type":"integer","format":"int32"},"datetime":{"type":"string"},"department":{"type":"string"}}}}}}
+----
++
+The backend services are now ready, so time to deploy the frontend store UI.
+
+[type=verification]
+Were you able to successfully deploy the Orders service and view the OpenAPI spec?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=5]
+[id="Deploy Webapp"]
+== Deploy Frontend Application
+
+The last element of the architecture is the _Store App_, which is a regular *NodeJS* runtime application. It is a frontend store page to take the orders from regular customers. It posts all the orders to the backend _Order Service`_ and while showing a _loading_ dialog until it receives the order outcome.
+
+=== Deploy to OpenShift
+
+. Via the Eclipse Che terminal, change to the project folder:
++
+[source,bash,subs="attributes+"]
+----
+cd $CHE_PROJECTS_ROOT/FleurDeLune/projects/store-ui/
+----
++
+[NOTE]
+====
+For the following commands, remember to be sure to switch to your _working_ project.
+====
++
+. Package and deploy the application using link:https://github.com/nodeshift/nodeshift#nodeshift-[nodeshift].  This command can take 2-5 minutes to run, so please be patient:
++
+[source,bash,subs="attributes+"]
+----
+npm install --save-dev nodeshift; npm run openshift
+----
+
+. Configure the route timeout and let the gateway know that this is a long running transaction:
++
+[source,bash,subs="attributes+"]
+----
+oc annotate route www-store --overwrite haproxy.router.openshift.io/timeout=3m
+----
+
+=== Check the OpenShift Developer Console
+
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
-. You should access the online store! 
+. Review the succesful deployment by clicking on the *Open URL* icon on the deployment. You should access the online store!
 +
 image::images/www-store.png[Store Web Page, role="integr8ly-img-responsive"]
 
-=== Order some Mango
+[type=verification]
+Can you see those tasty desserts?
 
-. Within the application, click on *PLACE ORDER!*
+[type=verificationFail]
+{standard-fail-text}
+
+[time=5]
+[id="Test Webapp"]
+== Test the application
+
+We are ready to test our application. We will order some different flavors by calling our RESTful backend services, plus check how the application behaves in case of failure.
+
+=== Order Mango
+
+. With the open application, click on *PLACE ORDER!*
 +
 image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
 
@@ -212,11 +574,11 @@ image::images/processing-order.png[Processing Order, role="integr8ly-img-respons
 +
 image::images/order-success.png[Order Success, role="integr8ly-img-responsive"]
 
-Congratulations! Your _Mango_ order was successful! Everything is fine and the sunshine is bright! _But..._
+Congratulations! Your _Mango_ order was successful! Everything is fine and the sunshine is bright!
 
 === Take down that service
 
-The application is working correctly, but what happens when a service _fails_? As we mentioned in the beginning of this lab, there are some problems when one of the services is not available or takes longer than expected to complete. Let's check what happens in that case.
+The application is working correctly, but what happens when a service _fails_?
 
 . Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
 
@@ -265,15 +627,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 [time=15]
 [id="Create AMQ Topics"]
-== Create your AMQ Online Topics
-
-In this section of the lab we will move from syncronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and allows to get fine-grained scaling. 
-
-image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
-
-We will use AMQ Online to provision an account to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls is blocking.
-
-image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-responsive"]
+== Create your AMQ Online Topic
 
 *Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 
