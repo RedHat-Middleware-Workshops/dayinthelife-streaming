@@ -11,8 +11,6 @@ endif::[]
 [id='cloud-native-integration']
 = Lab 3 - Cloud-Native Integration with EIPs
 
-In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
-
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
@@ -20,6 +18,17 @@ In this lab you will consume IoT events from an AMQ Online topic, use Enterprise
 Enterprise Integration Patterns (EIPs) have been used in technology for 40+ years.  But are they still relevant when we attempt Cloud-Native integration?
 
 Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still very useful when it comes to managing and integrating our data in the cloud.  Using Camel-K, we are able to enhance existing streaming technologies like Kafka to help route and mediate our data through various channels.
+
+AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+
+
+To provide better customer experience, Closely monitoring the harvest from marshmallows farms on the moon. Plus harvest batch shipping schedule, will allow Fleur de lune more proactive. And faster respond to any emergency that may impact their business.
+
+
+. In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
++
+image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
+
 
 *Why Red Hat?*
 
@@ -56,11 +65,93 @@ Your password is: `{user-password}`
 
 [time=10]
 [id="provision-amq-topic"]
+
+
+
 == Provision AMQ Topic
 
+=== Real time harvest information gathering
+. You are setting up a topic in AMQ Online to receive event signals from Edge devices
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
-=== Access OpenShift Console
++
+image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
+
+*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+
+=== Create an Address Space
+(Skip this apart and go directly to create Topics if you have already done so in other labs.)
+
+Let's create an **Address Space** using the AMQ Online Operator.
+
+. Go back to your OpenShift Developer Console.
+
+. Click *+Add* on the left menu.
++
+image::images/openshift-add.png[OpenShift +Add, role="integr8ly-img-responsive"]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
+
+. Type in `address` in the search box, and click on the *AddressSpace*:
++
+image::images/catalog-addressspace.png[AddressSpace, role="integr8ly-img-responsive"]
+
+. Click on *Create*:
++
+image::images/online-create.png[Create AddressSpace, role="integr8ly-img-responsive"]
+
+. Replace the content in the YAML editor with the following content:
++
+[source,yaml,role="copypaste"]
+----
+apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: amq
+spec:
+  plan: standard-small
+  type: standard
+  endpoints:
+    - name: messaging
+      service: messaging
+      expose:
+        type: route
+        routeServicePort: amqps
+        routeTlsTermination: passthrough
+      exports:
+        - kind: ConfigMap
+          name: amq-config
+  authenticationService:
+    name: none-authservice
+----
+
+. Click on *Create* to start the deployment
++
+image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
+
+. The AMQ operator will check the new resource and will begin to prepare all required components.
++
+--
+[IMPORTANT]
+====
+Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
+====
+
+[NOTE]
+====
+This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
+====
+--
+
+. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there.
++
+image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
+
+
+
+=== Create a Topic
 
 . Navigate to the {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"]
 
@@ -69,6 +160,7 @@ In this task, you'll provision a messaging topic using Red Hat's Messaging as a 
 . Click *amq* listed on the page this will take you to the
 +
 image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
+
 
 . Click the *Create Address* button to create the topic.
 +
@@ -121,9 +213,12 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 [time=15]
 [id="startup-che-workspace"]
-== Provision Eclipse Che Workspace
+== Create the Simulator
+. Since we can't really setup real edge device for you in the moon, you will need to create a simulator that simulates the edge device that sends random generated harvest data.
++
+image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-. Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
@@ -210,6 +305,11 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="setup-order-inventory"]
 == Setup Order Inventory with AMQ Streams
+. The harvest data are now streaming into the topic, we will be grading the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. And also streaming separately to the shipping departments.
++
+image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
++
+image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
 . Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"]
 
@@ -366,7 +466,12 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 [time=10]
 [id="setup-data-lake"]
-== Setup Data Lake with caching
+== Setup Data Lake with caching for Big Data analysis
+. “Fleur de lune” is introducing a new AI system for more efficient shipping, due to the high inter-planet cost. The shipping department is now responsible to preparing all data into a in-memory data lake for the AI system.
+
++
+image::images/4.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
+
 
 . Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
 +
@@ -466,7 +571,9 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="setup-supply-console"]
 == Create a Shipping Console
 
-Now that we have our backend services running, we can focus on creating a Shipping Console UI.
+.  Now that we have our backend services running, we can focus on creating a Shipping Console UI.
++
+image::images/5.0.0-diagram.png[5.0.0-diagram, role="integr8ly-img-responsive"]
 
 === Deploy RESTful Interface
 
