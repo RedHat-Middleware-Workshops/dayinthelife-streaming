@@ -1,0 +1,397 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: inventory
+      app.kubernetes.io/component: inventory
+      app.kubernetes.io/instance: inventory
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: quarkus
+      app.openshift.io/runtime-version: "11"
+    name: inventory
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: inventory
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: inventory
+          deploymentconfig: inventory
+      spec:
+        containers:
+        - image: quay.io/hguerreroo/dil-streaming-inventory:latest
+          imagePullPolicy: Always
+          name: inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          - containerPort: 8778
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: invoice
+      app.kubernetes.io/component: invoice
+      app.kubernetes.io/instance: invoice
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: quarkus
+      app.openshift.io/runtime-version: "11"
+    name: invoice
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: invoice
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: invoice
+          deploymentconfig: invoice
+      spec:
+        containers:
+        - image: quay.io/hguerreroo/dil-streaming-invoice:latest
+          imagePullPolicy: Always
+          name: invoice
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          - containerPort: 8778
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      app.openshift.io/connects-to: inventory,invoice
+    labels:
+      app: order
+      app.kubernetes.io/component: order
+      app.kubernetes.io/instance: order
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: spring
+      app.openshift.io/runtime-version: "11"
+    name: order
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: order
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: order
+          deploymentconfig: order
+      spec:
+        containers:
+        - image: quay.io/hguerreroo/dil-streaming-order:latest
+          imagePullPolicy: Always
+          name: order
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          - containerPort: 8778
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      app.openshift.io/connects-to: order
+    labels:
+      app: www-store
+      app.kubernetes.io/component: www-store
+      app.kubernetes.io/instance: www-store
+      app.kubernetes.io/name: nodejs
+      app.kubernetes.io/part-of: www
+      app.openshift.io/runtime: nodejs
+      app.openshift.io/runtime-version: "12"
+    name: www-store
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: www-store
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: www-store
+          deploymentconfig: www-store
+      spec:
+        containers:
+        - image: quay.io/hguerreroo/dil-streaming-www-store:latest
+          imagePullPolicy: Always
+          name: www-store
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: inventory
+      app.kubernetes.io/component: inventory
+      app.kubernetes.io/instance: inventory
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: java
+      app.openshift.io/runtime-version: "11"
+    name: inventory
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: inventory
+      deploymentconfig: inventory
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: invoice
+      app.kubernetes.io/component: invoice
+      app.kubernetes.io/instance: invoice
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: java
+      app.openshift.io/runtime-version: "11"
+    name: invoice
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: invoice
+      deploymentconfig: invoice
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: order
+      app.kubernetes.io/component: order
+      app.kubernetes.io/instance: order
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: java
+      app.openshift.io/runtime-version: "11"
+    name: order
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: order
+      deploymentconfig: order
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: www-store
+      app.kubernetes.io/component: www-store
+      app.kubernetes.io/instance: www-store
+      app.kubernetes.io/name: nodejs
+      app.kubernetes.io/part-of: www
+      app.openshift.io/runtime: nodejs
+      app.openshift.io/runtime-version: "12"
+    name: www-store
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: www-store
+      deploymentconfig: www-store
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: inventory
+      app.kubernetes.io/component: inventory
+      app.kubernetes.io/instance: inventory
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: java
+      app.openshift.io/runtime-version: "11"
+    name: inventory
+  spec:
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: inventory
+      weight: 100
+    wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: invoice
+      app.kubernetes.io/component: invoice
+      app.kubernetes.io/instance: invoice
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: java
+      app.openshift.io/runtime-version: "11"
+    name: invoice
+  spec:
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: invoice
+      weight: 100
+    wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: order
+      app.kubernetes.io/component: order
+      app.kubernetes.io/instance: order
+      app.kubernetes.io/name: java
+      app.kubernetes.io/part-of: rest
+      app.openshift.io/runtime: java
+      app.openshift.io/runtime-version: "11"
+    name: order
+  spec:
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: order
+      weight: 100
+    wildcardPolicy: None
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      haproxy.router.openshift.io/timeout: 3m
+    labels:
+      app: www-store
+      app.kubernetes.io/component: www-store
+      app.kubernetes.io/instance: www-store
+      app.kubernetes.io/name: nodejs
+      app.kubernetes.io/part-of: www
+      app.openshift.io/runtime: nodejs
+      app.openshift.io/runtime-version: "12"
+    name: www-store
+  spec:
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: www-store
+      weight: 100
+    wildcardPolicy: None
