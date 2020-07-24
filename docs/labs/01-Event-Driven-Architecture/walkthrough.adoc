@@ -277,12 +277,6 @@ Were you able to successfully scale-down and scale-up your application?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
-[type=taskResource]
-.AMQ Operator Resouces
-****
-* link:{openshift-host}/k8s/ns/user1/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
-****
-
 [time=15]
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topics
@@ -350,7 +344,7 @@ image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-i
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
 
-. Open the link:{openshift-host}/k8s/ns/user1/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"] to check the progress of your address creation
+. Open the link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"] to check the progress of your address creation
 +
 --
 [IMPORTANT]
@@ -440,6 +434,12 @@ Did you remember to write down the address space `service.host`?
 
 [type=verificationFail]
 {standard-fail-text}
+
+[type=taskResource]
+.AMQ Operator Resouces
+****
+* link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
+****
 
 [time=30]
 [id="Fuse Online Services"]
