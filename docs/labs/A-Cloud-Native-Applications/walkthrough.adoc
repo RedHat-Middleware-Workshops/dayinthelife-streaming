@@ -24,9 +24,11 @@ Check the easy of reusing all your Java EE knowledge while coding with Quarkus a
 
 *Overview*
 
-In this lab you will be introduced to Code Ready Workspaces a cloud native IDE for developers. You will be using the IDE to check the new Quarkus code, see how it runs locally in your environment and how to test it. You will interact with the OpenShift CLI to deploy this new and legacy applications as builds using the OpenShift source2image build tooling.
+In this lab you will be introduced to Code Ready Workspaces a cloud native IDE for developers. You will be using the IDE to check the new Quarkus code, see how it runs locally in your environment and how to test it. You will interact with the OpenShift CLI to deploy this new and legacy applications as builds using the OpenShift source-to-image build tooling.
 
 You will deploy the backend services build on Quarkus to manage the inventory and process the payments and invoicing for the frontend web app that handles the online orders. A legacy SpringBoot application is the mediator between the web application and the backend services. 
+
+image::images/labA-overview.png[Overview, role="integr8ly-img-responsive"]
 
 At the end of the lab, you should be able to order online from the nodejs application and see how your order is processed by the inventory and invoice service.
 

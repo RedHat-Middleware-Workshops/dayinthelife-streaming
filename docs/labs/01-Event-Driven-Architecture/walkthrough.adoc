@@ -20,13 +20,15 @@ As part of the acquisition, your team at International Inc's is now working with
 
 The first step was to migrate their ecommerce orders website from legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
-*Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
+*Audience:* Enterprise Integrators, System Architects, Developers, API Designers, Data Integrators
 
 *Overview*
 
-Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser.
+AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. You will create your own personal space to create events destinations that will be used by your applications with different patterns like queues and topics.
 
-AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+image::images/lab1-overview.png[Overview, role="integr8ly-img-responsive"]
+
+Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser. You will use this tool to design and implement a new API service and to connect with the Event bus provided by AMQ Online.
 
 *Why Red Hat?*
 
@@ -34,7 +36,7 @@ The Red Hat portfolio of middleware products helps you create a unified environm
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat AMQ —based on open source communities like Apache ActiveMQ and Apache Kafka— is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
-The AMQ streams component makes Apache Kafka “OpenShift-native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
+AMQ Online is a solution (Operator) to manage multiple components to provide the overall functionality of running self-service (Messaging as a Service) messaging platform on OpenShift. With AMQ online, enable developers to provision messaging when and where they need it through a browser console. The AMQ online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 *Credentials*
 
@@ -72,7 +74,7 @@ image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-resp
 
 [IMPORTANT]
 ====
-If you have already configured your CodeReady Workspaces environment in the previous lab, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
 ====
 
 === Start CodeReady workspace
@@ -111,7 +113,7 @@ You can close the _Problems_ and _Output_ views to clear space.
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
-. During the workshop we will need to introduce commands for both the OpenShift and Camel-K Command Line Interfaces (CLI). For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
+. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
 +
 image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
 
@@ -130,20 +132,19 @@ oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:
 
 . You should see something like the following (the project names may be different):
 +
-[source,bash,subs="attributes+"]
 ----
 Login successful.
 
 You have access to the following projects and can switch between them with 'oc project <projectname>':
 
-  * shared-db-earth
+    shared-db-earth
     shared-kafka-earth
-    user1
+  * user1
     user1-che
     user1-dayinthel-0605
     user1-shared-475f
 
-Using project "shared-db-earth".
+Using project "user1".
 Welcome! See 'oc help' to get started.
 ----
 
@@ -156,8 +157,21 @@ oc project {user-username}
 
 . Now you are ready to start working on the application services.
 
+=== Deploy the synchronous services
+
+. Once you are logged into the OpenShfit cluster, you need to deploy the services with the following command: 
++
+[source,bash,subs="attributes+"]
+----
+oc -n {user-username} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
+----
+
+. You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Don't forget to change the view from _Administrator_ to *Developer*.
++
+image::images/topology-getting-ready.png[REST Services]
+
 [type=verification]
-Were you able to successfully login to Openshift CLI?
+Were you able to successfully login to Openshift CLI and deploy the services?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -166,7 +180,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="Test Webapp"]
 == Review the problematic application
 
-You need to review the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and process the payment. The web application is build on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
+You need to check the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and process the payment. The web application is build on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
 
 image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
 
@@ -182,7 +196,7 @@ We are ready to go over the application to validate the previous statements. We 
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{user-username}-eda` from the combobox in the top left:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{user-username}` from the combobox in the top left:
 +
 image::images/topology-eda.png[Topology EDA, role="integr8ly-img-responsive"]
 
@@ -226,7 +240,7 @@ image::images/topology-inventory-deployment.png[Inventory Deployment, role="inte
 +
 A side bar will open with an overview of your service resources.
 
-. Click on the *Overview* tab to check the deployment generals. Then click in the _down_ arrow to scale down the deployment replicas to zero.
+. Click on the *Details* tab to check the deployment information. Then click in the _down_ arrow to scale down the deployment replicas to zero.
 +
 image::images/scale-down-inventory.png[Scale Down Inventory, role="integr8ly-img-responsive"]
 +
@@ -263,6 +277,12 @@ Were you able to successfully scale-down and scale-up your application?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
+[type=taskResource]
+.AMQ Operator Resouces
+****
+* link:{openshift-host}/k8s/ns/user1/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
+****
+
 [time=15]
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topics
@@ -281,7 +301,7 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 
 Let's create an **Address Space** using the AMQ Online Operator.
 
-. Go back to your OpenShift Developer Console.
+. Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"].
 
 . Click *+Add* on the left menu.
 +
@@ -329,6 +349,8 @@ spec:
 image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
+
+. Open the link:{openshift-host}/k8s/ns/user1/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"] to check the progress of your address creation
 +
 --
 [IMPORTANT]
