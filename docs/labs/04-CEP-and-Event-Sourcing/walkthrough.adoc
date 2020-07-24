@@ -51,6 +51,246 @@ Your password is: `{user-password}`
 ****
 
 [time=10]
+[id="AMQ-Online-Topic"]
+== Provision Simulator and AMQ Online Topic
+
+=== Real time harvest information gathering
+(Skip this task if you have already done so in other lab and go directly to Task 3)
+
+. You are setting up a topic in AMQ Online to receive event signals from Edge devices
+In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+
++
+image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
+
+*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+
+=== Create an Address Space
+
+Let's create an **Address Space** using the AMQ Online Operator.
+
+. Go back to your OpenShift Developer Console.
+
+. Click *+Add* on the left menu.
++
+image::images/openshift-add.png[OpenShift +Add, role="integr8ly-img-responsive"]
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
+
+. Type in `address` in the search box, and click on the *AddressSpace*:
++
+image::images/catalog-addressspace.png[AddressSpace, role="integr8ly-img-responsive"]
+
+. Click on *Create*:
++
+image::images/online-create.png[Create AddressSpace, role="integr8ly-img-responsive"]
+
+. Replace the content in the YAML editor with the following content:
++
+[source,yaml,role="copypaste"]
+----
+apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: amq
+spec:
+  plan: standard-small
+  type: standard
+  endpoints:
+    - name: messaging
+      service: messaging
+      expose:
+        type: route
+        routeServicePort: amqps
+        routeTlsTermination: passthrough
+      exports:
+        - kind: ConfigMap
+          name: amq-config
+  authenticationService:
+    name: none-authservice
+----
+
+. Click on *Create* to start the deployment
++
+image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
+
+. The AMQ operator will check the new resource and will begin to prepare all required components.
++
+--
+[IMPORTANT]
+====
+Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
+====
+
+[NOTE]
+====
+This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
+====
+--
+
+. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there.
++
+image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
+
+
+
+=== Create a Topic
+
+. Navigate to the {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"]
+
+. Login to using your credentials (`{user-username}` and `{user-password}`).
+
+. Click *amq* listed on the page this will take you to the
++
+image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
+
+
+. Click the *Create Address* button to create the topic.
++
+image::images/1.1.7-create-topic.png[1.1.7-create-topic, role="integr8ly-img-responsive"]
+
+. Enter the following details, then click *Next*:
+** Name: *`mytopic`*
+** Type: *topic*
+** Plan: *Small Topic*
++
+image::images/1.1.8-topic-details.png[1.1.8-topic-details, role="integr8ly-img-responsive"]
+
+. Review your configuration and click on Finish
++
+image::images/1.1.9-topic-details.png[1.1.9-topic-details, role="integr8ly-img-responsive"]
+
+. Please wait a few minutes for the topic to provision.  Once the queue is provisioned, the topic name (`mytopic`) should have a green checkmark next to it.
++
+image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integr8ly-img-responsive"]
+
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
+
+  Your username is: `{user-username}` +
+  Your password is: `{user-password}`
+
+. Locate *Search* under *Advance*
+
++
+image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
+
+
+. On the top search bar, select *service* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
++
+image::images/1.1.12-search-addressspace.png[1.1.12-search-addressspace, role="integr8ly-img-responsive"]
+
+. Click on *amq*
++
+image::images/1.1.13-addressspace-amq.png[1.1.13-addressspace-amq, role="integr8ly-img-responsive"]
+
+. Click on tab *YAML*, and copy the *serviceHost* for later use.
++
+image::images/1.1.14-serive-host-port.png[1.1.14-serive-host-port, role="integr8ly-img-responsive"]
+
+
+[type=verification]
+Were you able to successfully provision the topic in AMQ Online?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=15]
+[id="startup-che-workspace"]
+== Create the Simulator
+(Skip this task if you have already done so in other lab and go directly to Task 3)
+
+. Since we can't really setup real edge device for you in the moon, you will need to create a simulator that simulates the edge device that sends random generated harvest data.
++
+image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"]
+
+. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+
+. Login to Che using your credentials (`{user-username}` and `{user-password}`).
++
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+
+. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
++
+image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
+
+. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
++
+image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
+
+. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `serviceHost` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
++
+image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
+
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
++
+image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
+
+. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
++
+image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
+
+. Once you've logged into OpenShift via the CLI, run the following commands to update `edge-config` configmap.
++
+[source,bash,subs="attributes+"]
+----
+oc project {user-username}
+cd /projects/FleurDeLune/projects/harvest/simulator
+oc create configmap edge-config  --from-file=edge.properties
+----
+
+. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  We want to create a Camel Route that fires a timer every 5 seconds, retrieves some random data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
++
+[source,java,subs="attributes+"]
+----
+from("timer:tick?fixedRate=true&period=5000")
+.choice()
+    .when(simple("{{simulator.run}}"))
+        .setBody(method(this, "genRandomIoTData()"))
+        .marshal().json()
+        .log("${body}")
+        .to("amqp:topic:mytopic?subscriptionDurable=false&exchangePattern=InOnly")
+    .otherwise()
+        .log("Nothing send ")
+;
+----
++
+image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
+
+. Try deploying and running the *EdgeSimulator* Camel-K route by executing the following command
++
+[source,bash,subs="attributes+"]
+----
+kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+----
+
+. Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
++
+[source,bash,subs="attributes+"]
+----
+kamel log edge-simulator
+----
+
++
+image::images/2.1.10-kamel-log.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
+
+. Or you can also navigate back to the *OpenShift Developer Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
+
++
+image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
+
++
+image::images/2.1.12-verify-edge-simulator-log.png[2.1.11-verify-edge-simulator-log, role="integr8ly-img-responsive"]
+
+[type=verification]
+Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+
+[time=10]
 [id="harvest-from-amq-topic"]
 == Stream Harvest data to a Kafka Topic
 
@@ -58,7 +298,7 @@ Your password is: `{user-password}`
 +
 image::images/1.0.0-photo.png[1.0.0-photo, role="integr8ly-img-responsive"]
 +
-image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
+image::images/3.1.0-diagram.png[3.1.0-overview, role="integr8ly-img-responsive"]
 
 === Steps
 . In {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"], click **+Add** then click **From Catalog** link.
@@ -194,7 +434,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 . In this task, we'll increase the cost of each farm and replay the real-time cost.
 +
-image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
+image::images/3.2.0-diagram.png[3.2.0-diagram, role="integr8ly-img-responsive"]
 
 . In the Terminal, list all the Camel-K application, run the following commands. You should see at least two, `cost-center` and `cost-advice`
 +
