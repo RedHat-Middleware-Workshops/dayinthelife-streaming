@@ -154,7 +154,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      app.openshift.io/connects-to: order
+      app.openshift.io/connects-to: order,events
     labels:
       app: www-store
       app.kubernetes.io/component: www-store

@@ -676,29 +676,26 @@ image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-re
 +
 image::images/fuse-building-integration.png[Building Integration, role="integr8ly-img-responsive"]
 
-. Test your integration. Go back to the CodeReady Workspaces IDE and issue the following command via the terminal window:
+=== Deploy inventory and invoice event-driven services
+
+. Go back to the CodeReady Workspaces IDE terminal issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
++
+[source,none,subs="attributes+"]
+----
+oc -n {user-username} apply -f ... 
+----
+
+=== Test the integration
+
+. In the same Code Ready terminal issue the following command via the terminal window:
 +
 [source,bash,subs="attributes+"]
 ----
-curl -v -X POST \
-  http://i-events.fuse-{user-username}.svc:8080/place \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -d  \
-  '{
-    "orderId": 978,
-    "itemId": 135790,
-    "orderItemName": "Mango",
-    "quantity": 1,
-    "price": 2.50,
-    "address": "hello",
-    "zipCode": "15555"
-  }'
+curl -v -X POST http://i-events.fuse-{user-username}.svc:8080/place -H 'cache-control: no-cache' -H 'content-type: application/json' -d  '{"orderId":978,"itemId": 135790,"orderItemName": "Mango","quantity": 1,"price": 2.50,"address": "hello","zipCode": "15555"}'
 ----
 +
 You should receive a message back similar to the following one:
 +
-[source,none,subs="attributes+"]
 ----
 ...
 * upload completely sent off: 162 out of 162 bytes
@@ -714,277 +711,6 @@ You should receive a message back similar to the following one:
 ----
 +
 *Excellent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
-
-=== Add Extensions
-
-Fuse offers several connectors and components out of the box, but advanced users can also create new ones to enhance the power of the console. In this scenario, we have created some extensions to deliver _custom_ identifiers and timestamps.
-
-. Expand the *Customizations* menu and select the *Extensions* menu option on the left side.
-+
-image::images/fuse-extensions.png[Extension Customizations, role="integr8ly-img-responsive"]
-
-. Click on *Import Extension* button in the center of the screen.
-+
-image::images/fuse-import-extension.png[Import Extension, role="integr8ly-img-responsive"]
-
-. Download the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-custom-1.0.0.jar[Syndesis Custom Extension]  and the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-delay-1.0.0.jar[Syndesis Delay Extension] from the company's github repository. Save them to your local system.
-
-. Click in the _dotted border_ rectangle and select the `syndesis-extension-custom-1.0.0.jar` file from your *Downloads* folder.
-+
-image::images/fuse-import-jar.png[Import Extension Jar, role="integr8ly-img-responsive"]
-
-. Click on the *Import Extension* button.
-+
-image::images/fuse-extension-import.png[Import Extension Review, role="integr8ly-img-responsive"]
-
-. Repeat again the last tasks and this time select the `syndesis-extension-delay-1.0.0.jar` file from your *Downloads* folder.
-
-Your extensions should now be listed in the *Extensions* page.
-
-image::images/fuse-extensions-list.png[Extension Page, role="integr8ly-img-responsive"]
-
-=== Create Inventory Flow
-
-. Time to create a new integration. Click on the *Integration* menu on the left side menu.
-+
-image::images/fuse-new-inventory.png[Create Inventory, role="integr8ly-img-responsive"]
-
-. Click on *Create Integration*.
-+
-image::images/fuse-create-inventory.png[Create Inventory Integration, role="integr8ly-img-responsive"]
-
-. We will start to read from the AMQ _topic_. Click on *AMQ Online*.
-+
-image::images/fuse-start-amq.png[Start AMQ Online, role="integr8ly-img-responsive"]
-
-. You need to _subscribe for messages_. Click on the *Select* button.
-+
-image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-img-responsive"]
-
-. Fill in `incomingorders` in the *Destination name* field and select `Topic` from the *Destination Type* combobox. Then, click *Next* button.
-+
-image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
-
-. In the next step select `JSON Instance` from the *Select Type* combobox, enter `order` at the _Data Type Name_ and paste the following code in the *Definition*:
-+
-[source,json,subs="attributes+"]
-----
-{
-   "username":"jdoe",
-   "orderId":"1",
-   "itemId":"1",
-   "orderItemName":"kiwi",
-   "quantity":1,
-   "price":2,
-   "address":"123 Evergreen Terrace",
-   "zipCode":"2222"
-}
-----
-+
-image::images/fuse-start-datatype.png[Output Data Type, role="integr8ly-img-responsive"]
-
-. Click the *Next* button.
-
-. In the next screen, click on *AMQ Online* again, as we are going to publish a message back to AMQ.
-+
-image::images/fuse-finish-amq.png[Finish AMQ Online, role="integr8ly-img-responsive"]
-
-. Click on the *Select* button from the _Publish message_ option.
-+
-image::images/fuse-finish-publish.png[Publish Message, role="integr8ly-img-responsive"]
-
-. In this screen, fill in `notifications` in the *Destination name* and select `Topic` as the *type*.
-+
-image::images/fuse-topic-notifications.png[Publish Destination, role="integr8ly-img-responsive"]
-
-. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following code on the *Definition*. Then `inventorystatus` in the *Data Type Name*.
-+
-[source,json,subs="attributes+"]
-----
-{
-   "orderId":"C1234",
-   "itemId":"C2312312",
-   "department":"inventory",
-   "datetime":"2019-01-01",
-   "quantity":3,
-   "flavor":"kiwi",
-   "inventoryId":"338927483"
-}
-----
-+
-image::images/fuse-inventorystatus-schema.png[Destination Schema, role="integr8ly-img-responsive"]
-
-. Click *Next* to proceed to the flow.
-
-. Click the *+* button to add the _custom_ generators.
-+
-image::images/fuse-connection-assignuuid.png[Inventory Add AssignUUID, role="integr8ly-img-responsive"]
-
-. Click *Next* to get back to the flow.
-
-. Time to add a mapper to assign the values of the output message. Click the *+* button between *AssignUUID* and *Publish messages*.
-+
-image::images/fuse-inventory-mapper.png[Inventory Add Mapper, role="integr8ly-img-responsive"]
-
-. Click on *Data Mapper*.
-+
-image::images/fuse-type-mapper.png[Add Type Mapper, role="integr8ly-img-responsive"]
-
-. Create a *Constants* by clicking the *+* icon and fill in the value  `inventory` and type _String_.
-+
-image::images/fuse-add-constant.png[Add Constant Mapper, role="integr8ly-img-responsive"]
-
-. Then click *Save*.
-+
-image::images/fuse-inventory-constant.png[Iventory Constant, role="integr8ly-img-responsive"]
-
-. Now, expand the *Constants*, *Order* and *FleurDeLuneID* sections and _drag and drop_ the fields from left to right to the corresponding mapping in the target schema. When ready, click the *Done* button.
-+
-image::images/fuse-inventory-mapping.png[Iventory Mapping, role="integr8ly-img-responsive"]
-
-. Click on the *Publish* button.
-+
-image::images/fuse-inventory-publish.png[Iventory Publish, role="integr8ly-img-responsive"]
-
-. Fill in the information for saving this integration. Type `inventory` in the *Name* and `Inventory status` for *Description*. Finally click *Save and publish* button.
-+
-image::images/fuse-inventory-save.png[Iventory Publish, role="integr8ly-img-responsive"]
-
-. The service will start assembling and deploying to OpenShift. Wait a few moments for the flow to deploy.
-+
-image::images/fuse-inventory-deploying.png[Iventory Deployment, role="integr8ly-img-responsive"]
-
-=== Create Invoice Flow
-
-. Let's create our next integration. Click on the *Integration* menu on the left side menu.
-+
-image::images/fuse-new-invoice.png[Create Invoice, role="integr8ly-img-responsive"]
-
-. Click on *Create Integration*.
-+
-image::images/fuse-create-invoice.png[Create Invoice, role="integr8ly-img-responsive"]
-
-. We will start to read from the AMQ _topic_. Click on *AMQ Online*.
-+
-image::images/fuse-start-amq.png[Start AMQ Online, role="integr8ly-img-responsive"]
-
-. You need to _subscribe for messages_. Click on the *Select* button.
-+
-image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-img-responsive"]
-
-. Fill in `incomingorders` in the *Destination name* field and select `Topic` from the *Destination Type* combobox. Then, click *Next* button.
-+
-image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
-
-. In the next step select `JSON Instance` from the *Select Type* combobox and paste the following code in the *Definition*. Then type `order` in the *Data Type Name* field.
-+
---
-[source,json,subs="attributes+"]
-----
-{
-   "username":"jdoe",
-   "orderId":"1",
-   "itemId":"1",
-   "orderItemName":"kiwi",
-   "quantity":1,
-   "price":2,
-   "address":"123 Evergreen Terrace",
-   "zipCode":"2222"
-}
-----
-
-image::images/fuse-start-datatype.png[Output Data Type, role="integr8ly-img-responsive"]
---
-
-. Click the *Next* button.
-
-. In the next screen, click on *AMQ Online* again, as we are going to publish a message back to AMQ.
-+
-image::images/fuse-finish-amq.png[Finish AMQ Online, role="integr8ly-img-responsive"]
-
-. Click on the *Select* button from the _Publish message_ option.
-+
-image::images/fuse-finish-publish.png[Publish Message, role="integr8ly-img-responsive"]
-
-. In this screen, fill in `notifications` in the *Destination name* and select `Topic` as the *type*.
-+
-image::images/fuse-topic-notifications.png[Publish Destination, role="integr8ly-img-responsive"]
-
-. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following _Invoice Status_ code on the *Definiton*. Then `invoicestatus` in the *Data Type Name*.
-+
-[source,json,subs="attributes+"]
-----
-{
-   "itemId":"C2312312",
-   "department":"invoicing",
-   "datetime":"2019-01-01",
-   "amount":32,
-   "currency":"USD",
-   "invoiceId":"B-0338927483"
-}
-----
-+
-image::images/fuse-invoicestatus-schema.png[Destination Schema, role="integr8ly-img-responsive"]
-
-. Scroll down and click *Next* to proceed to the flow.
-
-. Click the *+* button to add the _custom_ generators.
-+
-image::images/fuse-connection-assignuuid.png[Invoice Add AssignUUID, role="integr8ly-img-responsive"]
-
-. Click *Next* to get back to the flow.
-
-. Click the *+* button to add a delay step in the service between the _Subscribe for messages_ and the _AssignUUID_.
-+
-image::images/fuse-add-step.png[Invoice Add Step, role="integr8ly-img-responsive"]
-
-. Scroll down and select *Delay* from the connection options.
-+
-image::images/fuse-connection-delay.png[Invoice Add Delay, role="integr8ly-img-responsive"]
-
-. Type in `30000` in the delay time to mimic the payment processing time for the service. Then click *Next* to return to the service flow.
-+
-image::images/fuse-delay-time.png[Invoice Delay Time, role="integr8ly-img-responsive"]
-
-. Time to add a mapper to assign the values of the output message. Click the *+* button between *AssignUUID* and *Publish messages*.
-+
-image::images/fuse-invoice-mapper.png[Invoice Add Mapper, role="integr8ly-img-responsive"]
-
-. Click on *Data Mapper*.
-+
-image::images/fuse-type-mapper.png[Add Type Mapper, role="integr8ly-img-responsive"]
-
-. Create a *Constants* by clicking the *+* icon and fill in the value  `invoicing` and type _String_.
-+
-image::images/fuse-add-constant.png[Add Constant Mapper, role="integr8ly-img-responsive"]
-
-. Then click *Save*.
-+
-image::images/fuse-invoice-constant.png[Invoice Constant, role="integr8ly-img-responsive"]
-
-. Repeat last two steps to create the `USD` *Constant* of _String_ type.
-+
-image::images/fuse-currency-constant.png[Currency Constant, role="integr8ly-img-responsive"]
-
-. Now, expand the *Constants*, *Order* and *FleurDeLuneID* sections. Select both `quantity` and `price` using the `ctrl` or `cmd` key and then map to the `amount` field in the right _target_ fields by dragging and dropping the field. Then select *Multiply* from the combobox in the right _options_ panel.
-+
-image::images/fuse-amount-mapping.png[Amount Mapping, role="integr8ly-img-responsive"]
-
-. Complete the rest of the fields _drag and drop_ from left to right to the corresponding mapping in the target schema. When ready, click the *Done* button.
-+
-image::images/fuse-invoice-mapping.png[Invoice Mapping, role="integr8ly-img-responsive"]
-
-. Click on the *Publish* button.
-+
-image::images/fuse-invoice-publish.png[Invoice Publish, role="integr8ly-img-responsive"]
-
-. Fill in the information for saving this integration. Type `invoice` in the *Name* and `Invoice status` for *Description*. Finally click *Save and publish* button.
-+
-image::images/fuse-invoice-save.png[Invoice Save, role="integr8ly-img-responsive"]
-
-. The service should start to assembly and deploy. It will take a few moments to complete.
-+
-image::images/fuse-invoice-deploy.png[Invoice Deploy, role="integr8ly-img-responsive"]
 
 [type=verification]
 Were you able to successfully start all 3 integration services?
@@ -1090,14 +816,14 @@ oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events
+oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven' -n {user-username}; oc expose svc/events -n {user-username}
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
 +
 [source,sh,role="copypaste"]
 ----
-oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
+oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }' -n {user-username}
 ----
 
 === Check the OpenShift Developer Console
