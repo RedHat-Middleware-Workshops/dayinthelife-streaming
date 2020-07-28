@@ -67,8 +67,10 @@ app.post('/order/rest', json(), async (req, res, next) => {
 
   try {
     const response = await http.post(new URL('/place', ORDERS_REST_BASE_URL ? ORDERS_REST_BASE_URL : 'http://order:8080'), {
-      json: true,
-      body: req.body
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
     })
 
     if (!req.session.orders) {
@@ -85,9 +87,9 @@ app.post('/order/rest', json(), async (req, res, next) => {
   }
 })
 
-// /* TODO add POST/EVENT method handling */ 
+// /* TODO add POST/EVENT method handling */
 
-// /* TODO add POST/EVENT method handling */ 
+// /* TODO add POST/EVENT method handling */
 
 // Provide a friendly 404 page for all unknown routes
 app.use((req, res, next) => {
