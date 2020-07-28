@@ -16,7 +16,7 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying even-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
 
 The first step was to migrate their ecommerce orders website from legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
@@ -28,7 +28,7 @@ AMQ self-service messaging enables Developers to provision messaging when and wh
 
 image::images/lab1-overview.png[Overview, role="integr8ly-img-responsive"]
 
-Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser. You will use this tool to design and implement a new API service and to connect with the Event bus provided by AMQ Online.
+Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a full toolchain and runtime, available right from your browser. You will use this tool to design and implement a new API service and to connect with the Event bus provided by AMQ Online.
 
 *Why Red Hat?*
 
@@ -104,7 +104,7 @@ image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-im
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
+This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
@@ -214,7 +214,7 @@ image::images/www-store.png[Store Web Page, role="integr8ly-img-responsive"]
 +
 image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
 
-. This are our ol' time classic flavors. Click on *Order Mango*,
+. These are our ol' time classic flavors. Click on *Order Mango*,
 +
 image::images/order-mango.png[Order Mango, role="integr8ly-img-responsive"]
 
@@ -766,7 +766,7 @@ This will be the base we will use to build our service.
 
 [NOTE]
 ====
-Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable an estable connection from the browser.
+Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable a persistent connection from the browser.
 ====
 --
 
