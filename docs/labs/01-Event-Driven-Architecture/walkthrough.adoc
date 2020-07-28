@@ -16,7 +16,7 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying even-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
 
 One of the projects they have is to migrate their current ecommerce orders website from the legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. They have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement the new services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
 
@@ -24,7 +24,7 @@ One of the projects they have is to migrate their current ecommerce orders websi
 
 *Overview*
 
-Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser.
+Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a full toolchain and runtime, available right from your browser.
 
 AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
@@ -97,7 +97,7 @@ image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-im
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
+This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
@@ -524,7 +524,7 @@ For the following commands, remember to be sure to switch to your _working_ proj
 +
 [source,bash,subs="attributes+"]
 ----
-npm install --save-dev nodeshift; npm run openshift
+npm run openshift
 ----
 
 . Configure the route timeout and let the gateway know that this is a long running transaction:
@@ -562,7 +562,7 @@ We are ready to test our application. We will order some different flavors by ca
 +
 image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
 
-. This are our ol' time classic flavors. Click on *Order Mango*,
+. These are our ol' time classic flavors. Click on *Order Mango*,
 +
 image::images/order-mango.png[Order Mango, role="integr8ly-img-responsive"]
 
@@ -588,7 +588,7 @@ image::images/topology-inventory-deployment.png[Inventory Deployment, role="inte
 +
 A side bar will open with an overview of your service resources.
 
-. Click on the *Overview* tab to check the deployment generals. Then click in the _down_ arrow to scale down the deployment replicas to zero.
+. Click on the *Details* (this is labeled *Overview* in previous OpenShift versions) tab to check the deployment generals. Then click in the _down_ arrow to scale down the deployment replicas to zero.
 +
 image::images/scale-down-inventory.png[Scale Down Inventory, role="integr8ly-img-responsive"]
 +
@@ -1314,7 +1314,7 @@ image::images/fuse-invoice-publish.png[Invoice Publish, role="integr8ly-img-resp
 +
 image::images/fuse-invoice-save.png[Invoice Save, role="integr8ly-img-responsive"]
 
-. The service should start to assembly and deploy. It will take a few moments to complete.
+. The service should start to assemble and deploy. It will take a few moments to complete.
 +
 image::images/fuse-invoice-deploy.png[Invoice Deploy, role="integr8ly-img-responsive"]
 
@@ -1372,7 +1372,7 @@ This will be the base we will use to build our service.
 
 [NOTE]
 ====
-Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable an estable connection from the browser.
+Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable a persistent connection from the browser.
 ====
 --
 
@@ -1422,14 +1422,14 @@ oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events
+oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven' -n user1; oc expose svc/events -n user1
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
 +
 [source,sh,role="copypaste"]
 ----
-oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
+oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }' -n {user-username}
 ----
 
 === Check the OpenShift Developer Console
@@ -1551,8 +1551,10 @@ app.post('/order/event', json(), async (req, res, next) => {
   log.info('placing order with body: %j', req.body)
   try {
     const response = await http.post(new URL('/place', ORDERS_EVENT_BASE_URL ? ORDERS_EVENT_BASE_URL : "http://i-events.fuse-{user-username}.svc:8080"), {
-      json: true,
-      body: req.body
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
     })
 
     if (!req.session.orders) {
