@@ -1422,7 +1422,7 @@ oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven' -n user1; oc expose svc/events -n user1
+oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven' -n {user-username}; oc expose svc/events -n {user-username}
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
