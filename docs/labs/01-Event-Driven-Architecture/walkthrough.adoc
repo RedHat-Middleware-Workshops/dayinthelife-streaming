@@ -854,11 +854,11 @@ Let's check how the stores looks with the new flavors.
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
-. With the open application, click on *PLACE ORDER!*
+. With the open application open, click on the *ASYNC* menu option.
 +
-image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
+image::images/store-order-async.png[Place async order, role="integr8ly-img-responsive"]
 
-. Can you see the new flavors we added? This time order a sweet _event-driven_ strawberry one.
+. Can you see the new flavors? This time lets order a sweet _event-driven_ strawberry one.
 +
 image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
@@ -880,24 +880,21 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 Remember that we need to test what happens when a service is down? Go back to _Fuse Online_ so we can take down the inventory service.
 
-. Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
+. Go back to the Code Ready IDE terminal
 
-. Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*.
+. Issue the following command to _scale down_ the *invoice_ service to simulate a failing service.
 +
-image::images/fuse-stop.png[Inventory Deployment, role="integr8ly-img-responsive"]
-
-. Click on *Stop* in the pop up dialog.
+[source,bash,subs="attributes+"]
+----
+oc -n {user-username} patch integration/inventory-events --patch $'spec:\n replicas: 0' --type merge
+----
 +
---
-image::images/fuse-stop-accept.png[Scale Down Inventory, role="integr8ly-img-responsive"]
-
-[TIP]
+[NOTE]
 ====
-This will simulate the _outage_ of the inventory service. Wait a few seconds for the service to stop.
+This will simulate the _outage_ of the inventory service. Wait a few seconds for the service to stop. You will notice the white circle on the Camel deployment.
 ====
-
-image::images/fuse-stopped.png[Scaled To Zero, role="integr8ly-img-responsive"]
---
++
+image::images/invoice-events-outage.png[Scaled To Zero, role="integr8ly-img-responsive"]
 
 . Go back to the web application page and try again to order the async *Strawberry* flavor. What happens?
 +
@@ -921,19 +918,16 @@ This time the Invoice service is decoupled from the Inventory call, so it can st
 ====
 --
 
-. Let's get the *inventory* service back online. Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
-
-. Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
+. Let's get the *inventory* service back online. Issue the following command to bring back the *invoice* service.
 +
-image::images/fuse-inventory-start.png[Scale Inventory Up, role="integr8ly-img-responsive"]
-
-. Click the *start* button on the next dialog.
-+
-image::images/fuse-inventory-restart.png[Confirm Start, role="integr8ly-img-responsive"]
+[source,bash,subs="attributes+"]
+----
+oc -n {user-username} patch integration/inventory-events --patch $'spec:\n replicas: 1' --type merge
+----
 
 . Wait a few seconds for the service to get back online.
 +
-image::images/fuse-inventory-restarting.png[Invetory Starting, role="integr8ly-img-responsive"]
+image::images/invoice-events-back.png[Invetory Starting, role="integr8ly-img-responsive"]
 
 . Go back to the web application page and try now to order some *blueberry*.
 +
@@ -950,7 +944,8 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=5]
 [id="summary"]
 == Summary
-In this lab you  created cloud native integration services which listen to events using Camel K. You also set up topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible and reactive.
+
+In this lab you successfully helped the development team to move the online ordering site to a new event-driven architecture based on AMQ Online and Quarkus reactive messaging clients. You were able to create a self-provisioning address space to create event destinations for the incoming orders and the notifications. Also you design a new API using the Red Hat API designed and implemented the service using Fuse Online. Finally you were able to check how decoupling services using event-driven apps help you to avoid disruption on your systems.
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 
@@ -958,5 +953,7 @@ You can now proceed to link:{next-lab-url}[Lab 2].
 [id="further-reading"]
 == Notes and Further Reading
 
-* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
-* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
+* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ, window="_blank"]
+* https://developers.redhat.com/courses/quarkus[Try Quarkus, window="_blank"]
+* https://www.redhat.com/en/technologies/jboss-middleware/fuse-online[Red Hat Fuse Online, window="_blank"]
+* https://developers.redhat.com/topics/event-driven/[Event-driven Architecture - Red Hat Developers, window="_blank"]
