@@ -1,0 +1,103 @@
+---
+apiVersion: camel.apache.org/v1
+kind: IntegrationPlatform
+metadata:
+  name: camel-k
+  labels:
+    app: "camel-k"
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: amqp-properties
+data:
+  application.properties: >-
+    camel.component.amqp.configuration.connection-factory=#class:org.apache.qpid.jms.JmsConnectionFactory
+
+    camel.component.amqp.configuration.connection-factory.remoteURI=amqp://messaging-88d9c44.workshop-operators.svc
+    
+    camel.component.amqp.username=user
+    
+    camel.component.amqp.password=password
+---
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: inventory-events
+spec:
+  configuration:
+    - type: configmap
+      value: amqp-properties
+  dependencies:
+    - 'camel:amqp'
+    - 'camel:jackson'
+  sources:
+    - content: >-
+        const Processor = Java.type("org.apache.camel.Processor");
+        const p = Java.extend(Processor);
+        const proc = new p(processInventory);
+        from('amqp:topic:incomingorders?exchangePattern=InOnly')
+            .log('Inventory Notified ${body}')
+            .unmarshal().json()
+            .setHeader('reply-to').simple('${body[username]}')
+            .marshal().json()
+            .delay(10000).asyncDelayed()
+            .process(proc)
+            .toD('amqp:queue:notifications?exchangePattern=InOnly')
+            .to('log:info');
+        function processInventory(e) {
+            var order = JSON.parse(
+                String.fromCharCode.apply(String, e.getMessage().getBody())
+            );
+            var result = JSON.stringify({
+                orderId: order.orderId,
+                itemId: order.itemId,
+                department: 'inventory',
+                datetime: Date.now(),
+                quantity: order.quantity,
+                flavor: order.orderItemName,
+                inventoryId: Math.floor(100000 + Math.random() * 999999)
+            });
+            e.getMessage().setBody(result);
+        }
+      name: InventoryEvents.js
+---
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: invoice-events
+spec:
+  configuration:
+    - type: configmap
+      value: amqp-properties
+  dependencies:
+    - 'camel:jackson'
+    - 'camel:amqp'
+  sources:
+    - content: >-
+        beans {
+            processInvoice = processor {
+                it.out.body = [
+                    orderId: it.in.body.orderId,
+                    itemId: it.in.body.itemId,
+                    department: 'invoicing',
+                    datetime: System.currentTimeMillis(),
+                    amount: (it.in.body.quantity * it.in.body.price),
+                    currency: 'USD',
+                    invoiceId: 'B-0' + (Math.floor(1000 + Math.random() * 9999))
+                ]
+                it.out.headers['reply-to'] = it.in.body.username
+            }
+        }
+
+        from('amqp:topic:incomingorders?exchangePattern=InOnly')
+            .log('Invoicing Notified ${body}')
+            .unmarshal().json()
+            .delay(30000).asyncDelayed()
+            .process('processInvoice')
+            .marshal().json()
+            .convertBodyTo(String.class)
+            .log('H:${headers}')
+            .toD('amqp:queue:notifications?exchangePattern=InOnly')
+            .to('log:info')
+      name: InvoiceEvents.groovy
