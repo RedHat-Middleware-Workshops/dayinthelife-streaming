@@ -816,14 +816,14 @@ oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven' -n {user-username}; oc expose svc/events -n {user-username}
+oc -n {user-username} new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events -n {user-username}
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
 +
 [source,bash,role="attributes+"]
 ----
-oc patch dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }' -n {user-username}
+oc -n {user-username} patch dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
 ----
 
 === Check the OpenShift Developer Console
