@@ -167,11 +167,11 @@ oc project {namespace}
 [id="configure-cdc-connectors"]
 == Configure CDC connectors for Kafka Connect
 
-There is already a legacy Kafka deployment running. We will then deploy a KafkaConnect CDC connector to connect to that cluster while we extract the data from the SQL Server Database.
+There is already a legacy Kafka deployment running in the cluster. We will deploy a KafkaConnect CDC connector to connect to that cluster so we can extract the data from the SQL Server Database.
 
 === Deploy KafkaConnect CDC Connector
 
-. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"].
+. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/{namespace}[Topology View, window="_blank"].
 +
 [IMPORTANT]
 ====
