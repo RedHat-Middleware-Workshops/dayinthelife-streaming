@@ -17,15 +17,15 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune's IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service calls and avoid the need to implement additional infrastructure components. 
 
-The first step was to migrate their ecommerce orders website from legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
+The first step was to migrate their ecommerce orders website from a legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase to upper management how EDA solves some of the problems that came along pure REST APIs.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, API Designers, Data Integrators
 
 *Overview*
 
-AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. You will create your own personal space to create events destinations that will be used by your applications with different patterns like queues and topics.
+AMQ self-service messaging enables developers to provision messaging when and where they need it via a web-based browser. You will create your own personal space to create events destinations that will be used by your applications with different patterns like queues and topics.
 
 image::images/lab1-overview.png[Overview, role="integr8ly-img-responsive"]
 
@@ -37,7 +37,7 @@ The Red Hat portfolio of middleware products helps you create a unified environm
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat AMQ —based on open source communities like Apache ActiveMQ and Apache Kafka— is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
-AMQ Online is a solution (Operator) to manage multiple components to provide the overall functionality of running self-service (Messaging as a Service) messaging platform on OpenShift. With AMQ online, enable developers to provision messaging when and where they need it through a browser console. The AMQ online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+AMQ Online is a solution (Operator) to manage multiple components to provide the overall functionality of running self-service (Messaging as a Service) messaging platform on OpenShift. With AMQ online, developers can provision messaging when and where they need it through a browser console. The AMQ online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 *Credentials*
 
@@ -165,14 +165,14 @@ oc project {namespace}
 
 === Deploy the synchronous services
 
-. Once you are logged into the OpenShfit cluster, you need to deploy the services with the following command: 
+. Once you are logged into the OpenShift cluster, you need to deploy the services with the following command: 
 +
 [source,bash,subs="attributes+"]
 ----
 oc {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
 ----
 
-. You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]. Don't forget to change the view from _Administrator_ to *Developer*.
+. You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Don't forget to change the view from *Administrator* to *Developer*.
 +
 image::images/topology-getting-ready.png[REST Services]
 
@@ -180,13 +180,13 @@ image::images/topology-getting-ready.png[REST Services]
 [id="Test Webapp"]
 == Review the problematic application
 
-You need to check the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and process the payment. The web application is build on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
+You need to check the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and processes the payment. The web application is built on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
 
 image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
 
-As we mentioned earlier, the current application has a flaw that is commonly find in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing and order: 
+As we mentioned earlier, the current application has a flaw that is commonly found in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing an order: 
 
-* First we will need to wait for both services to complete even though they are not related. As they payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get the feedback of the inventory too.
+* First we will need to wait for both services to complete even though they are not related. As they payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get inventory feedback too.
 * Second, in case of one of the services fail, because there is no correct error handling logic, what we see in the frontend application is that the whole transaction failed and we need to retry again.
 
 image::images/lab1-architecture-fail.png[App Architecture, role="integr8ly-img-responsive"]
@@ -281,7 +281,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topics
 
-In this section of the lab we will move from syncronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and allows to get fine-grained scaling. 
+In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and allows to get fine-grained scaling. 
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
@@ -380,7 +380,7 @@ image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsiv
 +
 image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
 
-. In the main _address space_ console screen, click on the *+ Create* button to start adding the required topics.
+. In the main _address space_ console screen, click on the *Create Address* button to start adding the required topics.
 +
 image::images/topic-create.png[newtopic, role="integr8ly-img-responsive"]
 
@@ -396,7 +396,7 @@ image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
 +
 image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive"]
 
-. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic.
+. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan as the _incomingorders_ topic.
 +
 --
 image::images/topics.png[topics, role="integr8ly-img-responsive"]
@@ -407,7 +407,7 @@ A green check mark will show that the resources were successfully deployed.
 ====
 --
 
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click in the *amq* link.
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click on the *amq* link.
 +
 image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
 
@@ -486,11 +486,11 @@ amqp://{your-service.host}?requestTimeout=1000
 image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
 --
 
-. Scroll down the same page and click on the *Validate* button to check the connections was been established.
+. Scroll down the same page and click on the *Validate* button to check the connection has been established.
 +
 image::images/fuse-validate.png[Connection Validation, role="integr8ly-img-responsive"]
 
-. You will see a green message back in the top.
+. You will see a green message back at the top.
 +
 image::images/fuse-validation-success.png[Connection Validation Success, role="integr8ly-img-responsive"]
 
@@ -678,7 +678,7 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the CodeReady Workspaces IDE terminal issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
+. Go back to the CodeReady Workspaces IDE terminal and issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
 +
 [source,none,subs="attributes+"]
 ----
@@ -710,7 +710,7 @@ You should receive a message back similar to the following one:
 * Connection #0 to host i-events.fuse-{user-username} left intact
 ----
 +
-*Excellent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
+*Excellent!* This means you are able to _POST_ an Order and it was sent to the _Topic_.
 
 [type=verification]
 Were you able to successfully start all 3 integration services?
@@ -805,7 +805,7 @@ For the following commands remember to be sure to switch to your _working_ proje
 oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events {namespace}
 ----
 
-. Start and watch the build, which will take about minutes to complete:
+. Start and watch the build, which will take about 2 minutes to complete:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -945,7 +945,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you successfully helped the development team to move the online ordering site to a new event-driven architecture based on AMQ Online and Quarkus reactive messaging clients. You were able to create a self-provisioning address space to create event destinations for the incoming orders and the notifications. Also you design a new API using the Red Hat API designed and implemented the service using Fuse Online. Finally you were able to check how decoupling services using event-driven apps help you to avoid disruption on your systems.
+In this lab you successfully helped the development team to move the online ordering site to a new event-driven architecture based on AMQ Online and Quarkus reactive messaging clients. You were able to create a self-provisioning address space to create event destinations for the incoming orders and the notifications. Also you designed a new API using the Red Hat API designer and implemented the service using Fuse Online. Finally you were able to check how decoupling services using event-driven apps help you to avoid disruption on your systems.
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 
