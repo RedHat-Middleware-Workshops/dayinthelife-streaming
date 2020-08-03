@@ -235,7 +235,7 @@ image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 cd /projects/FleurDeLune/projects/harvest/simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
@@ -340,7 +340,7 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 
@@ -390,7 +390,7 @@ image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="i
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 
@@ -632,7 +632,7 @@ image::images/1.1.4-oc.png[1.1.4-oc-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/disaster-control/
 

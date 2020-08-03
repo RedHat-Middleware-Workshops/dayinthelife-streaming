@@ -1,17 +1,25 @@
-:walkthrough: Stream change events from your database
-:che-url: http://che-che.{openshift-app-host}/
-:terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
+// Attributes
+:walkthrough: Change Data Capture
+:title: Lab 2 - Change Data Capture and Apache Kafka
 :user-password: openshift
+:standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+:namespace: {user-username}
+
+// URLs
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
+:codeready-url: http://che-che.{openshift-app-host}/
+:che-url: http://che-che.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab03/walkthrough.adoc
 endif::[]
 
 [id='change-data-capture']
-= Lab 2 - Change Data Capture
+= {title}
 
-In this lab you will enable Change Data Capture (CDC) for a legacy application that loads the customer orders from a comman separated value (CSV) file. This old PHP application can't be modified so there is no way to modernize it without risks. You will enable CDC on the SQL server database where the orders are stored and create a Kafka Connect deployment using AMQ streams to emit data change events to the Earth Apache Kafka cluster.
+One of the challenges of acquisitions is the integration between systems. You are now part of the team that needs to integrate the enterprise systems of International Inc, with the cloud native infrastructure of Fleur de Lune. You will use the Debezium Change Data Capture connector to emit events from a legacy application to replicate orders data to the new Apache Kafka clusters.
+
+In the first part of this lab you will use the already enabled Change Data Capture (CDC) for a legacy application that loads the customer orders from a comma separated value (CSV) file. This old PHP application can’t be modified so there is no way to modernize it without risks. You will use CDC on the SQL server database where the orders are stored and the connector deployed on the Kafka Connect cluster using AMQ streams to emit data change events.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
@@ -19,7 +27,11 @@ In this lab you will enable Change Data Capture (CDC) for a legacy application t
 
 Apache Kafka is the de facto standard for asynchronous event propagation between microservices. Things get challenging, though, when adding a service’s database to the picture: how can you avoid inconsistencies between Kafka and the database?
 
-Enter Change Data Capture (CDC) and Debezium. By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
+Enter Change Data Capture (CDC) and Debezium. 
+
+image::images/debezium-cdc.png[Debezium CDC]
+
+By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
 
 *Why Red Hat?*
 
@@ -31,8 +43,8 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 Use the following credentials to login into the web consoles:
 
-Your username is: `{user-username}` +
-Your password is: `{user-password}`
+* Your *username* is: `{user-username}` +
+* Your *password* is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
@@ -42,10 +54,114 @@ Your password is: `{user-password}`
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
 ****
-* link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+* link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 ****
 
 :sectnums:
+
+[time=5]
+[id="Getting Ready"]
+== Getting ready for the labs
+
+[IMPORTANT]
+====
+Please complete the following instructions to get ready for this lab. *If this is not the first lab you are doing today, and you have already completed this step in any of the previous labs, please skip to next task*.
+====
+
+You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+
+. To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
++
+image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
+
+. *If this is your first lab of the day*, you will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
++
+image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-responsive"]
+
+[IMPORTANT]
+====
+If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+====
+
+=== Start CodeReady workspace
+
+. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard. 
++
+--
+A new workspace has been configured with the required tools, plugins and project to start working on this workshop. 
+
+Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
+
+image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
+
+[NOTE]
+====
+You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
+====
+--
+
+. This will start an instance of the workspace. Please wait a few moments while it downloads the required container images and configuration setup.
++
+image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
+
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
++
+image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
++
+[NOTE]
+====
+This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
+
+You can close the _Problems_ and _Output_ views to clear space.
+====
+
+. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
++
+image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
+
+. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
++
+image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
+
+. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
++
+image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-responsive"]
+
+=== Login into the OpenShift cluster
+
+. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
+----
+
+. You should see something like the following (the project names may be different):
++
+----
+Login successful.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+    shared-db-earth
+    shared-kafka-earth
+  * user1
+    user1-che
+    user1-dayinthel-0605
+    user1-shared-475f
+
+Using project "user1".
+Welcome! See 'oc help' to get started.
+----
+
+. Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc project {namespace}
+----
+
+. Now you are ready to start working on the next tasks.
 
 [time=5]
 [id="configure-cdc-connectors"]
@@ -55,11 +171,11 @@ There is already a legacy Kafka deployment running. We will then deploy a KafkaC
 
 === Deploy KafkaConnect CDC Connector
 
-. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"].
+. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"].
 +
 [IMPORTANT]
 ====
-Be sure to be in your _{user-username}_ project
+Be sure to be in your _{namespace}_ project
 ====
 
 . Click *+Add* on the left menu.
@@ -109,7 +225,7 @@ image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="
 +
 [source,bash,subs="attributes+"]
 ----
-oc expose service debezium-connect-api --name kafka-connect -n {user-username}
+oc expose service debezium-connect-api --name kafka-connect {namespace}
 ----
 +
 [IMPORTANT]
@@ -541,7 +657,7 @@ image:images/openshift-bridge-topology.png[Mirror Maker Topology]
 +
 [source,bash,subs="attributes+"]
 ----
-oc expose service http-bridge-service --name kafka-bridge -n {user-username}
+oc expose service http-bridge-service --name kafka-bridge {namespace}
 ----
 
 === Test the HTTP Bridge

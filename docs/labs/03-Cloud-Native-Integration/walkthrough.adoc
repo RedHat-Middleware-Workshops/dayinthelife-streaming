@@ -248,7 +248,7 @@ image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 cd /projects/FleurDeLune/projects/harvest/simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
@@ -315,7 +315,7 @@ image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
 . Login to OpenShift Developer Console using your credentials (`{user-username}` and `{user-password}`).
 
-. Select the *Developer* drop-down, then select *Project: {user-username}*, *+Add* and click on the `From Catalog` link.
+. Select the *Developer* drop-down, then select *Project: {namespace}*, *+Add* and click on the `From Catalog` link.
 +
 image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
 
@@ -430,7 +430,7 @@ image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties,
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 cd /projects/FleurDeLune/projects/harvest/inventory
 oc create configmap sender-config  --from-file=kafka.properties
 kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java
@@ -482,7 +482,7 @@ image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img
 [source,bash,subs="attributes+"]
 ----
 cd /projects/FleurDeLune/projects/harvest/shipping
-oc project {user-username}
+oc project {namespace}
 oc create -f connect-secret.yaml
 oc create -f jdg-cluster.yaml
 ----
@@ -586,7 +586,7 @@ image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-respons
 [source,bash,subs="attributes+"]
 ----
 cd /projects/FleurDeLune/projects/harvest/display/
-oc project {user-username}
+oc project {namespace}
 oc apply -f shippingconsole-config.yaml
 ----
 

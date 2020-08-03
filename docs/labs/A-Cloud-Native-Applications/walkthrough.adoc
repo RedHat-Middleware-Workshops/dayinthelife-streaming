@@ -57,7 +57,7 @@ Use the following credentials to login into the web consoles:
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
 ****
-* link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+* link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
 ****
 
 :sectnums:
@@ -148,11 +148,11 @@ Using project "shared-db-earth".
 Welcome! See 'oc help' to get started.
 ----
 
-. Most of the work will be deploy to your own `{user-username}` project namespace, so be sure to have it as a _working_ project by executing the following command:
+. Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 ----
 
 . Now you are ready to start working on the application services.
@@ -275,14 +275,14 @@ mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 ----
 +
 You should get the following output:
 +
 [source,bash,subs="attributes+"]
 ----
-Now using project "{user-username}" on server "https://172.30.0.1:443".
+Now using project "{namespace}" on server "https://172.30.0.1:443".
 ----
 
 . Create a _Build Configuration_ for your application using the OpenJDK base container image:
@@ -290,7 +290,7 @@ Now using project "{user-username}" on server "https://172.30.0.1:443".
 --
 [source,bash,subs="attributes+"]
 ----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=inventory -l app=inventory -n {user-username}
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=inventory -l app=inventory {namespace}
 ----
 
 [NOTE]
@@ -303,7 +303,7 @@ This build uses the new link:https://access.redhat.com/documentation/en-us/red_h
 +
 [source,bash,subs="attributes+"]
 ----
-oc start-build inventory --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/inventory/target/*-runner.jar --follow -n {user-username}
+oc start-build inventory --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/inventory/target/*-runner.jar --follow {namespace}
 ----
 +
 You should get a _Push succesful_ line at the end
@@ -326,7 +326,7 @@ oc new-app inventory -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-inventory.png[Topology Inventory, role="integr8ly-img-responsive"]
 
@@ -383,14 +383,14 @@ For the following commands remember to be sure to switch to your _working_ proje
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=invoice -l app=invoice -n {user-username}
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=invoice -l app=invoice {namespace}
 ----
 
 . Start and watch the build, which will take about minutes to complete:
 +
 [source,bash,subs="attributes+"]
 ----
-oc start-build invoice --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/invoice/target/*-runner.jar --follow -n {user-username}
+oc start-build invoice --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/invoice/target/*-runner.jar --follow {namespace}
 ----
 
 . Deploy the service as an OpenShift application with the CLI:
@@ -402,7 +402,7 @@ oc new-app invoice -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-o
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-invoice.png[Topology Invoice, role="integr8ly-img-responsive"]
 
@@ -459,14 +459,14 @@ For the following commands remember to be sure to switch to your _working_ proje
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=order -l app=order -n {user-username}
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=order -l app=order {namespace}
 ----
 
 . Start and watch the build, which will take about minutes to complete:
 +
 [source,bash,subs="attributes+"]
 ----
-oc start-build order --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/order/target/*.jar --follow -n {user-username}
+oc start-build order --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/order/target/*.jar --follow {namespace}
 ----
 
 . Deploy the service as an OpenShift application with the CLI:
@@ -485,7 +485,7 @@ oc annotate dc/order app.openshift.io/connects-to=invoice,inventory
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"]
 
@@ -542,7 +542,7 @@ oc annotate route www-store --overwrite haproxy.router.openshift.io/timeout=3m
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
@@ -586,7 +586,7 @@ Congratulations! Your _Mango_ order was successful! Everything is fine and the s
 
 The application is working correctly, but what happens when a service _fails_?
 
-. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Go back to the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
 
 . Click on the *inventory* service deployment.
 +
@@ -615,7 +615,7 @@ The service was not able to fulfill the order because the inventory service was 
 ====
 --
 
-. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +
