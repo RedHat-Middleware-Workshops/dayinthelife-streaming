@@ -57,7 +57,7 @@ Use the following credentials to login into the web consoles:
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
 ****
-* link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
+* link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 ****
 
 :sectnums:
@@ -326,7 +326,7 @@ oc new-app inventory -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-inventory.png[Topology Inventory, role="integr8ly-img-responsive"]
 
@@ -402,7 +402,7 @@ oc new-app invoice -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-o
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-invoice.png[Topology Invoice, role="integr8ly-img-responsive"]
 
@@ -485,7 +485,7 @@ oc annotate dc/order app.openshift.io/connects-to=invoice,inventory
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-order.png[Topology Order, role="integr8ly-img-responsive"]
 
@@ -542,7 +542,7 @@ oc annotate route www-store --overwrite haproxy.router.openshift.io/timeout=3m
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
@@ -586,7 +586,7 @@ Congratulations! Your _Mango_ order was successful! Everything is fine and the s
 
 The application is working correctly, but what happens when a service _fails_?
 
-. Go back to the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
+. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 
 . Click on the *inventory* service deployment.
 +
@@ -615,7 +615,7 @@ The service was not able to fulfill the order because the inventory service was 
 ====
 --
 
-. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
+. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +

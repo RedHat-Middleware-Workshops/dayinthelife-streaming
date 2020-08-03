@@ -196,7 +196,7 @@ We are ready to go over the application to validate the previous statements. We 
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{namespace}` from the combobox in the top left:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{namespace}` from the combobox in the top left:
 +
 image::images/topology-eda.png[Topology EDA, role="integr8ly-img-responsive"]
 
@@ -232,7 +232,7 @@ Congratulations! Your _Mango_ order was successful! Everything is fine and the s
 
 The application is working correctly, but what happens when a service _fails_? As we mentioned in the beginning of this lab, there are some problems when one of the services is not available or takes longer than expected to complete. Let's check what happens in that case.
 
-. Go back to the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
+. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 
 . Click on the *inventory* service deployment.
 +
@@ -261,7 +261,7 @@ The service was not able to fulfill the order because the inventory service was 
 ====
 --
 
-. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"]
+. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +
@@ -301,7 +301,7 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 
 Let's create an **Address Space** using the AMQ Online Operator.
 
-. Go back to your OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"].
+. Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
 
 . Click *+Add* on the left menu.
 +
@@ -828,7 +828,7 @@ oc {namespace} patch dc/events -p '{ "metadata" : { "annotations" : { "app.opens
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
 +
 image::images/topology-events.png[Topology Events, role="integr8ly-img-responsive"]
 
@@ -850,7 +850,7 @@ Remember what happens when a service is down in our _traditional_ REST architect
 
 Let's check how the stores looks with the new flavors.
 
-. In the link:{openshift-host}/topology{namespace}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
+. In the link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
