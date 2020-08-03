@@ -11,7 +11,7 @@ endif::[]
 [id='change-data-capture']
 = Lab 2 - Change Data Capture
 
-In this lab you will enable Change Data Capture (CDC) for a legacy application that loads the customer orders from a comman separated value (CSV) file. This old PHP application can't be modified so there is no way to modernize it without risks. You will enable CDC on the SQL server database where the orders are stored and create a Kafka Connect deployment using AMQ streams to emit data change events to the Earth Apache Kafka cluster.
+In this lab you will enable Change Data Capture (CDC) for a legacy application that loads the customer orders from a comma separated value (CSV) file. This old PHP application can't be modified so there is no way to modernize it without risks. You will enable CDC on the SQL server database where the orders are stored and create a Kafka Connect deployment using AMQ streams to emit data change events to the Earth Apache Kafka cluster.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
