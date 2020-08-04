@@ -270,7 +270,7 @@ spec:
     database.user: "sa"
     database.password: "Password!"
     database.dbname: "InternationalDB"
-    database.server.name: "{user-username}.db"
+    database.server.name: "{user-username}.earth"
     table.whitelist: "dbo.Orders"
     database.history.kafka.bootstrap.servers: "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092"
     database.history.kafka.topic: "{user-username}.db.dbhistory"
@@ -284,47 +284,8 @@ image:images/openshift-kafkaconnect-resource.png[Back To Topology]
 +
 image:images/topology-kafkaconnect.png[KafkaConnect Topology]
 
-. Check that everything deployed correctly by clicking the *Open URL* icon.
-
-. You should be able to see the information of the Kafka cluster version like the following:
-+
-[source,json,subs="attributes+"]
-----
-{"version":"2.2.1.redhat-00002","commit":"c330425647372ca2","kafka_cluster_id":"g0lUt2NARWSPxFn1Aq3uTw"}
-----
-
-. Now that we know that the Kafka Connect cluster is running, let's create a new connector config to react to changes in the `Orders` table. Issue the following command in the CodeReady Terminal window:
-+
-[source,bash,subs="attributes+"]
-----
-cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
-{
-  "name": "orders-connector",
-  "config": {
-    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
-    "database.hostname": "mssql-server-linux.shared-db-earth.svc",
-    "database.port": "1433",
-    "database.user": "sa",
-    "database.password": "Password!",
-    "database.dbname": "InternationalDB",
-    "database.server.name": "{user-username}.earth",
-    "table.whitelist": "dbo.Orders",
-    "database.history.kafka.bootstrap.servers": "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092",
-    "database.history.kafka.topic": "{user-username}.earth.dbhistory"
-  }
-}
-EOF
-----
-
-. If the last command was successful. you should get the following output as return:
-+
-[source,json,subs="attributes+"]
-----
-{"name":"orders-connector","config":{"connector.class":"io.debezium.connector.sqlserver.SqlServerConnector","database.hostname":"mssql-server-linux.shared-db-earth.svc","database.port":"1433","database.user":"sa","database.password":"Password!","database.dbname":"InternationalDB","database.server.name":"{user-username}.earth","table.whitelist":"dbo.Orders","database.history.kafka.bootstrap.servers":"earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092","database.history.kafka.topic":"{user-username}.earth.dbhistory","name":"orders-connector"},"tasks":[],"type":"source"}
-----
-
 [type=verification]
-Did you receive the orders-connector response from the SqlServerConnector?
+Do you see the blue circle around the debezium-connect pod?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
@@ -700,7 +661,7 @@ image:images/openshift-bridge-topology.png[Mirror Maker Topology]
 +
 [source,bash,subs="attributes+"]
 ----
-oc expose service http-bridge-service --name kafka-bridge {namespace}
+oc expose service http-bridge-service --name kafka-bridge -n {namespace}
 ----
 
 === Test the HTTP Bridge
