@@ -275,7 +275,7 @@ image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+kamel run EdgeSimulator.java
 ----
 
 . Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
@@ -433,7 +433,7 @@ image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties,
 oc project {user-username}
 cd /projects/FleurDeLune/projects/harvest/inventory
 oc create configmap sender-config  --from-file=kafka.properties
-kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java
+kamel run Inventory.java --name=inventory-lab3
 ----
 
 . After the Camel-K command has finished deploying, it should run via the terminal without errors.  You should see **Integration Created**.
@@ -551,14 +551,14 @@ image::images/4.1.8-standard-java-update.png[4.1.8-standard-java-update, role="i
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap premiumshipping-config PremiumShipping.java
+kamel run PremiumShipping.java
 ----
 
 . Ensure that the Camel-K command ran without error and connections to Infinispan and Kafka were successful.  You can verify the deployment via the OpenShift Developer topology screen.  Repeat the same for the StandardShipping flow:
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap standardshipping-config StandardShipping.java
+kamel run StandardShipping.java
 ----
 
 [type=verification]
@@ -594,7 +594,7 @@ oc apply -f shippingconsole-config.yaml
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final  --configmap shippingconsole-config ConsoleService.java --dev
+kamel run ConsoleService.java --dev
 ----
 
 . Now that we have the Camel-K interface running, we can view the content in our Data Lake.  First, navigate here (in a new tab) to see the Standard shipments: `http://console-service-{user-username}.{openshift-app-host}/standard`. If successful, you should see output similar to the following:
