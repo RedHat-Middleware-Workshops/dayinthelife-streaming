@@ -1,3 +1,5 @@
+// camel-k: dependency=camel-jackson dependency=costcenter-config
+
 package module3;
 import org.apache.camel.builder.RouteBuilder;
 import java.util.Map;
