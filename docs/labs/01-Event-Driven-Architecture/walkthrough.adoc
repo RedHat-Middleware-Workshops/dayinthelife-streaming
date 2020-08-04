@@ -3,6 +3,7 @@
 :title: Lab 1 - {walkthrough}
 :user-password: openshift
 :standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+:namespace: {user-username}
 
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
@@ -16,17 +17,19 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-As part of the acquisition, your team at International Inc's is now working with Fleur de Lune IT department to learn more about Event-Driven Architecture or EDA. By applying even-driven concepts you will help to avoid classic problems derived from coupled synchronous service call and avoid the need to implement additional infrastructure components. 
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune's IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service calls and avoid the need to implement additional infrastructure components. 
 
-The first step was to migrate their ecommerce orders website from legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because of one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase the upper management how EDA solve some of the problems that came along pure REST APIs.
+The first step was to migrate their ecommerce orders website from a legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase to upper management how EDA solves some of the problems that came along pure REST APIs.
 
-*Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
+*Audience:* Enterprise Integrators, System Architects, Developers, API Designers, Data Integrators
 
 *Overview*
 
-Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully toolchain and runtime, available right from your browser.
+AMQ self-service messaging enables developers to provision messaging when and where they need it via a web-based browser. You will create your own personal space to create events destinations that will be used by your applications with different patterns like queues and topics.
 
-AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+image::images/lab1-overview.png[Overview, role="integr8ly-img-responsive"]
+
+Red Hat Integration includes an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a full toolchain and runtime, available right from your browser. You will use this tool to design and implement a new API service and to connect with the Event bus provided by AMQ Online.
 
 *Why Red Hat?*
 
@@ -34,14 +37,14 @@ The Red Hat portfolio of middleware products helps you create a unified environm
 
 To respond to business demands quickly and efficiently, you need a way to integrate applications and data spread across your enterprise. Red Hat AMQ —based on open source communities like Apache ActiveMQ and Apache Kafka— is a flexible messaging platform that delivers information reliably, enabling real-time integration and connecting the Internet of Things (IoT).
 
-The AMQ streams component makes Apache Kafka “OpenShift-native” through the use of powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on OpenShift.
+AMQ Online is a solution (Operator) to manage multiple components to provide the overall functionality of running self-service (Messaging as a Service) messaging platform on OpenShift. With AMQ online, developers can provision messaging when and where they need it through a browser console. The AMQ online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 *Credentials*
 
 Use the following credentials to login into the web consoles:
 
-* *Username:* `{user-username}`
-* *Password:* `{user-password}`
+* Your *username* is: `{user-username}`
+* Your *password* is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
@@ -51,7 +54,7 @@ Use the following credentials to login into the web consoles:
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
 ****
-* link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+* link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 ****
 
 :sectnums:
@@ -59,6 +62,11 @@ Use the following credentials to login into the web consoles:
 [time=5]
 [id="Getting Ready"]
 == Getting ready for the labs
+
+[IMPORTANT]
+====
+Please complete the following instructions to get ready for this lab. *If this is not the first lab you are doing today, and you have already completed this step in any of the previous labs, please skip to next task*.
+====
 
 You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
@@ -72,7 +80,7 @@ image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-resp
 
 [IMPORTANT]
 ====
-If you have already configured your CodeReady Workspaces environment in the previous lab, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
 ====
 
 === Start CodeReady workspace
@@ -102,7 +110,7 @@ image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-im
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
+This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
@@ -111,7 +119,7 @@ You can close the _Problems_ and _Output_ views to clear space.
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
-. During the workshop we will need to introduce commands for both the OpenShift and Camel-K Command Line Interfaces (CLI). For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
+. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
 +
 image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
 
@@ -130,49 +138,55 @@ oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:
 
 . You should see something like the following (the project names may be different):
 +
-[source,bash,subs="attributes+"]
 ----
 Login successful.
 
 You have access to the following projects and can switch between them with 'oc project <projectname>':
 
-  * shared-db-earth
+    shared-db-earth
     shared-kafka-earth
-    user1
+  * user1
     user1-che
     user1-dayinthel-0605
     user1-shared-475f
 
-Using project "shared-db-earth".
+Using project "user1".
 Welcome! See 'oc help' to get started.
 ----
 
-. Most of the work will be deploy to your own `{user-username}` project namespace, so be sure to have it as a _working_ project by executing the following command:
+. Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 ----
 
 . Now you are ready to start working on the application services.
 
-[type=verification]
-Were you able to successfully login to Openshift CLI?
+=== Deploy the synchronous services
 
-[type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+. Once you are logged into the OpenShift cluster, you need to deploy the services with the following command: 
++
+[source,bash,subs="attributes+"]
+----
+oc {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
+----
+
+. You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Don't forget to change the view from *Administrator* to *Developer*.
++
+image::images/topology-getting-ready.png[REST Services]
 
 [time=5]
 [id="Test Webapp"]
 == Review the problematic application
 
-You need to review the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and process the payment. The web application is build on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
+You need to check the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and processes the payment. The web application is built on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
 
 image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
 
-As we mentioned earlier, the current application has a flaw that is commonly find in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing and order: 
+As we mentioned earlier, the current application has a flaw that is commonly found in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing an order: 
 
-* First we will need to wait for both services to complete even though they are not related. As they payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get the feedback of the inventory too.
+* First we will need to wait for both services to complete even though they are not related. As they payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get inventory feedback too.
 * Second, in case of one of the services fail, because there is no correct error handling logic, what we see in the frontend application is that the whole transaction failed and we need to retry again.
 
 image::images/lab1-architecture-fail.png[App Architecture, role="integr8ly-img-responsive"]
@@ -182,7 +196,7 @@ We are ready to go over the application to validate the previous statements. We 
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{user-username}-eda` from the combobox in the top left:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure you are in the correct namespace by selecting `{namespace}` from the combobox in the top left:
 +
 image::images/topology-eda.png[Topology EDA, role="integr8ly-img-responsive"]
 
@@ -200,7 +214,7 @@ image::images/www-store.png[Store Web Page, role="integr8ly-img-responsive"]
 +
 image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
 
-. This are our ol' time classic flavors. Click on *Order Mango*,
+. These are our ol' time classic flavors. Click on *Order Mango*,
 +
 image::images/order-mango.png[Order Mango, role="integr8ly-img-responsive"]
 
@@ -218,7 +232,7 @@ Congratulations! Your _Mango_ order was successful! Everything is fine and the s
 
 The application is working correctly, but what happens when a service _fails_? As we mentioned in the beginning of this lab, there are some problems when one of the services is not available or takes longer than expected to complete. Let's check what happens in that case.
 
-. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 
 . Click on the *inventory* service deployment.
 +
@@ -226,7 +240,7 @@ image::images/topology-inventory-deployment.png[Inventory Deployment, role="inte
 +
 A side bar will open with an overview of your service resources.
 
-. Click on the *Overview* tab to check the deployment generals. Then click in the _down_ arrow to scale down the deployment replicas to zero.
+. Click on the *Details* tab to check the deployment information. Then click in the _down_ arrow to scale down the deployment replicas to zero.
 +
 image::images/scale-down-inventory.png[Scale Down Inventory, role="integr8ly-img-responsive"]
 +
@@ -247,7 +261,7 @@ The service was not able to fulfill the order because the inventory service was 
 ====
 --
 
-. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+. Dismiss the error dialog and go back to the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 
 . Scale back up the service and wait for the pod to come up.
 +
@@ -267,7 +281,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topics
 
-In this section of the lab we will move from syncronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and allows to get fine-grained scaling. 
+In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and allows to get fine-grained scaling. 
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
@@ -277,11 +291,17 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 
 *Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 
+[type=taskResource]
+.AMQ Operator Resouces
+****
+* link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
+****
+
 === Create an Address Space
 
 Let's create an **Address Space** using the AMQ Online Operator.
 
-. Go back to your OpenShift Developer Console.
+. Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
 
 . Click *+Add* on the left menu.
 +
@@ -329,6 +349,8 @@ spec:
 image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
+
+. Open the link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"] to check the progress of your address creation
 +
 --
 [IMPORTANT]
@@ -358,7 +380,7 @@ image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsiv
 +
 image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
 
-. In the main _address space_ console screen, click on the *+ Create* button to start adding the required topics.
+. In the main _address space_ console screen, click on the *Create Address* button to start adding the required topics.
 +
 image::images/topic-create.png[newtopic, role="integr8ly-img-responsive"]
 
@@ -374,7 +396,7 @@ image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
 +
 image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive"]
 
-. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan than the _incomingorders_ topic.
+. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan as the _incomingorders_ topic.
 +
 --
 image::images/topics.png[topics, role="integr8ly-img-responsive"]
@@ -385,7 +407,7 @@ A green check mark will show that the resources were successfully deployed.
 ====
 --
 
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click in the *amq* link.
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click on the *amq* link.
 +
 image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
 
@@ -420,8 +442,8 @@ Did you remember to write down the address space `service.host`?
 {standard-fail-text}
 
 [time=30]
-[id="Fuse Online Services"]
-== Develop Fuse Online Services
+[id="fuse-services"]
+== Develop Fuse Services
 
 *Red Hat Fuse Online* (part of _Red Hat Fuse_) is an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully cloud-hosted toolchain and runtime, available right from your browser.
 
@@ -464,11 +486,11 @@ amqp://{your-service.host}?requestTimeout=1000
 image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
 --
 
-. Scroll down the same page and click on the *Validate* button to check the connections was been established.
+. Scroll down the same page and click on the *Validate* button to check the connection has been established.
 +
 image::images/fuse-validate.png[Connection Validation, role="integr8ly-img-responsive"]
 
-. You will see a green message back in the top.
+. You will see a green message back at the top.
 +
 image::images/fuse-validation-success.png[Connection Validation Success, role="integr8ly-img-responsive"]
 
@@ -654,29 +676,26 @@ image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-re
 +
 image::images/fuse-building-integration.png[Building Integration, role="integr8ly-img-responsive"]
 
-. Test your integration. Go back to the CodeReady Workspaces IDE and issue the following command via the terminal window:
+=== Deploy inventory and invoice event-driven services
+
+. Go back to the CodeReady Workspaces IDE terminal and issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
++
+[source,none,subs="attributes+"]
+----
+oc {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
+----
+
+=== Test the integration
+
+. In the same Code Ready terminal issue the following command via the terminal window:
 +
 [source,bash,subs="attributes+"]
 ----
-curl -v -X POST \
-  http://i-events.fuse-{user-username}.svc:8080/place \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -d  \
-  '{
-    "orderId": 978,
-    "itemId": 135790,
-    "orderItemName": "Mango",
-    "quantity": 1,
-    "price": 2.50,
-    "address": "hello",
-    "zipCode": "15555"
-  }'
+curl -v -X POST http://i-events.fuse-{user-username}.svc:8080/place -H 'cache-control: no-cache' -H 'content-type: application/json' -d  '{"orderId":978,"itemId": 135790,"orderItemName": "Mango","quantity": 1,"price": 2.50,"address": "hello","zipCode": "15555"}'
 ----
 +
 You should receive a message back similar to the following one:
 +
-[source,none,subs="attributes+"]
 ----
 ...
 * upload completely sent off: 162 out of 162 bytes
@@ -691,278 +710,7 @@ You should receive a message back similar to the following one:
 * Connection #0 to host i-events.fuse-{user-username} left intact
 ----
 +
-*Excellent!* This means your are able to _POST_ an Order and sent it to the _Topic_.
-
-=== Add Extensions
-
-Fuse offers several connectors and components out of the box, but advanced users can also create new ones to enhance the power of the console. In this scenario, we have created some extensions to deliver _custom_ identifiers and timestamps.
-
-. Expand the *Customizations* menu and select the *Extensions* menu option on the left side.
-+
-image::images/fuse-extensions.png[Extension Customizations, role="integr8ly-img-responsive"]
-
-. Click on *Import Extension* button in the center of the screen.
-+
-image::images/fuse-import-extension.png[Import Extension, role="integr8ly-img-responsive"]
-
-. Download the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-custom-1.0.0.jar[Syndesis Custom Extension]  and the link:https://github.com/RedHatWorkshops/dayinthelife-streaming/raw/master/support/projects/module-1/syndesis-extension-delay-1.0.0.jar[Syndesis Delay Extension] from the company's github repository. Save them to your local system.
-
-. Click in the _dotted border_ rectangle and select the `syndesis-extension-custom-1.0.0.jar` file from your *Downloads* folder.
-+
-image::images/fuse-import-jar.png[Import Extension Jar, role="integr8ly-img-responsive"]
-
-. Click on the *Import Extension* button.
-+
-image::images/fuse-extension-import.png[Import Extension Review, role="integr8ly-img-responsive"]
-
-. Repeat again the last tasks and this time select the `syndesis-extension-delay-1.0.0.jar` file from your *Downloads* folder.
-
-Your extensions should now be listed in the *Extensions* page.
-
-image::images/fuse-extensions-list.png[Extension Page, role="integr8ly-img-responsive"]
-
-=== Create Inventory Flow
-
-. Time to create a new integration. Click on the *Integration* menu on the left side menu.
-+
-image::images/fuse-new-inventory.png[Create Inventory, role="integr8ly-img-responsive"]
-
-. Click on *Create Integration*.
-+
-image::images/fuse-create-inventory.png[Create Inventory Integration, role="integr8ly-img-responsive"]
-
-. We will start to read from the AMQ _topic_. Click on *AMQ Online*.
-+
-image::images/fuse-start-amq.png[Start AMQ Online, role="integr8ly-img-responsive"]
-
-. You need to _subscribe for messages_. Click on the *Select* button.
-+
-image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-img-responsive"]
-
-. Fill in `incomingorders` in the *Destination name* field and select `Topic` from the *Destination Type* combobox. Then, click *Next* button.
-+
-image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
-
-. In the next step select `JSON Instance` from the *Select Type* combobox, enter `order` at the _Data Type Name_ and paste the following code in the *Definition*:
-+
-[source,json,subs="attributes+"]
-----
-{
-   "username":"jdoe",
-   "orderId":"1",
-   "itemId":"1",
-   "orderItemName":"kiwi",
-   "quantity":1,
-   "price":2,
-   "address":"123 Evergreen Terrace",
-   "zipCode":"2222"
-}
-----
-+
-image::images/fuse-start-datatype.png[Output Data Type, role="integr8ly-img-responsive"]
-
-. Click the *Next* button.
-
-. In the next screen, click on *AMQ Online* again, as we are going to publish a message back to AMQ.
-+
-image::images/fuse-finish-amq.png[Finish AMQ Online, role="integr8ly-img-responsive"]
-
-. Click on the *Select* button from the _Publish message_ option.
-+
-image::images/fuse-finish-publish.png[Publish Message, role="integr8ly-img-responsive"]
-
-. In this screen, fill in `notifications` in the *Destination name* and select `Topic` as the *type*.
-+
-image::images/fuse-topic-notifications.png[Publish Destination, role="integr8ly-img-responsive"]
-
-. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following code on the *Definition*. Then `inventorystatus` in the *Data Type Name*.
-+
-[source,json,subs="attributes+"]
-----
-{
-   "orderId":"C1234",
-   "itemId":"C2312312",
-   "department":"inventory",
-   "datetime":"2019-01-01",
-   "quantity":3,
-   "flavor":"kiwi",
-   "inventoryId":"338927483"
-}
-----
-+
-image::images/fuse-inventorystatus-schema.png[Destination Schema, role="integr8ly-img-responsive"]
-
-. Click *Next* to proceed to the flow.
-
-. Click the *+* button to add the _custom_ generators.
-+
-image::images/fuse-connection-assignuuid.png[Inventory Add AssignUUID, role="integr8ly-img-responsive"]
-
-. Click *Next* to get back to the flow.
-
-. Time to add a mapper to assign the values of the output message. Click the *+* button between *AssignUUID* and *Publish messages*.
-+
-image::images/fuse-inventory-mapper.png[Inventory Add Mapper, role="integr8ly-img-responsive"]
-
-. Click on *Data Mapper*.
-+
-image::images/fuse-type-mapper.png[Add Type Mapper, role="integr8ly-img-responsive"]
-
-. Create a *Constants* by clicking the *+* icon and fill in the value  `inventory` and type _String_.
-+
-image::images/fuse-add-constant.png[Add Constant Mapper, role="integr8ly-img-responsive"]
-
-. Then click *Save*.
-+
-image::images/fuse-inventory-constant.png[Iventory Constant, role="integr8ly-img-responsive"]
-
-. Now, expand the *Constants*, *Order* and *FleurDeLuneID* sections and _drag and drop_ the fields from left to right to the corresponding mapping in the target schema. When ready, click the *Done* button.
-+
-image::images/fuse-inventory-mapping.png[Iventory Mapping, role="integr8ly-img-responsive"]
-
-. Click on the *Publish* button.
-+
-image::images/fuse-inventory-publish.png[Iventory Publish, role="integr8ly-img-responsive"]
-
-. Fill in the information for saving this integration. Type `inventory` in the *Name* and `Inventory status` for *Description*. Finally click *Save and publish* button.
-+
-image::images/fuse-inventory-save.png[Iventory Publish, role="integr8ly-img-responsive"]
-
-. The service will start assembling and deploying to OpenShift. Wait a few moments for the flow to deploy.
-+
-image::images/fuse-inventory-deploying.png[Iventory Deployment, role="integr8ly-img-responsive"]
-
-=== Create Invoice Flow
-
-. Let's create our next integration. Click on the *Integration* menu on the left side menu.
-+
-image::images/fuse-new-invoice.png[Create Invoice, role="integr8ly-img-responsive"]
-
-. Click on *Create Integration*.
-+
-image::images/fuse-create-invoice.png[Create Invoice, role="integr8ly-img-responsive"]
-
-. We will start to read from the AMQ _topic_. Click on *AMQ Online*.
-+
-image::images/fuse-start-amq.png[Start AMQ Online, role="integr8ly-img-responsive"]
-
-. You need to _subscribe for messages_. Click on the *Select* button.
-+
-image::images/fuse-start-subscribe.png[Subscribe For Messages, role="integr8ly-img-responsive"]
-
-. Fill in `incomingorders` in the *Destination name* field and select `Topic` from the *Destination Type* combobox. Then, click *Next* button.
-+
-image::images/fuse-incoming-topic.png[AMQP Destination, role="integr8ly-img-responsive"]
-
-. In the next step select `JSON Instance` from the *Select Type* combobox and paste the following code in the *Definition*. Then type `order` in the *Data Type Name* field.
-+
---
-[source,json,subs="attributes+"]
-----
-{
-   "username":"jdoe",
-   "orderId":"1",
-   "itemId":"1",
-   "orderItemName":"kiwi",
-   "quantity":1,
-   "price":2,
-   "address":"123 Evergreen Terrace",
-   "zipCode":"2222"
-}
-----
-
-image::images/fuse-start-datatype.png[Output Data Type, role="integr8ly-img-responsive"]
---
-
-. Click the *Next* button.
-
-. In the next screen, click on *AMQ Online* again, as we are going to publish a message back to AMQ.
-+
-image::images/fuse-finish-amq.png[Finish AMQ Online, role="integr8ly-img-responsive"]
-
-. Click on the *Select* button from the _Publish message_ option.
-+
-image::images/fuse-finish-publish.png[Publish Message, role="integr8ly-img-responsive"]
-
-. In this screen, fill in `notifications` in the *Destination name* and select `Topic` as the *type*.
-+
-image::images/fuse-topic-notifications.png[Publish Destination, role="integr8ly-img-responsive"]
-
-. Select the data type of the publish message. Select `JSON Instance` from the *Select Type* combobox and paste the following _Invoice Status_ code on the *Definiton*. Then `invoicestatus` in the *Data Type Name*.
-+
-[source,json,subs="attributes+"]
-----
-{
-   "itemId":"C2312312",
-   "department":"invoicing",
-   "datetime":"2019-01-01",
-   "amount":32,
-   "currency":"USD",
-   "invoiceId":"B-0338927483"
-}
-----
-+
-image::images/fuse-invoicestatus-schema.png[Destination Schema, role="integr8ly-img-responsive"]
-
-. Scroll down and click *Next* to proceed to the flow.
-
-. Click the *+* button to add the _custom_ generators.
-+
-image::images/fuse-connection-assignuuid.png[Invoice Add AssignUUID, role="integr8ly-img-responsive"]
-
-. Click *Next* to get back to the flow.
-
-. Click the *+* button to add a delay step in the service between the _Subscribe for messages_ and the _AssignUUID_.
-+
-image::images/fuse-add-step.png[Invoice Add Step, role="integr8ly-img-responsive"]
-
-. Scroll down and select *Delay* from the connection options.
-+
-image::images/fuse-connection-delay.png[Invoice Add Delay, role="integr8ly-img-responsive"]
-
-. Type in `30000` in the delay time to mimic the payment processing time for the service. Then click *Next* to return to the service flow.
-+
-image::images/fuse-delay-time.png[Invoice Delay Time, role="integr8ly-img-responsive"]
-
-. Time to add a mapper to assign the values of the output message. Click the *+* button between *AssignUUID* and *Publish messages*.
-+
-image::images/fuse-invoice-mapper.png[Invoice Add Mapper, role="integr8ly-img-responsive"]
-
-. Click on *Data Mapper*.
-+
-image::images/fuse-type-mapper.png[Add Type Mapper, role="integr8ly-img-responsive"]
-
-. Create a *Constants* by clicking the *+* icon and fill in the value  `invoicing` and type _String_.
-+
-image::images/fuse-add-constant.png[Add Constant Mapper, role="integr8ly-img-responsive"]
-
-. Then click *Save*.
-+
-image::images/fuse-invoice-constant.png[Invoice Constant, role="integr8ly-img-responsive"]
-
-. Repeat last two steps to create the `USD` *Constant* of _String_ type.
-+
-image::images/fuse-currency-constant.png[Currency Constant, role="integr8ly-img-responsive"]
-
-. Now, expand the *Constants*, *Order* and *FleurDeLuneID* sections. Select both `quantity` and `price` using the `ctrl` or `cmd` key and then map to the `amount` field in the right _target_ fields by dragging and dropping the field. Then select *Multiply* from the combobox in the right _options_ panel.
-+
-image::images/fuse-amount-mapping.png[Amount Mapping, role="integr8ly-img-responsive"]
-
-. Complete the rest of the fields _drag and drop_ from left to right to the corresponding mapping in the target schema. When ready, click the *Done* button.
-+
-image::images/fuse-invoice-mapping.png[Invoice Mapping, role="integr8ly-img-responsive"]
-
-. Click on the *Publish* button.
-+
-image::images/fuse-invoice-publish.png[Invoice Publish, role="integr8ly-img-responsive"]
-
-. Fill in the information for saving this integration. Type `invoice` in the *Name* and `Invoice status` for *Description*. Finally click *Save and publish* button.
-+
-image::images/fuse-invoice-save.png[Invoice Save, role="integr8ly-img-responsive"]
-
-. The service should start to assembly and deploy. It will take a few moments to complete.
-+
-image::images/fuse-invoice-deploy.png[Invoice Deploy, role="integr8ly-img-responsive"]
+*Excellent!* This means you are able to _POST_ an Order and it was sent to the _Topic_.
 
 [type=verification]
 Were you able to successfully start all 3 integration services?
@@ -1018,7 +766,7 @@ This will be the base we will use to build our service.
 
 [NOTE]
 ====
-Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable an estable connection from the browser.
+Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable a persistent connection from the browser.
 ====
 --
 
@@ -1054,33 +802,33 @@ For the following commands remember to be sure to switch to your _working_ proje
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events -n {user-username}
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events {namespace}
 ----
 
-. Start and watch the build, which will take about minutes to complete:
+. Start and watch the build, which will take about 2 minutes to complete:
 +
 [source,bash,subs="attributes+"]
 ----
-oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/target/*-runner.jar --follow -n {user-username}
+oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/target/*-runner.jar --follow {namespace}
 ----
 
 . Deploy the service as an OpenShift application with the CLI:
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events
+oc {namespace} new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events {namespace}
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
 +
-[source,sh,role="copypaste"]
+[source,bash,subs="attributes+"]
 ----
-oc patch dc/events -p '{ "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
+oc {namespace} patch dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
 ----
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the OpenShift logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
 +
 image::images/topology-events.png[Topology Events, role="integr8ly-img-responsive"]
 
@@ -1088,168 +836,6 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 
 [type=verification]
 Were you able to successfully view the events default webpage?
-
-[type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
-
-[time=10]
-[id="Update Frontend"]
-== Update Frontend UI for Event-driven
-
-The current _store frontend application_ is currently handling only the *REST API* flavors. We will need to add the call to our new *EDA* options. Follow the next tasks to _add the HTML_ for the new flavors, _receive and display_ the async notifications and to correctly post the orders in the _eventing flow_.
-
-=== Add the new Async flavors to the UI
-
-. Navigate to the `store-ui` project and open the *product.handlebars* file under `views/`.
-+
-image::images/store-product.png[Store UI Product File, role="integr8ly-img-responsive"]
-
-. Look for line *12* and paste the following code between the `/* TODO: INSERT HERE NEW FLAVORS */` markers:
-+
-[source,html,subs="attributes+"]
-----
-    <ul>
-      <li>
-        <h1>New Async Special</h1>
-        <p>This website template has been designed by freewebsitetemplates.com for you, for free.</p>
-      </li>
-      <li>
-        <img src="images/blackberry.jpg" alt="">
-        <div class="order-btn">
-          <button onclick="placeOrder('blackberry', 'event')">Order Blackberry &nbsp;<i class="fas fa-cart-plus"></i></button>
-        </div>
-      </li>
-      <li>
-        <img src="images/strawberry.jpg" alt="">
-        <div class="order-btn">
-          <button onclick="placeOrder('strawberry', 'event')">Order Strawberry &nbsp;<i class="fas fa-cart-plus"></i></button>
-        </div>
-      </li>
-      <li>
-        <img src="images/blueberry.jpg" alt="">
-        <div class="order-btn">
-          <button onclick="placeOrder('blueberry', 'event')">Order Blueberry &nbsp;<i class="fas fa-cart-plus"></i></button>
-        </div>
-      </li>
-    </ul>
-----
-
-. Scroll all the way down to line *310* and paste the next lines between `/* TODO: PROCESSS EVENT RESPONSE */`:
-+
-[source,javascript,subs="attributes+"]
-----
-              else {
-                new Noty({
-                  layout: 'center',
-                  type: 'info',
-                  text: "Your order for " + order.orderItemName + " was posted!"
-                }).show();
-              }
-----
-
-. Next, open the *events.handlebars* under `views/partials` folder.
-+
-image::images/store-events.png[Store UI Events File, role="integr8ly-img-responsive"]
-
-. Paste the following code between the `/* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */` markers:
-+
-[source,javascript,subs="attributes+"]
-----
-        constructor() {
-            this.source = new EventSource("//events-{user-username}.{openshift-app-host}/consume");
-            this.source.onopen = (e) => console.log(e);
-            this.source.onmessage = ({ data }) => this.updateDoc(data);
-        }
-        updateDoc(data) {
-            console.log("received data= " + data);
-            var event = JSON.parse(data);
-            if (event.department === 'inventory') {
-                new Noty({
-                    type: 'info',
-                    text: 'Your ' + event.flavor + ' order was successfully processed!'
-                }).show();
-            }
-            if (event.department === 'invoicing') {
-                new Noty({
-                    type: 'reply',
-                    text: 'Your payment of $' + event.amount + ' ' + event.currency + ' is confirmed!'
-                }).show();
-            }
-        }
-----
-+
-[NOTE]
-====
-The link:https://developer.mozilla.org/en-US/docs/Web/API/EventSource[EventSource] interface is web content's interface to server-sent events. An EventSource instance opens a persistent connection to an HTTP server, which sends events in text/event-stream format.
-
-Unlike link:https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API[WebSockets], server-sent events are unidirectional; that is, data messages are delivered in one direction, from the server to the clients browser.
-====
-
-. Now, open the *index.js* file at the top level.
-+
-image::images/codeready-store-index.png[Store UI Index File, role="integr8ly-img-responsive"]
-
-. Navigte to Line *88* and paste the following code between the `/* TODO add POST/EVENT method handling */` markers:
-+
-[source,javascript,subs="attributes+"]
-----
-app.post('/order/event', json(), async (req, res, next) => {
-  log.info('placing order with body: %j', req.body)
-  try {
-    const response = await http.post(new URL('/place', ORDERS_EVENT_BASE_URL ? ORDERS_EVENT_BASE_URL : "http://i-events.fuse-{user-username}.svc:8080"), {
-      json: true,
-      body: req.body
-    })
-
-    if (!req.session.orders) {
-      req.session.orders = []
-    }
-
-    // Store the order result in the user session
-    // Can be used to render order history or similar
-    req.session.orders.push(response.body)
-
-    res.json(response.body)
-  } catch (e) {
-    next(boom.internal('error placing order', e))
-  }
-})
-----
-
-. Finally, go back to the terminal window and start a new build with these changes. First be sure you are in the correct directory with this command:
-+
-[source,bash,subs="attributes+"]
-----
-cd $CHE_PROJECTS_ROOT/FleurDeLune/projects/store-ui/
-----
-
-. If you haven't done it yet, login into the openshift cli:
-+
-[source,bash,subs="attributes+"]
-----
-oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
-----
-
-. Be sure to the in the correct _working_ `{user-username}` directory:
-+
-[source,bash,subs="attributes+"]
-----
-oc project {user-username}
-----
-
-. Then, start a new application deployment:
-+
-[source,bash,subs="attributes+"]
-----
-npm run openshift
-----
-
-. Check the deployment was successful by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Make sure the are dark blue circles around the OpenShift logo:
-+
-image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
-
-[type=verification]
-Were you able to successfully see the www-store pods running?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -1264,15 +850,15 @@ Remember what happens when a service is down in our _traditional_ REST architect
 
 Let's check how the stores looks with the new flavors.
 
-. In the link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
+. In the link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"] click the *Open URL* icon for the `www-store` service.
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
-. With the open application, click on *PLACE ORDER!*
+. With the open application open, click on the *ASYNC* menu option.
 +
-image::images/store-place-order.png[Place order, role="integr8ly-img-responsive"]
+image::images/store-order-async.png[Place async order, role="integr8ly-img-responsive"]
 
-. Can you see the new flavors we added? This time order a sweet _event-driven_ strawberry one.
+. Can you see the new flavors? This time lets order a sweet _event-driven_ strawberry one.
 +
 image::images/store-strawberry.png[Order Strawberry, role="integr8ly-img-responsive"]
 
@@ -1294,24 +880,21 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 Remember that we need to test what happens when a service is down? Go back to _Fuse Online_ so we can take down the inventory service.
 
-. Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
+. Go back to the Code Ready IDE terminal
 
-. Click on the *Integration* menu option on the left bar. Then click on the three dots menu of the *inventory* service to display the emergent menu. Then click on *Stop*.
+. Issue the following command to _scale down_ the *invoice_ service to simulate a failing service.
 +
-image::images/fuse-stop.png[Inventory Deployment, role="integr8ly-img-responsive"]
-
-. Click on *Stop* in the pop up dialog.
+[source,bash,subs="attributes+"]
+----
+oc {namespace} patch integration/inventory-events --patch $'spec:\n replicas: 0' --type merge
+----
 +
---
-image::images/fuse-stop-accept.png[Scale Down Inventory, role="integr8ly-img-responsive"]
-
-[TIP]
+[NOTE]
 ====
-This will simulate the _outage_ of the inventory service. Wait a few seconds for the service to stop.
+This will simulate the _outage_ of the inventory service. Wait a few seconds for the service to stop. You will notice the white circle on the Camel deployment.
 ====
-
-image::images/fuse-stopped.png[Scaled To Zero, role="integr8ly-img-responsive"]
---
++
+image::images/invoice-events-outage.png[Scaled To Zero, role="integr8ly-img-responsive"]
 
 . Go back to the web application page and try again to order the async *Strawberry* flavor. What happens?
 +
@@ -1335,19 +918,16 @@ This time the Invoice service is decoupled from the Inventory call, so it can st
 ====
 --
 
-. Let's get the *inventory* service back online. Go back to the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
-
-. Click again in the *inventory* service three dot menu and select *start* from the pop up menu.
+. Let's get the *inventory* service back online. Issue the following command to bring back the *invoice* service.
 +
-image::images/fuse-inventory-start.png[Scale Inventory Up, role="integr8ly-img-responsive"]
-
-. Click the *start* button on the next dialog.
-+
-image::images/fuse-inventory-restart.png[Confirm Start, role="integr8ly-img-responsive"]
+[source,bash,subs="attributes+"]
+----
+oc {namespace} patch integration/inventory-events --patch $'spec:\n replicas: 1' --type merge
+----
 
 . Wait a few seconds for the service to get back online.
 +
-image::images/fuse-inventory-restarting.png[Invetory Starting, role="integr8ly-img-responsive"]
+image::images/invoice-events-back.png[Invetory Starting, role="integr8ly-img-responsive"]
 
 . Go back to the web application page and try now to order some *blueberry*.
 +
@@ -1364,7 +944,8 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=5]
 [id="summary"]
 == Summary
-In this lab you  created cloud native integration services which listen to events using Camel K. You also set up topics for your event driven system. Now your system is decoupled and modularized in a way that is flexible and reactive.
+
+In this lab you successfully helped the development team to move the online ordering site to a new event-driven architecture based on AMQ Online and Quarkus reactive messaging clients. You were able to create a self-provisioning address space to create event destinations for the incoming orders and the notifications. Also you designed a new API using the Red Hat API designer and implemented the service using Fuse Online. Finally you were able to check how decoupling services using event-driven apps help you to avoid disruption on your systems.
 
 You can now proceed to link:{next-lab-url}[Lab 2].
 
@@ -1372,5 +953,7 @@ You can now proceed to link:{next-lab-url}[Lab 2].
 [id="further-reading"]
 == Notes and Further Reading
 
-* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
-* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
+* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ, window="_blank"]
+* https://developers.redhat.com/courses/quarkus[Try Quarkus, window="_blank"]
+* https://www.redhat.com/en/technologies/jboss-middleware/fuse-online[Red Hat Fuse Online, window="_blank"]
+* https://developers.redhat.com/topics/event-driven/[Event-driven Architecture - Red Hat Developers, window="_blank"]

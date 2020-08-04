@@ -9,7 +9,7 @@
     "build": "npm run copy:patternfly-assets",
     "copy:patternfly-assets": "cp -R node_modules/@patternfly/patternfly/assets public && cp node_modules/@patternfly/patternfly/patternfly.min.css public/patternfly.min.css && cp node_modules/@patternfly/patternfly/patternfly-addons.css public/patternfly-addons.css",
     "coverage": "nyc npm test",
-    "openshift": "nodeshift --strictSSL=false --nodeVersion=10.x --expose --quiet",
+    "openshift": "npx nodeshift --strictSSL=false --nodeVersion=10.x --expose --quiet -d USER=$CHE_WORKSPACE_NAMESPACE",
     "postinstall": "npm run copy:patternfly-assets",
     "start": "node .",
     "start:dev": "LOG_LEVEL=trace NODE_ENV=local nodemon . | pino-pretty -t",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "nodemon": "~1.19.4",
-    "nodeshift": "~3.1.1",
+    "nodeshift": "~6.2.0",
     "nyc": "~14.1.1",
     "pino-pretty": "~3.2.2",
     "standard": "~14.3.1"

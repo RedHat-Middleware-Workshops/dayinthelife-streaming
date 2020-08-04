@@ -1,9 +1,27 @@
 <script>
     class Source {
-        {{!-- /* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */ --}}
-
-
-        {{!-- /* TODO: START SSE SOURCE & PROCESS INCOMING MESSAGES */ --}}
+        constructor(url) {
+            this.source = new EventSource("//" + url);
+            this.source.onopen = (e) => console.log(e);
+            this.source.onmessage = ({ data }) => this.updateDoc(data);
+        }
+        updateDoc(data) {
+            console.log("received data= " + data);
+            var event = JSON.parse(data);
+            if (event.department === 'inventory') {
+                new Noty({
+                    type: 'info',
+                    text: 'Your ' + event.flavor + ' order was successfully processed!'
+                }).show();
+            }
+            if (event.department === 'invoicing') {
+                new Noty({
+                    type: 'reply',
+                    text: 'Your payment of $' + event.amount + ' ' + event.currency + ' is confirmed!'
+                }).show();
+            }
+        }
     }
-    new Source();
+    var url=window.location.hostname.replace("www-store", "events") + "/consume";
+    new Source(url);
 </script>
