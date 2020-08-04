@@ -1,4 +1,5 @@
-package module4;
+// camel-k: dependency=camel-infinispan dependency=camel-bean dependency=camel-jackson dependency=camel-swagger-java configmap=costadvice-config
+
 import org.apache.camel.builder.RouteBuilder;
 import java.util.Map;
 import java.util.HashMap;
