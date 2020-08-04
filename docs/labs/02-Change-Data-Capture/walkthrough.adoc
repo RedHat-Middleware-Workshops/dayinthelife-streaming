@@ -171,11 +171,11 @@ There is already a legacy Kafka deployment running in the cluster. We will deplo
 
 === Deploy KafkaConnect CDC Connector
 
-. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
+. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]. 
 +
 [IMPORTANT]
 ====
-Be sure to be in your _{namespace}_ project
+Don't forget to change the view from *Administrator* to *Developer*. Be sure to be in the _{namespace}_ project.
 ====
 
 . Click *+Add* on the left menu.
@@ -202,17 +202,24 @@ apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaConnect
 metadata:
   name: debezium
+  annotations:
+    strimzi.io/use-connector-resources: "true"
 spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
-  image: 'quay.io/hguerreroo/debezium-connect:0.10.0-sqlsrv'
+  image: 'quay.io/hguerreroo/rhi-cdc-connect:2020-Q2'
   replicas: 1
+  resources:
+    requests:
+      memory: 2Gi
+    limits:
+      memory: 2Gi
   jvmOptions:
     gcLoggingEnabled: false
   config:
-    group.id: {user-username}-connect-cluster
-    offset.storage.topic: {user-username}-connect-cluster-offsets
-    config.storage.topic: {user-username}-connect-cluster-configs
-    status.storage.topic: {user-username}-connect-cluster-status
+    group.id: {user-username}-debezium-cluster
+    offset.storage.topic: {user-username}-debezium-cluster-offsets
+    config.storage.topic: {user-username}-debezium-cluster-configs
+    status.storage.topic: {user-username}-debezium-cluster-status
 ----
 
 . Click on *Create* button.
@@ -221,17 +228,53 @@ image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="
 
 === Configure KafkaConnect CDC Connector
 
-. Go back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
-+
-[source,bash,subs="attributes+"]
-----
-oc expose service debezium-connect-api --name kafka-connect {namespace}
-----
+When you have created a container image for your connector plug-in, you need to create a connector instance in your Kafka Connect cluster. You can then configure, monitor, and manage a running connector instance.
+
+AMQ Streams provides two APIs for creating and managing connectors:
+
+* KafkaConnector resources (referred to as KafkaConnectors)
+* Kafka Connect REST API
+
+*KafkaConnectors* allow you to create and manage connector instances for Kafka Connect in an OpenShift-native way, so an HTTP client such as cURL is not required. Like other Kafka resources, you declare a connector’s desired state in a *KafkaConnector* _YAML_ file that is deployed to your OpenShift cluster to create the connector instance.
+
+. In the topology view, click *+Add* on the left menu.
+
+. Click on the *From Catalog* option.
+
+. Type in `kafka` in the search text field and then click on *Kafka connector*.
 +
 [IMPORTANT]
 ====
-Remember to be logged into OpenShift and be in the correct _working_ project.
+Double check that you are selecting *KafkaConnector* and not _KafkaConnect_. Notice the *or* at the end.
 ====
+
+. Click on Create button.
+
+. Replace the contents of the YAML editor with the following code:
++
+[source,yaml,subs="attributes+"]
+----
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: orders-connector
+  labels:
+    strimzi.io/cluster: debezium
+spec:
+  class: io.debezium.connector.sqlserver.SqlServerConnector
+  tasksMax: 1
+  config:
+    connector.class: "io.debezium.connector.sqlserver.SqlServerConnector"
+    database.hostname: "mssql-server-linux.shared-db-earth.svc"
+    database.port: "1433"
+    database.user: "sa"
+    database.password: "Password!"
+    database.dbname: "InternationalDB"
+    database.server.name: "{user-username}.db"
+    table.whitelist: "dbo.Orders"
+    database.history.kafka.bootstrap.servers: "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092"
+    database.history.kafka.topic: "{user-username}.db.dbhistory"
+----
 
 . Go back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu
 +
