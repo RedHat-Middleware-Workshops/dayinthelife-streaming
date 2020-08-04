@@ -169,7 +169,7 @@ oc project {namespace}
 +
 [source,bash,subs="attributes+"]
 ----
-oc {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
+oc apply -n {namespace} -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
 ----
 
 . You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Don't forget to change the view from *Administrator* to *Developer*.
@@ -180,13 +180,13 @@ image::images/topology-getting-ready.png[REST Services]
 [id="Test Webapp"]
 == Review the problematic application
 
-You need to check the problems with the orders web application from Fleur de Lune. In this application customers select their favorite flavers and place the order online. This application then updates the inventory and processes the payment. The web application is built on NodeJS and the backend service is using the legacy SpringBoot service. The rest of the application components were already migrated to Quarkus.
+You need to check the problems with the orders web application from Fleur de Lune. In this application, customers select their favorite flavers and place the order online. This application then updates the inventory and processes the payment. The web application is built on NodeJS and the backend service is using the legacy Spring Boot service. The rest of the application components were already migrated to Quarkus.
 
 image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
 
 As we mentioned earlier, the current application has a flaw that is commonly found in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing an order: 
 
-* First we will need to wait for both services to complete even though they are not related. As they payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get inventory feedback too.
+* First we will need to wait for both services to complete even though they are not related. As the payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get inventory feedback too.
 * Second, in case of one of the services fail, because there is no correct error handling logic, what we see in the frontend application is that the whole transaction failed and we need to retry again.
 
 image::images/lab1-architecture-fail.png[App Architecture, role="integr8ly-img-responsive"]
@@ -285,7 +285,7 @@ In this section of the lab we will move from synchronous HTTP REST calls to even
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
-We will use AMQ Online to provision an account to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls is blocking.
+We will use AMQ Online to provision an account to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls are blocking.
 
 image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-responsive"]
 
@@ -294,7 +294,7 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 [type=taskResource]
 .AMQ Operator Resouces
 ****
-* link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
+* link:{openshift-host}/k8s/ns/{namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.2/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
 ****
 
 === Create an Address Space
@@ -682,12 +682,12 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 +
 [source,none,subs="attributes+"]
 ----
-oc {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
+oc apply -n {namespace} -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
 ----
 
 === Test the integration
 
-. In the same Code Ready terminal issue the following command via the terminal window:
+. In the same CodeReady Workspaces terminal issue the following command:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -802,28 +802,28 @@ For the following commands remember to be sure to switch to your _working_ proje
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events {namespace}
+oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events -n {namespace}
 ----
 
 . Start and watch the build, which will take about 2 minutes to complete:
 +
 [source,bash,subs="attributes+"]
 ----
-oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/target/*-runner.jar --follow {namespace}
+oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/target/*-runner.jar --follow -n {namespace}
 ----
 
 . Deploy the service as an OpenShift application with the CLI:
 +
 [source,bash,subs="attributes+"]
 ----
-oc {namespace} new-app events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events {namespace}
+oc new-app -n {namespace} events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events -n {namespace}
 ----
 
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
 +
 [source,bash,subs="attributes+"]
 ----
-oc {namespace} patch dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
+oc patch -n {namespace} dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
 ----
 
 === Check the OpenShift Developer Console
@@ -878,15 +878,15 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 === Take down that service
 
-Remember that we need to test what happens when a service is down? Go back to _Fuse Online_ so we can take down the inventory service.
+Remember that we need to test what happens when a service is down?
 
-. Go back to the Code Ready IDE terminal
+. Go back to the CodeReady Workspaces IDE terminal
 
-. Issue the following command to _scale down_ the *invoice_ service to simulate a failing service.
+. Issue the following command to _scale down_ the _invoice_ service to simulate a failing service.
 +
 [source,bash,subs="attributes+"]
 ----
-oc {namespace} patch integration/inventory-events --patch $'spec:\n replicas: 0' --type merge
+oc patch -n {namespace} integration/inventory-events --patch $'spec:\n replicas: 0' --type merge
 ----
 +
 [NOTE]
@@ -922,7 +922,7 @@ This time the Invoice service is decoupled from the Inventory call, so it can st
 +
 [source,bash,subs="attributes+"]
 ----
-oc {namespace} patch integration/inventory-events --patch $'spec:\n replicas: 1' --type merge
+oc patch -n {namespace} integration/inventory-events --patch $'spec:\n replicas: 1' --type merge
 ----
 
 . Wait a few seconds for the service to get back online.
