@@ -405,36 +405,18 @@ A green check mark will show that the resources were successfully deployed.
 ====
 --
 
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click on the *amq* link.
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Click on the *Endpoints* tab to check the messaging host information.
 +
-image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
+image::images/addressspace-endpoints.png[Address Space Endpoints, role="integr8ly-img-responsive"]
 
-. Then, click the *Resources* tab. In that tab, click the *amq-config* link.
+. Copy and write down the *Host* information of the `amq.messsaging.cluster`. As we will be connecting all our services from within OpenShift we can use the internal hostname.
 +
---
-image::images/addressspace-configmap.png[topics, role="integr8ly-img-responsive"]
-
-[NOTE]
-====
-When we created the Address Space, we configure it to _export_ the connection configuration using a *ConfigMap*. This configuration is available for our microservices to inject the connecting details so we don't need to hardcode them in the code.
-====
---
-
-. Scroll down the page to reveal the _configmap_ details.  For this workshop, we will run all our services within the OpenShift cluster, so copy and write down only the `service.host` information.
-+
---
-image::images/addressspace-service-host.png[topics, role="integr8ly-img-responsive"]
-
-[TIP]
-====
-You will also be able to see the _certificate_ information for connecting using the TLS endpoint under `external.host`. This is required for connections from _outside_ the OpenShift cluster.
-====
---
+image::images/addressspace-hostname.png[Address Space Host, role="integr8ly-img-responsive"]
 
 *Well done!* You now have a running AMQ with two topics called `incomingorders` and `notifications`.
 
 [type=verification]
-Did you remember to write down the address space `service.host`?
+Did you remember to write down the address space *Host*?
 
 [type=verificationFail]
 {standard-fail-text}
