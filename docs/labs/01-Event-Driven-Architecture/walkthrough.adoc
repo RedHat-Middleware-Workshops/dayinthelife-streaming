@@ -275,7 +275,7 @@ Your order should be back again!
 Were you able to successfully scale-down and scale-up your application?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="Create AMQ Topics"]
@@ -716,7 +716,7 @@ You should receive a message back similar to the following one:
 Were you able to successfully start all 3 integration services?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="Develop Events Service"]
@@ -838,7 +838,7 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 Were you able to successfully view the events default webpage?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=10]
 [id="test-eda"]
@@ -874,7 +874,7 @@ image::images/www-invoice.png[Payment received, role="integr8ly-img-responsive"]
 Were you able to successfully see all 3 notification messages?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 === Take down that service
 
@@ -938,7 +938,7 @@ image::images/www-order-back.png[Invetory Starting, role="integr8ly-img-responsi
 Did your order reappear and received?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 
 [time=5]

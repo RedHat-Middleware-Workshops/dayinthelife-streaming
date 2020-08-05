@@ -273,21 +273,23 @@ spec:
     database.server.name: "{user-username}.earth"
     table.whitelist: "dbo.Orders"
     database.history.kafka.bootstrap.servers: "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092"
-    database.history.kafka.topic: "{user-username}.db.dbhistory"
+    database.history.kafka.topic: "{user-username}.earth.dbhistory"
 ----
 
-. Go back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu
+. Click the *Create* button to submit the configuration.
+
+. Go back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu. 
 +
 image:images/openshift-kafkaconnect-resource.png[Back To Topology]
 
-. Wait for the default deployment to finish and deploy the required pod. Remember to wait for the dark blue circles.
+. Check the log in the *debezium-cluster* deployment.
 +
 image:images/topology-kafkaconnect.png[KafkaConnect Topology]
 
 [type=verification]
-Do you see the blue circle around the debezium-connect pod?
+Did the connector started correctly and is now reading the database transaction log?
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="loading-earth-orders"]
@@ -391,7 +393,7 @@ You can narrow the results by adding `{user-username}` to the search filter.
 Were you able to see that your Change Data Capture connector has access to Kafka?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 === Inspect Kafka records
 
@@ -435,7 +437,7 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic {user-us
 Were you able to capture the changes in the MSSQL server database and generate Apache Kafka events using Change Data Capture?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=5]
 [id="deploying-apache-kafka"]
@@ -511,7 +513,7 @@ image:images/openshift-kafka-topology.png[Kafka Topology]
 Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="replicating-to-other-kafka-clusters"]
@@ -602,7 +604,7 @@ This time there is no need to filter the topics, as this _moon_ cluster is only 
 Were you able to verify the Kafka Topic?  Good, this means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="enabling-http-access"]
@@ -720,7 +722,7 @@ You can take notice of the `offset` returned in the records to know how many mes
 Were you able to successfully retrieve CDC data over HTTP?  *Congratulations!* You just finished capturing data from a MSSQL database into Kafka, then replicate that information to a different Kafka cluster. Finally you were able to retrieve the information using an HTTP interface.
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=5]
 [id="summary"]
