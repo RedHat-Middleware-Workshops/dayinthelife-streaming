@@ -331,7 +331,7 @@ image::images/www-imported-orders.png[Imported Orders]
 
 === Check Database Records
 
-After loading the file into the system, the orders data  should be storee in the MSSQL Server database. Let's check to make sure that's the case.
+After loading the file into the system, the orders data should be stored in the MSSQL Server database. Let's check to make sure that's the case.
 
 . Go back to the topology view of the OpenShift Developer console. Change the project to the `shared-db-earth`.
 +
@@ -503,7 +503,7 @@ image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integ
 +
 image:images/openshift-kafkas-list.png[Back To Topology]
 
-. Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
+. Wait for the cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
 image:images/openshift-kafka-topology.png[Kafka Topology]
 
@@ -517,13 +517,13 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="replicating-to-other-kafka-clusters"]
 == Replicating to other Kafka clusters
 
-We refer to the process of replicating data between Kafka clusters "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
+We refer to the process of replicating data between Kafka clusters as "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
 
 The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
 
 === Deploy Mirror Maker
 
-. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kafka cluster)
+. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We mean from the Earth Kafka cluster to the Moon Kafka cluster)
 
 . Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
@@ -709,7 +709,7 @@ curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-us
 The first call to the service will return an empty string as it just created the consumer and subscribed to the topic.
 ====
 
-. Call the comand again, it will start to retrieve batchs of records. Keep repeating until there is no more records to read.
+. Call the command again, it will start to retrieve batchs of records. Keep repeating until there is no more records to read.
 +
 [TIP]
 ====

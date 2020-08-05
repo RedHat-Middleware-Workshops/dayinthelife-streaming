@@ -22,7 +22,7 @@ Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still ve
 AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 
-To provide better customer experience, Closely monitoring the harvest from marshmallows farms on the moon. Plus harvest batch shipping schedule, will allow Fleur de lune more proactive. And faster respond to any emergency that may impact their business.
+To provide a better customer experience, you will be closely monitoring the harvest from marshmallows farms on the moon. You will also be adding a harvest batch shipping schedule to allow Fleur de lune to be more proactive along with faster response to any emergency that may impact their business.
 
 
 . In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
@@ -71,7 +71,7 @@ Your password is: `{user-password}`
 == Provision AMQ Topic
 
 === Real time harvest information gathering
-. You are setting up a topic in AMQ Online to receive event signals from Edge devices
+. You are setting up a topic in AMQ Online to receive event signals from Edge devices. 
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
@@ -214,7 +214,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="startup-che-workspace"]
 == Create the Simulator
-. Since we can't really setup real edge device for you in the moon, you will need to create a simulator that simulates the edge device that sends random generated harvest data.
+. Since we can't really set up a real edge device for you on the moon, you will need to create a simulator that simulates the edge device that sends randomly generated harvest data.
 +
 image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
@@ -305,7 +305,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="setup-order-inventory"]
 == Setup Order Inventory with AMQ Streams
-. The harvest data are now streaming into the topic, we will be grading the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. And also streaming separately to the shipping departments.
+. The harvest data is now streaming into the topic, we will be grading the marshmallows according to their sizes. First we will store all the updated grading information in a relational database, it will also stream separately to the shipping departments.
 +
 image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
 +
@@ -422,7 +422,7 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 
 . Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
-. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **step-2-inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
+. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
 +
 image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
 
