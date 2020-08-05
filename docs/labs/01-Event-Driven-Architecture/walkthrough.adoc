@@ -685,6 +685,14 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 oc apply -n {namespace} -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
 ----
 
+. Update the ecommerce web application to point to your new event-driven API by updating the application environment variable:
++
+[source,none,subs="attributes+"]
+----
+oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-events.fuse-{user-username}.svc:8080"
+----
+
+
 === Test the integration
 
 . In the same CodeReady Workspaces terminal issue the following command:
