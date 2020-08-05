@@ -294,7 +294,7 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 [type=taskResource]
 .AMQ Operator Resouces
 ****
-* link:{openshift-host}/k8s/ns/{namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.2/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
+* link:{openshift-host}/k8s/ns/{namespace}/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.2/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
 ****
 
 === Create an Address Space
@@ -350,21 +350,7 @@ image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-i
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
 
-. Open the link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"] to check the progress of your address creation
-+
---
-[IMPORTANT]
-====
-Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
-====
-
-[NOTE]
-====
-This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
-====
---
-
-. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there.
+. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there. Open it.
 +
 image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
 
@@ -379,6 +365,18 @@ image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsiv
 . Click in the *amq* link to show the Messaging console Overview Page.
 +
 image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
++
+--
+[IMPORTANT]
+====
+Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
+====
+
+[NOTE]
+====
+This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
+====
+--
 
 . In the main _address space_ console screen, click on the *Create Address* button to start adding the required topics.
 +
