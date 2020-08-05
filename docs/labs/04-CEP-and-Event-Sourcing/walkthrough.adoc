@@ -4,6 +4,8 @@
 :user-password: openshift
 :lab-path: FleurDeLune/projects
 :lab-4-path: overseer
+:namespace: {user-username}
+:amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab05/walkthrough.adoc
@@ -12,7 +14,7 @@ endif::[]
 [id='cep-event-sourcing']
 = Lab 4 - Complex Event Processing and Event Sourcing
 
-In this lab you will be applying two common scenarios to processing events. Event Sourcing and Complex Event Processing. First replaying the harvest data to estimate possible costs to operate farms on the moon. . You will use Kafka Streams API for real-time events processing and extracting information from event streams as they arrive.
+In this lab you will be applying two common scenarios to processing events. Event Sourcing and Complex Event Processing. First replaying the harvest data to estimate possible costs to operate farms on the moon. You will use Kafka Streams API for real-time events processing and extracting information from event streams as they arrive.
 *Audience:* System Architects, Developers, Data Integrators
 
 *Overview*
@@ -31,7 +33,7 @@ Kogito is the open source Quarkus extension that allows developers to implement 
 
 *Prerequisites*
 
-This lab assumes you have successfully completed Lab 1 to 3.
+This lab assumes you have successfully completed Labs 1 to 3.
 
 *Credentials*
 
@@ -55,7 +57,7 @@ Your password is: `{user-password}`
 == Provision Simulator and AMQ Online Topic
 
 === Real time harvest information gathering
-(Skip this task if you have already done so in other lab and go directly to Task 3)
+(Skip this task if you have already done so in other labs and go directly to the next Task)
 
 . You are setting up a topic in AMQ Online to receive event signals from Edge devices
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
@@ -171,7 +173,7 @@ image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integ
   Your username is: `{user-username}` +
   Your password is: `{user-password}`
 
-. Locate *Search* under *Advance*
+. Locate *Search* under *More*
 
 +
 image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
@@ -199,7 +201,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="startup-che-workspace"]
 == Create the Simulator
-(Skip this task if you have already done so in other lab and go directly to Task 3)
+(Skip this task if you have already done so in other labs and go directly to the next Task)
 
 . Since we can't really setup real edge device for you in the moon, you will need to create a simulator that simulates the edge device that sends random generated harvest data.
 +
@@ -262,7 +264,7 @@ image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+kamel run --name edge-simulator EdgeSimulator.java
 ----
 
 . Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
@@ -324,7 +326,7 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
 
-. Open the *costcenter.yaml* file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
+. Open the *costcenter.yaml* file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `camel.component.amqp.configuration.connection-factory.remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **camel.component.kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
 image::images/1.1.2-cost-config-update.png[1.1.2-cost-config-update, role="integr8ly-img-responsive"]
 
@@ -347,13 +349,13 @@ cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 oc apply -f costcenter.yaml
 ----
 
-. Open the *CostCenter.java* file located in the *cost-center* folder.  This simple application simply re-route harvest event(from AMQ Online **mytopic**) to an AMQ Streams Topic .
+. Open the *CostCenter.java* file located in the *cost-center* folder.  This simple application simply re-routes harvest events (from AMQ Online **mytopic**) to an AMQ Streams Topic.
 
 . Try deploying and running the *CostCenter* Camel-K route by executing the following command
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
+kamel run CostCenter.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-center** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
@@ -382,7 +384,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 +
 image::images/2.0.0-overview.png[2.0.0-overview, role="integr8ly-img-responsive"]
 
-. Open the `costadvice-config.yaml` file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `remoteURI` for the **Kafka** endpoint. Update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
+. Open the `costadvice-config.yaml` file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update it for the **Kafka** endpoint. Update the **camel.component.kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
 image::images/2.1.1-advice-config-update.png[2.1.1-advice-config-update, role="integr8ly-img-responsive"]
 
@@ -403,7 +405,7 @@ oc apply -f costadvice-config.yaml
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
+kamel run CostAdvice.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.
@@ -502,7 +504,7 @@ image::images/3.1.6-change-cost.png[3.1.6-change-cost, role="integr8ly-img-respo
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
+kamel run CostAdvice.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.
@@ -520,7 +522,7 @@ image::images/3.1.8-cost-advice-result.png[3.1.8-cost-advice-route, role="integr
 . Your URL should look like the following: `http://cost-advice-{user-username}.{openshift-app-host}/costadvice`.
 
 [type=verification]
-Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift? Did you get the what if result? try replay with couple of different costs!
+Were you able to successfully deploy the Camel-K **Cost Advice** to OpenShift? Did you get the what if results? Try replay with a couple of different costs!
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -649,6 +651,7 @@ image::images/4.1.8-start-build.png[4.1.8-start-build, role="integr8ly-img-respo
 
 . Once you've logged into OpenShift via the CLI, run the following commands to start the application.
 +
+[source,bash,subs="attributes+"]
 ----
 oc new-app --image-stream=cep-kogito \
  -e quarkus.kafka-streams.bootstrap-servers=moon-kafka-bootstrap.{user-username}.svc:9092 \
@@ -683,7 +686,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"]
 
 
-. Switch to the `dilwsXXX` terminal
+. Back in the CodeReady Workspaces IDE, switch to the `dilwsXXX` terminal
 
 . Deploying and run the *CostCenter* Camel-K route by executing the following command again to send harvest data again!
 +
@@ -692,7 +695,7 @@ image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 kamel delete cost-advice
 
-kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
+kamel run CostCenter.java
 ----
 
 . Stop the the *simlulator* Camel-K route by executing the following command again to send harvest data again!
@@ -702,7 +705,7 @@ kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
 kamel delete edge-simulator
 ----
 
-. Go to harvest/simulator, find *EdgeSimulator.java* and update the  MIN from 150 to 1;
+. Go to the *FleurDeLune/projects/harvest/simulator* folder, find *EdgeSimulator.java* and update the  MIN from 150 to 1;
 +
 [source,bash,subs="attributes+"]
 ----
@@ -717,9 +720,9 @@ image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
-cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
+cd $CHE_PROJECTS_ROOT/{lab-path}/harvest/simulator
 
-kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+kamel run --name edge-simulator EdgeSimulator.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* view the new processed result
@@ -749,7 +752,7 @@ image::images/4.2.5-cep-result.png[4.2.5-cep-result, role="integr8ly-img-respons
 
 
 [type=verification]
-Were you able to successfully deploy the **CEP-KOGITO** application to OpenShift?
+Were you able to successfully see disasters occurring?
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
@@ -758,7 +761,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="summary"]
 == Summary
 
-In this lab you replay stream of events to see the possible analytical result of farm costs in order to better predict revenue. This is a common event streaming technique-- Event sourcing. You have been introduced how to implement with ease using Camel-K and Red Hat Streams.
+In this lab you replayed streams of events to see the possible analytical result of farm costs in order to better predict revenue. This is a common event streaming technique called Event sourcing. You have been introduced how to implement with ease using Camel-K and Red Hat AMQ Streams.
 
 Event driven is also the foundation for real time behavior detection. You used Kafka Streams in conjunction with Kogito to build real time complex event processing app to detect if disaster strikes base on the harvest data.
 
