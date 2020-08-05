@@ -658,14 +658,7 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the CodeReady Workspaces IDE terminal and issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
-+
-[source,none,subs="attributes+"]
-----
-oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
-----
-
-. Update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services.
+. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services.
 +
 image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
 +
@@ -688,6 +681,12 @@ oc -n {namespace} create configmap amqp-properties --from-file $CHE_PROJECTS_ROO
 oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-events.fuse-{user-username}.svc:8080"
 ----
 
+. Issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
++
+[source,none,subs="attributes+"]
+----
+oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
+----
 
 === Test the integration
 
