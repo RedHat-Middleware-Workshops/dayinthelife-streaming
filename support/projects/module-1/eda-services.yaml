@@ -6,20 +6,6 @@ metadata:
   labels:
     app: "camel-k"
 ---
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: amqp-properties
-data:
-  application.properties: >-
-    camel.component.amqp.configuration.connection-factory=#class:org.apache.qpid.jms.JmsConnectionFactory
-
-    camel.component.amqp.configuration.connection-factory.remoteURI=amqp://messaging-88d9c44.workshop-operators.svc
-    
-    camel.component.amqp.username=user
-    
-    camel.component.amqp.password=password
----
 apiVersion: camel.apache.org/v1
 kind: Integration
 metadata:
