@@ -78,87 +78,75 @@ In this task, you'll provision a messaging topic using Red Hat's Messaging as a 
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+=== Eclipse Che Workspace and Setup the environment
 
-=== Create an Address Space
-(Skip this part and go directly to the *Create a Topic* section if you have already done so in other labs.)
+. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
-Let's create an **Address Space** using the AMQ Online Operator.
-
-. Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
-
-. Click *+Add* on the left menu.
+. Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
-image::images/openshift-add.png[OpenShift +Add, role="integr8ly-img-responsive"]
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 
-. Click on the *From Catalog* option.
+. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
 +
-image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
+image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
 
-. Type in `address` in the search box, and click on the *AddressSpace*:
-+
-image::images/catalog-addressspace.png[AddressSpace, role="integr8ly-img-responsive"]
+. You’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
 
-. Click on *Create*:
+. Click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
 +
-image::images/online-create.png[Create AddressSpace, role="integr8ly-img-responsive"]
+image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
-. Replace the content in the YAML editor with the following content:
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
 +
-[source,yaml,role="copypaste"]
+image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
+
+. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
++
+image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
+
+. Once you've logged into OpenShift via the CLI, run the following commands to setup this lab. (Setup AddressSpace and Kafka Cluster)
++
+[source,bash,subs="attributes+"]
 ----
-apiVersion: enmasse.io/v1beta1
-kind: AddressSpace
-metadata:
-  name: amq
-spec:
-  plan: standard-small
-  type: standard
-  endpoints:
-    - name: messaging
-      service: messaging
-      expose:
-        type: route
-        routeServicePort: amqps
-        routeTlsTermination: passthrough
-      exports:
-        - kind: ConfigMap
-          name: amq-config
-  authenticationService:
-    name: none-authservice
+oc project {namespace}
+cd /projects/FleurDeLune/projects/harvest/simulator
+oc apply -f config/prereq.yaml
 ----
 
-. Click on *Create* to start the deployment
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
+
+  Your username is: `{user-username}` +
+  Your password is: `{user-password}`
+
+. Click on the the Topology view (left side menu)
 +
-image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
+image:images/openshift-kafkas-list.png[Back To Topology]
 
-. The AMQ operator will check the new resource and will begin to prepare all required components.
+. Wait for the Kafka cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
---
-[IMPORTANT]
-====
-Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
-====
-
-[NOTE]
-====
-This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
-====
---
-
-. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there.
-+
-image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
-
-
-
-=== Create a Topic
+image:images/openshift-kafka-topology.png[Kafka Topology]
 
 . Navigate to the {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"]
 
 . Login to using your credentials (`{user-username}` and `{user-password}`).
 
-. Click *amq* listed on the page this will take you to the
+. Make sure the AMQ AddressSpace *amq* is listed on the page
++
+image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
+
+
+[type=verification]
+Were you able to successfully provision the AMQ Online Address Space and Kafka Cluster?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+
+=== Create a Topic
+*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+
+
+. In your {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"].a Click *amq* listed on the page this will take you to the
 +
 image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
 
@@ -220,17 +208,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 +
 image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
-
-. Login to Che using your credentials (`{user-username}` and `{user-password}`).
-+
-image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
-
-. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
-+
-image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
-
-. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
+. In the Che workspace open the `FleurDeLune/projects/harvest/simulator` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
@@ -238,15 +216,8 @@ image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="i
 +
 image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
 
-. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
-+
-image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
-
-. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
-+
-image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
-
-. Once you've logged into OpenShift via the CLI, run the following commands to update `edge-config` configmap.
+. Go to the `dil-` terminal that was opened in the previous task (followed by a 5-digit alphanumeric code).
+. Run the following commands to update `edge-config` configmap.
 +
 [source,bash,subs="attributes+"]
 ----
@@ -303,83 +274,6 @@ Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
-
-[time=5]
-[id="deploying-apache-kafka"]
-== Deploying Apache Kafka on OpenShift
-(Skip this part and go directly to the *Setup Order Inventory with AMQ Streams* section if you have already done so in other labs.)
-
-The AMQ Streams component uses powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on Red Hat OpenShift® Container Platform.
-
-In this section you will learn how to start a local Kafka cluster.
-
-. Go back to the OpenShift Developer console.
-
-. Change back to the `{user-username}` project and click on *+Add* menu on the left side bar.
-+
-image:images/openshift-kafka-add.png[Add From Topology]
-+
-[IMPORTANT]
-====
-Be sure to switch back to your working `{user-username}` project
-====
-
-. Click on the *From Catalog* option.
-+
-image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
-
-. Type in `kafka` in the search text field and then click on *Kafka*.
-+
-image::images/openshift-catalog-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
-
-. Click on *Create* button.
-+
-image::images/openshift-create-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
-
-. Create a `Kafka` Kubernetes Resource to define your Apache Kafka Cluster. Replace the _YAML_ editor with the following code:
-+
-[source,yaml,subs="attributes+"]
-----
-apiVersion: kafka.strimzi.io/v1beta1
-kind: Kafka
-metadata:
-  name: moon
-spec:
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
-  kafka:
-    listeners:
-      external:
-        type: route
-      plain: {}
-      tls: {}
-    replicas: 3
-    storage:
-      type: ephemeral
-  zookeeper:
-    replicas: 3
-    storage:
-      type: ephemeral
-----
-
-. Click on *Create* button.
-+
-image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
-
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-kafkas-list.png[Back To Topology]
-
-. Wait for the cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
-+
-image:images/openshift-kafka-topology.png[Kafka Topology]
-
-[type=verification]
-Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
-
-[type=verificationFail]
-{standard-fail-text}
 
 
 [time=15]
