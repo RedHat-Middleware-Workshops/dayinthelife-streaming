@@ -1,4 +1,4 @@
-// camel-k: dependency=camel-infinispan dependency=camel-bean dependency=camel-jackson dependency=camel-swagger-java configmap=costadvice-config
+// camel-k: dependency=camel-bean dependency=camel-jackson dependency=camel-swagger-java dependency=mvn:io.netty:netty-codec:4.1.49.Final configmap=costadvice-config
 
 import org.apache.camel.builder.RouteBuilder;
 import java.util.Map;
@@ -30,7 +30,6 @@ public class CostAdvice extends RouteBuilder{
 
 
         restConfiguration()
-            .component("undertow")
             .apiContextPath("/api-doc")
             .apiProperty("cors", "true")
             .apiProperty("api.title", "Order API")
