@@ -3,6 +3,7 @@
 :amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04-CEP-and-Event-Sourcing/
 :user-password: openshift
+:namespace: {user-username}
 
 ifdef::env-github[]
 :next-lab-url: ../lab04/walkthrough.adoc
@@ -22,10 +23,10 @@ Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still ve
 AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
 
-To provide better customer experience, Closely monitoring the harvest from marshmallows farms on the moon. Plus harvest batch shipping schedule, will allow Fleur de lune more proactive. And faster respond to any emergency that may impact their business.
+To provide a better customer experience, you will be closely monitoring the harvest from marshmallows farms on the moon. You will also be adding a harvest batch shipping schedule to allow Fleur de lune to be more proactive along with faster response to any emergency that may impact their business.
 
 
-. In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
+In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
 +
 image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
 
@@ -71,7 +72,7 @@ Your password is: `{user-password}`
 == Provision AMQ Topic
 
 === Real time harvest information gathering
-. You are setting up a topic in AMQ Online to receive event signals from Edge devices
+You are setting up a topic in AMQ Online to receive event signals from Edge devices. 
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
@@ -80,11 +81,11 @@ image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"
 *Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 
 === Create an Address Space
-(Skip this apart and go directly to create Topics if you have already done so in other labs.)
+(Skip this part and go directly to the *Create a Topic* section if you have already done so in other labs.)
 
 Let's create an **Address Space** using the AMQ Online Operator.
 
-. Go back to your OpenShift Developer Console.
+. Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
 
 . Click *+Add* on the left menu.
 +
@@ -186,13 +187,13 @@ image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integ
   Your username is: `{user-username}` +
   Your password is: `{user-password}`
 
-. Locate *Search* under *Advance*
+. Locate *Search* under *More*
 
 +
 image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
 
 
-. On the top search bar, select *service* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
+. On the top search bar, select *Resources* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
 +
 image::images/1.1.12-search-addressspace.png[1.1.12-search-addressspace, role="integr8ly-img-responsive"]
 
@@ -214,7 +215,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="startup-che-workspace"]
 == Create the Simulator
-. Since we can't really setup real edge device for you in the moon, you will need to create a simulator that simulates the edge device that sends random generated harvest data.
+. Since we can't really set up a real edge device for you on the moon, you will need to create a simulator that simulates the edge device that sends randomly generated harvest data.
 +
 image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
@@ -253,7 +254,7 @@ cd /projects/FleurDeLune/projects/harvest/simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
 
-. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  We want to create a Camel Route that fires a timer every 5 seconds, retrieves some random data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
+. Open the `EdgeSimulator.java` file located in the same folder.  We want to create a Camel Route that fires a timer every 5 seconds, retrieves some random data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
 +
 [source,java,subs="attributes+"]
 ----
@@ -278,7 +279,7 @@ image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 kamel run EdgeSimulator.java
 ----
 
-. Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
+. Give the deployment 2-5 minutes to run. To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
 +
 [source,bash,subs="attributes+"]
 ----
@@ -288,7 +289,7 @@ kamel log edge-simulator
 +
 image::images/2.1.10-kamel-log.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
 
-. Or you can also navigate back to the *OpenShift Developer Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
+. Or you can also navigate back to the *OpenShift Developer Console* link:{openshift-host}/topology/ns/{namespace}[OpenShift Developer Console, window="_blank"] and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
 
 +
 image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
@@ -305,7 +306,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="setup-order-inventory"]
 == Setup Order Inventory with AMQ Streams
-. The harvest data are now streaming into the topic, we will be grading the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. And also streaming separately to the shipping departments.
+. Now that the harvest data is now streaming into the topic, we will need to grade the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. It will also stream separately to the shipping departments.
 +
 image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
 +
@@ -319,7 +320,7 @@ image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 +
 image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
 
-. In the *Filter by keyword...* box, enter `Postgresql`, then select the **PostgreSQL (Ephemeral)** template.  Click the **Instantiate Template** button.
+. In the *Filter by keyword...* box, enter `Postgresql`. You may also need to un-check the *Operator Backed* checkbox on the left-hand side. Select the **PostgreSQL (Ephemeral)** template.  Click the **Instantiate Template** button.
 +
 image::images/3.1.5-postgres-template.png[3.1.5-postgres-template, role="integr8ly-img-responsive"]
 
@@ -338,19 +339,31 @@ image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-respo
 [source,bash,subs="attributes+"]
 ----
 psql -d sampledb -U user
+----
 
++
+[source,bash,subs="attributes+"]
+----
 CREATE TABLE premium (
 	mmid bigint NOT NULL,
 	diameter integer NOT NULL,
     weight decimal NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+----
 
-
++
+[source,bash,subs="attributes+"]
+----
 CREATE TABLE standard (
 	weight decimal NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+----
+
++
+[source,bash,subs="attributes+"]
+----
 
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
@@ -422,7 +435,7 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 
 . Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
-. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **step-2-inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
+. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
 +
 image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
 
@@ -467,7 +480,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=10]
 [id="setup-data-lake"]
 == Setup Data Lake with caching for Big Data analysis
-. “Fleur de lune” is introducing a new AI system for more efficient shipping, due to the high inter-planet cost. The shipping department is now responsible to preparing all data into a in-memory data lake for the AI system.
+. Due to the high inter-planet shipping costs, “Fleur de lune” is introducing a new AI system for more efficient shipping. The shipping department is now responsible for preparing all data into a in-memory data lake for the AI system.
 
 +
 image::images/4.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
@@ -491,7 +504,7 @@ oc create -f jdg-cluster.yaml
 +
 image::images/4.1.2-check-infinispan.png[4.1.2-check-infinispan, role="integr8ly-img-responsive"]
 
-. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `kafka.brokers` and `infinispan-configuration.hosts` URL to match your environment.  The kafka broker URL you can reuse from `kafka-properties` in the `step-2-inventory` folder.  For the infinispan URL, just update the `user1` value to `{user-username}`.
+. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `camel.component.kafka.brokers` to be `moon-kafka-bootstrap.{user-username}.svc:9092` and `camel.component.infinispan-configuration.hosts` URL to be `example-infinispan.{user-username}.svc:11222`.
 +
 image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img-responsive"]
 
@@ -502,7 +515,7 @@ image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img
 oc apply -f premiumshipping-config.yaml
 ----
 
-. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Let's insert our Camel routes into this class:
+. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Let's insert our Camel routes into this class:
 +
 [source,java,subs="attributes+"]
 ----
@@ -532,7 +545,7 @@ from("kafka:user1-premium?groupId=premium-shipping")
 +
 image::images/4.1.6-update-kafka-topic.png[4.1.6-update-kafka-topic, role="integr8ly-img-responsive"]
 
-. We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `kafka.brokers` and `infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
+. We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `camel.component.kafka.brokers` and `camel.component.infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
 +
 image::images/4.1.7-update-standard-config.png[4.1.7-update-standard-config, role="integr8ly-img-responsive"]
 

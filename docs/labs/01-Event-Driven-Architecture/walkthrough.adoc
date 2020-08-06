@@ -275,7 +275,7 @@ Your order should be back again!
 Were you able to successfully scale-down and scale-up your application?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="Create AMQ Topics"]
@@ -294,7 +294,7 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 [type=taskResource]
 .AMQ Operator Resouces
 ****
-* link:{openshift-host}/k8s/ns/{namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/amq-online.1.5.2/enmasse.io~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
+* link:{openshift-host}/k8s/ns/{namespace}/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.2/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
 ****
 
 === Create an Address Space
@@ -350,21 +350,7 @@ image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-i
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
 
-. Open the link:{openshift-host}/k8s/ns/user1/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.1/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"] to check the progress of your address creation
-+
---
-[IMPORTANT]
-====
-Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
-====
-
-[NOTE]
-====
-This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
-====
---
-
-. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there.
+. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there. Open it.
 +
 image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
 
@@ -379,6 +365,18 @@ image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsiv
 . Click in the *amq* link to show the Messaging console Overview Page.
 +
 image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
++
+--
+[IMPORTANT]
+====
+Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
+====
+
+[NOTE]
+====
+This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
+====
+--
 
 . In the main _address space_ console screen, click on the *Create Address* button to start adding the required topics.
 +
@@ -407,36 +405,18 @@ A green check mark will show that the resources were successfully deployed.
 ====
 --
 
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Go back to the OpenShift console with the _AddressSpaces_ lists and click on the *amq* link.
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Click on the *Endpoints* tab to check the messaging host information.
 +
-image::images/addressspaces-list.png[topics, role="integr8ly-img-responsive"]
+image::images/addressspace-endpoints.png[Address Space Endpoints, role="integr8ly-img-responsive"]
 
-. Then, click the *Resources* tab. In that tab, click the *amq-config* link.
+. Copy and write down the *Host* information of the `amq.messsaging.cluster`. As we will be connecting all our services from within OpenShift we can use the internal hostname.
 +
---
-image::images/addressspace-configmap.png[topics, role="integr8ly-img-responsive"]
-
-[NOTE]
-====
-When we created the Address Space, we configure it to _export_ the connection configuration using a *ConfigMap*. This configuration is available for our microservices to inject the connecting details so we don't need to hardcode them in the code.
-====
---
-
-. Scroll down the page to reveal the _configmap_ details.  For this workshop, we will run all our services within the OpenShift cluster, so copy and write down only the `service.host` information.
-+
---
-image::images/addressspace-service-host.png[topics, role="integr8ly-img-responsive"]
-
-[TIP]
-====
-You will also be able to see the _certificate_ information for connecting using the TLS endpoint under `external.host`. This is required for connections from _outside_ the OpenShift cluster.
-====
---
+image::images/addressspace-hostname.png[Address Space Host, role="integr8ly-img-responsive"]
 
 *Well done!* You now have a running AMQ with two topics called `incomingorders` and `notifications`.
 
 [type=verification]
-Did you remember to write down the address space `service.host`?
+Did you remember to write down the address space *Host*?
 
 [type=verificationFail]
 {standard-fail-text}
@@ -678,11 +658,34 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the CodeReady Workspaces IDE terminal and issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
+. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services.
++
+image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
++
+[IMPORTANT]
+====
+Replace the placeholder text with your actual hostname.
+====
+
+. Create the config map issuing the following command:
 +
 [source,none,subs="attributes+"]
 ----
-oc apply -n {namespace} -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
+oc -n {namespace} create configmap amqp-properties --from-file $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/application.properties
+----
+
+. Update the ecommerce web application to point to your new event-driven API by updating the application environment variable:
++
+[source,none,subs="attributes+"]
+----
+oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-events.fuse-{user-username}.svc:8080"
+----
+
+. Issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
++
+[source,none,subs="attributes+"]
+----
+oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
 ----
 
 === Test the integration
@@ -716,7 +719,7 @@ You should receive a message back similar to the following one:
 Were you able to successfully start all 3 integration services?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="Develop Events Service"]
@@ -838,7 +841,7 @@ image::images/topology-events.png[Topology Events, role="integr8ly-img-responsiv
 Were you able to successfully view the events default webpage?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=10]
 [id="test-eda"]
@@ -874,7 +877,7 @@ image::images/www-invoice.png[Payment received, role="integr8ly-img-responsive"]
 Were you able to successfully see all 3 notification messages?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 === Take down that service
 
@@ -938,7 +941,7 @@ image::images/www-order-back.png[Invetory Starting, role="integr8ly-img-responsi
 Did your order reappear and received?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 
 [time=5]
