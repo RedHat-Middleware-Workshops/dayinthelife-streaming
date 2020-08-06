@@ -262,7 +262,7 @@ image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+kamel run EdgeSimulator.java
 ----
 
 . Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
@@ -353,7 +353,7 @@ oc apply -f costcenter.yaml
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
+kamel run CostCenter.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-center** pod deployed correctly.  You can verify this by checking the Harvest events are coming in and there are no errors.
@@ -403,7 +403,7 @@ oc apply -f costadvice-config.yaml
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
+kamel run CostAdvice.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.
@@ -502,7 +502,7 @@ image::images/3.1.6-change-cost.png[3.1.6-change-cost, role="integr8ly-img-respo
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-bean -d camel-jackson -d camel-swagger-java -d camel-undertow  --configmap costadvice-config CostAdvice.java
+kamel run CostAdvice.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* and verify the **cost-advice** pod deployed correctly.
@@ -692,7 +692,7 @@ image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 kamel delete cost-advice
 
-kamel run -d camel-jackson --configmap costcenter-config CostCenter.java
+kamel run CostCenter.java
 ----
 
 . Stop the the *simlulator* Camel-K route by executing the following command again to send harvest data again!
@@ -719,7 +719,7 @@ image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-respons
 ----
 cd $CHE_PROJECTS_ROOT/{lab-path}/{lab-4-path}/cost-center/
 
-kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+kamel run EdgeSimulator.java  
 ----
 
 . Navigate back to the *OpenShift Developer Console* view the new processed result
