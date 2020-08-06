@@ -72,7 +72,7 @@ Your password is: `{user-password}`
 == Provision AMQ Topic
 
 === Real time harvest information gathering
-You are setting up a topic in AMQ Online to receive event signals from Edge devices. 
+You are setting up a topic in AMQ Online to receive event signals from Edge devices.
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
@@ -212,6 +212,7 @@ Were you able to successfully provision the topic in AMQ Online?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
+
 [time=15]
 [id="startup-che-workspace"]
 == Create the Simulator
@@ -302,6 +303,84 @@ Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift
 
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+[time=5]
+[id="deploying-apache-kafka"]
+== Deploying Apache Kafka on OpenShift
+(Skip this part and go directly to the *Setup Order Inventory with AMQ Streams* section if you have already done so in other labs.)
+
+The AMQ Streams component uses powerful operators that simplify the deployment, configuration, management, and use of Apache Kafka on Red Hat OpenShift® Container Platform.
+
+In this section you will learn how to start a local Kafka cluster.
+
+. Go back to the OpenShift Developer console.
+
+. Change back to the `{user-username}` project and click on *+Add* menu on the left side bar.
++
+image:images/openshift-kafka-add.png[Add From Topology]
++
+[IMPORTANT]
+====
+Be sure to switch back to your working `{user-username}` project
+====
+
+. Click on the *From Catalog* option.
++
+image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+
+. Type in `kafka` in the search text field and then click on *Kafka*.
++
+image::images/openshift-catalog-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
+
+. Click on *Create* button.
++
+image::images/openshift-create-kafka.png[OpenShift Kafka, role="integr8ly-img-responsive"]
+
+. Create a `Kafka` Kubernetes Resource to define your Apache Kafka Cluster. Replace the _YAML_ editor with the following code:
++
+[source,yaml,subs="attributes+"]
+----
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: moon
+spec:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+  kafka:
+    listeners:
+      external:
+        type: route
+      plain: {}
+      tls: {}
+    replicas: 3
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral
+----
+
+. Click on *Create* button.
++
+image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
+
+. Go back to the topology view by clicking *Topology* in the left side menu
++
+image:images/openshift-kafkas-list.png[Back To Topology]
+
+. Wait for the cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
++
+image:images/openshift-kafka-topology.png[Kafka Topology]
+
+[type=verification]
+Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
+
+[type=verificationFail]
+{standard-fail-text}
+
 
 [time=15]
 [id="setup-order-inventory"]
