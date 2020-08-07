@@ -5,3 +5,5 @@ AMQHOST=$(oc get addressspace amq -o yaml | grep serviceHost | sed "s/serviceHos
 sed "s/REPLACE/$AMQHOST/g" edge.properties.bak > edge.properties
 oc create configmap edge-config  --from-file=edge.properties
 kamel run EdgeSimulator.java
+
+echo REMEMBER this AMQP endpoint -- [$AMQHOST]
