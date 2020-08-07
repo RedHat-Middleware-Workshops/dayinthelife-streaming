@@ -16,7 +16,7 @@ data:
     infinispan.client.hotrod.auth_realm=default
     infinispan.client.hotrod.sasl_mechanism=SCRAM-SHA-512
     infinispan.client.hotrod.marshaller=org.infinispan.commons.marshall.JavaSerializationMarshaller
-    infinispan.client.hotrod.java_serial_whitelist=java.util.ArrayList,java.util.LinkedHashMap
+    infinispan.client.hotrod.java_serial_whitelist=java.util.ArrayList,java.util.LinkedHashMap,java.util.HashMap
     infinispan.client.hotrod.async_executor_factory = org.infinispan.client.hotrod.impl.async.DefaultAsyncExecutorFactory
     infinispan.client.hotrod.default_executor_factory.pool_size = 1
     infinispan.client.hotrod.hash_function_impl.2 = org.infinispan.client.hotrod.impl.consistenthash.ConsistentHashV2
