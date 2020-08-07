@@ -64,21 +64,20 @@ Your password is: `{user-password}`
 * link:{openshift-host}/[Open Console, window="_blank"]
 ****
 
-[time=10]
-[id="provision-amq-topic"]
 
 
+[time=5]
+[id="real-time-harvest-gathering"]
+== Real time harvest information gathering
 
-== Provision AMQ Topic
-
-=== Real time harvest information gathering
+=== Eclipse Che Workspace and Setup the environment
 You are setting up a topic in AMQ Online to receive event signals from Edge devices.
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-=== Eclipse Che Workspace and Setup the environment
+
 
 . To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
