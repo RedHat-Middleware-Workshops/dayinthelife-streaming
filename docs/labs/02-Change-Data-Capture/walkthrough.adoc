@@ -243,12 +243,18 @@ AMQ Streams provides two APIs for creating and managing connectors:
 
 . Type in `kafka` in the search text field and then click on *Kafka connector*.
 +
+--
+image::images/kafka-connector-resource.png[KafkaConnector Resource, role="integr8ly-img-responsive"]
+
 [IMPORTANT]
 ====
 Double check that you are selecting *KafkaConnector* and not _KafkaConnect_. Notice the *or* at the end.
 ====
+--
 
 . Click on Create button.
++
+image::images/kafka-connector-create.png[Create KafkaConnector, role="integr8ly-img-responsive"]
 
 . Replace the contents of the YAML editor with the following code:
 +
@@ -277,10 +283,8 @@ spec:
 ----
 
 . Click the *Create* button to submit the configuration.
-
-. Go back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu. 
 +
-image:images/openshift-kafkaconnect-resource.png[Back To Topology]
+image::images/kafka-connector-details.png[Details KafkaConnector, role="integr8ly-img-responsive"]
 
 . Check the log in the *debezium-cluster* deployment.
 +
@@ -380,7 +384,7 @@ image:images/openshift-project-sharedkafka.png[Change Project]
 +
 image::images/openshift-search-kafkatopics.png[Search KafkaTopics]
 
-. This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-connect-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
+. This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-debezium-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
 +
 image::images/openshift-cdc-topics.png[CDC KafkaTopics]
 +
@@ -501,10 +505,6 @@ spec:
 +
 image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-kafkas-list.png[Back To Topology]
-
 . Wait for the cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
 image:images/openshift-kafka-topology.png[Kafka Topology]
@@ -566,10 +566,6 @@ spec:
 . Click on *Create* button.
 +
 image::images/openshift-mirromaker-detail.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
-
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-mirrormakers-list.png[Back To Topology]
 
 . Wait for cluster to start.  It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
@@ -650,10 +646,6 @@ spec:
 . Click on *Create* button.
 +
 image::images/openshift-bridge-details.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
-
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-bridge-list.png[Back To Topology]
 
 . Wait for the bridge to start.
 +
