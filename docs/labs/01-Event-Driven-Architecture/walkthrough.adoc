@@ -572,7 +572,7 @@ image::images/fuse-response-code.png[API Operation Response, role="integr8ly-img
 You can add an example if you are planning to mock this API definition.
 ====
 
-. Remember to name your API `Place Orders`. Finally hit the *Save* button to store your API definition.
+. Remember to name your API `Place Order`. Finally hit the *Save* button to store your API definition.
 +
 image::images/fuse-response-type.png[API Response Type, role="integr8ly-img-responsive"]
 
@@ -658,13 +658,13 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services.
+. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `remoteURI` property with the *hostname* that you wrote down in the previous task.
 +
 image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
 +
 [IMPORTANT]
 ====
-Replace the placeholder text with your actual hostname.
+Replace the placeholder text with your actual hostname. You can always get back to the messaging console to get your endpoint Host.
 ====
 
 . Create the config map issuing the following command:
@@ -688,6 +688,8 @@ oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-e
 oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
 ----
 
+. The rest of the event-driven components should deploy now, you can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
+
 === Test the integration
 
 . In the same CodeReady Workspaces terminal issue the following command:
@@ -699,6 +701,7 @@ curl -v -X POST http://i-events.fuse-{user-username}.svc:8080/place -H 'cache-co
 +
 You should receive a message back similar to the following one:
 +
+[source,none,subs="attributes+"]
 ----
 ...
 * upload completely sent off: 162 out of 162 bytes
@@ -711,6 +714,7 @@ You should receive a message back similar to the following one:
 <
 * Curl_http_done: called premature == 0
 * Connection #0 to host i-events.fuse-{user-username} left intact
+Order Received!
 ----
 +
 *Excellent!* This means you are able to _POST_ an Order and it was sent to the _Topic_.
@@ -735,7 +739,7 @@ image::images/codeready-events.png[Events Service, role="integr8ly-img-responsiv
 +
 The Inventory service implements _Server-Side Events_ (SSE) using *Quarkus* and link:https://smallrye.io/smallrye-reactive-messaging/[SmallRye Reactive Messaging].
 
-. Open the `EventsResource.java` file under 'src/main/java/com/redhat/eventdriven' and check the provided code.
+. Open the `EventsResource.java` file under `src/main/java/com/redhat/eventdriven` and check the provided code.
 +
 image::images/events-resource.png[EventsResource.java, role="integr8ly-img-responsive"]
 +
