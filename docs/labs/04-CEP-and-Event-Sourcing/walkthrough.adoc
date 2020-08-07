@@ -87,7 +87,7 @@ image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img
 
 . You’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
 
-. Click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
+. Click the **Workspace** button and open the `FleurDeLune/projects/overseer` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
@@ -108,10 +108,7 @@ cd /projects/FleurDeLune/projects/overseer
 oc apply -f config/prereq.yaml
 ----
 
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
-
-  Your username is: `{user-username}` +
-  Your password is: `{user-password}`
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (Your username is: `{user-username}` Your password is: `{user-password}`)
 
 . Click on the the Topology view (left side menu)
 +
@@ -567,7 +564,7 @@ kamel run CostCenter.java
 kamel delete edge-simulator
 ----
 
-. Go to the *FleurDeLune/projects/harvest/simulator* folder, find *EdgeSimulator.java* and update the  MIN from 150 to 1;
+. Go to the *FleurDeLune/projects/overseer/config* folder, find *EdgeSimulator.java* and update the  MIN from 150 to 1;
 +
 [source,bash,subs="attributes+"]
 ----
@@ -582,9 +579,9 @@ image::images/4.2.3-update-min.png[4.2.3-update-min, role="integr8ly-img-respons
 +
 [source,bash,subs="attributes+"]
 ----
-cd $CHE_PROJECTS_ROOT/{lab-path}/harvest/simulator
+cd $CHE_PROJECTS_ROOT/{lab-path}/overseer/config
 
-kamel run --name edge-simulator EdgeSimulator.java
+kamel run EdgeSimulator.java
 ----
 
 . Navigate back to the *OpenShift Developer Console* view the new processed result
