@@ -1,4 +1,4 @@
-# Installation
+# Installation - [DEPRECATED! Please use [RHPDS provisioning](provisioning.md) instead!]
 
 This page describes the installation of the Day In the Streaming Life Workshop (DIL Streaming) from the latest sources from GitHub.
 
