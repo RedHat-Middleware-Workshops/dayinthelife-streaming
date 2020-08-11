@@ -17,7 +17,7 @@ The workshop will cover the following topics:
 
 #### Developers, Architects, Data Integrators
 
-### Prereqisites
+### Prerequisites
 
 * Debezium
 * AMQ Streams
@@ -25,6 +25,10 @@ The workshop will cover the following topics:
 * Camel K
 * Fuse Online
 * OpenShift 4.x
+
+### Duration
+
+Each module should be able to be completed in between 60-90 minutes plus 20 mins of slides introducing the content.
 
 ### Installation
 
