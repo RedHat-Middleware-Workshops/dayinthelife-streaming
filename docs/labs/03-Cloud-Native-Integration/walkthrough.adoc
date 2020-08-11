@@ -3,6 +3,7 @@
 :amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04-CEP-and-Event-Sourcing/
 :user-password: openshift
+:namespace: {user-username}
 
 ifdef::env-github[]
 :next-lab-url: ../lab04/walkthrough.adoc
@@ -11,8 +12,6 @@ endif::[]
 [id='cloud-native-integration']
 = Lab 3 - Cloud-Native Integration with EIPs
 
-In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
-
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
@@ -20,6 +19,17 @@ In this lab you will consume IoT events from an AMQ Online topic, use Enterprise
 Enterprise Integration Patterns (EIPs) have been used in technology for 40+ years.  But are they still relevant when we attempt Cloud-Native integration?
 
 Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still very useful when it comes to managing and integrating our data in the cloud.  Using Camel-K, we are able to enhance existing streaming technologies like Kafka to help route and mediate our data through various channels.
+
+AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
+
+
+To provide a better customer experience, you will be closely monitoring the harvest from marshmallows farms on the moon. You will also be adding a harvest batch shipping schedule to allow Fleur de lune to be more proactive along with faster response to any emergency that may impact their business.
+
+
+In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
++
+image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
+
 
 *Why Red Hat?*
 
@@ -54,21 +64,87 @@ Your password is: `{user-password}`
 * link:{openshift-host}/[Open Console, window="_blank"]
 ****
 
-[time=10]
-[id="provision-amq-topic"]
-== Provision AMQ Topic
 
+
+[time=5]
+[id="real-time-harvest-gathering"]
+== Real time harvest information gathering
+
+=== Eclipse Che Workspace and Setup the environment
+. You are setting up a topic in AMQ Online to receive event signals from Edge devices.
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
-=== Access OpenShift Console
++
+image::images/1.1.0-diagram-1.png[1.1.0-diagram-1, role="integr8ly-img-responsive"]
+
+
+. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+
+. Login to Che using your credentials (`{user-username}` and `{user-password}`).
++
+image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+
+. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
++
+image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
+
+. You’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
+
+. Click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
++
+image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
+
+. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
++
+image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
+
+. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
++
+image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
+
+. Once you've logged into OpenShift via the CLI, run the following commands to setup this lab. (Setup AddressSpace and Kafka Cluster)
++
+[source,bash,subs="attributes+"]
+----
+oc project {namespace}
+cd /projects/FleurDeLune/projects/harvest/simulator
+oc apply -f config/prereq.yaml
+----
+
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials. Your username is: `{user-username}` + Your password is: `{user-password}`
+
+. Click on the the Topology view (left side menu)
++
+image:images/openshift-kafkas-list.png[Back To Topology]
+
+. Wait for the Kafka cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
++
+image:images/openshift-kafka-topology.png[Kafka Topology]
 
 . Navigate to the {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"]
 
 . Login to using your credentials (`{user-username}` and `{user-password}`).
 
-. Click *amq* listed on the page this will take you to the
+. Make sure the AMQ AddressSpace *amq* is listed on the page
 +
 image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
+
+
+[type=verification]
+Were you able to successfully provision the AMQ Online Address Space and Kafka Cluster?
+
+[type=verificationFail]
+Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+
+
+=== Create a Topic
+*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+
+
+. In your {amqoneline-url}[AMQ Online Console, window="_blank", id="{context}-3"].a Click *amq* listed on the page this will take you to the
++
+image::images/1.1.3-amq-console.png[1.1.3-amq-console, role="integr8ly-img-responsive"]
+
 
 . Click the *Create Address* button to create the topic.
 +
@@ -94,13 +170,13 @@ image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integ
   Your username is: `{user-username}` +
   Your password is: `{user-password}`
 
-. Locate *Search* under *Advance*
+. Locate *Search* under *More*
 
 +
 image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
 
 
-. On the top search bar, select *service* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
+. On the top search bar, select *Resources* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
 +
 image::images/1.1.12-search-addressspace.png[1.1.12-search-addressspace, role="integr8ly-img-responsive"]
 
@@ -119,21 +195,15 @@ Were you able to successfully provision the topic in AMQ Online?
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
+
 [time=15]
 [id="startup-che-workspace"]
-== Provision Eclipse Che Workspace
-
-. Navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
-
-. Login to Che using your credentials (`{user-username}` and `{user-password}`).
+== Create the Simulator
+. Since we can't really set up a real edge device for you on the moon, you will need to create a simulator that simulates the edge device that sends randomly generated harvest data.
 +
-image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
+image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-. Click the **Play** button to open your workspace.  Give it a few minutes to provision and open.
-+
-image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img-responsive"]
-
-. Once the workspace provisions, click the **Workspace** button and open the `FleurDeLune/projects/harvest/simulator` folder.
+. In the Che workspace open the `FleurDeLune/projects/harvest/simulator` folder.
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
@@ -141,24 +211,17 @@ image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="i
 +
 image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
 
-. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
-+
-image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
-
-. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
-+
-image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
-
-. Once you've logged into OpenShift via the CLI, run the following commands to update `edge-config` configmap.
+. Go to the `dil-` terminal that was opened in the previous task (followed by a 5-digit alphanumeric code).
+. Run the following commands to update `edge-config` configmap.
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 cd /projects/FleurDeLune/projects/harvest/simulator
 oc create configmap edge-config  --from-file=edge.properties
 ----
 
-. Open the `EdgeSimulator.java` file located in the *step-1-simulator* folder.  We want to create a Camel Route that fires a timer every 5 seconds, retrieves some random data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
+. Open the `EdgeSimulator.java` file located in the same folder.  We want to create a Camel Route that fires a timer every 5 seconds, retrieves some random data, marshalls it to JSON and sends it via AMQP to your AMQ Online **mytopic**.  Copy and paste the following Camel route to your EdgeSimulator.java file:
 +
 [source,java,subs="attributes+"]
 ----
@@ -180,10 +243,10 @@ image::images/2.1.9-edgesim.png[2.1.9-edgesim, role="integr8ly-img-responsive"]
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run --name edge-simulator EdgeSimulator.java  -d camel-jackson -d camel-bean  --configmap edge-config
+kamel run EdgeSimulator.java
 ----
 
-. Give the deployment 2-5 minutes to run.To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
+. Give the deployment 2-5 minutes to run. To see the log, run the following command, and type ctrl-C/cmd-C to exit the log
 +
 [source,bash,subs="attributes+"]
 ----
@@ -193,7 +256,7 @@ kamel log edge-simulator
 +
 image::images/2.1.10-kamel-log.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
 
-. Or you can also navigate back to the *OpenShift Developer Console* and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
+. Or you can also navigate back to the *OpenShift Developer Console* link:{openshift-host}/topology/ns/{namespace}[OpenShift Developer Console, window="_blank"] and verify the **edge-simulator** pod deployed correctly.  You can verify this by checking the Camel **timer** is firing every 5 seconds and there are no errors.
 
 +
 image::images/2.1.11-verify-edge-simulator.png[2.1.11-verify-edge-simulator, role="integr8ly-img-responsive"]
@@ -207,19 +270,25 @@ Were you able to successfully deploy the Camel-K **Edge Simulator** to OpenShift
 [type=verificationFail]
 Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
 
+
 [time=15]
 [id="setup-order-inventory"]
 == Setup Order Inventory with AMQ Streams
+. Now that the harvest data is now streaming into the topic, we will need to grade the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. It will also stream separately to the shipping departments.
++
+image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
++
+image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
 . Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"]
 
 . Login to OpenShift Developer Console using your credentials (`{user-username}` and `{user-password}`).
 
-. Select the *Developer* drop-down, then select *Project: {user-username}*, *+Add* and click on the `From Catalog` link.
+. Select the *Developer* drop-down, then select *Project: {namespace}*, *+Add* and click on the `From Catalog` link.
 +
 image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly-img-responsive"]
 
-. In the *Filter by keyword...* box, enter `Postgresql`, then select the **PostgreSQL (Ephemeral)** template.  Click the **Instantiate Template** button.
+. In the *Filter by keyword...* box, enter `Postgresql`. You may also need to un-check the *Operator Backed* checkbox on the left-hand side. Select the **PostgreSQL (Ephemeral)** template.  Click the **Instantiate Template** button.
 +
 image::images/3.1.5-postgres-template.png[3.1.5-postgres-template, role="integr8ly-img-responsive"]
 
@@ -238,19 +307,31 @@ image::images/3.1.7-pod-details.png[3.1.7-pod-details, role="integr8ly-img-respo
 [source,bash,subs="attributes+"]
 ----
 psql -d sampledb -U user
+----
 
++
+[source,bash,subs="attributes+"]
+----
 CREATE TABLE premium (
 	mmid bigint NOT NULL,
 	diameter integer NOT NULL,
     weight decimal NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+----
 
-
++
+[source,bash,subs="attributes+"]
+----
 CREATE TABLE standard (
 	weight decimal NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+----
+
++
+[source,bash,subs="attributes+"]
+----
 
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
@@ -322,7 +403,7 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 
 . Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
-. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **step-2-inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
+. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
 +
 image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
 
@@ -330,10 +411,10 @@ image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties,
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {user-username}
+oc project {namespace}
 cd /projects/FleurDeLune/projects/harvest/inventory
 oc create configmap sender-config  --from-file=kafka.properties
-kamel run -d mvn:org.postgresql:postgresql:42.2.10 -d camel-jdbc -d mvn:org.apache.commons:commons-dbcp2:2.7.0 --configmap sender-config Inventory.java
+kamel run Inventory.java --name=inventory-lab3
 ----
 
 . After the Camel-K command has finished deploying, it should run via the terminal without errors.  You should see **Integration Created**.
@@ -366,7 +447,12 @@ Verify that you followed each step in the procedure above. If you are still havi
 
 [time=10]
 [id="setup-data-lake"]
-== Setup Data Lake with caching
+== Setup Data Lake with caching for Big Data analysis
+. Due to the high inter-planet shipping costs, “Fleur de lune” is introducing a new AI system for more efficient shipping. The shipping department is now responsible for preparing all data into a in-memory data lake for the AI system.
+
++
+image::images/4.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
+
 
 . Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
 +
@@ -377,7 +463,7 @@ image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img
 [source,bash,subs="attributes+"]
 ----
 cd /projects/FleurDeLune/projects/harvest/shipping
-oc project {user-username}
+oc project {namespace}
 oc create -f connect-secret.yaml
 oc create -f jdg-cluster.yaml
 ----
@@ -386,7 +472,7 @@ oc create -f jdg-cluster.yaml
 +
 image::images/4.1.2-check-infinispan.png[4.1.2-check-infinispan, role="integr8ly-img-responsive"]
 
-. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `kafka.brokers` and `infinispan-configuration.hosts` URL to match your environment.  The kafka broker URL you can reuse from `kafka-properties` in the `step-2-inventory` folder.  For the infinispan URL, just update the `user1` value to `{user-username}`.
+. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `camel.component.kafka.brokers` to be `moon-kafka-bootstrap.{user-username}.svc:9092` and `camel.component.infinispan-configuration.hosts` URL to be `example-infinispan.{user-username}.svc:11222`.
 +
 image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img-responsive"]
 
@@ -397,7 +483,8 @@ image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img
 oc apply -f premiumshipping-config.yaml
 ----
 
-. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This Class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Let's insert our Camel routes into this class:
+. Now that we have the config map deployed, let's take a look at `PremiumShipping.java`.  This class contains a Camel route which consumes messages from Kafka and populates the Infinispan cache with premium shipments. Let's insert our Camel routes into this class:
+*MAKE SURE to replace the Kafka Topic to `{user-username}`*
 +
 [source,java,subs="attributes+"]
 ----
@@ -427,7 +514,7 @@ from("kafka:user1-premium?groupId=premium-shipping")
 +
 image::images/4.1.6-update-kafka-topic.png[4.1.6-update-kafka-topic, role="integr8ly-img-responsive"]
 
-. We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `kafka.brokers` and `infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
+. We need to update the standard shipping config map.  Open up `standardshipping-config.yaml` file and update both the `camel.component.kafka.brokers` and `camel.component.infinispan.configuration.hosts` URLs.  You can reuse the URLs you used in the premium shipping config map.
 +
 image::images/4.1.7-update-standard-config.png[4.1.7-update-standard-config, role="integr8ly-img-responsive"]
 
@@ -446,14 +533,14 @@ image::images/4.1.8-standard-java-update.png[4.1.8-standard-java-update, role="i
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap premiumshipping-config PremiumShipping.java
+kamel run PremiumShipping.java
 ----
 
 . Ensure that the Camel-K command ran without error and connections to Infinispan and Kafka were successful.  You can verify the deployment via the OpenShift Developer topology screen.  Repeat the same for the StandardShipping flow:
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-jackson -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap standardshipping-config StandardShipping.java
+kamel run StandardShipping.java
 ----
 
 [type=verification]
@@ -466,7 +553,9 @@ Verify that you followed each step in the procedure above. If you are still havi
 [id="setup-supply-console"]
 == Create a Shipping Console
 
-Now that we have our backend services running, we can focus on creating a Shipping Console UI.
+.  Now that we have our backend services running, we can focus on creating a Shipping Console UI.
++
+image::images/5.0.0-diagram.png[5.0.0-diagram, role="integr8ly-img-responsive"]
 
 === Deploy RESTful Interface
 
@@ -479,7 +568,7 @@ image::images/5.1.1-config-map.png[5.1.1-config-map, role="integr8ly-img-respons
 [source,bash,subs="attributes+"]
 ----
 cd /projects/FleurDeLune/projects/harvest/display/
-oc project {user-username}
+oc project {namespace}
 oc apply -f shippingconsole-config.yaml
 ----
 
@@ -487,7 +576,7 @@ oc apply -f shippingconsole-config.yaml
 +
 [source,bash,subs="attributes+"]
 ----
-kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final  --configmap shippingconsole-config ConsoleService.java --dev
+kamel run ConsoleService.java --dev
 ----
 
 . Now that we have the Camel-K interface running, we can view the content in our Data Lake.  First, navigate here (in a new tab) to see the Standard shipments: `http://console-service-{user-username}.{openshift-app-host}/standard`. If successful, you should see output similar to the following:

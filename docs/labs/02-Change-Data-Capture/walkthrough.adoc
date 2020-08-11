@@ -1,17 +1,25 @@
-:walkthrough: Stream change events from your database
-:che-url: http://che-che.{openshift-app-host}/
-:terminal-url: https://terminal-terminal.{openshift-app-host}/hub/user/{user-username}
-:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
+// Attributes
+:walkthrough: Change Data Capture
+:title: Lab 2 - Change Data Capture and Apache Kafka
 :user-password: openshift
+:standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+:namespace: {user-username}
+
+// URLs
+:next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
+:codeready-url: http://che-che.{openshift-app-host}/
+:che-url: http://che-che.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab03/walkthrough.adoc
 endif::[]
 
 [id='change-data-capture']
-= Lab 2 - Change Data Capture
+= {title}
 
-In this lab you will enable Change Data Capture (CDC) for a legacy application that loads the customer orders from a comman separated value (CSV) file. This old PHP application can't be modified so there is no way to modernize it without risks. You will enable CDC on the SQL server database where the orders are stored and create a Kafka Connect deployment using AMQ streams to emit data change events to the Earth Apache Kafka cluster.
+One of the challenges of acquisitions is the integration between systems. You are now part of the team that needs to integrate the enterprise systems of International Inc, with the cloud native infrastructure of Fleur de Lune. You will use the Debezium Change Data Capture connector to emit events from a legacy application to replicate orders data to the new Apache Kafka clusters.
+
+In the first part of this lab you will use the already enabled Change Data Capture (CDC) for a legacy application that loads the customer orders from a comma separated value (CSV) file. This old PHP application can’t be modified so there is no way to modernize it without risks. You will use CDC on the SQL server database where the orders are stored and the connector deployed on the Kafka Connect cluster using AMQ streams to emit data change events.
 
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
@@ -19,7 +27,11 @@ In this lab you will enable Change Data Capture (CDC) for a legacy application t
 
 Apache Kafka is the de facto standard for asynchronous event propagation between microservices. Things get challenging, though, when adding a service’s database to the picture: how can you avoid inconsistencies between Kafka and the database?
 
-Enter Change Data Capture (CDC) and Debezium. By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
+Enter Change Data Capture (CDC) and Debezium. 
+
+image::images/debezium-cdc.png[Debezium CDC]
+
+By capturing changes from the log files of the database, Debezium gives you both reliable and consistent inter-service messaging via Kafka and instant read-your-own-write semantics for services themselves.
 
 *Why Red Hat?*
 
@@ -31,8 +43,8 @@ AMQ streams component makes Apache Kafka “OpenShift native” through the use 
 
 Use the following credentials to login into the web consoles:
 
-Your username is: `{user-username}` +
-Your password is: `{user-password}`
+* Your *username* is: `{user-username}` +
+* Your *password* is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
@@ -42,24 +54,128 @@ Your password is: `{user-password}`
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
 ****
-* link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]
+* link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]
 ****
 
 :sectnums:
 
 [time=5]
+[id="Getting Ready"]
+== Getting ready for the labs
+
+[IMPORTANT]
+====
+Please complete the following instructions to get ready for this lab. *If this is not the first lab you are doing today, and you have already completed this step in any of the previous labs, please skip to next task*.
+====
+
+You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+
+. To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
++
+image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
+
+. *If this is your first lab of the day*, you will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
++
+image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-responsive"]
+
+[IMPORTANT]
+====
+If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+====
+
+=== Start CodeReady workspace
+
+. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard. 
++
+--
+A new workspace has been configured with the required tools, plugins and project to start working on this workshop. 
+
+Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
+
+image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
+
+[NOTE]
+====
+You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
+====
+--
+
+. This will start an instance of the workspace. Please wait a few moments while it downloads the required container images and configuration setup.
++
+image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
+
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
++
+image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
++
+[NOTE]
+====
+This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
+
+You can close the _Problems_ and _Output_ views to clear space.
+====
+
+. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
++
+image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
+
+. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
++
+image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
+
+. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
++
+image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-responsive"]
+
+=== Login into the OpenShift cluster
+
+. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
+----
+
+. You should see something like the following (the project names may be different):
++
+----
+Login successful.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+    shared-db-earth
+    shared-kafka-earth
+  * user1
+    user1-che
+    user1-dayinthel-0605
+    user1-shared-475f
+
+Using project "user1".
+Welcome! See 'oc help' to get started.
+----
+
+. Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc project {namespace}
+----
+
+. Now you are ready to start working on the next tasks.
+
+[time=5]
 [id="configure-cdc-connectors"]
 == Configure CDC connectors for Kafka Connect
 
-There is already a legacy Kafka deployment running. We will then deploy a KafkaConnect CDC connector to connect to that cluster while we extract the data from the SQL Server Database.
+There is already a legacy Kafka deployment running in the cluster. We will deploy a KafkaConnect CDC connector to connect to that cluster so we can extract the data from the SQL Server Database.
 
 === Deploy KafkaConnect CDC Connector
 
-. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"].
+. Go back, or Open a new tab with the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"]. 
 +
 [IMPORTANT]
 ====
-Be sure to be in your _{user-username}_ project
+Don't forget to change the view from *Administrator* to *Developer*. Be sure to be in the _{namespace}_ project.
 ====
 
 . Click *+Add* on the left menu.
@@ -86,17 +202,24 @@ apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaConnect
 metadata:
   name: debezium
+  annotations:
+    strimzi.io/use-connector-resources: "true"
 spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
-  image: 'quay.io/hguerreroo/debezium-connect:0.10.0-sqlsrv'
+  image: 'quay.io/hguerreroo/rhi-cdc-connect:2020-Q2'
   replicas: 1
+  resources:
+    requests:
+      memory: 2Gi
+    limits:
+      memory: 2Gi
   jvmOptions:
     gcLoggingEnabled: false
   config:
-    group.id: {user-username}-connect-cluster
-    offset.storage.topic: {user-username}-connect-cluster-offsets
-    config.storage.topic: {user-username}-connect-cluster-configs
-    status.storage.topic: {user-username}-connect-cluster-status
+    group.id: {user-username}-debezium-cluster
+    offset.storage.topic: {user-username}-debezium-cluster-offsets
+    config.storage.topic: {user-username}-debezium-cluster-configs
+    status.storage.topic: {user-username}-debezium-cluster-status
 ----
 
 . Click on *Create* button.
@@ -105,69 +228,72 @@ image::images/openshift-kafkaconnect-detail.png[OpenShift Kafka Resource, role="
 
 === Configure KafkaConnect CDC Connector
 
-. Go back to the CodeReady IDE and expose the Kafka Connect REST API by running this command on the *Terminal* window.
+When you have created a container image for your connector plug-in, you need to create a connector instance in your Kafka Connect cluster. You can then configure, monitor, and manage a running connector instance.
+
+AMQ Streams provides two APIs for creating and managing connectors:
+
+* KafkaConnector resources (referred to as KafkaConnectors)
+* Kafka Connect REST API
+
+*KafkaConnectors* allow you to create and manage connector instances for Kafka Connect in an OpenShift-native way, so an HTTP client such as cURL is not required. Like other Kafka resources, you declare a connector’s desired state in a *KafkaConnector* _YAML_ file that is deployed to your OpenShift cluster to create the connector instance.
+
+. In the topology view, click *+Add* on the left menu.
+
+. Click on the *From Catalog* option.
+
+. Type in `kafka` in the search text field and then click on *Kafka connector*.
 +
-[source,bash,subs="attributes+"]
-----
-oc expose service debezium-connect-api --name kafka-connect -n {user-username}
-----
-+
+--
+image::images/kafka-connector-resource.png[KafkaConnector Resource, role="integr8ly-img-responsive"]
+
 [IMPORTANT]
 ====
-Remember to be logged into OpenShift and be in the correct _working_ project.
+Double check that you are selecting *KafkaConnector* and not _KafkaConnect_. Notice the *or* at the end.
 ====
+--
 
-. Go back to the OpenShift developer console and open the topology view by clicking *Topology* in the left side menu
+. Click on Create button.
 +
-image:images/openshift-kafkaconnect-resource.png[Back To Topology]
+image::images/kafka-connector-create.png[Create KafkaConnector, role="integr8ly-img-responsive"]
 
-. Wait for the default deployment to finish and deploy the required pod. Remember to wait for the dark blue circles.
+. Replace the contents of the YAML editor with the following code:
++
+[source,yaml,subs="attributes+"]
+----
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: orders-connector
+  labels:
+    strimzi.io/cluster: debezium
+spec:
+  class: io.debezium.connector.sqlserver.SqlServerConnector
+  tasksMax: 1
+  config:
+    connector.class: "io.debezium.connector.sqlserver.SqlServerConnector"
+    database.hostname: "mssql-server-linux.shared-db-earth.svc"
+    database.port: "1433"
+    database.user: "sa"
+    database.password: "Password!"
+    database.dbname: "InternationalDB"
+    database.server.name: "{user-username}.earth"
+    table.whitelist: "dbo.Orders"
+    database.history.kafka.bootstrap.servers: "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092"
+    database.history.kafka.topic: "{user-username}.earth.dbhistory"
+----
+
+. Click the *Create* button to submit the configuration.
++
+image::images/kafka-connector-details.png[Details KafkaConnector, role="integr8ly-img-responsive"]
+
+. Check the log in the *debezium-cluster* deployment.
 +
 image:images/topology-kafkaconnect.png[KafkaConnect Topology]
 
-. Check that everything deployed correctly by clicking the *Open URL* icon.
-
-. You should be able to see the information of the Kafka cluster version like the following:
-+
-[source,json,subs="attributes+"]
-----
-{"version":"2.2.1.redhat-00002","commit":"c330425647372ca2","kafka_cluster_id":"g0lUt2NARWSPxFn1Aq3uTw"}
-----
-
-. Now that we know that the Kafka Connect cluster is running, let's create a new connector config to react to changes in the `Orders` table. Issue the following command in the CodeReady Terminal window:
-+
-[source,bash,subs="attributes+"]
-----
-cat << EOF | curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://kafka-connect-{user-username}.{openshift-app-host}/connectors -d @-
-{
-  "name": "orders-connector",
-  "config": {
-    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
-    "database.hostname": "mssql-server-linux.shared-db-earth.svc",
-    "database.port": "1433",
-    "database.user": "sa",
-    "database.password": "Password!",
-    "database.dbname": "InternationalDB",
-    "database.server.name": "{user-username}.earth",
-    "table.whitelist": "dbo.Orders",
-    "database.history.kafka.bootstrap.servers": "earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092",
-    "database.history.kafka.topic": "{user-username}.earth.dbhistory"
-  }
-}
-EOF
-----
-
-. If the last command was successful. you should get the following output as return:
-+
-[source,json,subs="attributes+"]
-----
-{"name":"orders-connector","config":{"connector.class":"io.debezium.connector.sqlserver.SqlServerConnector","database.hostname":"mssql-server-linux.shared-db-earth.svc","database.port":"1433","database.user":"sa","database.password":"Password!","database.dbname":"InternationalDB","database.server.name":"{user-username}.earth","table.whitelist":"dbo.Orders","database.history.kafka.bootstrap.servers":"earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092","database.history.kafka.topic":"{user-username}.earth.dbhistory","name":"orders-connector"},"tasks":[],"type":"source"}
-----
-
 [type=verification]
-Did you receive the orders-connector response from the SqlServerConnector?
+Did the connector started correctly and is now reading the database transaction log?
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="loading-earth-orders"]
@@ -211,7 +337,7 @@ image::images/www-imported-orders.png[Imported Orders]
 
 === Check Database Records
 
-After loading the file into the system, the orders data  should be storee in the MSSQL Server database. Let's check to make sure that's the case.
+After loading the file into the system, the orders data should be stored in the MSSQL Server database. Let's check to make sure that's the case.
 
 . Go back to the topology view of the OpenShift Developer console. Change the project to the `shared-db-earth`.
 +
@@ -251,14 +377,14 @@ image:images/openshift-project-sharedkafka.png[Change Project]
 
 . Validate that the *KafkaTopics* were created.
 +
-- Expand the *Advanced* menu on the left menu bar.
+- Expand the *More* menu on the left menu bar.
 - Click on *Search* to load the _resources_ search page.
 - Click on the _Resource Type_ field and type 'topic'.
-- Finally select *KafkaTopic*.
+- Finally check *KafkaTopic*.
 +
 image::images/openshift-search-kafkatopics.png[Search KafkaTopics]
 
-. This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-connect-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
+. This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-debezium-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
 +
 image::images/openshift-cdc-topics.png[CDC KafkaTopics]
 +
@@ -271,7 +397,7 @@ You can narrow the results by adding `{user-username}` to the search filter.
 Were you able to see that your Change Data Capture connector has access to Kafka?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 === Inspect Kafka records
 
@@ -315,7 +441,7 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic {user-us
 Were you able to capture the changes in the MSSQL server database and generate Apache Kafka events using Change Data Capture?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=5]
 [id="deploying-apache-kafka"]
@@ -379,11 +505,7 @@ spec:
 +
 image::images/openshift-kafka-resource.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-kafkas-list.png[Back To Topology]
-
-. Wait for cluster to start it can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
+. Wait for the cluster to start. It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
 image:images/openshift-kafka-topology.png[Kafka Topology]
 
@@ -391,19 +513,19 @@ image:images/openshift-kafka-topology.png[Kafka Topology]
 Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="replicating-to-other-kafka-clusters"]
 == Replicating to other Kafka clusters
 
-We refer to the process of replicating data between Kafka clusters "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
+We refer to the process of replicating data between Kafka clusters as "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
 
 The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
 
 === Deploy Mirror Maker
 
-. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We do mean from the Earth Kafka cluster to the Moon Kafka cluster)
+. Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We mean from the Earth Kafka cluster to the Moon Kafka cluster)
 
 . Go back to the OpenShift Developer console and click on *+Add* menu on the left side bar.
 +
@@ -445,10 +567,6 @@ spec:
 +
 image::images/openshift-mirromaker-detail.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-mirrormakers-list.png[Back To Topology]
-
 . Wait for cluster to start.  It can take a few minutes as the operator will deploy your Kafka cluster infrastructure and related operators to manage it.
 +
 image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
@@ -458,13 +576,13 @@ image:images/openshift-mirrormaker-topology.png[Mirror Maker Topology]
 . Validate that the *KafkaTopics* were created.
 +
 --
-. Expand the *Advanced* menu on the left menu bar.
+. Expand the *More* menu on the left menu bar.
 
 . Click on *Search* to load the _resources_ search page.
 
 . Click on the _Resource Type_ field and type 'topic'.
 
-. Finally select *KafkaTopic*.
+. Finally check *KafkaTopic*.
 --
 +
 image::images/openshift-moon-kafkatopics.png[Search KafkaTopics]
@@ -482,7 +600,7 @@ This time there is no need to filter the topics, as this _moon_ cluster is only 
 Were you able to verify the Kafka Topic?  Good, this means that Mirror Maker was able to mirror the data from the _earth_ cluster to the *Moon*.
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=15]
 [id="enabling-http-access"]
@@ -529,10 +647,6 @@ spec:
 +
 image::images/openshift-bridge-details.png[OpenShift Kafka Resource, role="integr8ly-img-responsive"]
 
-. Go back to the topology view by clicking *Topology* in the left side menu
-+
-image:images/openshift-bridge-list.png[Back To Topology]
-
 . Wait for the bridge to start.
 +
 image:images/openshift-bridge-topology.png[Mirror Maker Topology]
@@ -541,7 +655,7 @@ image:images/openshift-bridge-topology.png[Mirror Maker Topology]
 +
 [source,bash,subs="attributes+"]
 ----
-oc expose service http-bridge-service --name kafka-bridge -n {user-username}
+oc expose service http-bridge-service --name kafka-bridge -n {namespace}
 ----
 
 === Test the HTTP Bridge
@@ -589,7 +703,7 @@ curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-us
 The first call to the service will return an empty string as it just created the consumer and subscribed to the topic.
 ====
 
-. Call the comand again, it will start to retrieve batchs of records. Keep repeating until there is no more records to read.
+. Call the command again, it will start to retrieve batchs of records. Keep repeating until there is no more records to read.
 +
 [TIP]
 ====
@@ -600,7 +714,7 @@ You can take notice of the `offset` returned in the records to know how many mes
 Were you able to successfully retrieve CDC data over HTTP?  *Congratulations!* You just finished capturing data from a MSSQL database into Kafka, then replicate that information to a different Kafka cluster. Finally you were able to retrieve the information using an HTTP interface.
 
 [type=verificationFail]
-Verify that you followed each step in the procedure above. If you are still having issues, contact your administrator.
+{standard-fail-text}
 
 [time=5]
 [id="summary"]

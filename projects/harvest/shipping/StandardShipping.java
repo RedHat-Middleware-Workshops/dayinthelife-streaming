@@ -1,3 +1,5 @@
+// camel-k: dependency=camel-infinispan dependency=camel-bean dependency=camel-jackson dependency=mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final dependency=mvn:io.netty:netty-codec:4.1.49.Final configmap=standardshipping-config
+
 package module3;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.infinispan.InfinispanConstants;

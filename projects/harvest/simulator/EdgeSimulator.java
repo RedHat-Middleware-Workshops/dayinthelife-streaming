@@ -1,3 +1,4 @@
+// camel-k: dependency=camel-bean dependency=camel-jackson configmap=edge-config
 
 package module3.simulator;
 

@@ -1,4 +1,5 @@
-package module3;
+// camel-k: dependency=camel-jackson configmap=costcenter-config
+
 import org.apache.camel.builder.RouteBuilder;
 import java.util.Map;
 import java.util.HashMap;

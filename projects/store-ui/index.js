@@ -52,6 +52,7 @@ app.get('/', (req, res) => {
 })
 
 // Render relevant product pages
+app.get('/async', (req, res) => res.render('async.handlebars', { activePage: { async: true } }))
 app.get('/product', (req, res) => res.render('product.handlebars', { activePage: { product: true } }))
 app.get('/contact', (req, res) => res.render('contact.handlebars', { activePage: { contact: true } }))
 
@@ -67,8 +68,10 @@ app.post('/order/rest', json(), async (req, res, next) => {
 
   try {
     const response = await http.post(new URL('/place', ORDERS_REST_BASE_URL ? ORDERS_REST_BASE_URL : 'http://order:8080'), {
-      json: true,
-      body: req.body
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
     })
 
     if (!req.session.orders) {
@@ -85,9 +88,29 @@ app.post('/order/rest', json(), async (req, res, next) => {
   }
 })
 
-// /* TODO add POST/EVENT method handling */ 
+app.post('/order/event', json(), async (req, res, next) => {
+  log.info('placing order with body: %j', req.body)
+  try {
+    const response = await http.post(new URL('/place', ORDERS_EVENT_BASE_URL ? ORDERS_EVENT_BASE_URL : "http://i-events.fuse-user1.svc:8080"), {
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
+    })
 
-// /* TODO add POST/EVENT method handling */ 
+    if (!req.session.orders) {
+      req.session.orders = []
+    }
+
+    // Store the order result in the user session
+    // Can be used to render order history or similar
+    req.session.orders.push(response.body)
+
+    res.json(response.body)
+  } catch (e) {
+    next(boom.internal('error placing order', e))
+  }
+})
 
 // Provide a friendly 404 page for all unknown routes
 app.use((req, res, next) => {

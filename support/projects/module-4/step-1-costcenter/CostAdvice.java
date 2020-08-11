@@ -1,3 +1,5 @@
+// camel-k: dependency=camel-infinispan dependency=camel-bean dependency=camel-jackson dependency=camel-swagger-java configmap=costadvice-config
+
 package module3;
 import org.apache.camel.builder.RouteBuilder;
 import java.util.Map;

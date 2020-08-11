@@ -6,12 +6,12 @@ This workshop is a series of hands-on modules which are designed to familiarize 
 
 The workshop will cover the following topics:
 
-- How to connect enterprise on-premise software and container-native applications using Red Hat Integration
-- Technologies to implement different event and messaging connectivity patterns
-- What is Red Hat AMQ Streams (Apache Kafka) and the basics of its components
-- How to run Red Hat AMQ Streams (Apache Kafka) on OpenShift, the enterprise Kubernetes
-- Event-driven microservices benefits and patterns
-- How to implement an event management bus using Red Hat Middleware
+* How to connect enterprise on-premise software and container-native applications using Red Hat Integration
+* Technologies to implement different event and messaging connectivity patterns
+* What is Red Hat AMQ Streams (Apache Kafka) and the basics of its components
+* How to run Red Hat AMQ Streams (Apache Kafka) on OpenShift, the enterprise Kubernetes
+* Event-driven microservices benefits and patterns
+* How to implement an event management bus using Red Hat Middleware
 
 ### Audience
 
@@ -38,14 +38,14 @@ Follow the [Installation Procedure](docs/install.md#installation) to setup a wor
 
 This workshop is broken into 4 time-boxed modules:
 
-Module 1: Introduction to Event Driven Architecture<br/>
-Module 2: Change Data Capture & Apache Kafka<br/>
-Module 3: Cloud-Native Enterprise Integration Patterns using Camel K<br/>
-Module 4: Event Sourcing and Complex Event Processing<br/>
+* Module 1: Introduction to Event Driven Architecture
+* Module 2: Change Data Capture & Apache Kafka
+* Module 3: Cloud-Native Enterprise Integration Patterns using Camel K
+* Module 4: Event Sourcing and Complex Event Processing
 
-This workshop could also be split up. All modules could be delivered on their own as standalone workshops, but we **strongly** recommend to deliver them in the suggested order.
+This workshop could also be split up. All modules could be delivered on their own as standalone workshops, but we strongly recommend to deliver them in the suggested order.
 
-### Background Story
+### Background
 
 The premise for our “Day in the Life” workshops is centered around a fictitious global conglomerate called International Inc.  Initially, International Inc. focused on forming a Digital Transformation strategy.  They began with an API-first approach to help facilitate their merger & acquisition activities.  The outcome of this approach was very successful, and helped them keep up with their competitors, deliver new business functionality faster, and make the merger & acquisition process seamless.  International Inc. is now interested in exploring new business opportunities in the field of space exploration.
 
@@ -96,7 +96,3 @@ A meteor shower has just hit a couple of the devices on some marshmallow farms, 
 * Disaster STRIKES!! Data recovery and replaying events (IoT Breakdown)
 * Start Up simulator (Needs to check if we can write back to the same offset)
 * Replay CEP
-
-### TODO
-
-Data Virt

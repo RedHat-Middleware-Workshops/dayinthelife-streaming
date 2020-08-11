@@ -5,3 +5,10 @@ metadata:
     app.openshift.io/connects-to: 'order,events'
   labels:
     app.openshift.io/runtime: nodejs
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+          - name: ORDERS_EVENT_BASE_URL
+            value: "http://i-events.fuse-${USER}.svc:8080"

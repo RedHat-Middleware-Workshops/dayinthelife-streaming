@@ -1,9 +1,11 @@
-package module4;
-import org.apache.camel.builder.RouteBuilder;
-import java.util.Map;
+// camel-k: dependency=camel-bean dependency=camel-jackson dependency=camel-swagger-java dependency=mvn:io.netty:netty-codec:4.1.49.Final configmap=costadvice-config
+
 import java.util.HashMap;
-import org.apache.camel.component.jackson.JacksonDataFormat;
+import java.util.Map;
+
 import org.apache.camel.Body;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.model.rest.RestBindingMode;
 
 
@@ -29,7 +31,6 @@ public class CostAdvice extends RouteBuilder{
 
 
         restConfiguration()
-            .component("undertow")
             .apiContextPath("/api-doc")
             .apiProperty("cors", "true")
             .apiProperty("api.title", "Order API")

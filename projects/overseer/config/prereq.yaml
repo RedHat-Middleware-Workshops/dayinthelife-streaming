@@ -1,0 +1,51 @@
+---
+apiVersion: enmasse.io/v1beta1
+kind: AddressSpace
+metadata:
+  name: amq
+spec:
+  plan: standard-small
+  type: standard
+  endpoints:
+    - name: messaging
+      service: messaging
+      expose:
+        type: route
+        routeServicePort: amqps
+        routeTlsTermination: passthrough
+      exports:
+        - kind: ConfigMap
+          name: amq-config
+  authenticationService:
+    name: none-authservice
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: moon
+spec:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+  kafka:
+    listeners:
+      external:
+        type: route
+      plain: {}
+      tls: {}
+    replicas: 3
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral
+---
+apiVersion: enmasse.io/v1beta1
+kind: Address
+metadata:
+  name: amq.mytopic
+spec:
+  address: mytopic
+  plan: standard-small-topic
+  type: topic
