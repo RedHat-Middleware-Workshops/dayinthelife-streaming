@@ -180,7 +180,7 @@ image::images/topology-getting-ready.png[REST Services]
 [id="Test Webapp"]
 == Review the problematic application
 
-You need to check the problems with the orders web application from Fleur de Lune. In this application, customers select their favorite flavers and place the order online. This application then updates the inventory and processes the payment. The web application is built on NodeJS and the backend service is using the legacy Spring Boot service. The rest of the application components were already migrated to Quarkus.
+You need to check the problems with the orders web application from Fleur de Lune. In this application, customers select their favorite flavors and place the order online. This application then updates the inventory and processes the payment. The web application is built on NodeJS and the backend service is using the legacy Spring Boot service. The rest of the application components were already migrated to Quarkus.
 
 image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
 
@@ -281,7 +281,7 @@ Were you able to successfully scale-down and scale-up your application?
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topics
 
-In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and allows to get fine-grained scaling. 
+In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and enables fine-grained scaling. 
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
@@ -688,7 +688,7 @@ oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-e
 oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
 ----
 
-. The rest of the event-driven components should deploy now, you can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
+. The rest of the event-driven components should deploy now.  You can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
 
 === Test the integration
 
@@ -835,7 +835,7 @@ oc patch -n {namespace} dc/events -p '{ "metadata" : { "annotations" : { "app.op
 
 === Check the OpenShift Developer Console
 
-. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
+. Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], and make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
 +
 image::images/topology-events.png[Topology Events, role="integr8ly-img-responsive"]
 
