@@ -30,9 +30,9 @@ The workshop will cover the following topics:
 
 Each module should be able to be completed in between 60-90 minutes plus 20 mins of slides introducing the content.
 
-### Installation
+### Provisioning
 
-Follow the [Installation Procedure](docs/install.md#installation) to setup a working environment.
+The **DIL Streaming - Event-driven Workshop** item under _workshops_ in the [RHPDS catalog](https://rhpds.redhat.com/) allows provisioning a cluster with a capacity for the specified number of users. 
 
 ## Workshop Modules
 
