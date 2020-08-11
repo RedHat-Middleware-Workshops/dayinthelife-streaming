@@ -12,34 +12,29 @@ endif::[]
 [id='cloud-native-integration']
 = Lab 3 - Cloud-Native Integration with EIPs
 
+Your IT journey on International Inc has taken you to the Moon. Is now time to apply all your knowledge around Enterprise Integration to the IoT-based farming from Fleur de Lune. You will create a couple of microservices to help them get information regarding the harvest size, quality and shipping using the cloud-native framework of Apache Camel K.
+
 *Audience:* Enterprise Integrators, System Architects, Developers, Data Integrators
 
 *Overview*
 
 Enterprise Integration Patterns (EIPs) have been used in technology for 40+ years.  But are they still relevant when we attempt Cloud-Native integration?
 
-Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still very useful when it comes to managing and integrating our data in the cloud.  Using Camel-K, we are able to enhance existing streaming technologies like Kafka to help route and mediate our data through various channels.
+Patterns like the Splitter, Content-Based Routing (CBR) and WireTap are still very useful when it comes to managing and integrating our data in the cloud.  Using Camel K, we are able to enhance existing streaming technologies like Kafka to help route and mediate our data through various channels.
 
 AMQ self-service messaging enables Developers to provision messaging when and where they need it via a web-based browser. The AMQ Online component is built on the foundation of Red Hat OpenShift, a container platform for high scalability and availability of cloud-native applications.
 
-
 To provide a better customer experience, you will be closely monitoring the harvest from marshmallows farms on the moon. You will also be adding a harvest batch shipping schedule to allow Fleur de lune to be more proactive along with faster response to any emergency that may impact their business.
 
-
 In this lab you will consume IoT events from an AMQ Online topic, use Enterprise Integration Patterns (EIPs) in Camel-K to split and route messages to a Datalake.  Lastly, you'll stream the messages to a Standard and Premium Shipping topic on Kafka.
-+
-image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
 
+image::images/1.0.0-overview.png[1.0.0-overview, role="integr8ly-img-responsive"]
 
 *Why Red Hat?*
 
-To solve complex cloud-native integration challenges, we need to apply EIPs to manage our data and messaging needs.  Camel-K gives us a Kubernetes native EIP solution for tackling EIPs in the cloud.
+To solve complex cloud-native integration challenges, we need to apply EIPs to manage our data and messaging needs. Apache Camel K gives us a Kubernetes native EIP solution for tackling EIPs in the cloud.
 
 By using Camel-K, we can enhance data streaming and apply traditional EIPs to solve cloud-native integration.
-
-*Prerequisites*
-
-This lab assumes you have successfully completed Lab 1 & 2.
 
 *Credentials*
 
@@ -64,19 +59,15 @@ Your password is: `{user-password}`
 * link:{openshift-host}/[Open Console, window="_blank"]
 ****
 
-
-
 [time=5]
 [id="real-time-harvest-gathering"]
 == Real time harvest information gathering
 
 === Eclipse Che Workspace and Setup the environment
-. You are setting up a topic in AMQ Online to receive event signals from Edge devices.
+You are setting up a topic in AMQ Online to receive event signals from Edge devices.
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
-+
-image::images/1.1.0-diagram-1.png[1.1.0-diagram-1, role="integr8ly-img-responsive"]
-
+image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
 . To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
@@ -94,24 +85,55 @@ image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
-. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
+. Select **Terminal > Open Terminal in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
 +
 image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
 
-. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
+=== Login into the OpenShift cluster
+
+. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
 +
-image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
+[source,bash,subs="attributes+"]
+----
+oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
+----
+
+. You should see something like the following (the project names may be different):
++
+----
+Login successful.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+    shared-db-earth
+    shared-kafka-earth
+  * user1
+    user1-che
+    user1-dayinthel-0605
+    user1-shared-475f
+
+Using project "user1".
+Welcome! See 'oc help' to get started.
+----
+
+. Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc project {namespace}
+----
 
 . Once you've logged into OpenShift via the CLI, run the following commands to setup this lab. (Setup AddressSpace and Kafka Cluster)
 +
 [source,bash,subs="attributes+"]
 ----
-oc project {namespace}
-cd /projects/FleurDeLune/projects/harvest/simulator
-oc apply -f config/prereq.yaml
+oc -n {user-username} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/harvest/simulator/config/prereq.yaml
 ----
 
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials. Your username is: `{user-username}` + Your password is: `{user-password}`
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
++
+Your username is: `{user-username}` +
+Your password is: `{user-password}`
 
 . Click on the the Topology view (left side menu)
 +
@@ -165,29 +187,13 @@ image::images/1.1.9-topic-details.png[1.1.9-topic-details, role="integr8ly-img-r
 +
 image::images/1.1.10-topic-provisioned.png[1.1.10-topic-provisioned, role="integr8ly-img-responsive"]
 
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
-
-  Your username is: `{user-username}` +
-  Your password is: `{user-password}`
-
-. Locate *Search* under *More*
-
+. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Click on the *Endpoints* tab to check the messaging host information.
 +
-image::images/1.1.11-find-search.png[1.1.11-find-search, role="integr8ly-img-responsive"]
+image::images/addressspace-endpoints.png[Address Space Endpoints, role="integr8ly-img-responsive"]
 
-
-. On the top search bar, select *Resources* and type to search *AddressSpace*, select the *AddressSpace* when appears in the drop down menu.
+. Copy and write down the *Host* information of the `amq.messsaging.cluster`. As we will be connecting all our services from within OpenShift we can use the internal hostname.
 +
-image::images/1.1.12-search-addressspace.png[1.1.12-search-addressspace, role="integr8ly-img-responsive"]
-
-. Click on *amq*
-+
-image::images/1.1.13-addressspace-amq.png[1.1.13-addressspace-amq, role="integr8ly-img-responsive"]
-
-. Click on tab *YAML*, and copy the *serviceHost* for later use.
-+
-image::images/1.1.14-serive-host-port.png[1.1.14-serive-host-port, role="integr8ly-img-responsive"]
-
+image::images/addressspace-hostname.png[Address Space Host, role="integr8ly-img-responsive"]
 
 [type=verification]
 Were you able to successfully provision the topic in AMQ Online?
@@ -468,7 +474,7 @@ oc create -f connect-secret.yaml
 oc create -f jdg-cluster.yaml
 ----
 
-. Navigate back to the OpenShift Developer console, select **Topology*, then click on the `example-infinispan` container.  Verify the pod has started and is running.
+. Navigate back to the OpenShift Developer console, select *Topology*, then click on the `example-infinispan` container.  Verify the pod has started and is running.
 +
 image::images/4.1.2-check-infinispan.png[4.1.2-check-infinispan, role="integr8ly-img-responsive"]
 
