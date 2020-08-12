@@ -33,7 +33,7 @@ public class StandardShipping extends RouteBuilder{
         ;
 
         //USE API
-        from("kafka:user1-premium?groupId=standard-shipping")
+        from("kafka:user1-standard?groupId=standard-shipping")
             .setHeader("marshmallow").simple("${body}")
             .setHeader(InfinispanConstants.OPERATION).constant(InfinispanOperation.GET)
             .setHeader(InfinispanConstants.KEY).constant("standard")
