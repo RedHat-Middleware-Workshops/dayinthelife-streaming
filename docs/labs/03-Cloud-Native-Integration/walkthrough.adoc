@@ -130,10 +130,7 @@ oc project {namespace}
 oc -n {user-username} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/harvest/simulator/config/prereq.yaml
 ----
 
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
-+
-Your username is: `{user-username}` +
-Your password is: `{user-password}`
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (`{user-username}` and `{user-password}`).
 
 . Click on the the Topology view (left side menu)
 +
