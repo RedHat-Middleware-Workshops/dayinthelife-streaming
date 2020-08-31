@@ -690,6 +690,12 @@ oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/modul
 
 . The rest of the event-driven components should deploy now.  You can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
 
+[type=verification]
+In your topology view do you see 2 new services deployed: `invoice-events` and `inventory-events`?
+
+[type=verificationFail]
+{standard-fail-text}
+
 === Test the integration
 
 . In the same CodeReady Workspaces terminal issue the following command:
