@@ -61,6 +61,7 @@ Your password is: `{user-password}`
 (Skip this task if you have already done so in other labs and go directly to the next Task)
 
 You are setting up a topic in AMQ Online to receive event signals from Edge devices. In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
@@ -69,6 +70,7 @@ image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"
 [id="pre-req"]
 === Eclipse Che Workspace and Setup the environment
 You are setting up a topic in AMQ Online to receive event signals from Edge devices.  In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
@@ -92,7 +94,9 @@ image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="i
 +
 image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
 
-. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (Your username is: `{user-username}` Your password is: `{user-password}`)
+
+. Click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
 +
 image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
 
@@ -104,8 +108,6 @@ oc project {namespace}
 cd /projects/FleurDeLune/projects/overseer
 oc apply -f config/prereq.yaml
 ----
-
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (Your username is: `{user-username}` Your password is: `{user-password}`)
 
 . Click on the the Topology view (left side menu)
 +
