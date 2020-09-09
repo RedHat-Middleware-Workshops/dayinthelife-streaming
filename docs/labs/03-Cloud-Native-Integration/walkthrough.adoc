@@ -279,10 +279,8 @@ Verify that you followed each step in the procedure above. If you are still havi
 == Setup Order Inventory with AMQ Streams
 Now that the harvest data is now streaming into the topic, we will need to grade the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. It will also stream separately to the shipping departments.
 
-+
-image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
+image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"] 
 
-+
 image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
 . Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"]
