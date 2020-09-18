@@ -592,7 +592,7 @@ image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integ
 
 . Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)
 +
-image::images/3.1.5-terminal.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
+image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
 . Click on the Terminal tab.
 +
