@@ -308,7 +308,7 @@ Let's get started!
 
 === Loading Orders File
 
-. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-1/earth-orders.csv[Earth Orders File, window="_blank"].
+. Download to your local system the link:https://raw.githubusercontent.com/RedHatWorkshops/dayinthelife-streaming/master/support/module-2/earth-orders.csv[Earth Orders File, window="_blank"].
 
 . Navigate to the legacy PHP link:http://www-shared-app-earth.{openshift-app-host}/#{user-username}[Enterprise System, window="_blank"] in a new browser tab.
 +

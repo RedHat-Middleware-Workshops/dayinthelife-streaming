@@ -130,10 +130,7 @@ oc project {namespace}
 oc -n {user-username} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/harvest/simulator/config/prereq.yaml
 ----
 
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials
-+
-Your username is: `{user-username}` +
-Your password is: `{user-password}`
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (`{user-username}` and `{user-password}`).
 
 . Click on the the Topology view (left side menu)
 +
@@ -280,10 +277,10 @@ Verify that you followed each step in the procedure above. If you are still havi
 [time=15]
 [id="setup-order-inventory"]
 == Setup Order Inventory with AMQ Streams
-. Now that the harvest data is now streaming into the topic, we will need to grade the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. It will also stream separately to the shipping departments.
-+
-image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
-+
+Now that the harvest data is now streaming into the topic, we will need to grade the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. It will also stream separately to the shipping departments.
+
+image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"] 
+
 image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
 . Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"]
@@ -639,7 +636,7 @@ image::images/6.1.3-select-datasource.png[6.1.3-select-datasource, role="integr8
 +
 image::images/6.1.4-postgres-save.png[6.1.4-postgres-save, role="integr8ly-img-responsive"]
 
-. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to Eclipse Che and copy the content from `/projects/harvest/display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Load**.
+. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to Eclipse Che and copy the content from `/projects/harvest/display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Import**.
 +
 image::images/6.1.5-load-json.png[6.1.5-load-json, role="integr8ly-img-responsive"]
 

@@ -14,12 +14,13 @@ endif::[]
 [id='cep-event-sourcing']
 = Lab 4 - Complex Event Processing and Event Sourcing
 
-In this lab you will be applying two common scenarios to processing events. Event Sourcing and Complex Event Processing. First replaying the harvest data to estimate possible costs to operate farms on the moon. You will use Kafka Streams API for real-time events processing and extracting information from event streams as they arrive.
+In this lab you will be applying two common scenarios to processing events: Event Sourcing and Complex Event Processing (CEP). First replaying the harvest data to estimate possible costs to operate farms on the moon. You will use Kafka Streams API for real-time events processing and extracting information from event streams as they arrive.
+
 *Audience:* System Architects, Developers, Data Integrators
 
 *Overview*
 
-Event Sourcing is used to handle sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
+Event Sourcing is used to handle the sequence of imperative events. Events in AMQ Streams are stored and persisted sequentially, each representing change of state. This allows applications to replay history and experiment with what-if scenarios.
 
 Complex Event Processing (CEP) is an event processing concept, with the goal of identifying the meaningful events within the event cloud.
 
@@ -59,8 +60,7 @@ Your password is: `{user-password}`
 === Real time harvest information gathering
 (Skip this task if you have already done so in other labs and go directly to the next Task)
 
-. You are setting up a topic in AMQ Online to receive event signals from Edge devices
-In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+You are setting up a topic in AMQ Online to receive event signals from Edge devices. In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
@@ -69,8 +69,7 @@ image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"
 [time=10]
 [id="pre-req"]
 === Eclipse Che Workspace and Setup the environment
-You are setting up a topic in AMQ Online to receive event signals from Edge devices.
-In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
+You are setting up a topic in AMQ Online to receive event signals from Edge devices.  In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
@@ -91,11 +90,13 @@ image::images/2.1.3-open-workspace.png[2.1.3-open-workspace, role="integr8ly-img
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
-. Select **Terminal > Open Terminal** in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
+. Select **Terminal > Open Terminal in specific container** and select the container that begins with `dil-` (followed by a 5-digit alphanumeric code).  Click it and a terminal window should open.
 +
 image::images/2.1.6-terminal.png[2.1.6-terminal, role="integr8ly-img-responsive"]
 
-. Navigate back to your OpenShift Admin console and click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
+. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (Your username is: `{user-username}` Your password is: `{user-password}`)
+
+. Click on your username in the top right-hand corner.  Click **Copy login command**, login with your credentials, then click **Display Token**. Copy the `oc login` command from this page and paste it in your terminal window.  Hit enter to login.
 +
 image::images/2.1.7-oc.png[2.1.7-oc, role="integr8ly-img-responsive"]
 
@@ -107,8 +108,6 @@ oc project {namespace}
 cd /projects/FleurDeLune/projects/overseer
 oc apply -f config/prereq.yaml
 ----
-
-. Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (Your username is: `{user-username}` Your password is: `{user-password}`)
 
 . Click on the the Topology view (left side menu)
 +
@@ -593,7 +592,7 @@ image::images/1.1.8-verify-cost-center.png[1.1.8-verify-cost-center, role="integ
 
 . Navigate back to the *OpenShift Developer Console* , find moon-kafka in the topology, and click on one of the three pod (any of one of the three)
 +
-image::images/3.1.5-terminal.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
+image::images/3.1.4-kafka-pod.png[3.1.4-kafka-pod, role="integr8ly-img-responsive"]
 
 . Click on the Terminal tab.
 +
