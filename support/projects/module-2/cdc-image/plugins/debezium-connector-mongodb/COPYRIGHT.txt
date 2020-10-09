@@ -1,4 +1,5 @@
 Cobolbaby
+Aaron Brady
 Aaron Rosenberg
 Addison Higham
 Adrian Kreuziger
@@ -16,18 +17,23 @@ Andras Istvan Nagy
 Andrew Garrett
 Andrew Tongen
 Andrey Pustovetov
+Andy Teijelo
+Anton Kondratev
 Anton Martynov
 Arkoprabho Chakraborti
 artiship
 Ashhar Hasan
 Attila Szucs
 Aykut Farsak
+Balázs Németh
 Barry LaFond
 Bartosz Miedlar
 Ben Hardesty
 Ben Williams
 Bin Li
 Bingqin Zhou
+Bob Roldan
+Braden Groom
 Braden Staudacher
 Brandon Brown
 Brandon Maguire
@@ -40,8 +46,10 @@ Cliff Wheadon
 Collin Van Dyck
 Cyril Scetbon
 Daan Roosen
+Dave Cumberland
 David Chen
 David Feinblum
+David Jerome
 David Leibovic
 David Szabo
 Deepak Barr
@@ -50,7 +58,10 @@ Dennis Campagna
 Dennis Persson
 Duncan Sands
 Echo Xu
+Ed Laur
 Eero Koplimets
+Elan Hasson
+Emmanuel Brard
 Emrul Islam
 Eric S. Kreiseir
 Ewen Cheslack-Postava
@@ -67,18 +78,24 @@ Guillaume Rosauro
 Gunnar Morling
 Gurnaaz Randhawa
 Grzegorz Kołakowski
+Jan Hendrik Dolling
 Hans-Peter Grahsl
+Hector Ventura Reyes
 Henryk Konsek
 Horia Chiorean
+Hossein Torabi
 Ian Axelrod
 Igor Gabaydulin
 Ilia Bogdanov
+Ivan Klass
 Ivan Kovbas
 Ivan Lorenz
 Ivan Luzyanin
 Ivan San Jose
+Ivan Trusov
 Ivan Vucina
 Jakub Cechacek
+James Carl
 Jan-Hendrik Dolling
 Jan Uyttenhove
 Jaromir Hamala
@@ -96,17 +113,23 @@ Jos Huiting
 Josh Arenberg
 Josh Stanfield
 Joy Gao
+Juan Antonio Pedraza
 Jun Du
 Jure Kajzer
+Justin Hiza
 Keith Barber
 Kevin Pullin
+Kewei Shang
 Krizhan Mariampillai
 Leo Mei
 Lev Zemlyanov
+Linh Nguyen Hoang
 Listman Gamboa
 Liu Hanlin
 Liu Lang Wa
 Luis Garcés-Erice
+Lukas Krejci
+lyidataminr
 Maciej Bryński
 MaoXiang Pan
 Marc Zbyszynski
@@ -117,11 +140,13 @@ Mathieu Rozieres
 Matthias Wessendorf
 Max Kaplan
 Melissa Winstanley
+Michael Wang
 Mike Graham
 Mincong Huang
 Moira Tagle
 Muhammad Sufyian
 Navdeep Agarwal
+Nayana Hettiarachchi
 Nikhil Benesch
 Olavi Mustanoja
 Omar Al-Safi
@@ -130,6 +155,7 @@ Orr Ganani
 Paul Mellor
 Peng Lyu
 Peter Goransson
+Peter Urbanetz
 Philip Sanetra
 Pradeep Mamillapalli
 Prannoy Mittal
@@ -141,6 +167,8 @@ Ramesh Reddy
 Randall Hauch
 Raúl Tovar
 Renato Mefi
+René Kerner
+Robert Hana
 Roman Kuchar
 Sagar Rao
 Sahan Dilshan
@@ -158,6 +186,7 @@ Scofield Xu
 Sean Rooney
 Sherafudheen PM
 Shubham Rawat
+Siddhant Agnihotry
 Stanley Shyiko
 Stathis Souris
 Stephen Powis

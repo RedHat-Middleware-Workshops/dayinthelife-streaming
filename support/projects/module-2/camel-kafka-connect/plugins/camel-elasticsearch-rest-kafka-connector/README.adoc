@@ -34,62 +34,8 @@ To run the integration tests it is required to:
 mvn -DskipIntegrationTests=false clean verify package
 ----
 
-It is also possible to point the tests to use an external services. To do so, you must set
-properties for the services that you want to run. This causes the tests to not launch the local
-container and use existing remote instances. At the moment, the following properties can be set
-for remote testing:
-
-* kafka.instance.type
-** kafka.bootstrap.servers
-* aws-service.instance.type
-** access.key: AWS access key (mandatory for remote testing)
-** secret.key: AWS secret key (mandatory for remote testing)
-** aws.region: AWS region (optional)
-** aws.host: AWS host (optional)
-* aws-service.kinesis.instance.type
-** access.key: AWS access key (mandatory for remote testing)
-** secret.key: AWS secret key (mandatory for remote testing)
-** aws.region: AWS region (optional)
-** aws.host: AWS host (optional)
-* elasticsearch.instance.type
-** elasticsearch.host
-** elasticsearch.port
-* cassandra.instance.type
-** cassandra.host
-** cassandra.cql3.port
-* jms-service.instance.type
-** jms.broker.address
-
-
-----
-mvn -Dkafka.bootstrap.servers=host1:port -Dkafka.instance.type=remote -DskipIntegrationTests=false clean verify package
-----
-
-It's possible to use a properties file to set these properties. To do so use `-Dtest.properties=/path/to/file.properties`.
-
-
-=== Building the container
-
-To build a container with
-
-----
-export CONNECTOR_NAME=<name> && docker build -t camel-kafka-connector-$CONNECTOR_NAME --build-arg CONNECTOR_NAME=${CONNECTOR_NAME} .
-----
-
-Then replace the connector name with one of the available connectors (ie.: sjms2, elasticsearch, etc). For example:
-
-----
-export CONNECTOR_NAME=elasticsearch && docker build -t camel-kafka-connector-$CONNECTOR_NAME --build-arg CONNECTOR_NAME=${CONNECTOR_NAME} .
-----
-
-Then, you have to create the configuration files:
-
-* A file named `CamelConnector.properties`. You can use any one from the examples.
-* A file name `connect-standalone.properties`. This should contain the connect runtime configuration.
-
-
-The important change to do on the `connect-standalone.properties` is to adjust the `bootstrap.servers` property
-so that it points to the Kafka instance to use.
+It is also possible to point the tests to use an external services. Please check the
+link:./docs/modules/ROOT/pages/testing.adoc[testing guide].
 
 
 === Try it out locally
