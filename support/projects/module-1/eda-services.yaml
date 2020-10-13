@@ -29,7 +29,7 @@ spec:
             .marshal().json()
             .delay(10000).asyncDelayed()
             .process(proc)
-            .toD('amqp:queue:notifications?exchangePattern=InOnly')
+            .toD('amqp:topic:notifications?exchangePattern=InOnly')
             .to('log:info');
         function processInventory(e) {
             var order = JSON.parse(
@@ -84,6 +84,6 @@ spec:
             .marshal().json()
             .convertBodyTo(String.class)
             .log('H:${headers}')
-            .toD('amqp:queue:notifications?exchangePattern=InOnly')
+            .toD('amqp:topic:notifications?exchangePattern=InOnly')
             .to('log:info')
       name: InvoiceEvents.groovy
