@@ -210,7 +210,7 @@ image::images/1.1.0-diagram-2.png[1.1.0-diagram, role="integr8ly-img-responsive"
 +
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
-. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `remoteURI` for the **AMQP** endpoint.  Copy and paste the `serviceHost` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
+. Open the `edge.properties` file.  This is the *application.properties* file where all credentials are stored.  We need to update `quarkus.qpid-jms.url` for the **AMQP** endpoint.  Copy and paste the `serviceHost` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname.
 +
 image::images/2.1.5-edge-properties.png[2.1.5-edge-properties, role="integr8ly-img-responsive"]
 
@@ -279,7 +279,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 == Setup Order Inventory with AMQ Streams
 Now that the harvest data is now streaming into the topic, we will need to grade the marshmallows according to their sizes. First we will store all the updated grading information in a relational database. It will also stream separately to the shipping departments.
 
-image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"] 
+image::images/3.0.0-overview.png[3.0.0-overview, role="integr8ly-img-responsive"]
 
 image::images/3.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
@@ -406,7 +406,7 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 
 . Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
-. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **remoteURI** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
+. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **quarkus.qpid-jms.url** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
 +
 image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
 

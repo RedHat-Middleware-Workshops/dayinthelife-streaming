@@ -5,7 +5,7 @@ metadata:
 data:
   kafka.properties: |2+
     consumer.group=premium
-    camel.component.kafka.brokers=my-cluster-kafka-bootstrap.workshop-operators.svc:9092
+    camel.component.kafka.brokers=<CHANGE_ME>:9092
     camel.component.infinispan.configuration.hosts=example-infinispan.user1.svc:11222
     camel.component.infinispan.configuration.configurationUri=client.properties
   client.properties: |2+

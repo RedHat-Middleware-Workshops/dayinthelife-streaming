@@ -4,4 +4,4 @@ metadata:
   name: costadvice-config
 data:
   app.properties: |2+
-    camel.component.kafka.brokers=my-cluster-kafka-bootstrap.workshop-operators.svc:9092
+    camel.component.kafka.brokers=<CHANGE_ME>:9092

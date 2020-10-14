@@ -184,7 +184,7 @@ image::images/1.1.2-login.png[1.1.2-login, role="integr8ly-img-responsive"]
 image::images/2.1.4-che-workspace-folder.png[2.1.4-che-workspace-folder, role="integr8ly-img-responsive"]
 
 
-. Open the *costcenter.yaml* file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `camel.component.amqp.configuration.connection-factory.remoteURI` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **camel.component.kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
+. Open the *costcenter.yaml* file.  This is the *Configuration Map* file where all credentials and configurations are stored.  We need to update `quarkus.qpid-jms.url` for the **AMQP** endpoint.  Copy and paste the `service.host` you copied earlier (into a text editor) and update the `amqp://` endpoint with the correct service hostname. Additionally, update the **camel.component.kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`
 +
 image::images/1.1.2-cost-config-update.png[1.1.2-cost-config-update, role="integr8ly-img-responsive"]
 
