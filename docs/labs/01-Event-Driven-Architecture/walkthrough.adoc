@@ -17,7 +17,7 @@ endif::[]
 [id='event-driven-architecture']
 = {title}
 
-As part of the acquisition, your team at International Inc's is now working with Fleur de Lune's IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service calls and avoid the need to implement additional infrastructure components. 
+As part of the acquisition, your team at International Inc's is now working with Fleur de Lune's IT department to learn more about Event-Driven Architecture or EDA. By applying event-driven concepts you will help to avoid classic problems derived from coupled synchronous service calls and avoid the need to implement additional infrastructure components.
 
 The first step was to migrate their ecommerce orders website from a legacy SpringBoot stack to the new supersonic subatomic Quarkus-based microservices. However, they have been dealing with a high rate of errors because one of the components is crashing frequently. To overcome this, you will need to create a new event bus using self-service messaging and implement new event-driven services and APIs using a highly productive iPaaS suite. You will then need to wire everything together to showcase to upper management how EDA solves some of the problems that came along pure REST APIs.
 
@@ -85,10 +85,10 @@ If you have already configured your CodeReady Workspaces environment and deploye
 
 === Start CodeReady workspace
 
-. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard. 
+. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard.
 +
 --
-A new workspace has been configured with the required tools, plugins and project to start working on this workshop. 
+A new workspace has been configured with the required tools, plugins and project to start working on this workshop.
 
 Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
 
@@ -165,7 +165,7 @@ oc project {namespace}
 
 === Deploy the synchronous services
 
-. Once you are logged into the OpenShift cluster, you need to deploy the services with the following command: 
+. Once you are logged into the OpenShift cluster, you need to deploy the services with the following command:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -184,7 +184,7 @@ You need to check the problems with the orders web application from Fleur de Lun
 
 image::images/lab1-architecture.png[App Architecture, role="integr8ly-img-responsive"]
 
-As we mentioned earlier, the current application has a flaw that is commonly found in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing an order: 
+As we mentioned earlier, the current application has a flaw that is commonly found in synchronous architectures. The backend service is _chaining_ the call to the inventory and the payment services through HTTP calls. This produces the following problems when placing an order:
 
 * First we will need to wait for both services to complete even though they are not related. As the payment service takes longer than the inventory (it needs to process the credit card payment), we have to wait all the way to get inventory feedback too.
 * Second, in case of one of the services fail, because there is no correct error handling logic, what we see in the frontend application is that the whole transaction failed and we need to retry again.
@@ -204,7 +204,7 @@ image::images/topology-eda.png[Topology EDA, role="integr8ly-img-responsive"]
 +
 image::images/topology-store.png[Topology Store, role="integr8ly-img-responsive"]
 
-. You should access the online store! 
+. You should access the online store!
 +
 image::images/www-store.png[Store Web Page, role="integr8ly-img-responsive"]
 
@@ -281,7 +281,7 @@ Were you able to successfully scale-down and scale-up your application?
 [id="Create AMQ Topics"]
 == Create your AMQ Online Topics
 
-In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and enables fine-grained scaling. 
+In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and enables fine-grained scaling.
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
@@ -658,7 +658,7 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `remoteURI` property with the *hostname* that you wrote down in the previous task.
+. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `quarkus.qpid-jms.url` property with the *hostname* that you wrote down in the previous task.
 +
 image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
 +

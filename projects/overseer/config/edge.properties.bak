@@ -1,6 +1,6 @@
 simulator.run=true
 simualator.disaster=false
-quarkus.qpid-jms.url=amqp://<CHANGE_ME>:5672
+quarkus.qpid-jms.url=amqp://REPLACE:5672
 quarkus.qpid-jms.username=user
 quarkus.qpid-jms.password=enmasse
 
