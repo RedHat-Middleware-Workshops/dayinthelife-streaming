@@ -27,7 +27,7 @@ spec:
             .unmarshal().json()
             .setHeader('reply-to').simple('${body[username]}')
             .marshal().json()
-            .delay(10000).asyncDelayed()
+            .delay(5000).asyncDelayed()
             .process(proc)
             .toD('amqp:topic:notifications?exchangePattern=InOnly')
             .to('log:info');
@@ -61,29 +61,35 @@ spec:
     - 'camel:amqp'
   sources:
     - content: >-
-        beans {
-            processInvoice = processor {
-                it.out.body = [
-                    orderId: it.in.body.orderId,
-                    itemId: it.in.body.itemId,
-                    department: 'invoicing',
-                    datetime: System.currentTimeMillis(),
-                    amount: (it.in.body.quantity * it.in.body.price),
-                    currency: 'USD',
-                    invoiceId: 'B-0' + (Math.floor(1000 + Math.random() * 9999))
-                ]
-                it.out.headers['reply-to'] = it.in.body.username
-            }
-        }
-
+        const Processor = Java.type("org.apache.camel.Processor");
+        const p = Java.extend(Processor);
+        const proc = new p(processInvoice);
+        
         from('amqp:topic:incomingorders?exchangePattern=InOnly')
             .log('Invoicing Notified ${body}')
             .unmarshal().json()
-            .delay(30000).asyncDelayed()
-            .process('processInvoice')
             .marshal().json()
-            .convertBodyTo(String.class)
+            .delay(10000).asyncDelayed()
+            .process(proc)
             .log('H:${headers}')
             .toD('amqp:topic:notifications?exchangePattern=InOnly')
-            .to('log:info')
-      name: InvoiceEvents.groovy
+            .to('log:info');
+            
+        function processInvoice(e) {
+            var order = JSON.parse(
+                String.fromCharCode.apply(String, e.getMessage().getBody())
+            );
+            var result = JSON.stringify({
+                orderId: order.orderId,
+                itemId: order.itemId,
+                department: 'invoicing',
+                datetime: Date.now(),
+                amount: (order.quantity*order.price),
+                currency: 'USD',
+                invoiceId: (Math.floor(100000 + Math.random() * 999999))
+            });
+            e.getMessage().setBody(result);
+        }
+
+        
+      name: InvoiceEvents.js
