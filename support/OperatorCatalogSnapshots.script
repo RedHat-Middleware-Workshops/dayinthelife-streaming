@@ -1,0 +1,34 @@
+podman login quay.io --authfile=quay_catalog.json --username redhatintegration+catalogsnapshotadmin --password <token>
+
+//Get Token
+//https://cloud.redhat.com/openshift/token
+
+export BEARER=$(curl --silent --data-urlencode "grant_type=refresh_token" --data-urlencode "client_id=cloud-services" --data-urlencode "refresh_token=XXX" \
+https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token | \
+jq -r .access_token)
+
+curl -X POST https://api.openshift.com/api/accounts_mgmt/v1/access_token --header "Content-Type:application/json" --header "Authorization: Bearer $BEARER" | jq
+
+
+oc adm catalog build \
+  --appregistry-org redhat-operators \
+  --from=registry.redhat.io/openshift4/ose-operator-registry:${OCP_VERSION} \
+  --filter-by-os="linux/amd64" \
+  --to=quay.io/redhatintegration/olm_snapshot_redhat_catalog:${IMAGE_TAG} \
+  -a merged_pullsecret.json
+
+# Community Operators Catalog
+oc adm catalog build \
+  --appregistry-org community-operators \
+  --from=registry.redhat.io/openshift4/ose-operator-registry:${OCP_VERSION} \
+  --filter-by-os="linux/amd64" \
+  --to=quay.io/redhatintegration/olm_snapshot_community_catalog:${IMAGE_TAG} \
+  -a merged_pullsecret.json
+
+# Certified Operators Catalog
+oc adm catalog build \
+  --appregistry-org certified-operators \
+  --from=registry.redhat.io/openshift4/ose-operator-registry:${OCP_VERSION} \
+  --filter-by-os="linux/amd64" \
+  --to=quay.io/redhatintegration/olm_snapshot_certified_catalog:${IMAGE_TAG} \
+  -a merged_pullsecret.json
