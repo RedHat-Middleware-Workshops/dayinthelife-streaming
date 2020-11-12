@@ -1,0 +1,33 @@
+podman login quay.io --authfile=quay_catalog.json --username redhatintegration+catalogsnapshotadmin --password <token>
+
+https://cloud.redhat.com/openshift/token
+
+export BEARER=$(curl --silent --data-urlencode "grant_type=refresh_token" --data-urlencode "client_id=cloud-services" --data-urlencode "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZDUyMjdhMy1iY2ZkLTRjZjAtYTdiNi0zOTk4MzVhMDg1NjYifQ.eyJpYXQiOjE2MDUwNjMzNTcsImp0aSI6IjlkZWYxZGU5LWM5YWMtNGNkYy05NTgwLWNiZTNiYmIwZThiOSIsImlzcyI6Imh0dHBzOi8vc3NvLnJlZGhhdC5jb20vYXV0aC9yZWFsbXMvcmVkaGF0LWV4dGVybmFsIiwiYXVkIjoiaHR0cHM6Ly9zc28ucmVkaGF0LmNvbS9hdXRoL3JlYWxtcy9yZWRoYXQtZXh0ZXJuYWwiLCJzdWIiOiJmOjUyOGQ3NmZmLWY3MDgtNDNlZC04Y2Q1LWZlMTZmNGZlMGNlNjp3ZWltZWk3OSIsInR5cCI6Ik9mZmxpbmUiLCJhenAiOiJjbG91ZC1zZXJ2aWNlcyIsIm5vbmNlIjoiZDk5MGNkZDgtOThkYS00MWQyLWE2MWQtOTA0MjQwMDZmNDRkIiwic2Vzc2lvbl9zdGF0ZSI6ImVlODI1N2QyLWRlZjktNGNkZi1hY2ViLWQzYWEzYzBjNDE5YyIsInNjb3BlIjoib3BlbmlkIG9mZmxpbmVfYWNjZXNzIn0.5PcCjRhnYAgzgbgQDQBVMGmFvbNbF18sHavBoLlWjvo" \
+https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token | \
+jq -r .access_token)
+
+curl -X POST https://api.openshift.com/api/accounts_mgmt/v1/access_token --header "Content-Type:application/json" --header "Authorization: Bearer $BEARER" | jq
+
+
+oc adm catalog build \
+  --appregistry-org redhat-operators \
+  --from=registry.redhat.io/openshift4/ose-operator-registry:${OCP_VERSION} \
+  --filter-by-os="linux/amd64" \
+  --to=quay.io/redhatintegration/olm_snapshot_redhat_catalog:${IMAGE_TAG} \
+  -a merged_pullsecret.json
+
+# Community Operators Catalog
+oc adm catalog build \
+  --appregistry-org community-operators \
+  --from=registry.redhat.io/openshift4/ose-operator-registry:${OCP_VERSION} \
+  --filter-by-os="linux/amd64" \
+  --to=quay.io/redhatintegration/olm_snapshot_community_catalog:${IMAGE_TAG} \
+  -a merged_pullsecret.json
+
+# Certified Operators Catalog
+oc adm catalog build \
+  --appregistry-org certified-operators \
+  --from=registry.redhat.io/openshift4/ose-operator-registry:${OCP_VERSION} \
+  --filter-by-os="linux/amd64" \
+  --to=quay.io/redhatintegration/olm_snapshot_certified_catalog:${IMAGE_TAG} \
+  -a merged_pullsecret.json
