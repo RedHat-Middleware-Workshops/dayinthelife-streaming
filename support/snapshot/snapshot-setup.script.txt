@@ -1,8 +1,9 @@
+<token> from Quay
 podman login quay.io --authfile=quay_catalog.json --username redhatintegration+catalogsnapshotadmin --password <token>
 
 https://cloud.redhat.com/openshift/token
 
-export BEARER=$(curl --silent --data-urlencode "grant_type=refresh_token" --data-urlencode "client_id=cloud-services" --data-urlencode "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZDUyMjdhMy1iY2ZkLTRjZjAtYTdiNi0zOTk4MzVhMDg1NjYifQ.eyJpYXQiOjE2MDUwNjMzNTcsImp0aSI6IjlkZWYxZGU5LWM5YWMtNGNkYy05NTgwLWNiZTNiYmIwZThiOSIsImlzcyI6Imh0dHBzOi8vc3NvLnJlZGhhdC5jb20vYXV0aC9yZWFsbXMvcmVkaGF0LWV4dGVybmFsIiwiYXVkIjoiaHR0cHM6Ly9zc28ucmVkaGF0LmNvbS9hdXRoL3JlYWxtcy9yZWRoYXQtZXh0ZXJuYWwiLCJzdWIiOiJmOjUyOGQ3NmZmLWY3MDgtNDNlZC04Y2Q1LWZlMTZmNGZlMGNlNjp3ZWltZWk3OSIsInR5cCI6Ik9mZmxpbmUiLCJhenAiOiJjbG91ZC1zZXJ2aWNlcyIsIm5vbmNlIjoiZDk5MGNkZDgtOThkYS00MWQyLWE2MWQtOTA0MjQwMDZmNDRkIiwic2Vzc2lvbl9zdGF0ZSI6ImVlODI1N2QyLWRlZjktNGNkZi1hY2ViLWQzYWEzYzBjNDE5YyIsInNjb3BlIjoib3BlbmlkIG9mZmxpbmVfYWNjZXNzIn0.5PcCjRhnYAgzgbgQDQBVMGmFvbNbF18sHavBoLlWjvo" \
+export BEARER=$(curl --silent --data-urlencode "grant_type=refresh_token" --data-urlencode "client_id=cloud-services" --data-urlencode "refresh_token={token}" \
 https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token | \
 jq -r .access_token)
 
