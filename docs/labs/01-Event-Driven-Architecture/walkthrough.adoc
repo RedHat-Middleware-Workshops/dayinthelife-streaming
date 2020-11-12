@@ -291,12 +291,6 @@ image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-re
 
 *Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 
-[type=taskResource]
-.AMQ Operator Resouces
-****
-* link:{openshift-host}/k8s/ns/{namespace}/operators.coreos.com\~v1alpha1~ClusterServiceVersion/amq-online.1.5.2/enmasse.io\~v1beta1~AddressSpace[AMQ Operator view, window="_blank"]
-****
-
 === Create an Address Space
 
 Let's create an **Address Space** using the AMQ Online Operator.
