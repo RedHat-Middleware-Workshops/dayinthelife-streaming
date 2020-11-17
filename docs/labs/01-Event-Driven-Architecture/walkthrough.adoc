@@ -7,7 +7,7 @@
 
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
-:codeready-url: http://che-che.{openshift-app-host}/
+:codeready-url: http://codeready-che.{openshift-app-host}/
 :fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
 ifdef::env-github[]

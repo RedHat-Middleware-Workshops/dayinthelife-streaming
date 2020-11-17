@@ -1,5 +1,5 @@
 :walkthrough: Complex Event Processing
-:che-url: http://che-che.{openshift-app-host}/
+:codeready-url: http://codeready-che.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-05/
 :user-password: openshift
 :lab-path: FleurDeLune/projects
@@ -44,7 +44,7 @@ Your password is: `{user-password}`
 [type=walkthroughResource]
 .Che
 ****
-* link:{che-url}/[Open Eclipse Che, window="_blank"]
+* link:{codeready-url}/[Open Eclipse Che, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=openshift]
@@ -74,7 +74,7 @@ You are setting up a topic in AMQ Online to receive event signals from Edge devi
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
@@ -173,7 +173,7 @@ image::images/1.1.1-create-kafka-topic.png[1.1.1-create-kafka-topic, role="integ
 +
 image::images/1.1.2-create-kafka-costcenter.png[1.1.2-create-kafka-costcenter, role="integr8ly-img-responsive"]
 
-. Navigate back to the Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. Navigate back to the Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
@@ -398,7 +398,7 @@ image::images/4.0.0-photo.png[4.0.0-photo, role="integr8ly-img-responsive"]
 image::images/4.0.0-overview.png[4.0.0-overview, role="integr8ly-img-responsive"]
 
 
-. Navigate back to Eclipse Che console: {che-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. Navigate back to Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
 
 . Find the `{lab-path}/{lab-4-path}/disaster-control/src/main/java/com/redhat/workshop/dil` folder.
 
