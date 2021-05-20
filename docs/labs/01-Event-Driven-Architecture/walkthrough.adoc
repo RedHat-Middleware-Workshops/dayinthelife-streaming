@@ -494,7 +494,7 @@ image::images/fuse-api-provider.png[Fuse API Provider, role="integr8ly-img-respo
 +
 image::images/fuse-create-api.png[Fuse Create API, role="integr8ly-img-responsive"]
 
-. The API editor is based on the link:http://apicurio.com/[Apicurio] community project. Begin adding a _Path_ to your API by clicking on *Add a path*.
+. The API editor is based on the link:http://apicurio.io/[Apicurio] community project. Begin adding a _Path_ to your API by clicking on *Add a path*.
 +
 image::images/fuse-add-path.png[API Add Path, role="integr8ly-img-responsive"]
 
