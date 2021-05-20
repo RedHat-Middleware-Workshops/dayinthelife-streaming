@@ -183,7 +183,7 @@ items:
           deploymentconfig: www-store
       spec:
         containers:
-        - image: quay.io/hguerreroo/dil-streaming-www-store:latest
+        - image: quay.io/redhatintegration/dil-streaming-www-store:latest
           imagePullPolicy: Always
           name: www-store
           ports:

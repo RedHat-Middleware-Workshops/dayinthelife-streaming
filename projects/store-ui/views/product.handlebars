@@ -282,7 +282,7 @@
               const json = await response.json()
               if (callType === "rest") {
                 // Add a slight delay so the loading screen is always visible
-                setTimeout(() => renderOrderResult(json), 500)
+                setTimeout(() => renderOrderResult(JSON.parse(json)), 500)
               }
               {{!-- /* TODO: PROCESSS EVENT RESPONSE */ --}}
 
