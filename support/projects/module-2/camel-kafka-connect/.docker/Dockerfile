@@ -5,4 +5,4 @@ COPY ./apicurio/ /opt/kafka/external_libs/apicurio/
 COPY ./drivers/ /opt/kafka/external_libs/drivers/
 RUN for d in /opt/kafka/plugins/*/; do ln -snf /opt/kafka/external_libs/apicurio/* $d; done
 RUN for d in /opt/kafka/plugins/camel-jdbc-kafka-connector/ /opt/kafka/plugins/camel-sql-kafka-connector/; do ln -snf /opt/kafka/external_libs/drivers/* $d; done
-USER kafka:kafka
+USER 1001
