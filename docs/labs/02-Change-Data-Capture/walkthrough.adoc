@@ -8,7 +8,6 @@
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
 :codeready-url: http://codeready-che.{openshift-app-host}/
-:che-url: http://codeready-che.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab03/walkthrough.adoc
@@ -49,7 +48,7 @@ Use the following credentials to login into the web consoles:
 [type=walkthroughResource,serviceName=codeready]
 .Red Hat CodeReady Workspaces
 ****
-* link:{che-url}[Console, window="_blank", , id="resources-codeready-url"]
+* link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
 [type=walkthroughResource]
 .Red Hat OpenShift Developer Console
