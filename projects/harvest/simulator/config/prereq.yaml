@@ -19,7 +19,7 @@ spec:
   authenticationService:
     name: none-authservice
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: moon

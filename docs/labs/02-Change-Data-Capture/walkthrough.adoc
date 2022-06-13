@@ -197,7 +197,7 @@ image::images/openshift-create-kafkaconnect.png[OpenShift KafkaConnect, role="in
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
 metadata:
   name: debezium
@@ -259,7 +259,7 @@ image::images/kafka-connector-create.png[Create KafkaConnector, role="integr8ly-
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: kafka.strimzi.io/v1alpha1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
   name: orders-connector
@@ -477,7 +477,7 @@ image::images/openshift-create-kafka.png[OpenShift Kafka, role="integr8ly-img-re
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: moon
@@ -546,7 +546,7 @@ image::images/openshift-mirrormaker-create.png[OpenShift Mirror Maker, role="int
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaMirrorMaker
 metadata:
   name: earth-moon
@@ -631,7 +631,7 @@ image::images/openshift-bridge-create.png[OpenShift HTTP Bridge, role="integr8ly
 +
 [source,yaml,subs="attributes+"]
 ----
-apiVersion: kafka.strimzi.io/v1alpha1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaBridge
 metadata:
   name: http
