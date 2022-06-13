@@ -404,7 +404,7 @@ image::images/3.1.3-add-from-catalog.png[3.1.3-add-from-catalog, role="integr8ly
 +
 image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integr8ly-img-responsive"]
 
-. Repleat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
+. Repeat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
 . Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **quarkus.qpid-jms.url** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
 +
