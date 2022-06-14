@@ -696,7 +696,7 @@ In your topology view do you see 2 new services deployed: `invoice-events` and `
 +
 [source,bash,subs="attributes+"]
 ----
-curl -v -X POST http://i-events.fuse-{user-username}.svc:8080/place -H 'cache-control: no-cache' -H 'content-type: application/json' -d  '{"orderId":978,"itemId": 135790,"orderItemName": "Mango","quantity": 1,"price": 2.50,"address": "hello","zipCode": "15555"}'
+curl -v -X POST http://i-events.fuse-{user-username}.svc:8080/place -H 'cache-control: no-cache' -H 'content-type: application/json' -d  '{"orderId":978,"itemId": 135790,"orderItemName": "Mango","quantity": 1,"price": 2,"address": "hello","zipCode": "15555"}'
 ----
 +
 You should receive a message back similar to the following one:
