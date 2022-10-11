@@ -9,11 +9,12 @@ RUN cd /tmp && git clone https://github.com/edenhill/kcat -b $KAFKACAT_VERSION -
 
 FROM registry.redhat.io/codeready-workspaces/plugin-java11-rhel8:2.15
 
-ENV CAMELK_VERSION=1.6.7
+ENV CAMELK_VERSION=1.8.0
+ENV JBANG_VERSION=0.98.0
 ENV SKUPPER_VERSION=1.0.2
-ENV RHOAS_VERSION=0.43.0
-ENV TKN_VERSION=0.23.1
-ENV KN_VERSION=1.1.0
+ENV RHOAS_VERSION=0.51.2
+ENV TKN_VERSION=0.24.0
+ENV KN_VERSION=1.3.1
 
 USER root
 
@@ -25,6 +26,10 @@ RUN wget https://github.com/skupperproject/skupper/releases/download/${SKUPPER_V
 RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/camel-k/${CAMELK_VERSION}/camel-k-client-${CAMELK_VERSION}-linux-64bit.tar.gz \
     -O - | tar -xz -C /usr/local/bin/
 
+# Install JBang
+RUN wget https://github.com/jbangdev/jbang/releases/download/v${JBANG_VERSION}/jbang.tar \
+    -O - | tar -x --strip 2 -C /usr/local/bin jbang/bin/jbang
+
 # Install rhoas
 RUN wget https://github.com/redhat-developer/app-services-cli/releases/download/v${RHOAS_VERSION}/rhoas_${RHOAS_VERSION}_linux_amd64.tar.gz \
     -O - | tar -xz --strip 1 -C /usr/local/bin rhoas_${RHOAS_VERSION}_linux_amd64/rhoas
@@ -34,8 +39,9 @@ RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/serverless/${KN_V
     -O - | tar -xz -C /usr/local/bin
 
 # Install Tekton
-RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/${TKN_VERSION}/tkn-linux-amd64-${TKN_VERSION}.tar.gz \
+RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/${TKN_VERSION}/tkn-linux-amd64.tar.gz \
     -O - | tar -xz -C /usr/local/bin
+
 
 # Install node
 RUN dnf install -y nodejs && \
@@ -47,6 +53,13 @@ COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kafkacat
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kcat
 
 USER jboss
+
+# Configure JBang
+RUN jbang trust add https://github.com/apache/camel/ && \
+    jbang app setup && \
+    jbang app install camel@apache/camel && \
+    chgrp -R 0 ~/.jbang && \
+    chmod -R g=u ~/.jbang
 
 WORKDIR /projects
 CMD tail -f /dev/null
