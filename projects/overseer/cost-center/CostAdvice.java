@@ -1,4 +1,4 @@
-// camel-k: dependency=camel-bean dependency=camel-jackson dependency=camel-swagger-java dependency=mvn:io.netty:netty-codec:4.1.49.Final configmap=costadvice-config
+// camel-k: dependency=camel-bean dependency=camel-jackson dependency=camel-openapi-java dependency=mvn:io.netty:netty-codec:4.1.49.Final configmap=costadvice-config
 
 import java.util.HashMap;
 import java.util.Map;

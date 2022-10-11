@@ -15,7 +15,7 @@ import org.apache.camel.model.rest.RestBindingMode;
 //oc delete configmap shippingconsole-config  
 //oc apply -f shippingconsole-config.yaml
 // 
-//kamel run -d camel-infinispan -d camel-bean -d camel-swagger-java -d camel-jackson -d camel-undertow  -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap shippingconsole-config ConsoleService.java --dev
+//kamel run -d camel-infinispan -d camel-bean -d camel-openapi-java -d camel-jackson -d camel-undertow  -d mvn:org.wildfly.security:wildfly-elytron:1.11.2.Final --configmap shippingconsole-config ConsoleService.java --dev
 //--trait debug.enabled=true --property logging.level.org.apache.camel=DEBUG
 
 public class ConsoleService extends RouteBuilder{
