@@ -1,3 +1,4 @@
+# kcat builder
 FROM registry.redhat.io/codeready-workspaces/plugin-java11-rhel8:2.15 AS kafkacat
 USER root
 RUN dnf -y install gcc which gcc-c++ wget make git cmake
@@ -7,6 +8,7 @@ RUN cd /tmp && git clone https://github.com/edenhill/kcat -b $KAFKACAT_VERSION -
     cd kcat && \
     ./bootstrap.sh
 
+# main image
 FROM registry.redhat.io/codeready-workspaces/plugin-java11-rhel8:2.15
 
 ENV CAMELK_VERSION=1.8.0
@@ -55,11 +57,18 @@ COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kcat
 USER jboss
 
 # Configure JBang
-RUN jbang trust add https://github.com/apache/camel/ && \
-    jbang app setup && \
-    jbang app install camel@apache/camel && \
-    chgrp -R 0 ~/.jbang && \
-    chmod -R g=u ~/.jbang
+RUN jbang app setup && \
+    jbang trust add https://github.com/apache/camel/ && \
+    jbang app install camel@apache/camel
+
+USER root
+
+RUN for f in "/home/jboss" "/projects"; do \
+      chgrp -R 0 ${f} && \
+      chmod -R g=u ${f}; \
+    done
+
+USER jboss
 
 WORKDIR /projects
 CMD tail -f /dev/null
