@@ -27,3 +27,4 @@ lib/
 
 support/projects/**/plugins/**/
 support/projects/module-2/cdc-image/plugins/**/*
+!support/projects/module-2/cdc-image/plugins/**/README.md
