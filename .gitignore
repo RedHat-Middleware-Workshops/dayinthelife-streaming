@@ -24,3 +24,6 @@ lib/
 **/*.retry
 .idea/
 **/node_modules/
+
+support/projects/**/plugins/**/
+support/projects/module-2/cdc-image/plugins/**/*
