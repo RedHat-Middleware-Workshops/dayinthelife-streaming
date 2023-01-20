@@ -1,4 +1,14 @@
 ---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: amqp-properties
+data:
+  application.properties: |
+    quarkus.qpid-jms.url=amqp://amq-broker-hdls-svc
+    quarkus.qpid-jms.username=user
+    quarkus.qpid-jms.password=openshift
+---
 apiVersion: camel.apache.org/v1
 kind: IntegrationPlatform
 metadata:
