@@ -306,7 +306,7 @@ metadata:
   application: amq-broker-app
 spec:
   adminPassword: openshift
-  adminUser: {user-username}
+  adminUser: user
   console:
     expose: true
   deploymentPlan:
@@ -318,6 +318,10 @@ spec:
     messageMigration: true
     jolokiaAgentEnabled: false
     managementRBACEnabled: true
+  acceptors:
+  - name: amqp
+    protocols: amqp
+    port: 5672
 ----
 
 . Click on *Create* to start the deployment
