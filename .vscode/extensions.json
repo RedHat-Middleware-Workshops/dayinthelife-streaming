@@ -1,0 +1,11 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    "redhat.vscode-xml",
+    "redhat.vscode-apache-camel",
+    "redhat.vscode-camelk",
+    "redhat.java",
+    "camel-karavan.karavan"
+  ]
+}
