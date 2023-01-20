@@ -7,7 +7,7 @@
 
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
-:codeready-url: http://codeready-che.{openshift-app-host}/
+:codeready-url: https://devspaces.{openshift-app-host}/
 :fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
 ifdef::env-github[]
@@ -47,7 +47,7 @@ Use the following credentials to login into the web consoles:
 * Your *password* is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
-.Red Hat CodeReady Workspaces
+.Red Hat OpenShift Dev Spaces
 ****
 * link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
@@ -68,35 +68,35 @@ Use the following credentials to login into the web consoles:
 Please complete the following instructions to get ready for this lab. *If this is not the first lab you are doing today, and you have already completed this step in any of the previous labs, please skip to next task*.
 ====
 
-You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
-. To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
+. To get started go to the link:{codeready-url}[OpenShift Dev Spaces console, window="_blank"] and log in using your username and password credentials.
 +
-image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
+image::images/openshift-login.png[OpenShift DevSpaces Login, role="integr8ly-img-responsive"]
 
-. *If this is your first lab of the day*, you will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
+. *If this is your first lab of the day*, you will need to _Authorize Access_ to Dev Spaces to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
 +
 image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-responsive"]
 
 [IMPORTANT]
 ====
-If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+If you have already configured your OpenShift Dev Spaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
 ====
 
-=== Start CodeReady workspace
+=== Start OpenShift Dev Spaces workspace
 
-. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard.
+. Once you have logged in and authorized access to your user account, you will land in your personal Dev Spaces dashboard.
 +
 --
 A new workspace has been configured with the required tools, plugins and project to start working on this workshop.
 
-Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
+Click on the workspace with the name starting with `dayinthelife-workspace` on the left menu bar under *RECENT WORKSPACES*.
 
 image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
 
 [NOTE]
 ====
-You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
+You can also click on the link that says _Open_ on the right hand side of the screen.
 ====
 --
 
@@ -104,55 +104,28 @@ You can also click on the name of the workspace in the center, and then click on
 +
 image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
 
-. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial Get Started tab and any prompt dialog.
 +
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
-
-You can close the _Problems_ and _Output_ views to clear space.
+This IDE is based on Microsoft *VS Code* editor. It will look familiar if you have already used it.
 ====
 
-. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
+. The projects explorer will show you the *Fleur-De-Lune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
-. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
+. During the workshop we will need to introduce commands for both OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _Menu_ hamburger button on the top left side and expand the **Terminal** menu. Click on *New Terminal*.
 +
 image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
 
-. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
+. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running Dev Spaces container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
 +
 image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-responsive"]
 
 === Login into the OpenShift cluster
-
-. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
-+
-[source,bash,subs="attributes+"]
-----
-oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
-----
-
-. You should see something like the following (the project names may be different):
-+
-----
-Login successful.
-
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-    shared-db-earth
-    shared-kafka-earth
-  * user1
-    user1-che
-    user1-dayinthel-0605
-    user1-shared-475f
-
-Using project "user1".
-Welcome! See 'oc help' to get started.
-----
 
 . Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
 +
@@ -169,7 +142,7 @@ oc project {namespace}
 +
 [source,bash,subs="attributes+"]
 ----
-oc apply -n {namespace} -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
+oc apply -n {namespace} -f $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/eda-dc.yaml
 ----
 
 . You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Don't forget to change the view from *Administrator* to *Developer*.
@@ -279,21 +252,30 @@ Were you able to successfully scale-down and scale-up your application?
 
 [time=15]
 [id="Create AMQ Topics"]
-== Create your AMQ Online Topics
+== Create your AMQ Broker Topics
 
 In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and enables fine-grained scaling.
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
-We will use AMQ Online to provision an account to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls are blocking.
+We will use the AMQ Broker operator to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls are blocking.
 
 image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-responsive"]
 
-*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+*Red Hat AMQ Broker* operator is an OpenShift-based mechanism for delivering messaging in a declarative way. AMQ Broker is a high-performance messaging implementation based on ActiveMQ Artemis. It uses an asynchronous journal for faster message persistence. AMQ Broker supports multiple languages, protocols, and platforms.
 
-=== Create an Address Space
+AMQ Broker provides the following features:
 
-Let's create an **Address Space** using the AMQ Online Operator.
+- Clustering and high availability options
+- Fast, native-IO persistence
+- Supports local transactions
+- Supports XA transactions when using AMQ Core Protocol JMS and AMQ OpenWire JMS clients
+- Written in Java for broad platform support
+- Multiple management interfaces: AMQ Management Console, Management APIs, and JMX
+
+=== Create a basic Broker
+
+Let's create a basic **broker** deployment using the AMQ Broker Operator.
 
 . Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
 
@@ -301,116 +283,95 @@ Let's create an **Address Space** using the AMQ Online Operator.
 +
 image::images/openshift-add.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Click on the *From Catalog* option.
+. Click on the *All services* option under _Development Catalog_.
 +
 image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Type in `address` in the search box, and click on the *AddressSpace*:
+. Type in `broker` in the search box, and click on *AMQ Broker*:
 +
-image::images/catalog-addressspace.png[AddressSpace, role="integr8ly-img-responsive"]
+image::images/catalog-broker.png[Broker, role="integr8ly-img-responsive"]
 
 . Click on *Create*:
 +
-image::images/online-create.png[Create AddressSpace, role="integr8ly-img-responsive"]
+image::images/broker-create.png[Create Broker, role="integr8ly-img-responsive"]
 
-. Replace the content in the YAML editor with the following content:
+. Select *YAML view* and replace the content in the YAML editor with the following content:
 +
-[source,yaml,role="copypaste"]
+[source,yaml,subs="attributes+"]
 ----
-apiVersion: enmasse.io/v1beta1
-kind: AddressSpace
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
 metadata:
-  name: amq
+  name: amq-broker
+  application: amq-broker-app
 spec:
-  plan: standard-small
-  type: standard
-  endpoints:
-    - name: messaging
-      service: messaging
-      expose:
-        type: route
-        routeServicePort: amqps
-        routeTlsTermination: passthrough
-      exports:
-        - kind: ConfigMap
-          name: amq-config
-  authenticationService:
-    name: none-authservice
+  adminPassword: openshift
+  adminUser: {user-username}
+  console:
+    expose: true
+  deploymentPlan:
+    image: placeholder
+    size: 1
+    requireLogin: false
+    persistenceEnabled: true
+    journalType: nio
+    messageMigration: true
+    jolokiaAgentEnabled: false
+    managementRBACEnabled: true
 ----
 
 . Click on *Create* to start the deployment
 +
-image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
+image::images/broker-detail.png[Broker Definition, role="integr8ly-img-responsive"]
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
 
-. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there. Open it.
+. You will be taken back to the topology view where your broker should now show as part of the current deployments
 +
-image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
+image::images/broker-topology.png[Broker Topology, role="integr8ly-img-responsive"]
 
-. Click on the *Log in with OpenShift* button.
+=== Create some Addresses Topics and Queues
+
+Let's create a par of **addresses** that will work as _Topics_ and _Queues_.
+
+. Click *+Add* on the left menu.
 +
-image::images/openshift-messaging-login.png[Messaging Login, role="integr8ly-img-responsive"]
+image::images/openshift-add-address.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Login using your user credentials.
+. Click on the *All services* option under _Development Catalog_.
 +
-image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsive"]
+image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Click in the *amq* link to show the Messaging console Overview Page.
+. Type in `address` in the search box, and click on *AMQ Broker Address*:
 +
-image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
+image::images/catalog-address.png[Address, role="integr8ly-img-responsive"]
+
+. Click on *Create*:
 +
---
-[IMPORTANT]
-====
-Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
-====
+image::images/address-create.png[Create Address, role="integr8ly-img-responsive"]
 
-[NOTE]
-====
-This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
-====
---
-
-. In the main _address space_ console screen, click on the *Create Address* button to start adding the required topics.
+. Select the configure via *Form View* option and type in the following values:
 +
-image::images/topic-create.png[newtopic, role="integr8ly-img-responsive"]
-
-. Fill in the _Address_ with *incomingorders* and select the *Topic* from the _Type_ combobox and *standard-small-topic* from the _Plan_ menu. Click *Next* to move to the next screen.
+- **Name**: `incomingorders`
+- **Queue Name**: `incomingorders`
+- **Address Name**: `incomingorders`
+- **Routing Type**: `multicast`
 +
-image::images/topic-name.png[topicname, role="integr8ly-img-responsive"]
+image::images/address-detail.png[Address detail, role="integr8ly-img-responsive"]
 
-. Finally click *Finish* to submit the topic creation.
+. Scroll all the way down and click the *Create* button.
+
+. Repeat the process but this time create it with the following information:
 +
-image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
-
-. AMQ will start the deployment of the required messaging infrastructure to provision your topic.
-+
-image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive"]
-
-. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan as the _incomingorders_ topic.
-+
---
-image::images/topics.png[topics, role="integr8ly-img-responsive"]
-
-[NOTE]
-====
-A green check mark will show that the resources were successfully deployed.
-====
---
-
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Click on the *Endpoints* tab to check the messaging host information.
-+
-image::images/addressspace-endpoints.png[Address Space Endpoints, role="integr8ly-img-responsive"]
-
-. Copy and write down the *Host* information of the `amq.messsaging.cluster`. As we will be connecting all our services from within OpenShift we can use the internal hostname.
-+
-image::images/addressspace-hostname.png[Address Space Host, role="integr8ly-img-responsive"]
+- **Name**: `notifications`
+- **Queue Name**: `notifications`
+- **Address Name**: `notifications`
+- **Routing Type**: `multicast`
 
 *Well done!* You now have a running AMQ with two topics called `incomingorders` and `notifications`.
 
 [type=verification]
-Did you remember to write down the address space *Host*?
+Where you able to see the *Broker* deployment in your namespace?
 
 [type=verificationFail]
 {standard-fail-text}
@@ -652,7 +613,7 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `quarkus.qpid-jms.url` property with the *hostname* that you wrote down in the previous task.
+. Go back to the OpenShift Dev Spaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `quarkus.qpid-jms.url` property with the *hostname* that you wrote down in the previous task.
 +
 image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
 +
@@ -665,7 +626,7 @@ Replace the placeholder text with your actual hostname. You can always get back 
 +
 [source,none,subs="attributes+"]
 ----
-oc -n {namespace} create configmap amqp-properties --from-file $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/application.properties
+oc -n {namespace} create configmap amqp-properties --from-file $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/application.properties
 ----
 
 . Update the ecommerce web application to point to your new event-driven API by updating the application environment variable:
@@ -679,7 +640,7 @@ oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-e
 +
 [source,none,subs="attributes+"]
 ----
-oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
+oc -n {namespace} apply -f $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/eda-services.yaml
 ----
 
 . The rest of the event-driven components should deploy now.  You can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
@@ -692,7 +653,7 @@ In your topology view do you see 2 new services deployed: `invoice-events` and `
 
 === Test the integration
 
-. In the same CodeReady Workspaces terminal issue the following command:
+. In the same OpenShift Dev Spaces terminal issue the following command:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -733,7 +694,7 @@ For the new event-driven store application, we will need to receive the updates 
 
 === Review the code
 
-. Go to the _Explorer:/projects_ in CodeReady Workspaces web IDE and expand the *events* folder.
+. Go to the _Explorer:/projects_ in OpenShift Dev Spaces web IDE and expand the *events* folder.
 +
 image::images/codeready-events.png[Events Service, role="integr8ly-img-responsive"]
 +
@@ -793,11 +754,11 @@ The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_
 
 === Deploy to OpenShift
 
-. Package the application by running the following maven plugin in the CodeReady Workspaces terminal:
+. Package the application by running the following maven plugin in the OpenShift Dev Spaces terminal:
 +
 [source,bash,subs="attributes+"]
 ----
-mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/
+mvn clean compile package -DskipTests -f $PROJECTS_ROOT/fleur-de-lune/projects/events/
 ----
 +
 [NOTE]
@@ -816,7 +777,7 @@ oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.
 +
 [source,bash,subs="attributes+"]
 ----
-oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/target/*-runner.jar --follow -n {namespace}
+oc start-build events --from-file $PROJECTS_ROOT/fleur-de-lune/projects/events/target/*-runner.jar --follow -n {namespace}
 ----
 
 . Deploy the service as an OpenShift application with the CLI:
@@ -887,7 +848,7 @@ Were you able to successfully see all 3 notification messages?
 
 Remember that we need to test what happens when a service is down?
 
-. Go back to the CodeReady Workspaces IDE terminal
+. Go back to the OpenShift Dev Spaces IDE terminal
 
 . Issue the following command to _scale down_ the _invoice_ service to simulate a failing service.
 +

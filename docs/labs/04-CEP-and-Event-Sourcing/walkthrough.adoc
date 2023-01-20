@@ -544,7 +544,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 image::images/4.2.0-overview.png[4.2.0-overview, role="integr8ly-img-responsive"]
 
 
-. Back in the CodeReady Workspaces IDE, switch to the `dilwsXXX` terminal
+. Back in the OpenShift Dev Spaces IDE, switch to the `dilwsXXX` terminal
 
 . Deploying and run the *CostCenter* Camel-K route by executing the following command again to send harvest data again!
 +
