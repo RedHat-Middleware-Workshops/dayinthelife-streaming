@@ -617,22 +617,6 @@ image::images/fuse-building-integration.png[Building Integration, role="integr8l
 
 === Deploy inventory and invoice event-driven services
 
-. Go back to the OpenShift Dev Spaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `quarkus.qpid-jms.url` property with the *hostname* that you wrote down in the previous task.
-+
-image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
-+
-[IMPORTANT]
-====
-Replace the placeholder text with your actual hostname. You can always get back to the messaging console to get your endpoint Host.
-====
-
-. Create the config map issuing the following command:
-+
-[source,none,subs="attributes+"]
-----
-oc -n {namespace} create configmap amqp-properties --from-file $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/application.properties
-----
-
 . Update the ecommerce web application to point to your new event-driven API by updating the application environment variable:
 +
 [source,none,subs="attributes+"]
