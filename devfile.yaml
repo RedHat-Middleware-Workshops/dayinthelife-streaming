@@ -47,18 +47,5 @@ components:
         - name: m2
           path: /home/user/.m2
       memoryLimit: 1.88G
-      endpoints:
-        - attributes:
-            contributed-by: che-code.eclipse.org
-            cookiesAuthEnabled: true
-            discoverable: false
-            type: main
-            urlRewriteSupported: true
-          exposure: public
-          name: che-code
-          path: '?tkn=eclipse-che'
-          protocol: https
-          secure: false
-          targetPort: 3100
   - name: m2
     volume: {}
