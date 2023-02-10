@@ -1,4 +1,8 @@
 schemaVersion: 2.2.0
+metadata:
+  name: dayinthelife-streaming
+  version: 1.0.0
+  displayName: Day In the Life - Streaming
 projects:
   - git:
       remotes:
