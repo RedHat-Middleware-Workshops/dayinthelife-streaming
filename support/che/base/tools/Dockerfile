@@ -1,5 +1,5 @@
 # kcat builder
-FROM registry.redhat.io/codeready-workspaces/plugin-java11-rhel8:2.15 AS kafkacat
+FROM registry.redhat.io/devspaces/udi-rhel8:3.3 AS kafkacat
 USER root
 RUN dnf -y install gcc which gcc-c++ wget make git cmake
 ENV KAFKACAT_VERSION=1.7.0
@@ -9,7 +9,7 @@ RUN cd /tmp && git clone https://github.com/edenhill/kcat -b $KAFKACAT_VERSION -
     ./bootstrap.sh
 
 # main image
-FROM registry.redhat.io/codeready-workspaces/plugin-java11-rhel8:2.15
+FROM registry.redhat.io/devspaces/udi-rhel8:3.3
 
 ENV CAMELK_VERSION=1.8.2
 ENV JBANG_VERSION=0.102.0
@@ -54,7 +54,7 @@ RUN dnf install -y nodejs && \
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kafkacat
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kcat
 
-USER jboss
+USER 1000
 
 # Configure JBang
 RUN jbang app setup && \
@@ -63,12 +63,12 @@ RUN jbang app setup && \
 
 USER root
 
-RUN for f in "/home/jboss" "/projects"; do \
+RUN for f in "/home/user" "/projects"; do \
       chgrp -R 0 ${f} && \
       chmod -R g=u ${f}; \
     done
 
-USER jboss
+USER 1000
 
 WORKDIR /projects
 CMD tail -f /dev/null
