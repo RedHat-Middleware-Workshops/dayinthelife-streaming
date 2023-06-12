@@ -43,7 +43,10 @@ components:
       cpuLimit: 500m
       volumeMounts:
         - name: m2
-          path: /home/user/.m2
+          path: /home/jboss/.m2
+      volumeMounts:
+        - name: jbang
+          path: /home/jboss/.jbang
       memoryLimit: 1.88G
       endpoints:
         - attributes:
@@ -59,4 +62,6 @@ components:
           secure: false
           targetPort: 3100
   - name: m2
+    volume: {}
+  - name: jbang
     volume: {}
