@@ -1,4 +1,6 @@
 schemaVersion: 2.2.0
+metadata:
+  name: dil-streaming
 projects:
   - git:
       remotes:
@@ -9,7 +11,6 @@ components:
   - name: universal-developer-image
     attributes:
       controller.devfile.io/merge-contribution: true
-      pod-overrides: {"spec":{"securityContext":{"runAsUser":1000}}}
     container:
       image: 'quay.io/redhatintegration/rhi-tools:latest'
       cpuRequest: 30m
