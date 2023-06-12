@@ -9,10 +9,7 @@ components:
   - name: universal-developer-image
     attributes:
       controller.devfile.io/merge-contribution: true
-      pod-overrides: 
-        spec:
-          securityContext: 
-            runAsUser: 1000
+      pod-overrides: {"spec":{"securityContext":{"runAsUser":1000}}}
     container:
       image: 'quay.io/redhatintegration/rhi-tools:latest'
       cpuRequest: 30m
