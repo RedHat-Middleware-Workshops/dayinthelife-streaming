@@ -1,5 +1,5 @@
 # kcat builder
-FROM registry.redhat.io/devspaces/udi-rhel8:3.3 AS kafkacat
+FROM registry.redhat.io/devspaces/udi-rhel8:3.6 AS kafkacat
 USER root
 RUN dnf -y install gcc which gcc-c++ wget make git cmake
 ENV KAFKACAT_VERSION=1.7.0
@@ -9,7 +9,7 @@ RUN cd /tmp && git clone https://github.com/edenhill/kcat -b $KAFKACAT_VERSION -
     ./bootstrap.sh
 
 # main image
-FROM registry.redhat.io/devspaces/udi-rhel8:3.3
+FROM registry.redhat.io/devspaces/udi-rhel8:3.6
 
 ENV CAMELK_VERSION=1.8.2
 ENV JBANG_VERSION=0.102.0
@@ -44,6 +44,10 @@ RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/serverless/${KN_V
 RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/${TKN_VERSION}/tkn-linux-amd64.tar.gz \
     -O - | tar -xz -C /usr/local/bin
 
+# Install httpie
+RUN wget https://packages.httpie.io/binaries/linux/http-latest -O /usr/local/bin/http && \
+    ln -s /usr/local/bin/http /usr/local/bin/https && \ 
+    chmod +x /usr/local/bin/http
 
 # Install node
 RUN dnf install -y nodejs && \
@@ -54,21 +58,21 @@ RUN dnf install -y nodejs && \
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kafkacat
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kcat
 
-USER 1000
+USER user
 
 # Configure JBang
 RUN jbang app setup && \
     jbang trust add https://github.com/apache/camel/ && \
     jbang app install camel@apache/camel
 
-USER root
+USER root 
 
 RUN for f in "/home/user" "/projects"; do \
       chgrp -R 0 ${f} && \
       chmod -R g=u ${f}; \
     done
 
-USER 1000
+USER user
 
 WORKDIR /projects
 CMD tail -f /dev/null
