@@ -1,0 +1,85 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Orders API",
+        "version": "1.0.0",
+        "description": "Orders REST API"
+    },
+    "paths": {
+        "/place": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/order"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/order"
+                                }
+                            }
+                        },
+                        "description": "Order placed"
+                    }
+                },
+                "operationId": "order",
+                "summary": "API to Event endpoint",
+                "description": "Order item"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "order": {
+                "title": "Root Type for order",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "orderId": {
+                        "type": "string"
+                    },
+                    "itemId": {
+                        "type": "string"
+                    },
+                    "orderItemName": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "price": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "zipCode": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "username": "jdoe",
+                    "orderId": "1",
+                    "itemId": "1",
+                    "orderItemName": "kiwi",
+                    "quantity": 1,
+                    "price": 2,
+                    "address": "123 Evergreen Terrace",
+                    "zipCode": "2222"
+                }
+            }
+        }
+    }
+}
