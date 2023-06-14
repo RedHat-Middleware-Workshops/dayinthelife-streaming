@@ -6,12 +6,13 @@ projects:
       remotes:
         origin: >-
           https://github.com/RedHat-Middleware-Workshops/dayinthelife-streaming.git
+      checkoutFrom:
+        revision: v2
     name: fleur-de-lune
 components:    
   - name: universal-developer-image
     attributes:
       controller.devfile.io/merge-contribution: true
-      pod-overrides: {"spec":{"securityContext":{"runAsUser":1000}}}
     container:
       image: 'quay.io/redhatintegration/rhi-tools:devspaces'
       env:
