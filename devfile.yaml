@@ -30,5 +30,13 @@ components:
       cpuRequest: 30m
       cpuLimit: 500m
       memoryRequest: 256Mi
-      memoryLimit: 1.88G
+      memoryLimit: 3G
       sourceMapping: /projects
+commands:
+  - exec:
+      commandLine: 'jbang app setup && jbang trust add https://github.com/apache/camel && jbang app install camel@apache/camel'
+      component: universal-developer-image
+    id: init-jbang
+events:
+  postStart:
+    - init-jbang
