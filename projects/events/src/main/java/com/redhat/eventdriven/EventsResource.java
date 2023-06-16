@@ -3,6 +3,7 @@ package com.redhat.eventdriven;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.jboss.resteasy.reactive.NoCache;
 import org.jboss.resteasy.reactive.RestStreamElementType;
+import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ public class EventsResource {
 
     /* TODO add notifications Channel */
 
-
+    
     /* TODO add consume Path */
 
 }
