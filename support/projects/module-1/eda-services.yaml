@@ -5,7 +5,7 @@ metadata:
   name: amqp-properties
 data:
   application.properties: |
-    quarkus.qpid-jms.url=amqp://amq-broker-hdls-svc
+    quarkus.qpid-jms.url=amqp://amq-broker-amqp-0-svc
     quarkus.qpid-jms.username=user
     quarkus.qpid-jms.password=openshift
 ---
@@ -30,38 +30,37 @@ spec:
     - type: configmap
       value: amqp-properties
   dependencies:
-    - 'camel:amqp'
+    - 'camel:jms'
     - 'camel:jackson'
+    - 'mvn:org.amqphub.quarkus:quarkus-qpid-jms'    
   sources:
-    - content: >-
-        const Processor = Java.type("org.apache.camel.Processor");
-        const p = Java.extend(Processor);
-        const proc = new p(processInventory);
-        from('amqp:topic:incomingorders?exchangePattern=InOnly')
+    - content: |-
+        // camel-k: language=js
+
+        // Write your routes here, for example:
+        from('jms:topic:incomingorders')
             .log('Inventory Notified ${body}')
-            .unmarshal().json()
-            .setHeader('reply-to').simple('${body[username]}')
-            .marshal().json()
             .delay(5000).asyncDelayed()
-            .process(proc)
-            .toD('amqp:topic:notifications?exchangePattern=InOnly')
+            .process((e) => handleInventory(e))
+            .to('jms:topic:notifications?disableReplyTo=true')
             .to('log:info');
-        function processInventory(e) {
-            var order = JSON.parse(
-                String.fromCharCode.apply(String, e.getMessage().getBody())
-            );
-            var result = JSON.stringify({
-                orderId: order.orderId,
-                itemId: order.itemId,
-                department: 'inventory',
-                datetime: Date.now(),
-                quantity: order.quantity,
-                flavor: order.orderItemName,
-                inventoryId: Math.floor(100000 + Math.random() * 999999)
-            });
-            e.getMessage().setBody(result);
+
+        const handleInventory = (e) => {
+          const order = JSON.parse(
+              String.fromCharCode.apply(String, e.getMessage().getBody())
+          );
+          const result = JSON.stringify({
+              orderId: order.orderId,
+              itemId: order.itemId,
+              department: 'inventory',
+              datetime: Date.now(),
+              quantity: order.quantity,
+              flavor: order.orderItemName,
+              inventoryId: Math.floor(100000 + Math.random() * 999999)
+          });
+          e.getOut().setBody(result);
         }
-      name: InventoryEvents.js
+      name: inventory-events.js
 ---
 apiVersion: camel.apache.org/v1
 kind: Integration
@@ -73,38 +72,33 @@ spec:
       value: amqp-properties
   dependencies:
     - 'camel:jackson'
-    - 'camel:amqp'
+    - 'camel:jms'
+    - 'mvn:org.amqphub.quarkus:quarkus-qpid-jms'      
   sources:
-    - content: >-
-        const Processor = Java.type("org.apache.camel.Processor");
-        const p = Java.extend(Processor);
-        const proc = new p(processInvoice);
-        
-        from('amqp:topic:incomingorders?exchangePattern=InOnly')
-            .log('Invoicing Notified ${body}')
-            .unmarshal().json()
-            .marshal().json()
-            .delay(10000).asyncDelayed()
-            .process(proc)
-            .log('H:${headers}')
-            .toD('amqp:topic:notifications?exchangePattern=InOnly')
-            .to('log:info');
-            
-        function processInvoice(e) {
-            var order = JSON.parse(
-                String.fromCharCode.apply(String, e.getMessage().getBody())
-            );
-            var result = JSON.stringify({
-                orderId: order.orderId,
-                itemId: order.itemId,
-                department: 'invoicing',
-                datetime: Date.now(),
-                amount: (order.quantity*order.price),
-                currency: 'USD',
-                invoiceId: (Math.floor(100000 + Math.random() * 999999))
-            });
-            e.getMessage().setBody(result);
-        }
+    - content: |-
+        // camel-k: language=js
 
-        
-      name: InvoiceEvents.js
+        // Write your routes here, for example:
+        from('jms:topic:incomingorders')
+            .log('Invoicing Notified ${body}')
+            .delay(10000).asyncDelayed()
+            .process((e) => handleInvoice(e))
+            .to('jms:topic:notifications?disableReplyTo=true')
+            .to('log:info');
+
+        const handleInvoice = (e) => {
+          const order = JSON.parse(
+              String.fromCharCode.apply(String, e.getMessage().getBody())
+          );
+          const result = JSON.stringify({
+              orderId: order.orderId,
+              itemId: order.itemId,
+              department: 'invoicing',
+              datetime: Date.now(),
+              amount: (order.quantity*order.price),
+              currency: 'USD',
+              invoiceId: (Math.floor(100000 + Math.random() * 999999))
+          });
+          e.getOut().setBody(result);
+        }
+      name: invoice-events.js

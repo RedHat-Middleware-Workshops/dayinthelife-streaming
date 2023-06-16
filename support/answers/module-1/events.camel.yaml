@@ -1,0 +1,40 @@
+- rest:
+    id: rest-bd5e
+    post:
+      - id: order
+        param:
+          - name: body
+            type: body
+            required: true
+        path: /place
+        description: Order item
+        consumes: application/json
+        produces: application/json
+        to: direct:order
+- route:
+    id: route-f9e1
+    from:
+      uri: direct:order
+      id: from-7f80
+      description: Order item
+      steps:
+        - log:
+            message: ${body}
+            id: log-7eaa
+        - to:
+            uri: jms:topic:incomingorders
+            id: to-86bc
+            parameters:
+              disableReplyTo: true
+              connectionFactory: '#bean:connectionFactoryBean'
+        - setBody:
+            id: setBody-c1da
+            expression:
+              constant:
+                expression: '{"response":"Order received!"}'
+                id: constant-897a
+- beans:
+    - name: connectionFactoryBean
+      properties:
+        remoteURI: amqp://amq-broker-amqp-0-svc.user1.svc
+      type: '#class:org.apache.qpid.jms.JmsConnectionFactory'
