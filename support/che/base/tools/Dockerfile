@@ -58,21 +58,10 @@ RUN dnf install -y nodejs && \
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kafkacat
 COPY --from=kafkacat /tmp/kcat/kcat /usr/local/bin/kcat
 
-USER user
-
-# Configure JBang
-RUN jbang app setup && \
-    jbang trust add https://github.com/apache/camel/ && \
-    jbang app install camel@apache/camel
-
-USER root 
-
 RUN for f in "/home/user" "/projects"; do \
       chgrp -R 0 ${f} && \
       chmod -R g=u ${f}; \
     done
-
-USER user
 
 WORKDIR /projects
 CMD tail -f /dev/null
