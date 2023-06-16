@@ -761,7 +761,6 @@ quarkus.http.cors.origins=*
 quarkus.http.cors.headers=*
 
 # OpenShift
-quarkus.openshift.expose=true
 quarkus.openshift.route.expose=true
 quarkus.openshift.deployment-kind=Deployment
 quarkus.openshift.labels."app.kubernetes.io/part-of"=event-driven
