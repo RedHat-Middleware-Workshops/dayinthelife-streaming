@@ -727,7 +727,7 @@ This will be the base we will use to build our service.
 ----
     @Inject
     @Channel("notifications")
-    Multi<Order> notifications;
+    Multi<String> notifications;
 ----
 
 . Now we need to add the `/consume` Path to receive the SSE requests. Add the following code below the `/* TODO add consume Path */` marker:
@@ -739,7 +739,7 @@ This will be the base we will use to build our service.
     @Path("/consume")
     @NoCache
     @RestStreamElementType(MediaType.APPLICATION_JSON)
-    public Multi<Order> stream() {
+    public Multi<String> stream() {
         return notifications.map(event -> { log.info("ev= " + event); return event; });
     }
 ----
@@ -756,13 +756,30 @@ Notice that the return type of the method is a *Multi* (from https://smallrye.io
 ----
 # HTTP config
 quarkus.http.cors=true
+quarkus.http.cors.access-control-allow-credentials=true
+quarkus.http.cors.origins=*
+quarkus.http.cors.headers=*
+
+# OpenShift
+quarkus.openshift.expose=true
+quarkus.openshift.route.expose=true
+quarkus.openshift.deployment-kind=Deployment
+quarkus.openshift.labels."app.kubernetes.io/part-of"=event-driven
+quarkus.openshift.annotations."app.openshift.io/connects-to"=amq-broker-ss
+
+quarkus.kubernetes.deploy=true
+quarkus.kubernetes.deployment-target=openshift
+
+quarkus.kubernetes-client.trust-certs=true
+
+quarkus.container-image.group=user1
 
 # Incoming stream
 mp.messaging.incoming.notifications.connector=smallrye-amqp
 mp.messaging.incoming.notifications.durable=false
 ----
 +
-The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_resource_sharing[Cross-Origin Resource Sharing] (CORS) for this service. Following is the MicroProfile configuration to use the `smallrye-amqp` component.
+The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_resource_sharing[Cross-Origin Resource Sharing] (CORS) for this service. Following is the OpenShift and Kubernetes configuration. Finally the MicroProfile configuration to use the `smallrye-amqp` component.
 
 === Deploy to OpenShift
 
@@ -770,7 +787,7 @@ The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_
 +
 [source,bash,subs="attributes+"]
 ----
-mvn clean compile package -DskipTests -f $PROJECTS_ROOT/fleur-de-lune/projects/events/
+ JAVA_HOME=$JAVA_HOME_17 mvn clean package quarkus:build -DskipTests -f $PROJECTS_ROOT/fleur-de-lune/projects/events/
 ----
 +
 [NOTE]
@@ -778,35 +795,12 @@ mvn clean compile package -DskipTests -f $PROJECTS_ROOT/fleur-de-lune/projects/e
 For the following commands remember to be sure to switch to your _working_ project.
 ====
 
-. Create a _Build Configuration_ for your application using the OpenJDK base container image:
-+
-[source,bash,subs="attributes+"]
-----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events -n {namespace}
-----
-
-. Start and watch the build, which will take about 2 minutes to complete:
-+
-[source,bash,subs="attributes+"]
-----
-oc start-build events --from-file $PROJECTS_ROOT/fleur-de-lune/projects/events/target/*-runner.jar --follow -n {namespace}
-----
-
-. Deploy the service as an OpenShift application with the CLI:
-+
-[source,bash,subs="attributes+"]
-----
-oc new-app -n {namespace} events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events -n {namespace}
-----
-
 . To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
 +
 [source,bash,subs="attributes+"]
 ----
 oc patch -n {namespace} dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
 ----
-
-=== Check the OpenShift Developer Console
 
 . Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], and make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
 +
