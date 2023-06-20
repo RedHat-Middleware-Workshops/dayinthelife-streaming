@@ -14,7 +14,7 @@ components:
     attributes:
       controller.devfile.io/merge-contribution: true
     container:
-      image: 'quay.io/redhatintegration/rhi-tools:devspaces'
+      image: 'quay.io/redhatintegration/rhi-tools:devspaces-3.6'
       env:
         - name: MAVEN_CONFIG
           value: ''
