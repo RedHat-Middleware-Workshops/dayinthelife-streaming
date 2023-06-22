@@ -1,13 +1,13 @@
 schemaVersion: 2.2.0
 metadata:
-  name: dil-streaming
+  name: dayinthelife-streaming
+  version: 2.0.0
+  displayName: Day In the Life - Streaming
 projects:
   - git:
       remotes:
         origin: >-
           https://github.com/RedHat-Middleware-Workshops/dayinthelife-streaming.git
-      checkoutFrom:
-        revision: v2
     name: fleur-de-lune
 components:    
   - name: universal-developer-image
