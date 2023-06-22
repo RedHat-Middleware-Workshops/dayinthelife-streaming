@@ -7,7 +7,7 @@
 
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-02-Change-Data-Capture/
-:codeready-url: http://codeready-che.{openshift-app-host}/
+:codeready-url: https://devspaces.{openshift-app-host}/
 :fuse-user-url: https://syndesis-fuse-{user-username}.{openshift-app-host}/
 
 ifdef::env-github[]
@@ -47,7 +47,7 @@ Use the following credentials to login into the web consoles:
 * Your *password* is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
-.Red Hat CodeReady Workspaces
+.Red Hat OpenShift Dev Spaces
 ****
 * link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
@@ -68,35 +68,35 @@ Use the following credentials to login into the web consoles:
 Please complete the following instructions to get ready for this lab. *If this is not the first lab you are doing today, and you have already completed this step in any of the previous labs, please skip to next task*.
 ====
 
-You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
-. To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
+. To get started go to the link:{codeready-url}[OpenShift Dev Spaces console, window="_blank"] and log in using your username and password credentials.
 +
-image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
+image::images/openshift-login.png[OpenShift DevSpaces Login, role="integr8ly-img-responsive"]
 
-. *If this is your first lab of the day*, you will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
+. *If this is your first lab of the day*, you will need to _Authorize Access_ to Dev Spaces to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
 +
 image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-responsive"]
 
 [IMPORTANT]
 ====
-If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+If you have already configured your OpenShift Dev Spaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
 ====
 
-=== Start CodeReady workspace
+=== Start OpenShift Dev Spaces workspace
 
-. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard.
+. Once you have logged in and authorized access to your user account, you will land in your personal Dev Spaces dashboard.
 +
 --
 A new workspace has been configured with the required tools, plugins and project to start working on this workshop.
 
-Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
+Click on the workspace with the name starting with `dayinthelife-workspace` on the left menu bar under *RECENT WORKSPACES*.
 
 image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
 
 [NOTE]
 ====
-You can also click on the name of the workspace in the center, and then click on the green button that says _Open_ on the top right hand side of the screen.
+You can also click on the link that says _Open_ on the right hand side of the screen.
 ====
 --
 
@@ -104,55 +104,32 @@ You can also click on the name of the workspace in the center, and then click on
 +
 image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
 
-. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
+. The first time it's run, it will git clone the required projects for this workshop. This will trigger a banner asking to trust the authors. Click in the *Yes, I trust the authors* buttons.
++
+image::images/codeready-trust.png[CodeReady Trust Banner, role="integr8ly-img-responsive"]
+
+. After a minute or two, you’ll be placed in the workspace. Close the initial Get Started tab and any prompt dialog.
 +
 image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
-
-You can close the _Problems_ and _Output_ views to clear space.
+This IDE is based on Microsoft *VS Code* editor. It will look familiar if you have already used it.
 ====
 
-. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
+. The projects explorer will show you the *Fleur-De-Lune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
-. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
+. During the workshop we will need to introduce commands for both OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _Menu_ hamburger button on the top left side and expand the **Terminal** menu. Click on *New Terminal*.
 +
 image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
 
-. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
+. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running Dev Spaces container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
 +
 image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-responsive"]
 
 === Login into the OpenShift cluster
-
-. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
-+
-[source,bash,subs="attributes+"]
-----
-oc login -u {user-username} -p {user-password} https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
-----
-
-. You should see something like the following (the project names may be different):
-+
-----
-Login successful.
-
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-    shared-db-earth
-    shared-kafka-earth
-  * user1
-    user1-che
-    user1-dayinthel-0605
-    user1-shared-475f
-
-Using project "user1".
-Welcome! See 'oc help' to get started.
-----
 
 . Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
 +
@@ -169,7 +146,7 @@ oc project {namespace}
 +
 [source,bash,subs="attributes+"]
 ----
-oc apply -n {namespace} -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-dc.yaml
+oc apply -n {namespace} -f $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/eda-dc.yaml
 ----
 
 . You can check the components were successfully deployed by opening the OpenShift Developer Console link:{openshift-host}/topology/ns/{user-username}[Topology View, window="_blank"]. Don't forget to change the view from *Administrator* to *Developer*.
@@ -279,21 +256,30 @@ Were you able to successfully scale-down and scale-up your application?
 
 [time=15]
 [id="Create AMQ Topics"]
-== Create your AMQ Online Topics
+== Create your AMQ Broker Topics
 
 In this section of the lab we will move from synchronous HTTP REST calls to event-driven services using an event broker or messaging server.  A broker is an intermediary component in charge of sending and receiving events between distributed systems. It removes technical and runtime coupling between microservices and enables fine-grained scaling.
 
 image::images/lab1-broker.png[Event Broker, role="integr8ly-img-responsive"]
 
-We will use AMQ Online to provision an account to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls are blocking.
+We will use the AMQ Broker operator to create publish/subscribe endpoints to send and receive events. In this way, we can send the order notification to the message bus and then, wait for the inventory and the payment service to return at their time. In the case of one of the services failing, the rest can continue working as none of the calls are blocking.
 
 image::images/lab1-architecture-eda.png[Architecture EDA, role="integr8ly-img-responsive"]
 
-*Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
+*Red Hat AMQ Broker* operator is an OpenShift-based mechanism for delivering messaging in a declarative way. AMQ Broker is a high-performance messaging implementation based on ActiveMQ Artemis. It uses an asynchronous journal for faster message persistence. AMQ Broker supports multiple languages, protocols, and platforms.
 
-=== Create an Address Space
+AMQ Broker provides the following features:
 
-Let's create an **Address Space** using the AMQ Online Operator.
+- Clustering and high availability options
+- Fast, native-IO persistence
+- Supports local transactions
+- Supports XA transactions when using AMQ Core Protocol JMS and AMQ OpenWire JMS clients
+- Written in Java for broad platform support
+- Multiple management interfaces: AMQ Management Console, Management APIs, and JMX
+
+=== Create a basic Broker
+
+Let's create a basic **broker** deployment using the AMQ Broker Operator.
 
 . Go back to your OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"].
 
@@ -301,423 +287,413 @@ Let's create an **Address Space** using the AMQ Online Operator.
 +
 image::images/openshift-add.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Click on the *From Catalog* option.
+. Click on the *All services* option under _Development Catalog_.
 +
 image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Type in `address` in the search box, and click on the *AddressSpace*:
+. Type in `broker` in the search box, and click on *AMQ Broker*:
 +
-image::images/catalog-addressspace.png[AddressSpace, role="integr8ly-img-responsive"]
+image::images/catalog-broker.png[Broker, role="integr8ly-img-responsive"]
 
 . Click on *Create*:
 +
-image::images/online-create.png[Create AddressSpace, role="integr8ly-img-responsive"]
+image::images/broker-create.png[Create Broker, role="integr8ly-img-responsive"]
 
-. Replace the content in the YAML editor with the following content:
+. Select *YAML view* and replace the content in the YAML editor with the following content:
 +
-[source,yaml,role="copypaste"]
+[source,yaml,subs="attributes+"]
 ----
-apiVersion: enmasse.io/v1beta1
-kind: AddressSpace
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
 metadata:
-  name: amq
+  name: amq-broker
+  application: amq-broker-app
 spec:
-  plan: standard-small
-  type: standard
-  endpoints:
-    - name: messaging
-      service: messaging
-      expose:
-        type: route
-        routeServicePort: amqps
-        routeTlsTermination: passthrough
-      exports:
-        - kind: ConfigMap
-          name: amq-config
-  authenticationService:
-    name: none-authservice
+  adminPassword: openshift
+  adminUser: user
+  console:
+    expose: true
+  deploymentPlan:
+    image: placeholder
+    size: 1
+    requireLogin: false
+    persistenceEnabled: true
+    journalType: nio
+    messageMigration: true
+    jolokiaAgentEnabled: false
+    managementRBACEnabled: true
+  acceptors:
+  - name: amqp
+    protocols: amqp
+    port: 5672
 ----
 
 . Click on *Create* to start the deployment
 +
-image::images/addressspace-detail.png[AddressSpace Definition, role="integr8ly-img-responsive"]
+image::images/broker-detail.png[Broker Definition, role="integr8ly-img-responsive"]
 
 . The AMQ operator will check the new resource and will begin to prepare all required components.
 
-. Click on the bricked icon on the top right side of the screen to get the consoles menu. The Messaging Console should now be available there. Open it.
+. You will be taken back to the topology view where your broker should now show as part of the current deployments
 +
-image::images/openshift-messaging-console.png[Messaging Console, role="integr8ly-img-responsive"]
+image::images/broker-topology.png[Broker Topology, role="integr8ly-img-responsive"]
 
-. Click on the *Log in with OpenShift* button.
+=== Create some Addresses Topics and Queues
+
+Let's create a par of **addresses** that will work as _Topics_ and _Queues_.
+
+. Click *+Add* on the left menu.
 +
-image::images/openshift-messaging-login.png[Messaging Login, role="integr8ly-img-responsive"]
+image::images/openshift-add-address.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Login using your user credentials.
+. Click on the *All services* option under _Development Catalog_.
 +
-image::images/openshift-login.png[Messaging Login, role="integr8ly-img-responsive"]
+image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
-. Click in the *amq* link to show the Messaging console Overview Page.
+. Type in `address` in the search box, and click on *AMQ Broker Address*:
 +
-image::images/addressspace-active.png[AMQ Address Space, role="integr8ly-img-responsive"]
+image::images/catalog-address.png[Address, role="integr8ly-img-responsive"]
+
+. Click on *Create*:
 +
---
-[IMPORTANT]
-====
-Wait for the *Address Space* to deploy the infrastructure until the status changes to _Active_ and shows the *green* checkmark.
-====
+image::images/address-create.png[Create Address, role="integr8ly-img-responsive"]
 
-[NOTE]
-====
-This could take a few minutes to finish.  If it looks like taking longer, then refresh the page.
-====
---
-
-. In the main _address space_ console screen, click on the *Create Address* button to start adding the required topics.
+. Select the configure via *Form View* option and type in the following values:
 +
-image::images/topic-create.png[newtopic, role="integr8ly-img-responsive"]
-
-. Fill in the _Address_ with *incomingorders* and select the *Topic* from the _Type_ combobox and *standard-small-topic* from the _Plan_ menu. Click *Next* to move to the next screen.
+- **Name**: `incomingorders`
+- **Queue Name**: `incomingorders`
+- **Address Name**: `incomingorders`
+- **Routing Type**: `multicast`
 +
-image::images/topic-name.png[topicname, role="integr8ly-img-responsive"]
+image::images/address-detail.png[Address detail, role="integr8ly-img-responsive"]
 
-. Finally click *Finish* to submit the topic creation.
+. Scroll all the way down and click the *Create* button.
+
+. Repeat the process but this time create it with the following information:
 +
-image::images/topic-summary.png[topicsummary, role="integr8ly-img-responsive"]
+- **Name**: `notifications`
+- **Queue Name**: `notifications`
+- **Address Name**: `notifications`
+- **Routing Type**: `multicast`
 
-. AMQ will start the deployment of the required messaging infrastructure to provision your topic.
-+
-image::images/topic-deploying.png[topicdeploying, role="integr8ly-img-responsive"]
-
-. Next, repeat the last couple of steps to provision the second topic. Create the `notifications` topic with the same type and plan as the _incomingorders_ topic.
-+
---
-image::images/topics.png[topics, role="integr8ly-img-responsive"]
-
-[NOTE]
-====
-A green check mark will show that the resources were successfully deployed.
-====
---
-
-. Now that our messaging infrastructure is deployed, we need to retrieve the messaging hostname service for our services to connect. Click on the *Endpoints* tab to check the messaging host information.
-+
-image::images/addressspace-endpoints.png[Address Space Endpoints, role="integr8ly-img-responsive"]
-
-. Copy and write down the *Host* information of the `amq.messsaging.cluster`. As we will be connecting all our services from within OpenShift we can use the internal hostname.
-+
-image::images/addressspace-hostname.png[Address Space Host, role="integr8ly-img-responsive"]
+// TODO Open AMQ Broker console and check the addresses are created correctly.
 
 *Well done!* You now have a running AMQ with two topics called `incomingorders` and `notifications`.
 
 [type=verification]
-Did you remember to write down the address space *Host*?
+Where you able to see the *Broker* deployment in your namespace?
 
 [type=verificationFail]
 {standard-fail-text}
 
 [time=30]
-[id="fuse-services"]
-== Develop Fuse Services
+[id="camel-services"]
+== Develop Apache Camel K Services
 
-*Red Hat Fuse Online* (part of _Red Hat Fuse_) is an integration Platform-as-a-Service (iPaaS) solution that makes it easy for business users to collaborate with integration experts and application developers. It is a fully cloud-hosted toolchain and runtime, available right from your browser.
+*Red Hat build of Apache Camel K* (part of _Red Hat Application Foundations_) is a lightweight integration framework built from link:pass:[https://github.com/apache/camel-k#camel--cloud--apache-camel-k][Apache Camel K, window="_blank"] that runs natively in the cloud on OpenShift. Camel K is specifically designed for serverless and microservice architectures. You can use Camel K to instantly run your integration code written in Camel Domain Specific Language (DSL) directly on OpenShift.
 
-[type=taskResource]
-.Fuse Online
-****
-* link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"]
-****
+Camel K uses the Kubernetes Operator SDK to automatically deploy integrations in the cloud. For example, this includes automatically creating services and routes on OpenShift. This provides much faster turnaround times when deploying and redeploying integrations in the cloud, such as a few seconds or less instead of minutes.
 
-=== Access Fuse Online
+=== Generate the REST service template
 
-. Access the link:{fuse-user-url}[Fuse Online Console, window="_blank", , id="resources-fuse-user-url"] and login using your credentials.
+While moving to event driven architecture, we still need the web application to send a REST request to submit new orders. The API team has already provided us with a new OpenAPI 3 document that we will need to implement using Camel K.
 
-. Click *Allow selected permissions* to _Authorize Access_ to your account information.
+1. Navigate to `projects/eda-services` and take a look at the OpenAPI document named `openapi-spec.json`
 +
-image::images/fuse-authorize.png[Authorize Access to Fuse, role="integr8ly-img-responsive"]
+image::images/camel-openapi-project.png[EDA Services OpenAPI, role="integr8ly-img-responsive"]
 
-. We will need to create the connections to the _topics_ created in the previous task. Click on the *Connections* menu option on the left side.
+2. Generate the Camel Route using YAML language using the https://github.com/apache/camel-karavan[Apache Camel Karavan, window="_blank"] VS Code Extension by right clicking in the `openapi-spec.json` file and select **Karavan: Generate REST API**.
 +
-image::images/fuse-connections.png[Fuse Connections Menu, role="integr8ly-img-responsive"]
+image::images/camel-generate-rest.png[Generate REST API, role="integr8ly-img-responsive"]
 
-=== Create connection to AMQ Online
-
-. Click on *Create Connection* button on the right top side.
+3. Select **Create new Integration** from the options menu.
 +
-image::images/fuse-create-connection.png[Fuse Create Connection, role="integr8ly-img-responsive"]
+image::images/camel-new-integration.png[New Integration, role="integr8ly-img-responsive"]
 
-. Fuse includes several connectors available to establish connectivity to cloud services. In this case click on the *AMQP Message Broker* one.
+4. Type in `events` for the new integration name and hit 'Enter'.
 +
-image::images/fuse-amqp-broker.png[AMQP Message Broker Connector, role="integr8ly-img-responsive"]
+image::images/camel-integration-name.png[Generate REST API, role="integr8ly-img-responsive"]
 
-. On the following page, add the *Connection URI* for connecting to the AMQ Online _AddressSpace_. You will need to replace the `{your-service.host}` placeholder with the value you save from the previous task.
+5. Select **Generate REST and routes** from the options menu.
 +
---
-[source,none,subs="attributes+"]
+image::images/camel-generate-route.png[Generate REST API, role="integr8ly-img-responsive"]
++
+{blank}
++
+This will create a new file in the project called `events.camel.yaml`
+
+6. Get back to the terminal and move the file to the folder where the openapi document is while switching to the folder issuing the following command:
++
+[source,bash,subs="attributes+"]
 ----
-amqp://{your-service.host}?requestTimeout=1000
-----
-
-image::images/fuse-connection-uri.png[AMQP Connection URI, role="integr8ly-img-responsive"]
---
-
-. Scroll down the same page and click on the *Validate* button to check the connection has been established.
-+
-image::images/fuse-validate.png[Connection Validation, role="integr8ly-img-responsive"]
-
-. You will see a green message back at the top.
-+
-image::images/fuse-validation-success.png[Connection Validation Success, role="integr8ly-img-responsive"]
-
-. Click on *Next>* button.
-+
-image::images/fuse-connector-next.png[Connector Next, role="integr8ly-img-responsive"]
-
-. In the next step, replace the *Name* with `AMQ Online` and finally click the *Save* button.
-+
-image::images/fuse-connection-name.png[Connector Name, role="integr8ly-img-responsive"]
-
-=== Create Place Order API
-
-. Time to begin with the first integration. Click on the *Integration* menu option on the left side.
-+
-image::images/fuse-integrations.png[Fuse Integrations, role="integr8ly-img-responsive"]
-
-. Click on the *Create Integration* button on the center of the screen or the top right side.
-+
-image::images/fuse-create-integration.png[Fuse Create Integration, role="integr8ly-img-responsive"]
-
-. Start by clicking the *API Provider* option.
-+
-image::images/fuse-api-provider.png[Fuse API Provider, role="integr8ly-img-responsive"]
-
-. We will create a _RESTful API_ from scratch. Select the *Create a new OpenAPI 2.x document* option and click on *Next* button.
-+
-image::images/fuse-create-api.png[Fuse Create API, role="integr8ly-img-responsive"]
-
-. The API editor is based on the link:http://apicurio.io/[Apicurio] community project. Begin adding a _Path_ to your API by clicking on *Add a path*.
-+
-image::images/fuse-add-path.png[API Add Path, role="integr8ly-img-responsive"]
-
-. Fill in `/place` in the *Path* textbox and click *Add*.
-+
-image::images/fuse-place-path.png[API /place Path, role="integr8ly-img-responsive"]
-
-. Next we need to define the _data schema_. Click on *Add a data type*.
-+
-image::images/fuse-data-type.png[API Data Type, role="integr8ly-img-responsive"]
-
-. Fill in `order` in the *Name* field. Fuse can use a JSON example to _bootstrap_ the schema properties. Paste the following code in the *JSON Example* field.
-+
-[source,json,subs="attributes+"]
-----
-{
-   "username":"jdoe",
-   "orderId":"1",
-   "itemId":"1",
-   "orderItemName":"kiwi",
-   "quantity":1,
-   "price":2,
-   "address":"123 Evergreen Terrace",
-   "zipCode":"2222"
-}
-
-----
-+
-image::images/fuse-type-definition.png[API Type Definition, role="integr8ly-img-responsive"]
-
-. Finally click on *Save* button.
-+
-image::images/fuse-schema-save.png[API Save Type Definition, role="integr8ly-img-responsive"]
-+
-[NOTE]
-====
-Notice that the there is _another_ save button in the top right. Beware NOT to click on that one.
-====
-
-. Click back on the */place* path on the left side. Scroll down the right panel and click on *Post* operation and then click on *Add Operation* button.
-+
-image::images/fuse-place-operation.png[API Place Operation, role="integr8ly-img-responsive"]
-
-. This will enable the _Operation info_ panel. Fill in the following data in the corresponding fields:
-+
-* *Summary*: `API to Event endpoint`
-* *Operation ID*: `order`
-* *Description*: `Order item`
-+
-image::images/fuse-operation-info.png[API Operation Info, role="integr8ly-img-responsive"]
-
-. Scroll down and click on *Add a request body* to enable the dropdown *Request Body Type*. Select `order`.
-+
-image::images/fuse-request-body.png[API Operation Body, role="integr8ly-img-responsive"]
-+
-[NOTE]
-====
-Did you notice that the warning icon disappeared?
-====
-
-. Now click on *Add a response* under the _RESPONSES_ section. Select `201 Created` from the dropdown menu. Finally click on the *Add* button.
-+
-image::images/fuse-response-code.png[API Operation Response, role="integr8ly-img-responsive"]
-
-. Type `Order sent` on the response *Description* and select `String` from the both *Response Type* dropdown menus.
-+
-[NOTE]
-====
-You can add an example if you are planning to mock this API definition.
-====
-
-. Remember to name your API `Place Order`. Finally hit the *Save* button to store your API definition.
-+
-image::images/fuse-response-type.png[API Response Type, role="integr8ly-img-responsive"]
-
-. Review your API information. If everything is fine click on *Next*.
-+
-image::images/fuse-review-api.png[Review API, role="integr8ly-img-responsive"]
-
-=== Create Order API Flow
-
-. We are ready to star this _place order_ flow. Click on the *Create flow* button.
-+
-image::images/fuse-create-flow.png[Create Flow, role="integr8ly-img-responsive"]
-
-. You will be presented with the basics of your integration. Click the *+* button to add a new step to your integration.
-+
-image::images/fuse-add-to.png[Add To Integration, role="integr8ly-img-responsive"]
-
-. Select *AMQ Online* from the available _connections_.
-+
-image::images/fuse-connect-amq.png[Add AMQ Online, role="integr8ly-img-responsive"]
-
-. Click the *Select* button next to the *Publish messages* option.
-+
-image::images/fuse-select-publish.png[Publish Messages, role="integr8ly-img-responsive"]
-
-. Fill in the _topic_ name `incomingorders?exchangePattern=InOnly&disableReplyTo=true` in the *Destination name* textbox and select `Topic` from the *Destination type* combobox. Then, click the *Next* button.
-+
-image::images/fuse-destination-name.png[Destination Name, role="integr8ly-img-responsive"]
-
-. In this screen, select `JSON Instance` from the *Select Type* menu. Type `order` in the *Data Type Name* field and paste the following code in the *Definition* field:
-+
---
-[source,json,subs="attributes+"]
-----
-{
-   "username":"jdoe",
-   "orderId":"1",
-   "itemId":"1",
-   "orderItemName":"kiwi",
-   "quantity":1,
-   "price":2,
-   "address":"123 Evergreen Terrace",
-   "zipCode":"2222"
-}
+mv $PROJECTS_ROOT/fleur-de-lune/events.camel.yaml $PROJECTS_ROOT/fleur-de-lune/projects/eda-services && cd $PROJECTS_ROOT/fleur-de-lune/projects/eda-services
 ----
 
-image::images/fuse-message-type.png[Destination Type, role="integr8ly-img-responsive"]
---
+=== Implement the Camel route
 
-. Scroll down and click the *Next* button.
-
-. Click on the _Warning_ icon and then click the *Add a data mapping step* to map between the API and the messaging formats.
+1. Right click on the file you just created and select **Karavan: open** to enable de visual editor.
 +
-image::images/fuse-add-mapper.png[Add Mapper, role="integr8ly-img-responsive"]
-
-. This is the _Atlas Mapper_ it allows us to map between API and Messaging schemas. Expand the `body` option on the left side under *1 - Request* and drag and drop each one of the fields from the left _Source_ to right _Target_ side.
+image::images/camel-open-editor.png[Karavan Open, role="integr8ly-img-responsive"]
 +
-image::images/fuse-field-mapper.png[Fields Mapper, role="integr8ly-img-responsive"]
-
-. Click on the *+* button between _Publish messages_ and _Provide API Return Path_ to add another mapper for the API return value.
+{blank}
 +
-image::images/fuse-return-mapper.png[Return Mapper, role="integr8ly-img-responsive"]
-
-. Select the *Data Mapper* option for the connection.
+This is the Karavan visual designer for Camel routes. Here we can use a graphical user interface to avoid handling manually the YAML of our integration.
 +
-image::images/fuse-connection-mapper.png[Connection Mapper, role="integr8ly-img-responsive"]
+image::images/camel-karavan-editor.png[Karavan Editor, role="integr8ly-img-responsive"]
 
-. Expand the *Constants* section and add a _string_ with the _value_ `Order Received!`. Drag and drop it to the right side under `body`. Then click the *Done* button.
+2. Let's add some steps to this flow! Move the mouse over the *Order* node for a *+* icon to appear and click on it.
 +
-image::images/fuse-map-response.png[Map Response, role="integr8ly-img-responsive"]
+image::images/camel-add-step-1.png[Karavan Add Step, role="integr8ly-img-responsive"]
 
-. Click the *Publish* button.
+3. In the _Select step_ dialog type in `log` in the search box and click on the *Log* card.
 +
-image::images/fuse-publish-api.png[Publish API Integration, role="integr8ly-img-responsive"]
+image::images/camel-add-log.png[Karavan Add Log, role="integr8ly-img-responsive"]
++
+{blank}
++ We will use the default configuration for this component.
 
-. Type `events` in the *Name* and `Order API to Event` in the *Description* fields. Then click the *Save and Publish* button to deploy your integration.
+4. Repeat the hover over the last route node to show the *Add step to From* options.
 +
-image::images/fuse-save-publish.png[Save and Publish API, role="integr8ly-img-responsive"]
+image::images/camel-add-step-2.png[Karavan Add Next, role="integr8ly-img-responsive"]
 
-. It will take a moment for Fuse to deploy your integration. It will compile and package an Apache Camel route into a _container_ image that is deployed to OpenShift. Fuse completes these steps automatically, so you don't need to learn how to build and deploy a container on Kubernetes. Wait a few minutes for the process to complete.
+5. Now, we want to send the content posted to the REST API to our AMQ Broker. Search for `jms` in the dialog. This time the element we want to use is under the *Components* tab. Click on it, then click on the *JMS* card.
 +
-image::images/fuse-building-integration.png[Building Integration, role="integr8ly-img-responsive"]
+image::images/camel-add-step-jms.png[Karavan Add JMS, role="integr8ly-img-responsive"]
 
-=== Deploy inventory and invoice event-driven services
+6. Time to configure the component. The component configuration bar is on the right side of the editor. There we will set the following _Parameters_
++
+=====
+. *Destination Type* : `topic`
+. *Destination Name* : `incomingorders`
+. *Disable Reply To* : `enabled`
+=====
++
+{blank}
++
+You should see the *Uri* changing to `jms:topic:incomingorders`
++
+image::images/camel-jms-config.png[Karavan JMS configuration, role="integr8ly-img-responsive"]
 
-. Go back to the CodeReady Workspaces IDE terminal and update the *application.properties* file under `support/projects/module-1/` so we can create a _config map_ that will provide the AMQ address space for our event-driven services. Update the `quarkus.qpid-jms.url` property with the *hostname* that you wrote down in the previous task.
+7. Finally add the last step following the previous steps. This time we will search for `set body` under *Transformation*.
 +
-image::images/application-properties-configmap.png[Properties ConfigMap, role="integr8ly-img-responsive"]
+image::images/camel-add-step-setbody.png[Karavan Add Set Body, role="integr8ly-img-responsive"]
+
+8. Configure the transformation by changing the *Language* to `constant` and typing the reply `{"response":"Order received!"}` in the *Expression* textbox.
 +
-[IMPORTANT]
+image::images/camel-setbody-constant.png[Karavan Set Body, role="integr8ly-img-responsive"]
+
+9. Switch to the *Beans* view of Karavan to configure the broker url connection. Click on the *+ Create bean* button.
++
+image::images/camel-create-bean.png[Karavan Create Bean, role="integr8ly-img-responsive"]
+
+10. Add the following configuration to the Bean:
++
 ====
-Replace the placeholder text with your actual hostname. You can always get back to the messaging console to get your endpoint Host.
+- *Name*: `connectionFactoryBean`
+- *Type*: `#class:org.apache.qpid.jms.JmsConnectionFactory`
 ====
 
-. Create the config map issuing the following command:
+11. Click the *Add Property* button and add the following: 
++
+====
+- Field Name: `remoteURI`
+- Field Value: `amqp://amq-broker-amqp-0-svc.{namespace}.svc`
+====
++
+{blank}
++
+image::images/camel-bean-connection.png[Karavan Connection Factory Bean, role="integr8ly-img-responsive"]
+
+12. Click on the *JMS* step and update the *Connection Factory* value and select the bean you just created.
++
+{blank}
++
+image::images/camel-jms-connection.png[Karavan JMS Connection Factory, role="integr8ly-img-responsive"]
+
+=== Run locally using Camel JBang CLI
+
+https://camel.apache.org/manual/camel-jbang.html[Camel JBang] is a Camel CLI (Command Line Interface) to easily install and get started with Apache Camel, in only a few minutes. Camel JBang is excellent for no-code/low-code use-cases and when you need to quickly build a prototype with Camel.
+
+1. Open back the IDE terminal and navigate to the service project:
 +
 [source,none,subs="attributes+"]
 ----
-oc -n {namespace} create configmap amqp-properties --from-file $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/application.properties
+cd $PROJECTS_ROOT/fleur-de-lune/projects/eda-services
 ----
+
+2. Run using `camel`
++
+[source,none,subs="attributes+"]
+----
+camel run * --dev
+----
++
+{blank}
++ 
+You will see the CLI loading the required dependencies and starting the Camel route.
+
+3. Wait until you see the output showing something similar to the following lines:
++
+----
+2023-06-15 16:58:18.895  INFO 2522 --- [           main] el.impl.engine.AbstractCamelContext : Apache Camel 3.20.5 (events) started in 2s386ms (build:283ms init:1s410ms start:693ms JVM-uptime:7s)
+2023-06-15 16:58:18.896  INFO 2522 --- [           main] che.camel.main.http.VertxHttpServer : HTTP endpoints summary
+2023-06-15 16:58:18.898  INFO 2522 --- [           main] che.camel.main.http.VertxHttpServer :     http://0.0.0.0:8080/place (POST)
+----
+
+{blank}
+
+This integration is now running in the IDE container, giving us the possibility to quicktly iterate and access services running on the OpenShift cluster. This is a great way of Red Hat to improve the developer experience.
+
+[type=verification]
+Were you able to successfully execute the Camel route?
+
+[type=verificationFail]
+{standard-fail-text}
+
+=== Test the local service
+
+We will be using https://httpie.io/[httpie] for testing the REST API that we just ran.
+
+1. Open a new IDE terminal
+
+2. Call the REST API with the following command:
++
+[source,none,subs="attributes+"]
+----
+http localhost:8080/place \
+orderId=978 \
+itemId=124590 \
+orderItemName=Cherry \
+quantity=1 \
+price=2 \
+address='evergreen terrace 123' \
+zipCode='1555'
+----
+
+3. If your route is working you should see a similar output like this:
++
+----
+HTTP/1.1 200 OK
+Accept: application/json, */*;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+User-Agent: HTTPie/3.2.1
+transfer-encoding: chunked
+
+{
+    "response": "Order received!"
+}
+----
+
+{blank}
+
+Congratulations! Your service is working!
+
+=== Deploy to OpenShift using Camel K
+
+1. Get back to the terminal where Camel is running and stop the process by pressing `CTRL + C` or by closing the terminal.
+
+2. Check that you are using the correct OpenShift project
++
+[source,none,subs="attributes+"]
+----
+oc project {namespace}
+----
+
+3. Using the `kamel` CLI run your integration
++
+[source,none,subs="attributes+"]
+----
+kamel run -n {namespace} --name i-events -d mvn:org.amqphub.quarkus:quarkus-qpid-jms events.camel.yaml
+----
+
+4. The CLI will create an *Integration* Kuberntes Custom Resource (CR) in your namespace. The Camel K Operator is watching those resources and will start a build process to deploy your integration using Camel Extensions for Quarkus. You should see an output similar to this:
++
+----
+Integration "i-events" created
+----
+
+5. Check the status of your integration using the following command:
++
+[source,none,subs="attributes+"]
+----
+kamel get -n {namespace}
+----
+
+6. Wait until you see the *PHASE* changing to `Running`
++
+----
+NAME    PHASE   KIT
+i-events  Running {namespace}/kit-ci5klksv9bi733la3sg0
+----
+
+{blank}
+
+Your integration is now running as a Pod on your OpenShift namespace. Check the link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"] to validate the pod is running.
+
+image::images/camel-topology-view.png[Camel K Integration, role="integr8ly-img-responsive"]
+
+[type=verification]
+In your topology view do you see the new service `i-events` deployed?
+
+[type=verificationFail]
+{standard-fail-text}
+
+=== Deploy the inventory and invoice additional event-driven services
 
 . Update the ecommerce web application to point to your new event-driven API by updating the application environment variable:
 +
 [source,none,subs="attributes+"]
 ----
-oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-events.fuse-{user-username}.svc:8080"
+oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-events"
 ----
 
 . Issue the following command to deploy the _event-driven_ services that will react to the events posted by the `events` service:
 +
 [source,none,subs="attributes+"]
 ----
-oc -n {namespace} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/support/projects/module-1/eda-services.yaml
+oc -n {namespace} apply -f $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/eda-services.yaml
 ----
 
 . The rest of the event-driven components should deploy now.  You can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
++ 
+image::images/camel-eda-topology.png[Event Driven Services, role="integr8ly-img-responsive"]
 
-[type=verification]
-In your topology view do you see 2 new services deployed: `invoice-events` and `inventory-events`?
 
-[type=verificationFail]
-{standard-fail-text}
-
-=== Test the integration
-
-. In the same CodeReady Workspaces terminal issue the following command:
+. Let's test the OpenShift route. In the same OpenShift Dev Spaces terminal issue the following command using `events.{namespace}.svc` now as the hostname:
 +
 [source,bash,subs="attributes+"]
 ----
-curl -v -X POST http://i-events.fuse-{user-username}.svc:8080/place -H 'cache-control: no-cache' -H 'content-type: application/json' -d  '{"orderId":978,"itemId": 135790,"orderItemName": "Mango","quantity": 1,"price": 2,"address": "hello","zipCode": "15555"}'
+http i-events.{namespace}.svc/place \
+orderId=978 \
+itemId=124590 \
+orderItemName=Cherry \
+quantity=1 \
+price=2 \
+address='evergreen terrace 123' \
+zipCode='1555'
 ----
 +
-You should receive a message back similar to the following one:
+{blank}
++ 
+You should see the same output from the localhost test
 +
-[source,none,subs="attributes+"]
 ----
-...
-* upload completely sent off: 162 out of 162 bytes
-< HTTP/1.1 201 Created
-< Connection: keep-alive
-< Content-Type: application/json
-< Content-Length: 0
-< X-Application-Context: application
-< Date: Fri, 20 Mar 2020 15:17:28 GMT
-<
-* Curl_http_done: called premature == 0
-* Connection #0 to host i-events.fuse-{user-username} left intact
-Order Received!
+HTTP/1.1 200 OK
+Accept: application/json, */*;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+User-Agent: HTTPie/3.2.1
+transfer-encoding: chunked
+
+{
+    "response": "Order received!"
+}
 ----
-+
-*Excellent!* This means you are able to _POST_ an Order and it was sent to the _Topic_.
+
+{blank}
+
+*Excellent!* This means you are able to _POST_ an Order and it was sent to the _Topic_ using Red Hat build of Apache Camel.
 
 [type=verification]
 Were you able to successfully start all 3 integration services?
@@ -733,7 +709,7 @@ For the new event-driven store application, we will need to receive the updates 
 
 === Review the code
 
-. Go to the _Explorer:/projects_ in CodeReady Workspaces web IDE and expand the *events* folder.
+. Go to the _Explorer:/projects_ in OpenShift Dev Spaces web IDE and expand the *events* folder.
 +
 image::images/codeready-events.png[Events Service, role="integr8ly-img-responsive"]
 +
@@ -751,7 +727,7 @@ This will be the base we will use to build our service.
 ----
     @Inject
     @Channel("notifications")
-    Flowable<String> notifications;
+    Multi<String> notifications;
 ----
 
 . Now we need to add the `/consume` Path to receive the SSE requests. Add the following code below the `/* TODO add consume Path */` marker:
@@ -762,42 +738,55 @@ This will be the base we will use to build our service.
     @GET
     @Path("/consume")
     @NoCache
-    @Produces(MediaType.SERVER_SENT_EVENTS)
-    public Publisher<String> sendEvents() {
-        // Stream notifications as Server-Side Events
-        return Flowable.<String>merge(
-            notifications.map(event -> { log.info("ev= " + event); return event; }),
-            Flowable.interval(1, TimeUnit.SECONDS).map(x -> "{}"));
+    @RestStreamElementType(MediaType.APPLICATION_JSON)
+    public Multi<String> stream() {
+        return notifications.map(event -> { log.info("ev= " + event); return event; });
     }
 ----
 
 [NOTE]
 ====
-Notice that the return type of the method is a *Publisher* and the _MediaType_ is *SERVER_SENT_EVENTS*. This will enable a persistent connection from the browser.
+Notice that the return type of the method is a *Multi* (from https://smallrye.io/smallrye-mutiny/[Mutiny, window="_blank"]). This is especially useful for streaming text or binary data. By using `@RestStreamElementType`, we don't need to add *@Produces(MediaType.SERVER_SENT_EVENTS)*.
 ====
 --
 
-. Most of the configuration is located in a properties file where we can add the MicroProfile connection settings for the message broker. Open `application.properties` file in 'src/main/resources/' and add the following configuration:
+. Most of the configuration is located in a properties file where we can add the MicroProfile connection settings for the message broker. Open `application.properties` file in `src/main/resources/` and add the following configuration:
 +
 [source,java,subs="attributes+"]
 ----
 # HTTP config
 quarkus.http.cors=true
+quarkus.http.cors.access-control-allow-credentials=true
+quarkus.http.cors.origins=*
+quarkus.http.cors.headers=*
+
+# OpenShift
+quarkus.openshift.route.expose=true
+quarkus.openshift.deployment-kind=Deployment
+quarkus.openshift.labels."app.kubernetes.io/part-of"=event-driven
+quarkus.openshift.annotations."app.openshift.io/connects-to"=amq-broker-ss
+
+quarkus.kubernetes.deploy=true
+quarkus.kubernetes.deployment-target=openshift
+
+quarkus.kubernetes-client.trust-certs=true
+
+quarkus.container-image.group=user1
 
 # Incoming stream
 mp.messaging.incoming.notifications.connector=smallrye-amqp
 mp.messaging.incoming.notifications.durable=false
 ----
 +
-The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_resource_sharing[Cross-Origin Resource Sharing] (CORS) for this service. Following is the MicroProfile configuration to use the `smallrye-amqp` component.
+The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_resource_sharing[Cross-Origin Resource Sharing] (CORS) for this service. Following is the OpenShift and Kubernetes configuration. Finally the MicroProfile configuration to use the `smallrye-amqp` component.
 
 === Deploy to OpenShift
 
-. Package the application by running the following maven plugin in the CodeReady Workspaces terminal:
+. Package the application by running the following maven plugin in the OpenShift Dev Spaces terminal:
 +
 [source,bash,subs="attributes+"]
 ----
-mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/
+ JAVA_HOME=$JAVA_HOME_17 mvn clean package quarkus:build -DskipTests -f $PROJECTS_ROOT/fleur-de-lune/projects/events/
 ----
 +
 [NOTE]
@@ -805,35 +794,12 @@ mvn clean compile package -DskipTests -f $CHE_PROJECTS_ROOT/FleurDeLune/projects
 For the following commands remember to be sure to switch to your _working_ project.
 ====
 
-. Create a _Build Configuration_ for your application using the OpenJDK base container image:
+. To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` using a Kubernetes Secret with the environment variable configuration.
 +
 [source,bash,subs="attributes+"]
 ----
-oc new-build registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5 --binary --name=events -l app=events -n {namespace}
+oc create secret generic amq-config --from-literal=AMQP_HOST=amq-broker-amqp-0-svc
 ----
-
-. Start and watch the build, which will take about 2 minutes to complete:
-+
-[source,bash,subs="attributes+"]
-----
-oc start-build events --from-file $CHE_PROJECTS_ROOT/FleurDeLune/projects/events/target/*-runner.jar --follow -n {namespace}
-----
-
-. Deploy the service as an OpenShift application with the CLI:
-+
-[source,bash,subs="attributes+"]
-----
-oc new-app -n {namespace} events -l 'app.openshift.io/runtime=quarkus,app.kubernetes.io/part-of=event-driven'; oc expose svc/events -n {namespace}
-----
-
-. To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` and `port` using the ConfigMap created by our _AddressSpace_ configuration.
-+
-[source,bash,subs="attributes+"]
-----
-oc patch -n {namespace} dc/events -p '{ "metadata" : { "annotations" : { "app.openshift.io/connects-to" : "invoice-events,inventory-events" } }, "spec": { "template": { "spec": { "containers": [ { "name": "events", "env": [ { "name": "AMQP_HOST", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.host" } } }, { "name": "AMQP_PORT", "valueFrom": { "configMapKeyRef": { "name": "amq-config", "key": "service.port.amqp" } } } ] } ] } } } }'
-----
-
-=== Check the OpenShift Developer Console
 
 . Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], and make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
 +
@@ -887,7 +853,7 @@ Were you able to successfully see all 3 notification messages?
 
 Remember that we need to test what happens when a service is down?
 
-. Go back to the CodeReady Workspaces IDE terminal
+. Go back to the OpenShift Dev Spaces IDE terminal
 
 . Issue the following command to _scale down_ the _invoice_ service to simulate a failing service.
 +

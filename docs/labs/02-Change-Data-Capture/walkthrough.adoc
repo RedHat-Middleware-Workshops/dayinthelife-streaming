@@ -46,7 +46,7 @@ Use the following credentials to login into the web consoles:
 * Your *password* is: `{user-password}`
 
 [type=walkthroughResource,serviceName=codeready]
-.Red Hat CodeReady Workspaces
+.Red Hat OpenShift Dev Spaces
 ****
 * link:{codeready-url}[Console, window="_blank", , id="resources-codeready-url"]
 ****
@@ -67,7 +67,7 @@ Use the following credentials to login into the web consoles:
 Please complete the following instructions to get ready for this lab. *If this is not the first lab you are doing today, and you have already completed this step in any of the previous labs, please skip to next task*.
 ====
 
-You will be using Red Hat CodeReady Workspaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
 . To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
 +
@@ -79,10 +79,10 @@ image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-resp
 
 [IMPORTANT]
 ====
-If you have already configured your CodeReady Workspaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
+If you have already configured your OpenShift Dev Spaces environment and deployed the services in the _optional_ **Lab A - Cloud Native Applications**, please skip the following steps and scroll down to the end of the page so you can move to *Step 2*.
 ====
 
-=== Start CodeReady workspace
+=== Start OpenShift Dev Spaces workspace
 
 . Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard.
 +

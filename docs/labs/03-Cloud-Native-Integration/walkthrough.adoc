@@ -127,7 +127,7 @@ oc project {namespace}
 +
 [source,bash,subs="attributes+"]
 ----
-oc -n {user-username} apply -f $CHE_PROJECTS_ROOT/FleurDeLune/projects/harvest/simulator/config/prereq.yaml
+oc -n {user-username} apply -f $PROJECTS_ROOT/fleur-de-lune/projects/harvest/simulator/config/prereq.yaml
 ----
 
 . Navigate to the {openshift-host}[OpenShift Developer Console, window="_blank", id="{context}-3"] and login with your OpenShift credentials (`{user-username}` and `{user-password}`).
