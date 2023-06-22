@@ -287,6 +287,10 @@ image::images/kafka-connector-details.png[Details KafkaConnector, role="integr8l
 +
 image:images/topology-kafkaconnect.png[KafkaConnect Topology]
 
+. You should see something similar to the following.
++
+image:images/kafkaconnector-log.png[KafkaConnector Log]
+
 [type=verification]
 Did the connector started correctly and is now reading the database transaction log?
 [type=verificationFail]
