@@ -34,7 +34,7 @@ components:
       sourceMapping: /projects
 commands:
   - exec:
-      commandLine: 'jbang app setup && jbang trust add https://github.com/apache/camel && jbang app install camel@apache/camel'
+      commandLine: 'jbang app setup && jbang trust add https://github.com/apache/camel && jbang app install --force camel@apache/camel/camel-3.21.0'
       component: universal-developer-image
     id: init-jbang
 events:
