@@ -5,7 +5,6 @@
     "redhat.vscode-xml",
     "redhat.vscode-apache-camel",
     "redhat.vscode-camelk",
-    "redhat.java",
-    "camel-karavan.karavan"
+    "redhat.java"
   ]
 }

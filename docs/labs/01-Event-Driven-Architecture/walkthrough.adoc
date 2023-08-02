@@ -394,6 +394,44 @@ Where you able to see the *Broker* deployment in your namespace?
 
 Camel K uses the Kubernetes Operator SDK to automatically deploy integrations in the cloud. For example, this includes automatically creating services and routes on OpenShift. This provides much faster turnaround times when deploying and redeploying integrations in the cloud, such as a few seconds or less instead of minutes.
 
+=== Install the Visual Designer Extension
+
+====
+To help building our route easier, we will use Visual Designer tooling in our Editor.
+
+link:pass:[https://github.com/apache/camel-karavan/tree/main/karavan-vscode][Apache Camel Karavan] is an Integration Toolkit for Apache Camel, which makes integration easy and fun through the visualization of pipelines, integration with runtimes and package, image build and deploy to kubernetes out-of-the-box.
+
+Integrations could be created using visual designer that includes Enterprise Integration Patterns DSL, REST API and Beans builder, all Camel Kamelets and Components.
+
+Features:
+
+- Enterprise Integration Patterns DSL
+- REST DSL designer
+- OpenAPI to REST DSL generator
+- Beans and dependencies
+- 100+ Kamelets source/sink/action
+- 300+ Components consumer/producer
+- Read/Write Integration CRD (*.yaml with kind:Integration) and plain yaml routes
+====
+
+{blank}
+
+To install the plugin on your editor locally, follow these steps:
+
+1. Clic on the left menu bar the `extensions` icon. In the top section, click the three dots of the context menu and then click on **Install from VSIX...** option.
++
+image::images/camel-install-vsix.png[Extension Install, role="integr8ly-img-responsive"]
+
+2. Select **karavan.vsix** from the options menu.
++
+image::images/camel-karavan-vsix.png[Karavan Install, role="integr8ly-img-responsive"]
+
+3. Wait until the notification in the bottom right reads `Completed installing Karavan extension from VSIX.`
+
+4. Finally, get back to the code view.
++
+image::images/camel-back-to-code.png[Back to Code, role="integr8ly-img-responsive"]
+
 === Generate the REST service template
 
 While moving to event driven architecture, we still need the web application to send a REST request to submit new orders. The API team has already provided us with a new OpenAPI 3 document that we will need to implement using Camel K.
@@ -421,6 +459,11 @@ image::images/camel-generate-route.png[Generate REST API, role="integr8ly-img-re
 {blank}
 +
 This will create a new file in the project called `events.camel.yaml`
++
+[IMPORTANT]
+====
+Please keep in mind that generating the file may take a few moments because the extensions' dependencies must be downloaded on the initial call.
+====
 
 6. Get back to the terminal and move the file to the folder where the openapi document is while switching to the folder issuing the following command:
 +
@@ -604,7 +647,7 @@ oc project {namespace}
 +
 [source,none,subs="attributes+"]
 ----
-kamel run -n {namespace} --name i-events -d mvn:org.amqphub.quarkus:quarkus-qpid-jms events.camel.yaml
+kamel run -n {namespace} --name i-events -d mvn:org.amqphub.quarkus:quarkus-qpid-jms $PROJECTS_ROOT/fleur-de-lune/projects/eda-services/events.camel.yaml
 ----
 
 4. The CLI will create an *Integration* Kuberntes Custom Resource (CR) in your namespace. The Camel K Operator is watching those resources and will start a build process to deploy your integration using Camel Extensions for Quarkus. You should see an output similar to this:
@@ -796,7 +839,7 @@ The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_
 For the following commands remember to be sure to switch to your _working_ project.
 ====
 
-. To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` using a Kubernetes Secret with the environment variable configuration.
+. To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` using a Kubernetes Secret with the environment variable configuration we previously configured in the `application.properties` file.
 +
 [source,bash,subs="attributes+"]
 ----
