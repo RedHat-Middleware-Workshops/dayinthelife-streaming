@@ -37,6 +37,11 @@ commands:
       commandLine: 'jbang app setup && jbang trust add https://github.com/apache/camel && jbang app install --force camel@apache/camel/camel-3.21.0'
       component: universal-developer-image
     id: init-jbang
+  - exec:
+      commandLine: 'wget -O /home/user/karavan.vsix -q https://github.com/apache/camel-karavan/releases/download/3.20.1/karavan-3.20.1.vsix'
+      component: universal-developer-image
+    id: install-karavan
 events:
   postStart:
     - init-jbang
+    - install-karavan
