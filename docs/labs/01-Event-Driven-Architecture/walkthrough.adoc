@@ -763,11 +763,13 @@ quarkus.http.cors.headers=*
 # OpenShift
 quarkus.openshift.route.expose=true
 quarkus.openshift.deployment-kind=Deployment
+quarkus.openshift.env.secrets=amq-config
 quarkus.openshift.labels."app.kubernetes.io/part-of"=event-driven
 quarkus.openshift.annotations."app.openshift.io/connects-to"=amq-broker-ss
 
 quarkus.kubernetes.deploy=true
 quarkus.kubernetes.deployment-target=openshift
+quarkus.kubernetes.env.secrets=amq-config
 
 quarkus.kubernetes-client.trust-certs=true
 
