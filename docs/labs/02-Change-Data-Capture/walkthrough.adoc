@@ -69,11 +69,11 @@ Please complete the following instructions to get ready for this lab. *If this i
 
 You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
-. To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
+. To get started go to the link:{codeready-url}[Dev Spaces console, window="_blank"] and log in using your username and password credentials.
 +
 image::images/openshift-login.png[OpenShift Login, role="integr8ly-img-responsive"]
 
-. *If this is your first lab of the day*, you will need to _Authorize Access_ to CodeReady to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
+. *If this is your first lab of the day*, you will need to _Authorize Access_ to Dev Spaces to access your permissions and being able to mananage your session. Click on *Allow selected permissions*.
 +
 image::images/authorize-codeready.png[Authorize Access, role="integr8ly-img-responsive"]
 
@@ -84,14 +84,14 @@ If you have already configured your OpenShift Dev Spaces environment and deploye
 
 === Start OpenShift Dev Spaces workspace
 
-. Once you have logged in and authorized access to your user account, you will land in your personal CodeReady dashboard.
+. Once you have logged in and authorized access to your user account, you will land in your personal Dev Spaces dashboard.
 +
 --
 A new workspace has been configured with the required tools, plugins and project to start working on this workshop.
 
-Click on the workspace with the name starting with `dil-streaming-` on the left menu bar under *RECENT WORKSPACES*.
+Click on the workspace with the name starting with `dayinthelife-workspace` on the left menu bar under *RECENT WORKSPACES*.
 
-image::images/codeready-dashboard.png[CodeReady Dashboard, role="integr8ly-img-responsive"]
+image::images/codeready-dashboard.png[Dev Spaces Dashboard, role="integr8ly-img-responsive"]
 
 [NOTE]
 ====
@@ -103,32 +103,30 @@ You can also click on the name of the workspace in the center, and then click on
 +
 image::images/codeready-loading.png[Loading CodeReady, role="integr8ly-img-responsive"]
 
-. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial welcome and Readme tabs then click on the Explorer button on the left side bar.
+. The first time it's run, it will git clone the required projects for this workshop. After a minute or two, you’ll be placed in the workspace. Close the initial Get Started tab and any prompt dialog.
 +
-image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-img-responsive"]
+image::images/codeready-welcome.png[Dev Spaces Welcome screen, role="integr8ly-img-responsive"]
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on Microsoft VS Code editor. It will look familiar if you have already used it.
-
-You can close the _Problems_ and _Output_ views to clear space.
+This IDE is based on Microsoft *VS Code* editor. It will look familiar if you have already used it.
 ====
 
-. The projects explorer will show you the *FleurDeLune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
+. The projects explorer will show you the *Fleur-De-Lune* folder with the required projects. Expand the folders to reveal the projects we cloned from the git repository.
 +
 image::images/codeready-projects.png[Workshop projects, role="integr8ly-img-responsive"]
 
-. During the workshop we will need to introduce commands for both the OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _My Workspace_ button on the right side panel and expand the **User Runtimes/tools** folder. Click on *>_ New terminal*.
+. During the workshop we will need to introduce commands for both OpenShift and other Command Line Interfaces (CLI) tools. For that we will need to start a terminal window _inside_ one of the containers from the developer workspace. To open the terminal window, click on the _Menu_ hamburger button on the top left side and expand the **Terminal** menu. Click on *New Terminal*.
 +
 image::images/codeready-new-terminal.png[Open Terminal, role="integr8ly-img-responsive"]
 
-. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running CodeReady container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
+. This will deploy the terminal window in the bottom of the screen. This terminal is attached to the running Dev Spaces container and is also running on OpenShift. This is the place where you will issue most of the commands from this workshop.
 +
 image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-responsive"]
 
 === Login into the OpenShift cluster
 
-. Finally, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
+. If this is your first lab, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
 +
 [source,bash,subs="attributes+"]
 ----
@@ -179,11 +177,11 @@ Don't forget to change the view from *Administrator* to *Developer*. Be sure to 
 
 . Click *+Add* on the left menu.
 +
-image::images/topology-add.png[Topology Add, role="integr8ly-img-responsive"]
+image::images/openshift-add.png[Topology Add, role="integr8ly-img-responsive"]
 
-. Click on the *From Catalog* option.
+. Click on the *All services* option under _Development Catalog_.
 +
-image::images/add-from-catalog.png[OpenShift From Catalog, role="integr8ly-img-responsive"]
+image::images/add-from-catalog.png[OpenShift +Add, role="integr8ly-img-responsive"]
 
 . Type in `kafka` in the search text field and then click on *KafkaConnect*.
 +
@@ -205,7 +203,7 @@ metadata:
     strimzi.io/use-connector-resources: "true"
 spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
-  image: 'quay.io/hguerreroo/rhi-cdc-connect:2020-Q2'
+  image: 'quay.io/redhatintegration/rhi-cdc-connect:2022-Q4'
   replicas: 1
   resources:
     requests:
@@ -289,6 +287,10 @@ image::images/kafka-connector-details.png[Details KafkaConnector, role="integr8l
 +
 image:images/topology-kafkaconnect.png[KafkaConnect Topology]
 
+. You should see something similar to the following.
++
+image:images/kafkaconnector-log.png[KafkaConnector Log]
+
 [type=verification]
 Did the connector started correctly and is now reading the database transaction log?
 [type=verificationFail]
@@ -338,33 +340,34 @@ image::images/www-imported-orders.png[Imported Orders]
 
 After loading the file into the system, the orders data should be stored in the MSSQL Server database. Let's check to make sure that's the case.
 
-. Go back to the topology view of the OpenShift Developer console. Change the project to the `shared-db-earth`.
-+
-image:images/openshift-change-project.png[Change Project]
-
-. Click on the database deployment to open the overview page. Then click on the *Resources* tab and next the _Pod_ name.
-+
-image:images/openshift-db-overview.png[Access Pod]
-
-. Now, click on the *Terminal* tab to access the pod's shell.
-+
-image:images/openshift-db-terminal.png[Pod Terminal]
-+
-[TIP]
-====
-If you feel comfortable, you can also use the OpenShift CLI command `oc rsh` to access the database pod as well.
-====
-
-. Run the following command to access the database:
+. Go back to your IDE terminal window and issue the following command to query the first 5 records in the database:
 +
 [source,bash,subs="attributes+"]
 ----
-/opt/mssql-tools/bin/sqlcmd -S mssql-server-linux -U sa -P Password! -d InternationalDB -Q "select top 5 * from dbo.Orders where OrderUser='{user-username}'"
+sqlcmd -S mssql-server-linux.shared-db-earth.svc \
+  -U sa -P Password! -d InternationalDB \
+  -Q "select top 5 * from dbo.Orders where OrderUser='{user-username}'"
 ----
 
-. Check the results, should look like this:
+. You should see an output similar to the following:
 +
-image::images/openshift-sqlcommand.png[Query]
+----
+OrderId     OrderType OrderItemName                                      Quantity    Price                                              ShipmentAddress                                                                                      ZipCode    OrderUser 
+----------- --------- -------------------------------------------------- ----------- -------------------------------------------------- ---------------------------------------------------------------------------------------------------- ---------- ----------
+          1 E         Lime                                                       100 3.69                                               541-428 Nulla Avenue                                                                                 4286       user1     
+          2 E         Lemon Bar                                                   17 0.09                                               Ap #249-5876 Magna. Rd.                                                                              I9E 0JN    user1     
+          3 E         Fruit Punch                                                 16 7.76                                               525-8975 Urna. Street                                                                                13965      user1     
+          4 E         Bubble Gum                                                 185 5.77                                               473-8850 Tellus Street                                                                               657101     user1     
+          5 E         Green Onion                                                 84 5.17                                               Ap #535-7695 Fringilla Street                                                                        70060      user1     
+
+(5 rows affected)
+----
+
+[type=verification]
+Were you able to see that your Change Data Capture connector has access to Kafka?
+
+[type=verificationFail]
+{standard-fail-text}
 
 === Check Apache Kafka Records
 
@@ -376,64 +379,78 @@ image:images/openshift-project-sharedkafka.png[Change Project]
 
 . Validate that the *KafkaTopics* were created.
 +
-- Expand the *More* menu on the left menu bar.
+====
 - Click on *Search* to load the _resources_ search page.
-- Click on the _Resource Type_ field and type 'topic'.
+- Click on the _Resources_ field and type 'topic'.
 - Finally check *KafkaTopic*.
+====
++
+{blank}
 +
 image::images/openshift-search-kafkatopics.png[Search KafkaTopics]
+
+. Filter the results for your username by selecting `Name` and then typing `{user-username}` in the text field
++
+image::images/openshift-search-filter.png[Search KafkaTopics]
 
 . This will display the topics on the *Earth* _Kafka cluster_. You should be able to locate your `{user-username}-debezium-cluster*` as well as the `{user-username}.earth.dbo.orders--*` _KafkaTopics_.
 +
 image::images/openshift-cdc-topics.png[CDC KafkaTopics]
-+
-[TIP]
-====
-You can narrow the results by adding `{user-username}` to the search filter.
-====
-
-[type=verification]
-Were you able to see that your Change Data Capture connector has access to Kafka?
-
-[type=verificationFail]
-{standard-fail-text}
 
 === Inspect Kafka records
 
 Time to check what information is flowing into Apache Kafka.
 
-. Go back to the topology view. We will access one of the Kafka brokers.
+. Go back to the IDE Terminal. We will use https://github.com/edenhill/kcat[kcat, window="_blank"] CLI tool to access the information in the Kafka cluster and https://jqlang.github.io/jq/[jq] to pretty format the JSON output.
 
-. Click on the `earth-cluster kafka` _stateful set_.
-
-. Click on the *Resources* tab.
-
-. Click on the `earth-cluster-kafka-0` pod to access the details.
-+
-image::images/openshift-kafka-deployment.png[Kafka Pods]
-
-. Click on the *Terminal* tab to access this pod's shell.
-+
-image::images/openshift-kafka-terminal.png[Kafka Pods]
-+
-[IMPORTANT]
-====
-Red Hat provides its own complete Apache Kafka distribution container images. We will use the `kafka-console-consumer.sh` script to query the topics.
-====
-
-. Issue the following command to read *all* the events in the `orders` topic:
+. Execute the following command to retrieve the last 5 records from the `Orders` topic.
 +
 [source,bash,subs="attributes+"]
 ----
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic {user-username}.earth.dbo.Orders --from-beginning
+kcat -b earth-cluster-kafka-bootstrap.shared-kafka-earth.svc -t {user-username}.earth.dbo.Orders -o 995 -e | jq
 ----
++
+[NOTE]
+====
+We are using the `-o 995` to indicate that we want to retrieve from this offset number. You can remove it and execute it again to retrieve all the 1000 records we inserted. 
+====
 
 . You should see the json output of the messages. Something like this:
 +
 [source,bash,subs="attributes+"]
 ----
 ...
-{"type":"string","optional":true,"field":"change_lsn"},{"type":"string","optional":true,"field":"commit_lsn"}],"optional":false,"name":"io.debezium.connector.sqlserver.Source","field":"source"},{"type":"string","optional":false,"field":"op"},{"type":"int64","optional":true,"field":"ts_ms"}],"optional":false,"name":"user1.earth.dbo.Orders.Envelope"},"payload":{"before":null,"after":{"OrderId":1000,"OrderType":"E","OrderItemName":"Mocha Irish Cream","Quantity":168,"Price":"4.30","ShipmentAddress":"P.O. Box 511, 4483 Ornare Rd.","ZipCode":"C5X 6L8","OrderUser":"user1"},"source":{"version":"0.10.0.Beta2-redhat-00001","connector":"sqlserver","name":"user1.earth","ts_ms":1584993092410,"snapshot":"false","db":"InternationalDB","schema":"dbo","table":"Orders","change_lsn":"00000027:00000038:0002","commit_lsn":"00000027:00000038:0003"},"op":"c","ts_ms":1584993096494}}
+  "payload": {
+    "before": null,
+    "after": {
+      "OrderId": 1000,
+      "OrderType": "E",
+      "OrderItemName": "Mocha Irish Cream",
+      "Quantity": 168,
+      "Price": "4.30",
+      "ShipmentAddress": "P.O. Box 511, 4483 Ornare Rd.",
+      "ZipCode": "C5X 6L8",
+      "OrderUser": "user1"
+    },
+    "source": {
+      "version": "1.9.7.Final-redhat-00003",
+      "connector": "sqlserver",
+      "name": "user1.earth",
+      "ts_ms": 1687476213463,
+      "snapshot": "false",
+      "db": "InternationalDB",
+      "sequence": null,
+      "schema": "dbo",
+      "table": "Orders",
+      "change_lsn": "00000027:000022f0:0002",
+      "commit_lsn": "00000027:000022f0:0003",
+      "event_serial_no": 1
+    },
+    "op": "c",
+    "ts_ms": 1687476214879,
+    "transaction": null
+  }
+}
 ----
 
 [type=verification]
@@ -658,7 +675,7 @@ image::images/openshift-bridge-details.png[OpenShift Kafka Resource, role="integ
 +
 image:images/openshift-bridge-topology.png[Mirror Maker Topology]
 
-. From the CodeReady terminal, expose the bridge HTTP REST API service as a route for external access.
+. From the Dev Spaces terminal, expose the bridge HTTP REST API service as a route for external access.
 +
 [source,bash,subs="attributes+"]
 ----
