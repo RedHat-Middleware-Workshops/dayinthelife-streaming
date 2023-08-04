@@ -776,5 +776,6 @@ You can now proceed to link:{next-lab-url}[Lab 3].
 [id="further-reading"]
 == Notes and Further Reading
 
-* https://www.redhat.com/en/technologies/jboss-middleware/amq[Red Hat AMQ]
-* https://developers.redhat.com/topics/event-driven/connectors/[Camel & Debezium Connectors]
+* https://www.redhat.com/en/products/application-foundations[Red Hat Application Foundations]
+* https://developers.redhat.com/topics/event-driven[Event-driven architecture for microservices]
+* https://developers.redhat.com/topics/stream-processing[Stream processing resources]
