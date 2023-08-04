@@ -545,9 +545,9 @@ Did all 3 Kafka resources (Kafka brokers, Zookeeper and Operator) startup OK?
 
 We refer to the process of replicating data between Kafka clusters as "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters.
 
-The Cluster Operator deploys one or more Kafka Mirror Maker replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
+The Cluster Operator deploys one or more Kafka Mirror Maker 2 replicas to replicate data between Kafka clusters. The Mirror Maker consumes messages from the source cluster and republishes those messages to the target cluster. A common use case for this kind of mirroring is to provide a replica in another datacenter.
 
-=== Deploy Mirror Maker
+=== Deploy Mirror Maker 2
 
 . Deploy the mirror maker cluster to _mirror_ the data from _Earth_ to _Moon_. (We mean from the Earth Kafka cluster to the Moon Kafka cluster)
 
@@ -567,24 +567,40 @@ image::images/openshift-mirrormaker-catalog.png[OpenShift Mirror Maker, role="in
 +
 image::images/openshift-mirrormaker-create.png[OpenShift Mirror Maker, role="integr8ly-img-responsive"]
 
-. Create a `KafkaMirrorMaker` Kubernetes Resource to define your Mirror Maker Cluster. Replace the _YAML_ editor with the following code:
+. Create a `KafkaMirrorMaker2` Kubernetes Resource to define your Mirror Maker Cluster. Replace the _YAML_ editor with the following code:
 +
 [source,yaml,subs="attributes+"]
 ----
+kind: KafkaMirrorMaker2
 apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaMirrorMaker
 metadata:
   name: earth-moon
 spec:
+  version: 3.4.0
   replicas: 1
-  consumer:
-    bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
-    groupId: mirror-maker-{user-username}
-    config:
-      auto.offset.reset: earliest
-  producer:
-    bootstrapServers: 'moon-kafka-bootstrap.{user-username}.svc:9092'
-  whitelist: {user-username}.earth.*
+  connectCluster: moon
+  clusters:
+    - alias: earth
+      bootstrapServers: 'earth-cluster-kafka-bootstrap.shared-kafka-earth.svc:9092'
+    - alias: moon
+      bootstrapServers: 'moon-kafka-bootstrap.{user-username}.svc:9092'
+      config:
+        config.storage.replication.factor: -1
+        offset.storage.replication.factor: -1
+        status.storage.replication.factor: -1
+  mirrors:
+    - sourceCluster: earth
+      targetCluster: moon
+      sourceConnector:
+        config:
+          replication.factor: -1
+          offset-syncs.topic.replication.factor: -1
+          sync.topic.acls.enabled: 'false'
+      checkpointConnector:
+        config:
+          checkpoints.topic.replication.factor: -1
+      topicsPattern: {user-username}.earth.*
+      groupsPattern: .*
 ----
 
 . Click on *Create* button.
@@ -688,38 +704,44 @@ oc expose service http-bridge-service --name kafka-bridge -n {namespace}
 +
 [source,bash,subs="attributes+"]
 ----
-cat << EOF | curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group -H 'content-type: application/vnd.kafka.v2+json' -d @-
-{
-    "name": "{user-username}",
-    "format": "json",
-    "auto.offset.reset": "earliest",
-    "enable.auto.commit": false,
-    "fetch.min.bytes": 1024,
-    "consumer.request.timeout.ms": 30000
-}
-EOF
+http http-bridge-service.{user-username}.svc:8080/consumers/{user-username}-http-group \
+  'content-type: application/vnd.kafka.v2+json' \
+  name=user1 \
+  format=json \
+  'auto.offset.reset'=earliest \
+  'enable.auto.commit':=false \
+  'fetch.min.bytes':=1024 \
+  'consumer.request.timeout.ms':=30000
 ----
 
 . Notice the return json `base_uri`, it represents the REST resource for your consumer.
 +
 [source,bash,subs="attributes+"]
 ----
-{"instance_id":"user1","base_uri":"http://kafka-bridge-{user-username}.apps.cluster-eventing-6fbb.eventing-6fbb.example.
-opentlc.com:80/consumers/{user-username}-http-group/instances/{user-username}"}
+HTTP/1.1 200 OK
+content-length: 121
+content-type: application/vnd.kafka.v2+json
+
+{
+    "base_uri": "http://http-bridge-service.{user-username}.svc:8080/consumers/{user-username}-http-group/instances/{user-username}",
+    "instance_id": "{user-username}"
+}
 ----
 
 . Use the previous **base_uri** to request subscription to the topics.
 +
 [source,bash,subs="attributes+"]
 ----
-curl -X POST http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/subscription -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["{user-username}.earth.dbo.Orders"]}'
+http http-bridge-service.{user-username}.svc:8080/consumers/{user-username}-http-group/instances/{user-namespace}/subscription \
+  'content-type: application/vnd.kafka.v2+json' \
+  topics[]='earth.{user-username}.earth.dbo.Orders'
 ----
 
 . Now you can start to consume some records. Notice that you need to send `json` as the accept type.
 +
 [source,bash,subs="attributes+"]
 ----
-curl http://kafka-bridge-{user-username}.{openshift-app-host}/consumers/{user-username}-http-group/instances/{user-username}/records -H 'accept: application/vnd.kafka.json.v2+json'
+http http-bridge-service.{user-username}.svc:8080/consumers/{user-username}-http-group/instances/{user-username}/records 'accept: application/vnd.kafka.json.v2+json'
 ----
 +
 [NOTE]
