@@ -131,6 +131,13 @@ image::images/codeready-terminal.png[CodeReady Terminal, role="integr8ly-img-res
 
 === Login into the OpenShift cluster
 
+. If this is your first lab, you will need to login into the OpenShift CLI to start interacting with the platform. For login, issue the following command:
++
+[source,bash,subs="attributes+"]
+----
+oc login -u {user-username} -p openshift https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --insecure-skip-tls-verify=true
+----
+
 . Most of the work will be deploy to your own `{namespace}` project namespace, so be sure to have it as a _working_ project by executing the following command:
 +
 [source,bash,subs="attributes+"]
@@ -697,6 +704,14 @@ oc -n {namespace} set env deployment/www-store ORDERS_EVENT_BASE_URL="http://i-e
 ----
 oc -n {namespace} apply -f $PROJECTS_ROOT/fleur-de-lune/support/projects/module-1/eda-services.yaml
 ----
++
+{blank}
++
+[IMPORTANT]
+====
+Please keep in mind that deploying this services may take a few moments.
+====
+
 
 . The rest of the event-driven components should deploy now.  You can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
 + 
@@ -827,6 +842,13 @@ The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_
 
 === Deploy to OpenShift
 
+. To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` using a Kubernetes Secret with the environment variable configuration we previously configured in the `application.properties` file.
++
+[source,bash,subs="attributes+"]
+----
+oc create secret generic amq-config --from-literal=AMQP_HOST=amq-broker-amqp-0-svc -n {namespace}
+----
+
 . Package the application by running the following maven plugin in the OpenShift Dev Spaces terminal:
 +
 [source,bash,subs="attributes+"]
@@ -838,13 +860,6 @@ The first line is just enabling link:https://en.wikipedia.org/wiki/Cross-origin_
 ====
 For the following commands remember to be sure to switch to your _working_ project.
 ====
-
-. To follow the external config practice of 12 factor applications we will inject the messaging endpoint `hostname` using a Kubernetes Secret with the environment variable configuration we previously configured in the `application.properties` file.
-+
-[source,bash,subs="attributes+"]
-----
-oc create secret generic amq-config --from-literal=AMQP_HOST=amq-broker-amqp-0-svc
-----
 
 . Open the OpenShift Developer Console link:{openshift-host}/topology/ns/{namespace}[Topology View, window="_blank"], and make sure it's done deploying by waiting for the dark blue circles around the Quarkus logo:
 +
