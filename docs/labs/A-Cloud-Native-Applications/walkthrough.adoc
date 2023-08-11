@@ -34,7 +34,7 @@ At the end of the lab, you should be able to order online from the nodejs applic
 
 *Why Red Hat?*
 
-Built on the open Eclipse Che project, Red Hat OpenShift Dev Spaces uses Kubernetes and containers to provide any member of the development or IT team with a consistent, secure, and zero-configuration development environment. The user experience is as fast and familiar as an integrated development environment (IDE) on their laptop.
+Built on the open OpenShfit Dev Spaces project, Red Hat OpenShift Dev Spaces uses Kubernetes and containers to provide any member of the development or IT team with a consistent, secure, and zero-configuration development environment. The user experience is as fast and familiar as an integrated development environment (IDE) on their laptop.
 
 Development environments are containerized and running on the OpenShift Kubernetes platform. Developers can run code updates in an OpenShift container without needing to understand all the details of managing a Kubernetes cluster. 
 
@@ -66,7 +66,7 @@ Use the following credentials to login into the web consoles:
 [id="Getting Ready"]
 == Getting ready for the labs
 
-You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[OpenShfit Dev Spaces, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
 . To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
 +
@@ -103,7 +103,7 @@ image::images/codeready-welcome.png[CodeReady Welcome screen, role="integr8ly-im
 +
 [NOTE]
 ====
-This IDE is based on *Eclipse Che*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
+This IDE is based on *OpenShfit Dev Spaces*, which is in turn is based on MicroSoft VS Code editor. It will look familiar if you have already used it.
 
 You can close the _Problems_ and _Output_ views to clear space.
 ====
@@ -514,7 +514,7 @@ The last element of the architecture is the _Store App_, which is a regular *Nod
 
 === Deploy to OpenShift
 
-. Via the Eclipse Che terminal, change to the project folder:
+. Via the OpenShfit Dev Spaces terminal, change to the project folder:
 +
 [source,bash,subs="attributes+"]
 ----

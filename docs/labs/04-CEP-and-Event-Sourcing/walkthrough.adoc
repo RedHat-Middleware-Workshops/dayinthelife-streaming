@@ -44,7 +44,7 @@ Your password is: `{user-password}`
 [type=walkthroughResource]
 .Che
 ****
-* link:{codeready-url}/[Open Eclipse Che, window="_blank"]
+* link:{codeready-url}/[Open OpenShfit Dev Spaces, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=openshift]
@@ -68,13 +68,13 @@ image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"
 *Red Hat AMQ Online* is an OpenShift-based mechanism for delivering messaging as a managed service. With Red Hat AMQ Online, administrators can configure a cloud-native, multi-tenant messaging service where developers can provision messaging using a _web console_. Multiple development teams can provision the brokers and queues from the console, *without* requiring each team to _install, configure, deploy, maintain, or patch any software_.
 [time=10]
 [id="pre-req"]
-=== Eclipse Che Workspace and Setup the environment
+=== OpenShfit Dev Spaces Workspace and Setup the environment
 You are setting up a topic in AMQ Online to receive event signals from Edge devices.  In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 +
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. To provision OpenShfit Dev Spaces Workspace, navigate to OpenShfit Dev Spaces console: {codeready-url}[OpenShfit Dev Spaces, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
@@ -173,7 +173,7 @@ image::images/1.1.1-create-kafka-topic.png[1.1.1-create-kafka-topic, role="integ
 +
 image::images/1.1.2-create-kafka-costcenter.png[1.1.2-create-kafka-costcenter, role="integr8ly-img-responsive"]
 
-. Navigate back to the Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. Navigate back to the OpenShfit Dev Spaces console: {codeready-url}[OpenShfit Dev Spaces, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
@@ -398,7 +398,7 @@ image::images/4.0.0-photo.png[4.0.0-photo, role="integr8ly-img-responsive"]
 image::images/4.0.0-overview.png[4.0.0-overview, role="integr8ly-img-responsive"]
 
 
-. Navigate back to Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. Navigate back to OpenShfit Dev Spaces console: {codeready-url}[OpenShfit Dev Spaces, window="_blank", id="{context}-3"]
 
 . Find the `{lab-path}/{lab-4-path}/disaster-control/src/main/java/com/redhat/workshop/dil` folder.
 
