@@ -514,7 +514,7 @@ The last element of the architecture is the _Store App_, which is a regular *Nod
 
 === Deploy to OpenShift
 
-. Via the Eclipse Che terminal, change to the project folder:
+. Via the OpenShfit Dev Spaces terminal, change to the project folder:
 +
 [source,bash,subs="attributes+"]
 ----
