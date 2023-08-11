@@ -1,5 +1,5 @@
 :walkthrough: Complex Event Processing
-:codeready-url: http://codeready-che.{openshift-app-host}/
+:codeready-url: http://devspaces.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-05/
 :user-password: openshift
 :lab-path: FleurDeLune/projects
