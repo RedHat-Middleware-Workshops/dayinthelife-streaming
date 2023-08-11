@@ -1,5 +1,5 @@
 :walkthrough: Cloud-Native Integration with EIPs
-:codeready-url: http://codeready-che.{openshift-app-host}/
+:codeready-url: http://devspaces.{openshift-app-host}/
 :amqoneline-url: https://console-workshop-operators.{openshift-app-host}/
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-04-CEP-and-Event-Sourcing/
 :user-password: openshift

@@ -7,7 +7,7 @@
 
 // URLs
 :next-lab-url: https://tutorial-web-app-webapp.{openshift-app-host}/tutorial/dayinthelife-streaming.git-labs-03-Cloud-Native-Integration/
-:codeready-url: http://codeready-che.{openshift-app-host}/
+:codeready-url: http://devspaces.{openshift-app-host}/
 
 ifdef::env-github[]
 :next-lab-url: ../lab03/walkthrough.adoc
