@@ -66,7 +66,7 @@ Use the following credentials to login into the web consoles:
 [id="Getting Ready"]
 == Getting ready for the labs
 
-You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[OpenShfit Dev Spaces, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
+You will be using Red Hat OpenShift Dev Spaces, an online integrated development environment (IDE) based on link:https://www.eclipse.org/che/[Eclipse Che, window="_blank"]. Changes to files are *auto-saved* every few seconds, so you don't need to explicitly save changes.
 
 . To get started go to the link:{codeready-url}[Codeready console, window="_blank"] and log in using your username and password credentials.
 +
