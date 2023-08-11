@@ -42,9 +42,9 @@ Your username is: `{user-username}` +
 Your password is: `{user-password}`
 
 [type=walkthroughResource]
-.Che
+.OpenShift Dev Spaces
 ****
-* link:{codeready-url}/[Open Eclipse Che, window="_blank"]
+* link:{codeready-url}/[Open OpenShfit Dev Spaces, window="_blank"]
 ****
 
 [type=walkthroughResource]
@@ -63,13 +63,13 @@ Your password is: `{user-password}`
 [id="real-time-harvest-gathering"]
 == Real time harvest information gathering
 
-=== Eclipse Che Workspace and Setup the environment
+=== OpenShfit Dev Spaces Workspace and Setup the environment
 You are setting up a topic in AMQ Online to receive event signals from Edge devices.
 In this task, you'll provision a messaging topic using Red Hat's Messaging as a Service platform on OpenShift (AMQ Online).
 
 image::images/1.1.0-diagram-1.png[1.1.0-diagram, role="integr8ly-img-responsive"]
 
-. To provision Eclipse Che Workspace, navigate to Eclipse Che console: {codeready-url}[Eclipse Che, window="_blank", id="{context}-3"]
+. To provision OpenShfit Dev Spaces Workspace, navigate to OpenShfit Dev Spaces console: {codeready-url}[OpenShfit Dev Spaces, window="_blank", id="{context}-3"]
 
 . Login to Che using your credentials (`{user-username}` and `{user-password}`).
 +
@@ -345,7 +345,7 @@ INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 INSERT INTO premium(mmid,diameter, weight) VALUES (4567845678456, 4, 2.3);
 ----
 
-. Now that we've populated the database table with records, navigate back to the *Eclipse Che* window and open the `FleurDeLune/projects/harvest/inventory` project.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.  A route to:
+. Now that we've populated the database table with records, navigate back to the *OpenShfit Dev Spaces* window and open the `FleurDeLune/projects/harvest/inventory` project.  Examine the `Inventory.java` file.  At this point we need to create 3 Camel routes.  A route to:
 +
 ** Consume harvest JSON messages from AMQ Online, and using Content-based routing determine whether they are standard, premium or utility marshmallows.
 ** Insert premium marshmallow dimensions into the PREMIUM database table
@@ -406,7 +406,7 @@ image::images/3.1.9-create-kafka-topic.png[3.1.9-create-kafka-topic, role="integ
 
 . Repeat the previous step to create `{user-username}-standard` and `{user-username}-utility` topics.
 
-. Return to the Eclipse Che IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **quarkus.qpid-jms.url** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
+. Return to the OpenShfit Dev Spaces IDE and open the `kafka.properties` file located in the **FleurDeLune/projects/harvest/inventory** folder.  Update the **quarkus.qpid-jms.url** for AMQP with the same one entered in edge.properties.  Additionally, update the **kafka.brokers** URL to be `moon-kafka-bootstrap.{user-username}.svc:9092`.
 +
 image::images/3.1.10-update-kafka-properties.png[3.1.10-update-kafka-properties, role="integr8ly-img-responsive"]
 
@@ -457,7 +457,7 @@ Verify that you followed each step in the procedure above. If you are still havi
 image::images/4.0.0-diagram.png[3.0.0-diagram, role="integr8ly-img-responsive"]
 
 
-. Navigate back to the Eclipse Che console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
+. Navigate back to the OpenShfit Dev Spaces console, and open `connect-secret.yaml` and `jdg-cluster.yaml` located in `/projects/harvest/shipping`.  Take a  look and notice this will be the identity secret required to setup our Infinispan cluster.
 +
 image::images/4.1.1-connect-secret.png[4.1.1-connect-secret, role="integr8ly-img-responsive"]
 
@@ -475,7 +475,7 @@ oc create -f jdg-cluster.yaml
 +
 image::images/4.1.2-check-infinispan.png[4.1.2-check-infinispan, role="integr8ly-img-responsive"]
 
-. Via the Eclipse Che IDE, open the `premiumshipping-config.yaml` file.  Update the `camel.component.kafka.brokers` to be `moon-kafka-bootstrap.{user-username}.svc:9092` and `camel.component.infinispan-configuration.hosts` URL to be `example-infinispan.{user-username}.svc:11222`.
+. Via the OpenShfit Dev Spaces IDE, open the `premiumshipping-config.yaml` file.  Update the `camel.component.kafka.brokers` to be `moon-kafka-bootstrap.{user-username}.svc:9092` and `camel.component.infinispan-configuration.hosts` URL to be `example-infinispan.{user-username}.svc:11222`.
 +
 image::images/4.1.4-premium-config.png[4.1.4-premium-config, role="integr8ly-img-responsive"]
 
@@ -636,7 +636,7 @@ image::images/6.1.3-select-datasource.png[6.1.3-select-datasource, role="integr8
 +
 image::images/6.1.4-postgres-save.png[6.1.4-postgres-save, role="integr8ly-img-responsive"]
 
-. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to Eclipse Che and copy the content from `/projects/harvest/display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Import**.
+. Click the **+** symbol then click **Import**.  Give the dashboard a name of `FleurDeLune`.  Navigate back to OpenShfit Dev Spaces and copy the content from `/projects/harvest/display/FleurDeLune-Dashboard.json`.  Paste the content into the Grafana JSON window then click **Import**.
 +
 image::images/6.1.5-load-json.png[6.1.5-load-json, role="integr8ly-img-responsive"]
 
