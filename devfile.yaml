@@ -27,10 +27,10 @@ components:
             -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/user
         - name: MAVEN_OPTS
           value: $(JAVA_OPTS)          
-      cpuRequest: 30m
+      cpuRequest: 200m
       cpuLimit: 500m
       memoryRequest: 256Mi
-      memoryLimit: 3G
+      memoryLimit: 4G
       sourceMapping: /projects
 commands:
   - exec:

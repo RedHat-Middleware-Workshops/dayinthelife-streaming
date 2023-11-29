@@ -575,7 +575,7 @@ cd $PROJECTS_ROOT/fleur-de-lune/projects/eda-services
 +
 [source,none,subs="attributes+"]
 ----
-camel run * --dev
+jbang camel@apache/camel run * --camel-version=4.0.0.redhat-00027 --repos=https://maven.repository.redhat.com/ga --dev
 ----
 +
 {blank}
@@ -667,7 +667,7 @@ Integration "i-events" created
 +
 [source,none,subs="attributes+"]
 ----
-kamel get -n {namespace}
+watch kamel get -n {namespace}
 ----
 
 6. Wait until you see the *PHASE* changing to `Running`
@@ -712,6 +712,12 @@ oc -n {namespace} apply -f $PROJECTS_ROOT/fleur-de-lune/support/projects/module-
 Please keep in mind that deploying this services may take a few moments.
 ====
 
+. Again, you can check the status of your deploymetns using the following command:
++
+[source,none,subs="attributes+"]
+----
+watch kamel get -n {namespace}
+----
 
 . The rest of the event-driven components should deploy now.  You can take a look at the topology view to check the deployment progress. Give it a few moments for everything to deploy.
 + 
@@ -831,7 +837,7 @@ quarkus.kubernetes.env.secrets=amq-config
 
 quarkus.kubernetes-client.trust-certs=true
 
-quarkus.container-image.group=user1
+quarkus.container-image.group={namespace}
 
 # Incoming stream
 mp.messaging.incoming.notifications.connector=smallrye-amqp
